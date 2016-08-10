@@ -1,1 +1,32 @@
 de:
+  phone: Telefon
+  fax: Fax
+  email: E-Mail
+  ceo: Geschäftsführer
+  invoice_date: Rechnungsdatum
+  cancel: Abbrechen
+  created: "%{model} gespeichert."
+  updated: "%{model} gespeichert."
+  destroyed: "%{model} gelöscht."
+  confirm_delete: "%{model} löschen?"
+  locations:
+    single:
+      title: "%{id}"
+    form:
+      error: Veranstaltungsort konnte nicht gespeichert werden.
+    new:
+      title: Veranstaltungsort anlegen
+  invoices:
+    single:
+      title: "Rechnung %{id}"
+    new:
+      title: Rechnung schreiben
+  search:
+    index:
+      title: Suchergebnisse
+  delete: Löschen
+  edit: Bearbeiten
+  list: Liste
+  new: Neu
+  save: Speichern
+  save_and_next: Speichern und Neu
