@@ -1,10 +1,15 @@
 = simple_form_for(@location) do |f|
   = f.error_notification
 
-  .form-inputs
-    = f.input :name
-    = f.input :short
-    /= f.input :address
+  section
+    .col-md-6
+      .form-inputs
+        = f.input :name
+        = f.input :short
+        /= f.input :address
 
-  .form-actions
-    = f.button :submit
+  section.action-buttons
+    .col-md-12
+      .pull-right
+        => link_to t(:cancel), 'javascript: window.history.back();', class: 'btn btn-default'
+        = f.submit t(:save), class: 'btn btn-primary'

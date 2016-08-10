@@ -41,6 +41,8 @@ de:
         count: Anzahl
         name: Bezeichnung
         unit_price: Einzelpreis
+      location:
+        short: Kürzel
       user:
         login: "Handle"
         email: E-Mail
