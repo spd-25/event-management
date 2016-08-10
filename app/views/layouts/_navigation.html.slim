@@ -1,5 +1,5 @@
 / navigation styled for Bootstrap 3.0
-nav.navbar.navbar-inverse.navbar-fixed-top
+/nav.navbar.navbar-inverse.navbar-fixed-top
   .container
     .navbar-header
       button.navbar-toggle[type="button" data-toggle="collapse" data-target=".navbar-collapse"]
@@ -11,3 +11,41 @@ nav.navbar.navbar-inverse.navbar-fixed-top
     .collapse.navbar-collapse
       ul.nav.navbar-nav
         == render 'layouts/navigation_links'
+
+- if user_signed_in?
+  nav.navbar.navbar-inverse.navbar-fixed-top
+    .container
+      .navbar-header
+        button.navbar-toggle[type='button' data-toggle='collapse' data-target='.navbar-collapse']
+          span.sr-only Toggle navigation
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        = link_to 'Home', root_path, class: 'navbar-brand', tabindex: -1
+      .collapse.navbar-collapse
+        ul.nav.navbar-nav
+          li class=('active' if controller_name == 'locations')
+            = link_to locations_title, locations_url, tabindex: -1
+          /= navbar_dropdown 'Auswertungen' do
+            - Report.in_menu.all.each do |report|
+              li
+                = link_to report.name, report
+            - Statistic.all.each do |stat|
+              li
+                = link_to stat.name, stat
+            li
+              = link_to 'Neue Statistik', new_statistic_url
+          /= navbar_dropdown 'Stammdaten', active: controller_name.in?(%w(products sellers)) do
+            li class=('active' if controller_name == 'products')
+              = link_to title_for_model(Product), products_url
+            li class=('active' if controller_name == 'sellers')
+              = link_to title_for_model(Seller), sellers_url
+
+        /ul.nav.navbar-nav.navbar-right
+          li
+            form.navbar-form.navbar-right role="search" action=search_url
+              .form-group
+                input.form-control type="text" placeholder="Suche" name="q" value=@query autofocus=(params[:controller] == 'search') tabindex="-1"
+          = navbar_dropdown current_user.username do
+            li = link_to 'Passwort ändern', edit_user_registration_url(current_user.username)
+            li = link_to 'Abmelden', destroy_user_session_path, method: 'delete', title: current_user.username
