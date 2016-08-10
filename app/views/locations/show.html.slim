@@ -1,0 +1,25 @@
+.page-header
+  = link_to locations_path, class: 'btn btn-default' do 
+    span.glyphicon.glyphicon-list-alt
+    =< t(:list)
+  = link_to edit_location_path(@location), class: 'btn btn-primary' do
+    span.glyphicon.glyphicon-pencil
+    =< t(:edit)
+  => link_to @location, method: :delete, data: { confirm: t(:confirm_delete, model: Location.model_name.human) }, class: 'btn btn-danger' do
+    span.glyphicon.glyphicon-remove
+    =< t(:delete)
+  h2
+    => @location.name
+    small = Location.model_name.human
+
+.row
+  .col-md-6 = panel_box title: Location.model_name.human do
+    .row
+      label.col-md-4 => Location.human_attribute_name(:name)
+      .col-md-8 = @location.name
+    .row
+      label.col-md-4 => Location.human_attribute_name(:short)
+      .col-md-8 = @location.short
+    .row
+      label.col-md-4 => Location.human_attribute_name(:address)
+      .col-md-8 = @location.address

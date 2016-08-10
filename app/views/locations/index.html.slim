@@ -1,0 +1,24 @@
+.page-header
+  = link_to locations_path(format: :csv), id: 'export-csv-button', class: 'btn btn-default' do
+    span.glyphicon.glyphicon-export
+    =< t(:export)
+  = link_to new_location_path, class: 'btn btn-primary' do 
+    span.glyphicon.glyphicon-plus
+    =< t(:new)
+  h2
+    => @locations.count
+    = Location.model_name.human count: @locations.count
+
+.table-responsive
+  table.table.table-striped.table-bordered.table-hover.table-clickable
+    thead
+      tr
+        th = Location.human_attribute_name(:name)
+        th = Location.human_attribute_name(:short)
+        th = Location.human_attribute_name(:address)
+    tbody
+      - @locations.each do | location |
+        tr data = {url: url_for(location)}
+          td = location.name
+          td = location.short
+          td = location.address
