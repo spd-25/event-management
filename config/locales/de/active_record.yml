@@ -18,6 +18,7 @@ de:
     salut:          Anrede
     start_date:     Beginn
     street:         Straße/Nr.
+    title:          Titel
     updated_at:     Bearbeitet
     zip:            PLZ
   activerecord:
@@ -28,6 +29,9 @@ de:
       location:
         one: Veranstaltungsort
         other: Veranstaltungsorte
+      teacher:
+        one: Referent
+        other: Referenten
     attributes:
       invoice:
         date: Rechnungsdatum

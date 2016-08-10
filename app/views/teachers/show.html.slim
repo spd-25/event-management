@@ -1,0 +1,26 @@
+- title_for @teacher, :name
+.page-header
+  = list_link teachers_url
+  = edit_link edit_teacher_url(@teacher)
+  = delete_link @teacher
+  h2
+    => @teacher.name
+    small = Teacher.model_name.human
+
+.row
+  .col-md-6 = panel_box title: Teacher.model_name.human do
+    .row
+      label.col-md-4 => Teacher.human_attribute_name(:first_name)
+      .col-md-8 = @teacher.first_name
+    .row
+      label.col-md-4 => Teacher.human_attribute_name(:last_name)
+      .col-md-8 = @teacher.last_name
+    .row
+      label.col-md-4 => Teacher.human_attribute_name(:title)
+      .col-md-8 = @teacher.title
+    .row
+      label.col-md-4 => Teacher.human_attribute_name(:address)
+      .col-md-8 = @teacher.address
+    .row
+      label.col-md-4 => Teacher.human_attribute_name(:contact)
+      .col-md-8 = @teacher.contact

@@ -3,6 +3,10 @@ module IconHelper
     fa_icon 'map-marker', text: text
   end
 
+  def teachers_icon(text = nil)
+    fa_icon 'graduation-cap', text: text
+  end
+
   def invoice_icon(text = nil)
     fa_icon 'file', text: text
   end

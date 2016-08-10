@@ -26,6 +26,8 @@
         ul.nav.navbar-nav
           li class=('active' if controller_name == 'locations')
             = link_to locations_title, locations_url, tabindex: -1
+          li class=('active' if controller_name == 'teachers')
+            = link_to teachers_title, teachers_url, tabindex: -1
           /= navbar_dropdown 'Auswertungen' do
             - Report.in_menu.all.each do |report|
               li

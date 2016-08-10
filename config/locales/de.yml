@@ -16,6 +16,13 @@ de:
       error: Veranstaltungsort konnte nicht gespeichert werden.
     new:
       title: Veranstaltungsort anlegen
+  teachers:
+    single:
+      title: "%{id}"
+    form:
+      error: Referent konnte nicht gespeichert werden.
+    new:
+      title: Referent anlegen
   invoices:
     single:
       title: "Rechnung %{id}"
