@@ -1,7 +1,7 @@
 class Seminar < ApplicationRecord
   # belongs_to :teacher, required: true
   # has_and_belongs_to_many :teachers
-  # belongs_to :location, required: true
+  belongs_to :location, optional: true
 
   validates :title, presence: true
 

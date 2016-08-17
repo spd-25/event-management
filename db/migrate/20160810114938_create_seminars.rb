@@ -10,6 +10,10 @@ class CreateSeminars < ActiveRecord::Migration[5.0]
       t.text :content
       t.text :notes
       t.text :due_date
+      t.text :price_text
+      t.text :date_text
+      t.text :location_text
+      t.string :time
       t.integer :max_attendees
       t.jsonb :others, default: '{}'
       t.references :location, foreign_key: true

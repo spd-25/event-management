@@ -33,6 +33,10 @@ ActiveRecord::Schema.define(version: 20160810114938) do
     t.text     "content"
     t.text     "notes"
     t.text     "due_date"
+    t.text     "price_text"
+    t.text     "date_text"
+    t.text     "location_text"
+    t.string   "time"
     t.integer  "max_attendees"
     t.jsonb    "others",        default: "{}"
     t.integer  "location_id"
@@ -46,6 +50,7 @@ ActiveRecord::Schema.define(version: 20160810114938) do
     t.string   "first_name"
     t.string   "last_name"
     t.string   "title"
+    t.string   "profession"
     t.jsonb    "address",    default: "{}"
     t.jsonb    "contact",    default: "{}"
     t.datetime "created_at",                null: false
