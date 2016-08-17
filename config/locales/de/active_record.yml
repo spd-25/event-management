@@ -54,8 +54,9 @@ de:
         max_attendees: Max. Anzahl Teilnehmer
         subtitle: Untertitel
         benefit: Nutzen
+        categories: Themata
         content: Inhalt
-        teacher: Referent
+        teachers: Referenten
         location: Veranstaltungsort
         notes: Bemerkungen
       user:

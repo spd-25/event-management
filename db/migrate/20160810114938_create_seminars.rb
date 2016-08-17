@@ -5,7 +5,6 @@ class CreateSeminars < ActiveRecord::Migration[5.0]
       t.string :title, null: false
       t.string :subtitle
       t.integer :year, null: false
-      t.references :teacher, foreign_key: true
       t.text :benefit
       t.text :content
       t.text :notes

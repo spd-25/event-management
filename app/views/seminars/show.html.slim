@@ -15,6 +15,12 @@
     .row
       label.col-md-4 => Seminar.human_attribute_name(:subtitle)
       .col-md-8 = @seminar.subtitle
+    .row
+      label.col-md-4 => Seminar.human_attribute_name(:teachers)
+      .col-md-8
+        ul.list-inline
+          - @seminar.teachers.each do |teacher|
+            li = link_to teacher.name, teacher
     /.row
       label.col-md-4 => Seminar.human_attribute_name(:teacher)
       .col-md-8 = @seminar.teacher

@@ -11,7 +11,8 @@
       tr
         th = Seminar.human_attribute_name(:title)
         th = Seminar.human_attribute_name(:subtitle)
-        /th = Seminar.human_attribute_name(:teacher)
+        th = Seminar.human_attribute_name(:teachers)
+        th = Seminar.human_attribute_name(:categories)
         /th = Seminar.human_attribute_name(:benefit)
         /th = Seminar.human_attribute_name(:content)
         /th = Seminar.human_attribute_name(:notes)
@@ -22,6 +23,8 @@
         tr data = {url: url_for(seminar)}
           td = seminar.title
           td = seminar.subtitle
+          td = seminar.teachers.map(&:name).join(', ')
+          td = seminar.others['categories'].join(', ')
           /td = seminar.teacher
           /td = seminar.benefit
           /td = seminar.content

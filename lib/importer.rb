@@ -2,7 +2,7 @@ module Importer
   def self.import
     seminars = fetch_seminars
     locations = store_locations(seminars)
-    # teachers = store_teachers(seminars)
+    teachers = store_teachers(seminars)
 
     seminars.each do |sem_orig|
       attrs = %i(title number content benefit notes due_date price_text time location_text date year)
@@ -10,6 +10,7 @@ module Importer
       sem_hash[:others]   = sem_orig.except(*attrs)
       location            = locations[sem_hash[:location_text]]
       sem_hash[:location] = location if location
+      sem_hash[:teachers] = sem_orig[:teachers].map { |teacher_hash| teachers[teacher_hash] }
 
       begin
         Seminar.create!(sem_hash)
@@ -21,7 +22,7 @@ module Importer
   end
 
   def self.fetch_seminars
-    seminar_links[0..50].map do |link|
+    seminar_links.map do |link|
       res = fetch_seminar link
       res[:location_text] = res.delete(:location_text)&.split('<br>')&.join("\n")
       res[:date_text]     = res.delete(:date)&.join("\n")
@@ -111,7 +112,7 @@ module Importer
 
   def self.get_teachers(block)
     block.css('.nutzentext p').map do |teacher|
-      name = teacher.css('strong').text.split
+      name = teacher.css('strong').text.gsub(' - ', '-').split
       {
         title: name[-3],
         first_name: name[-2],

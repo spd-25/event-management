@@ -5,7 +5,7 @@ class SeminarsController < ApplicationController
 
   def index
     authorize Seminar
-    @seminars = Seminar.all
+    @seminars = Seminar.includes(:teachers).all
   end
 
   def show
