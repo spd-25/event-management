@@ -3,4 +3,5 @@ Rails.application.routes.draw do
   devise_for :users
   resources :locations
   resources :teachers
+  resources :seminars
 end

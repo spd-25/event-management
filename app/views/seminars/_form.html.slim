@@ -1,0 +1,30 @@
+= simple_form_for(@seminar) do |f|
+  = f.error_notification
+
+  .row
+    .col-md-6
+      .form-inputs
+        = f.input :title
+        = f.input :subtitle
+        = f.association :teachers, input_html: { class: 'select2' }
+    .col-md-6
+      .form-inputs
+        = f.input :max_attendees
+        = f.association :location
+  .row
+    .col-md-6
+      .form-inputs
+        = f.input :benefit, input_html: { rows: 10 }
+    .col-md-6
+      .form-inputs
+        = f.input :content, input_html: { rows: 10 }
+  .row
+    .col-md-6
+      .form-inputs
+        = f.input :notes, input_html: { rows: 10 }
+
+  section.action-buttons
+    .col-md-12
+      .pull-right
+        => link_to t(:cancel), 'javascript: window.history.back();', class: 'btn btn-default'
+        = f.submit t(:save), class: 'btn btn-primary'

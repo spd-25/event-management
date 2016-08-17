@@ -23,6 +23,13 @@ de:
       error: Referent konnte nicht gespeichert werden.
     new:
       title: Referent anlegen
+  seminars:
+    single:
+      title: "%{id}"
+    form:
+      error: Seminar konnte nicht gespeichert werden.
+    new:
+      title: Seminar anlegen
   invoices:
     single:
       title: "Rechnung %{id}"

@@ -1,0 +1,35 @@
+- title_for @seminar, :name
+.page-header
+  = list_link seminars_url
+  = edit_link edit_seminar_url(@seminar)
+  = delete_link @seminar
+  h2
+    => @seminar.name
+    small = Seminar.model_name.human
+
+.row
+  .col-md-12 = panel_box title: Seminar.model_name.human do
+    .row
+      label.col-md-4 => Seminar.human_attribute_name(:title)
+      .col-md-8 = @seminar.title
+    .row
+      label.col-md-4 => Seminar.human_attribute_name(:subtitle)
+      .col-md-8 = @seminar.subtitle
+    /.row
+      label.col-md-4 => Seminar.human_attribute_name(:teacher)
+      .col-md-8 = @seminar.teacher
+    .row
+      label.col-md-4 => Seminar.human_attribute_name(:benefit)
+      .col-md-8 = @seminar.benefit&.html_safe
+    .row
+      label.col-md-4 => Seminar.human_attribute_name(:content)
+      .col-md-8 = @seminar.content&.html_safe
+    .row
+      label.col-md-4 => Seminar.human_attribute_name(:notes)
+      .col-md-8 = @seminar.notes&.html_safe
+    .row
+      label.col-md-4 => Seminar.human_attribute_name(:max_attendees)
+      .col-md-8 = @seminar.max_attendees
+    /.row
+      label.col-md-4 => Seminar.human_attribute_name(:location)
+      .col-md-8 = @seminar.location

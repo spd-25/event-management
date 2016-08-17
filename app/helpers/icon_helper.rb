@@ -7,6 +7,10 @@ module IconHelper
     fa_icon 'graduation-cap', text: text
   end
 
+  def seminars_icon(text = nil)
+    fa_icon 'university', text: text
+  end
+
   def invoice_icon(text = nil)
     fa_icon 'file', text: text
   end

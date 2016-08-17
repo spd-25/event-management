@@ -29,6 +29,9 @@ de:
       location:
         one: Veranstaltungsort
         other: Veranstaltungsorte
+      seminar:
+        one: Seminar
+        other: Seminare
       teacher:
         one: Referent
         other: Referenten
@@ -47,6 +50,14 @@ de:
         unit_price: Einzelpreis
       location:
         short: Kürzel
+      seminar:
+        max_attendees: Max. Anzahl Teilnehmer
+        subtitle: Untertitel
+        benefit: Nutzen
+        content: Inhalt
+        teacher: Referent
+        location: Veranstaltungsort
+        notes: Bemerkungen
       user:
         login: "Handle"
         email: E-Mail

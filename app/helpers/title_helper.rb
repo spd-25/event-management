@@ -7,4 +7,8 @@ module TitleHelper
     teachers_icon title_for_model(Teacher)
   end
 
+  def seminars_title
+    seminars_icon title_for_model(Seminar)
+  end
+
 end
