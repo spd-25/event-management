@@ -5,7 +5,7 @@ class TeachersController < ApplicationController
 
   def index
     authorize Teacher
-    @teachers = Teacher.order(:last_name).all
+    @teachers = Teacher.active.order(:last_name).all
   end
 
   def show

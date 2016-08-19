@@ -11,8 +11,10 @@
       tr
         th = Teacher.human_attribute_name(:name)
         th = Teacher.human_attribute_name(:profession)
+        th = Teacher.human_attribute_name(:seminars)
     tbody
       - @teachers.each do | teacher |
         tr data = {url: url_for(teacher)}
           td = teacher.name
           td = teacher.profession
+          td = teacher.seminars.count
