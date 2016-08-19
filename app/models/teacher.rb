@@ -5,6 +5,6 @@ class Teacher < ApplicationRecord
   validates :last_name, presence: true
 
   def name
-    [title, first_name, last_name].join(' ')
+    [title, first_name, last_name].select(&:present?).join(' ')
   end
 end
