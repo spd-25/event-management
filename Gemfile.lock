@@ -96,6 +96,8 @@ GEM
       warden (~> 1.2.3)
     devise-i18n (1.1.0)
     diff-lcs (1.2.5)
+    domain_name (0.5.20160615)
+      unf (>= 0.0.5, < 1.0.0)
     erubis (2.7.0)
     execjs (2.7.0)
     factory_girl (4.7.0)
@@ -152,6 +154,13 @@ GEM
     lumberjack (1.0.10)
     mail (2.6.4)
       mime-types (>= 1.16, < 4)
+    mechanize (2.1.1)
+      domain_name (~> 0.5, >= 0.5.1)
+      net-http-digest_auth (~> 1.1, >= 1.1.1)
+      net-http-persistent (~> 2.4, >= 2.4.1)
+      nokogiri (~> 1.4)
+      ntlm-http (~> 0.1, >= 0.1.1)
+      webrobots (~> 0.0, >= 0.0.9)
     method_source (0.8.2)
     mime-types (3.1)
       mime-types-data (~> 3.2015)
@@ -160,6 +169,8 @@ GEM
     minitest (5.9.0)
     multi_json (1.12.1)
     nenv (0.3.0)
+    net-http-digest_auth (1.4)
+    net-http-persistent (2.9.4)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (3.2.0)
@@ -170,6 +181,7 @@ GEM
     notiffany (0.1.1)
       nenv (~> 0.1)
       shellany (~> 0.0)
+    ntlm-http (0.1.1)
     orm_adapter (0.5.0)
     parser (2.3.1.2)
       ast (~> 2.2)
@@ -303,6 +315,9 @@ GEM
       thread_safe (~> 0.1)
     uglifier (3.0.1)
       execjs (>= 0.3.0, < 3)
+    unf (0.1.4)
+      unf_ext
+    unf_ext (0.0.7.2)
     unicode-display_width (1.1.0)
     warden (1.2.6)
       rack (>= 1.0)
@@ -311,6 +326,7 @@ GEM
       activemodel (>= 5.0)
       debug_inspector
       railties (>= 5.0)
+    webrobots (0.1.2)
     websocket (1.2.3)
     websocket-driver (0.6.4)
       websocket-extensions (>= 0.1.0)
@@ -346,6 +362,7 @@ DEPENDENCIES
   jquery-rails
   launchy
   listen (~> 3.0.5)
+  mechanize
   pg
   pry-rails
   pry-rescue
