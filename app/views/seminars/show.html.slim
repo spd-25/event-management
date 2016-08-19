@@ -16,6 +16,9 @@
       label.col-md-4 => Seminar.human_attribute_name(:subtitle)
       .col-md-8 = @seminar.subtitle
     .row
+      label.col-md-4 => Seminar.human_attribute_name(:location)
+      .col-md-8 = link_to @seminar.location.name, @seminar.location
+    .row
       label.col-md-4 => Seminar.human_attribute_name(:teachers)
       .col-md-8
         ul.list-inline

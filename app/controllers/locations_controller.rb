@@ -5,7 +5,7 @@ class LocationsController < ApplicationController
 
   def index
     authorize Location
-    @locations = Location.all
+    @locations = Location.order(:name).all
   end
 
   def show

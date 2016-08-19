@@ -13,8 +13,14 @@
       label.col-md-4 => Location.human_attribute_name(:name)
       .col-md-8 = @location.name
     .row
-      label.col-md-4 => Location.human_attribute_name(:short)
-      .col-md-8 = @location.short
-    .row
+      label.col-md-4 => Location.human_attribute_name(:description)
+      .col-md-8 = @location.description.html_safe
+    /.row
       label.col-md-4 => Location.human_attribute_name(:address)
       .col-md-8 = @location.address
+  .col-md-6 = panel_box_with_table title: 'Seminare' do
+    table.table.table-condensed.table-striped.table-clickable
+      tbody
+        - @location.seminars.order(:title).each do |seminar|
+          tr data={ url: url_for(seminar) }
+            td = seminar.title

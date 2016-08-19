@@ -7,8 +7,11 @@
     => @teacher.name
     small = Teacher.model_name.human
 
-/.row
+.row
   .col-md-6 = panel_box title: Teacher.model_name.human do
+    .row
+      label.col-md-4 => Teacher.human_attribute_name(:title)
+      .col-md-8 = @teacher.title
     .row
       label.col-md-4 => Teacher.human_attribute_name(:first_name)
       .col-md-8 = @teacher.first_name
@@ -16,12 +19,15 @@
       label.col-md-4 => Teacher.human_attribute_name(:last_name)
       .col-md-8 = @teacher.last_name
     .row
-      label.col-md-4 => Teacher.human_attribute_name(:address)
-      .col-md-8 = @teacher.address
-    .row
-      label.col-md-4 => Teacher.human_attribute_name(:contact)
-      .col-md-8 = @teacher.contact
-= panel_box title: 'Seminare' do
-  ul
-    - @teacher.seminars.each do |seminar|
-      li = link_to seminar.title, seminar
+      label.col-md-4 => Teacher.human_attribute_name(:profession)
+      .col-md-8 = @teacher.profession
+  /.col-md-6 = panel_box title: 'Seminare' do
+    ul
+      - @teacher.seminars.each do |seminar|
+        li = link_to seminar.title, seminar
+  .col-md-6 = panel_box_with_table title: 'Seminare' do
+    table.table.table-condensed.table-striped.table-clickable
+      tbody
+        - @teacher.seminars.order(:title).each do |seminar|
+          tr data={ url: url_for(seminar) }
+            td = seminar.title
