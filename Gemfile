@@ -32,6 +32,7 @@ gem 'pundit'
 gem 'simple_form'
 gem 'slim-rails'
 gem 'font-awesome-rails'
+gem 'wysiwyg-rails'
 
 group :development do
   gem 'better_errors'

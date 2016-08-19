@@ -1,4 +1,5 @@
-$(document).on 'ready page:load', ->
+$(document).on 'ready page:load turbolinks:load', ->
+  $('.editor').froalaEditor( language: 'de' )
   $('input.date').each (i, input) ->
     $input = $(input)
     date = $input.val()

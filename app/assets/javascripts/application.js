@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require bootstrap-sprockets
+//= require froala_editor
 //= require form_init
 //= require table
 //= require_tree .
