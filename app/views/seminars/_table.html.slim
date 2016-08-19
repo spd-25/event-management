@@ -1,0 +1,29 @@
+- if seminars.any?
+  - scope = local_assigns[:scope]
+  h4 = Seminar.model_name.human count: 2
+  .table-responsive
+    table.table.table-striped.table-bordered.table-hover.table-clickable
+      thead
+        tr
+          th = Seminar.human_attribute_name(:number)
+          th = Seminar.human_attribute_name(:year)
+          th = Seminar.human_attribute_name(:title)
+          th = Seminar.human_attribute_name(:subtitle)
+          - unless scope == :location
+            th = Seminar.human_attribute_name(:location)
+          th = Seminar.human_attribute_name(:teachers)
+      tbody
+        - seminars.order(:number).each do |seminar|
+          tr data = {url: url_for(seminar)}
+            td.number = seminar.number
+            td = seminar.year
+            td = seminar.title
+            td = seminar.subtitle
+            - unless scope == :location
+              td = seminar.location&.name
+            td
+              ul.list-inline
+                - seminar.teachers.each do |teacher|
+                  li = link_to teacher.name, teacher
+- else
+  p Keine Seminare

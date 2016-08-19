@@ -17,23 +17,5 @@
       - @category.categories.each do |category|
         li = link_to category.name, category
 
-- if @category.seminars.any?
-  h4 = Seminar.model_name.human count: 2
-  .table-responsive
-    table.table.table-striped.table-bordered.table-hover.table-clickable
-      thead
-        tr
-          th = Seminar.human_attribute_name(:number)
-          th = Seminar.human_attribute_name(:title)
-          th = Seminar.human_attribute_name(:subtitle)
-          th = Seminar.human_attribute_name(:teachers)
-      tbody
-        - @category.seminars.each do |seminar|
-          tr data = {url: url_for(seminar)}
-            td.number = seminar.number
-            td = seminar.title
-            td = seminar.subtitle
-            td
-              ul.list-inline
-                - seminar.teachers.each do |teacher|
-                  li = link_to teacher.name, teacher
+= render 'seminars/table', seminars: @category.seminars
+

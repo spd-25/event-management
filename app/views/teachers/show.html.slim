@@ -20,20 +20,4 @@
   label.col-md-2 => Teacher.human_attribute_name(:profession)
   .col-md-10 = @teacher.profession
 
-- if @teacher.seminars.any?
-  h4 = Seminar.model_name.human count: 2
-  .table-responsive
-    table.table.table-striped.table-bordered.table-hover.table-clickable
-      thead
-        tr
-          th = Seminar.human_attribute_name(:number)
-          th = Seminar.human_attribute_name(:title)
-          th = Seminar.human_attribute_name(:subtitle)
-          th = Seminar.human_attribute_name(:location)
-      tbody
-        - @teacher.seminars.each do |seminar|
-          tr data = {url: url_for(seminar)}
-            td.number = seminar.number
-            td = seminar.title
-            td = seminar.subtitle
-            td = seminar.location.name
+= render 'seminars/table', seminars: @teacher.seminars
