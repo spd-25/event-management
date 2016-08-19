@@ -49,16 +49,20 @@ de:
         name: Bezeichnung
         unit_price: Einzelpreis
       location:
-        short: Kürzel
+        seminars: Seminare
       seminar:
+        number: Nummer
         max_attendees: Max. Anzahl Teilnehmer
         subtitle: Untertitel
         benefit: Nutzen
-        categories: Themata
+        categories: Themen
         content: Inhalt
         teachers: Referenten
         location: Veranstaltungsort
         notes: Bemerkungen
+      teacher:
+        profession: Tätigkeit
+        seminars: Seminare
       user:
         login: "Handle"
         email: E-Mail

@@ -9,6 +9,7 @@
   table.table.table-striped.table-bordered.table-hover.table-clickable
     thead
       tr
+        th = Seminar.human_attribute_name(:number)
         th = Seminar.human_attribute_name(:title)
         th = Seminar.human_attribute_name(:subtitle)
         th = Seminar.human_attribute_name(:teachers)
@@ -21,6 +22,7 @@
     tbody
       - @seminars.each do | seminar |
         tr data = {url: url_for(seminar)}
+          td style="white-space: nowrap;" = seminar.number
           td = seminar.title
           td = seminar.subtitle
           td = seminar.teachers.map(&:name).join(', ')

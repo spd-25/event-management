@@ -5,7 +5,7 @@ class SeminarsController < ApplicationController
 
   def index
     authorize Seminar
-    @seminars = Seminar.includes(:teachers).all
+    @seminars = Seminar.order(:number).includes(:teachers).all
   end
 
   def show
@@ -53,6 +53,7 @@ class SeminarsController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def seminar_params
-    params.require(:seminar).permit(:title, :subtitle, :teacher_id, :benefit, :content, :notes, :max_attendees, :location_id)
+    params.require(:seminar).permit(:number, :title, :subtitle, :benefit, :content, :notes,
+                                    :max_attendees, :location_id, teacher_ids: [])
   end
 end

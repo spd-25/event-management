@@ -8,37 +8,38 @@
     small = Seminar.model_name.human
 
 .row
-  .col-md-12 = panel_box title: Seminar.model_name.human do
-    .row
-      label.col-md-4 => Seminar.human_attribute_name(:title)
-      .col-md-8 = @seminar.title
-    .row
-      label.col-md-4 => Seminar.human_attribute_name(:subtitle)
-      .col-md-8 = @seminar.subtitle
-    .row
-      label.col-md-4 => Seminar.human_attribute_name(:location)
-      .col-md-8 = link_to @seminar.location.name, @seminar.location
-    .row
-      label.col-md-4 => Seminar.human_attribute_name(:teachers)
-      .col-md-8
-        ul.list-inline
-          - @seminar.teachers.each do |teacher|
-            li = link_to teacher.name, teacher
-    /.row
-      label.col-md-4 => Seminar.human_attribute_name(:teacher)
-      .col-md-8 = @seminar.teacher
-    .row
-      label.col-md-4 => Seminar.human_attribute_name(:benefit)
-      .col-md-8 = @seminar.benefit&.html_safe
-    .row
-      label.col-md-4 => Seminar.human_attribute_name(:content)
-      .col-md-8 = @seminar.content&.html_safe
-    .row
-      label.col-md-4 => Seminar.human_attribute_name(:notes)
-      .col-md-8 = @seminar.notes&.html_safe
-    .row
-      label.col-md-4 => Seminar.human_attribute_name(:max_attendees)
-      .col-md-8 = @seminar.max_attendees
-    /.row
-      label.col-md-4 => Seminar.human_attribute_name(:location)
-      .col-md-8 = @seminar.location
+  label.col-md-2 => Seminar.human_attribute_name(:number)
+  .col-md-10 = @seminar.number
+.row
+  label.col-md-2 => Seminar.human_attribute_name(:title)
+  .col-md-10 = @seminar.title
+.row
+  label.col-md-2 => Seminar.human_attribute_name(:subtitle)
+  .col-md-10 = @seminar.subtitle
+.row
+  label.col-md-2 => Seminar.human_attribute_name(:location)
+  .col-md-10 = link_to @seminar.location.name, @seminar.location
+.row
+  label.col-md-2 => Seminar.human_attribute_name(:max_attendees)
+  .col-md-10 = @seminar.max_attendees
+.row
+  label.col-md-2 => Seminar.human_attribute_name(:teachers)
+  .col-md-10
+    ul.list-unstyled
+      - @seminar.teachers.each do |teacher|
+        li = link_to teacher.name, teacher
+/.row
+  label.col-md-2 => Seminar.human_attribute_name(:teacher)
+  .col-md-10 = @seminar.teacher
+.row
+  label.col-md-2 => Seminar.human_attribute_name(:benefit)
+  .col-md-10 = @seminar.benefit&.html_safe
+.row
+  label.col-md-2 => Seminar.human_attribute_name(:content)
+  .col-md-10 = @seminar.content&.html_safe
+.row
+  label.col-md-2 => Seminar.human_attribute_name(:notes)
+  .col-md-10 = @seminar.notes&.html_safe
+/.row
+  label.col-md-2 => Seminar.human_attribute_name(:location)
+  .col-md-10 = @seminar.location
