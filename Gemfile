@@ -33,6 +33,7 @@ gem 'simple_form'
 gem 'slim-rails'
 gem 'font-awesome-rails'
 gem 'wysiwyg-rails'
+gem 'select2-rails'
 
 group :development do
   gem 'better_errors'

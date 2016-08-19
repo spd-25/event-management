@@ -15,6 +15,8 @@
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require froala_editor
+//= require select2
+//  require select2-full
 //= require form_init
 //= require table
 //= require_tree .
