@@ -8,7 +8,7 @@
 ul
   - @categories.each do |category|
     li
-      = link_to category.name, category
+      = link_to "#{category.name} (#{category.seminars.count})", category
       ul
         - category.categories.each do |sub_cat|
-          li = link_to sub_cat.name, sub_cat
+          li = link_to "#{sub_cat.name} (#{sub_cat.seminars.count})", sub_cat
