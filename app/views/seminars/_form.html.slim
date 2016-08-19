@@ -1,27 +1,35 @@
 = simple_form_for(@seminar) do |f|
   = f.error_notification
 
-  .row
-    .col-md-6
-      .form-inputs
-        = f.input :title
-        = f.input :subtitle
-        = f.association :teachers, input_html: { class: 'select2' }
-    .col-md-6
-      .form-inputs
-        = f.input :max_attendees
-        = f.association :location
-  .row
-    .col-md-6
-      .form-inputs
-        = f.input :benefit, input_html: { rows: 20, class: 'editor' }
-    .col-md-6
-      .form-inputs
-        = f.input :content, input_html: { rows: 20, class: 'editor'  }
-  .row
-    .col-md-6
-      .form-inputs
-        = f.input :notes, input_html: { rows: 20, class: 'editor'  }
+  div
+    ul.nav.nav-tabs role="tablist"
+      li.active role="presentation"
+        a aria-controls="home" data-toggle="tab" href="#general" role="tab"  Allgemein
+      li role="presentation"
+        a aria-controls="profile" data-toggle="tab" href="#benefit" role="tab"  Nutzen
+      li role="presentation"
+        a aria-controls="messages" data-toggle="tab" href="#content" role="tab"  Inhalt
+      li role="presentation"
+        a aria-controls="settings" data-toggle="tab" href="#notes" role="tab"  Bemerkungen
+    .tab-content
+      #general.tab-pane.active role="tabpanel"
+        .row
+          .col-md-6
+            .form-inputs
+              = f.input :number
+              = f.input :title
+              = f.input :subtitle
+              = f.association :teachers, input_html: { class: 'select2' }
+          .col-md-6
+            .form-inputs
+              = f.input :max_attendees
+              = f.association :location
+      #benefit.tab-pane role="tabpanel"
+        .form-inputs = f.input :benefit, input_html: { class: 'editor' }, label: false
+      #content.tab-pane role="tabpanel"
+        .form-inputs = f.input :content, input_html: { class: 'editor' }, label: false
+      #notes.tab-pane role="tabpanel"
+        .form-inputs = f.input :notes, input_html: { class: 'editor' }, label: false
 
   section.action-buttons
     .col-md-12
