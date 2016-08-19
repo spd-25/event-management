@@ -1,128 +1,115 @@
 module Importer
-  def self.import
-    seminars = fetch_seminars
-    locations = store_locations(seminars)
-    teachers = store_teachers(seminars)
 
-    seminars.each do |sem_orig|
-      attrs = %i(title number content benefit notes due_date price_text time location_text date year)
-      sem_hash            = sem_orig.slice(*attrs)
-      sem_hash[:others]   = sem_orig.except(*attrs)
-      location            = locations[sem_hash[:location_text]]
-      sem_hash[:location] = location if location
-      sem_hash[:teachers] = sem_orig[:teachers].map { |teacher_hash| teachers[teacher_hash] }
+  class PageImport
 
-      begin
-        Seminar.create!(sem_hash)
-      rescue ActiveRecord::RecordInvalid => e
-        puts e.record, e.message, sem_hash
-      end
+    attr_reader :doc, :data
+
+    def initialize(file_name)
+      @file_name = file_name
+      @doc = Nokogiri::HTML(File.open(file_name), nil, 'UTF-8')
+      @data = {}
+      read
+    rescue StandardError => e
+      puts e.message, file_name
     end
-    nil
-  end
 
-  def self.fetch_seminars
-    seminar_links.map do |link|
-      res = fetch_seminar link
-      res[:location_text] = res.delete(:location_text)&.split('<br>')&.join("\n")
-      res[:date_text]     = res.delete(:date)&.join("\n")
-      res
+    def input(name)
+      doc.css("input[name=#{name}]")&.attribute('value')&.value
     end
-  end
 
-  def self.store_locations(seminars)
-    seminars.map { |sem| sem[:location_text] }.uniq.each_with_object({}) do |loc, locations|
-      begin
-        locations[loc] = Location.create! name: loc if loc.present?
-      rescue ActiveRecord::RecordInvalid => e
-        puts e.record, e.message, loc
-      end
+    def select(name)
+      selected = doc.css("select[name=#{name}]>option[selected]")
+      selected.attribute('value')&.value
+    rescue NoMethodError => e
+      nil
+    end
+
+    def checkbox(name)
+      val = doc.css("input[type=checkbox][name=#{name}]")&.attribute('value')&.value
+      return nil if val.nil?
+      val == '1'
+    end
+
+    def textarea(name)
+      doc.css("textarea[name=#{name}]").inner_html
     end
   end
 
-  def self.store_teachers(seminars)
-    teachers = []
-    seminars.each { |sem| teachers += sem[:teachers ]}
-    teachers.uniq.each_with_object({}) do |teacher, teachers_hash|
-      begin
-        teachers_hash[teacher] = Teacher.create! teacher
-      rescue ActiveRecord::RecordInvalid => e
-        puts e.record, e.message, teacher
-      end
-    end
-  end
-
-  def self.seminar_links
-    doc = Nokogiri::HTML(open(url_base + '/katalog.php?jahr=2016'))
-    doc.xpath('//div[@id="textlinks"]//a[contains(@href, "seminar")]/@href').map(&:to_s)
-  end
-
-  def self.url_base
-    'http://buchung.bildungswerk-lsa.de'
-  end
-
-  def self.fetch_seminar(link)
-    link    = '/' + link unless link.starts_with?('/')
-    res     = { link: link, year: 2016 }
-    doc     = Nokogiri::HTML(open(url_base + link))
-    content = doc.css('#textlinks').first
-
-    res[:title]      = content.css('h1.titel').text.strip
-    res[:number]     = content.css('.seminarklammer .seminarnummer').text.strip
-    res[:categories] = content.css('.seminarklammer .seminarthema').text.strip.split(' |').map(&:strip)
-    res.merge parse_blocks(content)
-  end
-
-  def self.parse_blocks(content)
-    content.css('.nutzenklammer').each_with_object({}) do |block, res|
-      key, content = content_for(block)
-      res[key] = content
-    end
-  end
-
-  def self.key_for(block)
-    {
-      'Nutzen'         => :benefit,
-      'Inhalt'         => :content,
-      'Bemerkungen'    => :notes,
-      'Referenten'     => :teachers,
-      'Datum'          => :date,
-      'Zeit'           => :time,
-      'Ort'            => :location_text,
-      'Gebühr'         => :price_text,
-      'Anmeldeschluss' => :due_date,
-    }[block.css('.nutzenueber').text]
-  end
-
-  def self.content_for(block)
-    key = key_for(block)
-    content = case key
-    when :teachers then get_teachers(block)
-    when :date     then get_dates(block)
-    else                get_html(block)
-    end
-    [key, content]
-  end
-
-  def self.get_html(block)
-    content = block.css('.nutzentext')
-    content = block.css('.nutzentext>div') if content.inner_html.include?('nutzentext')
-    content.inner_html.chomp.strip
-  end
-
-  def self.get_teachers(block)
-    block.css('.nutzentext p').map do |teacher|
-      name = teacher.css('strong').text.gsub(' - ', '-').split
-      {
-        title: name[-3],
-        first_name: name[-2],
-        last_name: name[-1],
-        profession: teacher.children[2].to_s
+  class SeminarPage < PageImport
+    def read
+      count_dates      = input('termine').to_i
+      count_teachers   = input('refs').to_i
+      count_categories = input('themen').to_i
+      #  time location_text date year
+      data[:year]        = 2016
+      data[:id]          = input 'id'
+      data[:title]       = input 'titel'
+      data[:subtitle]    = input 'untertitel'
+      data[:number]      = input 'seminarnr0'
+      data[:teacher_ids] = (0...count_teachers).map { |i| select("referent#{i}") }.uniq
+      data[:location_id] = select('ort0')
+      data[:benefit]     = textarea 'nutzen'
+      data[:content]     = textarea 'inhalt'
+      data[:notes]       = textarea 'bemerkungen'
+      data[:price_text]  = textarea 'gebuehr'
+      data[:due_date]    = textarea 'anmeldeschluss'
+      data[:others] = {
+        categories:  (0...count_categories).map { |i| select("thema#{i}") },
+        dates_from:  (0...count_dates).map { |i| input("datumvon#{i}") },
+        dates_to:    (0...count_dates).map { |i| input("datumbis#{i}") },
+        time_from:   input('zeitvon'),
+        time_to:     input('zeitbis'),
+        free_places: checkbox('freieplaetze'),
+        in_calendar: checkbox('inkalender'),
+        locations:   (0...count_dates).map { |i| select("ort#{i}") }
       }
     end
   end
 
-  def self.get_dates(block)
-    block.css('.nutzentext td').children.map(&:text).select(&:present?)
+  class TeacherPage < PageImport
+    def read
+      data[:id]         = input 'id'
+      data[:first_name] = input 'vorname'
+      data[:last_name]  = input 'name'
+      data[:profession] = input 'titel'
+    end
   end
+
+  class LocationPage < PageImport
+    def read
+      data[:id]          = input 'id'
+      data[:name]        = input 'ortkurz'
+      data[:description] = textarea 'ort'
+    end
+  end
+
+  def self.import
+    reset Seminar, Teacher, Location
+    ActiveRecord::Base.logger.level = 1
+    import_files_for Teacher,  TeacherPage,  'ref_*'
+    import_files_for Location, LocationPage, 'ort_*'
+    import_files_for Seminar,  SeminarPage,  'sem_*'
+    ActiveRecord::Base.logger.level = 0
+  end
+
+  def self.reset(*models)
+    models.each do |model|
+      model.delete_all
+      ActiveRecord::Base.connection.reset_pk_sequence!(model.table_name)
+    end
+  end
+
+  def self.import_files_for(model, page, suffix)
+    files = Dir[Rails.root.join('db', 'seeds', suffix)]
+    puts "import of #{files.count} #{model.name} files"
+    files.each { |file| create! model, page.new(file).data, file }
+    puts "#{model.count} #{model.name} imported"
+  end
+
+  def self.create!(model, data, file)
+    model.create! data
+  rescue StandardError => e
+    puts e.message, data, file
+  end
+
 end

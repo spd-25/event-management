@@ -17,10 +17,10 @@ ActiveRecord::Schema.define(version: 20160817202020) do
 
   create_table "locations", force: :cascade do |t|
     t.string   "name"
-    t.string   "short"
-    t.jsonb    "address",    default: "{}"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.text     "description"
+    t.jsonb    "address",     default: "{}"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   create_table "seminars", force: :cascade do |t|
@@ -82,4 +82,6 @@ ActiveRecord::Schema.define(version: 20160817202020) do
   end
 
   add_foreign_key "seminars", "locations"
+  add_foreign_key "seminars_teachers", "seminars", on_delete: :cascade
+  add_foreign_key "seminars_teachers", "teachers", on_delete: :cascade
 end
