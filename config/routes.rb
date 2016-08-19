@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   resources :locations
   resources :teachers
   resources :seminars
+  resources :categories
 end

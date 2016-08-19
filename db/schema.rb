@@ -10,10 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160817202020) do
+ActiveRecord::Schema.define(version: 20160819160411) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "categories", force: :cascade do |t|
+    t.string  "name"
+    t.integer "category_id"
+    t.index ["category_id"], name: "index_categories_on_category_id", using: :btree
+    t.index ["name"], name: "index_categories_on_name", using: :btree
+  end
+
+  create_table "categories_seminars", id: false, force: :cascade do |t|
+    t.integer "category_id", null: false
+    t.integer "seminar_id",  null: false
+    t.index ["category_id"], name: "index_categories_seminars_on_category_id", using: :btree
+    t.index ["seminar_id"], name: "index_categories_seminars_on_seminar_id", using: :btree
+  end
 
   create_table "locations", force: :cascade do |t|
     t.string   "name"
@@ -81,6 +95,9 @@ ActiveRecord::Schema.define(version: 20160817202020) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
+  add_foreign_key "categories", "categories", on_delete: :cascade
+  add_foreign_key "categories_seminars", "categories", on_delete: :cascade
+  add_foreign_key "categories_seminars", "seminars", on_delete: :cascade
   add_foreign_key "seminars", "locations"
   add_foreign_key "seminars_teachers", "seminars", on_delete: :cascade
   add_foreign_key "seminars_teachers", "teachers", on_delete: :cascade

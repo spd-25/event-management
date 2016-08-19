@@ -11,6 +11,10 @@ module IconHelper
     fa_icon 'university', text: text
   end
 
+  # def categories_icon(text = nil)
+  #   fa_icon 'university', text: text
+  # end
+
   def invoice_icon(text = nil)
     fa_icon 'file', text: text
   end

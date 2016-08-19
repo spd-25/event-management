@@ -24,12 +24,14 @@
         = link_to 'Home', root_path, class: 'navbar-brand', tabindex: -1
       .collapse.navbar-collapse
         ul.nav.navbar-nav
+          li class=('active' if controller_name == 'seminars')
+            = link_to seminars_title, seminars_url, tabindex: -1
           li class=('active' if controller_name == 'locations')
             = link_to locations_title, locations_url, tabindex: -1
           li class=('active' if controller_name == 'teachers')
             = link_to teachers_title, teachers_url, tabindex: -1
-          li class=('active' if controller_name == 'seminars')
-            = link_to seminars_title, seminars_url, tabindex: -1
+          li class=('active' if controller_name == 'categories')
+            = link_to categories_title, categories_url, tabindex: -1
           /= navbar_dropdown 'Auswertungen' do
             - Report.in_menu.all.each do |report|
               li

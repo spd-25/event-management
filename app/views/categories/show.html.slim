@@ -1,17 +1,23 @@
-- title_for @location, :name
+- title_for @category, :name
 .page-header
-  = list_link locations_url
-  = edit_link edit_location_url(@location)
-  = delete_link @location
+  = list_link categories_url
+  = edit_link edit_category_url(@category)
+  = delete_link @category
   h2
-    => @location.name
-    small = Location.model_name.human
+    => @category.name
+    small = Category.model_name.human
 
 .row
-  label.col-md-2 => Location.human_attribute_name(:description)
-  .col-md-10 = @location.description.html_safe
+  label.col-md-2 => Category.human_attribute_name(:category)
+  .col-md-10 = link_to @category.category.name, @category.category unless @category.parent?
+.row
+  label.col-md-2 => Category.human_attribute_name(:categories)
+  .col-md-10
+    ul.list-unstyled
+      - @category.categories.each do |category|
+        li = link_to category.name, category
 
-- if @location.seminars.any?
+- if @category.seminars.any?
   h4 = Seminar.model_name.human count: 2
   .table-responsive
     table.table.table-striped.table-bordered.table-hover.table-clickable
@@ -22,9 +28,9 @@
           th = Seminar.human_attribute_name(:subtitle)
           th = Seminar.human_attribute_name(:teachers)
       tbody
-        - @location.seminars.each do |seminar|
+        - @category.seminars.each do |seminar|
           tr data = {url: url_for(seminar)}
-            td.number= seminar.number
+            td.number = seminar.number
             td = seminar.title
             td = seminar.subtitle
             td

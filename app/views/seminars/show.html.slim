@@ -11,6 +11,12 @@
   label.col-md-2 => Seminar.human_attribute_name(:number)
   .col-md-10 = @seminar.number
 .row
+  label.col-md-2 => Seminar.human_attribute_name(:categories)
+  .col-md-10
+    ul.list-unstyled
+      - @seminar.categories.each do |category|
+        li = link_to category.name, category
+.row
   label.col-md-2 => Seminar.human_attribute_name(:title)
   .col-md-10 = @seminar.title
 .row

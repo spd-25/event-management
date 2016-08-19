@@ -54,6 +54,6 @@ class SeminarsController < ApplicationController
   # Only allow a trusted parameter "white list" through.
   def seminar_params
     params.require(:seminar).permit(:number, :title, :subtitle, :benefit, :content, :notes,
-                                    :max_attendees, :location_id, teacher_ids: [])
+                                    :max_attendees, :location_id, teacher_ids: [], category_ids: [])
   end
 end

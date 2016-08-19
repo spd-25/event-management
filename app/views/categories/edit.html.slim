@@ -1,0 +1,7 @@
+- title_for @category, :name
+.page-header
+  h2
+    => @category.name
+    small = Category.model_name.human
+
+= render 'form'

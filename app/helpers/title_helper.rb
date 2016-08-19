@@ -11,4 +11,9 @@ module TitleHelper
     seminars_icon title_for_model(Seminar)
   end
 
+
+  def categories_title
+    title_for_model(Category)
+  end
+
 end

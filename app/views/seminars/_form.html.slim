@@ -6,6 +6,8 @@
       li.active role="presentation"
         a aria-controls="home" data-toggle="tab" href="#general" role="tab"  Allgemein
       li role="presentation"
+        a aria-controls="settings" data-toggle="tab" href="#categories" role="tab"  Themen
+      li role="presentation"
         a aria-controls="profile" data-toggle="tab" href="#benefit" role="tab"  Nutzen
       li role="presentation"
         a aria-controls="messages" data-toggle="tab" href="#content" role="tab"  Inhalt
@@ -14,22 +16,25 @@
     .tab-content
       #general.tab-pane.active role="tabpanel"
         .row
-          .col-md-6
-            .form-inputs
-              = f.input :number
-              = f.input :title
-              = f.input :subtitle
-              = f.association :teachers, input_html: { class: 'select2' }
-          .col-md-6
-            .form-inputs
-              = f.input :max_attendees
-              = f.association :location
+          .col-md-2 = f.input :number
+          .col-md-10
+        = f.input :title
+        = f.input :subtitle
+        .row
+          .col-md-4 = f.association :teachers, input_html: { class: 'select2' }, collection: Teacher.order(:last_name)
+          .col-md-4 = f.association :location, collection: Location.order(:name)
+          .col-md-4 = f.input :max_attendees
+
+      #categories.tab-pane role="tabpanel"
+        .form-inputs
+          = f.association :categories, collection: categories_for_select, as: :check_boxes, label: false
       #benefit.tab-pane role="tabpanel"
         .form-inputs = f.input :benefit, input_html: { class: 'editor' }, label: false
       #content.tab-pane role="tabpanel"
         .form-inputs = f.input :content, input_html: { class: 'editor' }, label: false
       #notes.tab-pane role="tabpanel"
         .form-inputs = f.input :notes, input_html: { class: 'editor' }, label: false
+
 
   section.action-buttons
     .col-md-12

@@ -13,23 +13,15 @@
         th = Seminar.human_attribute_name(:title)
         th = Seminar.human_attribute_name(:subtitle)
         th = Seminar.human_attribute_name(:teachers)
-        th = Seminar.human_attribute_name(:categories)
-        /th = Seminar.human_attribute_name(:benefit)
-        /th = Seminar.human_attribute_name(:content)
-        /th = Seminar.human_attribute_name(:notes)
         th = Seminar.human_attribute_name(:max_attendees)
-        /th = Seminar.human_attribute_name(:location)
     tbody
       - @seminars.each do | seminar |
         tr data = {url: url_for(seminar)}
-          td style="white-space: nowrap;" = seminar.number
+          td.number = seminar.number
           td = seminar.title
           td = seminar.subtitle
-          td = seminar.teachers.map(&:name).join(', ')
-          td = seminar.others['categories'].join(', ')
-          /td = seminar.teacher
-          /td = seminar.benefit
-          /td = seminar.content
-          /td = seminar.notes
+          td
+            ul.list-inline
+              - seminar.teachers.each do |teacher|
+                li = link_to teacher.name, teacher
           td = seminar.max_attendees
-          /td = seminar.location

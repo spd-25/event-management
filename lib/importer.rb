@@ -46,6 +46,7 @@ module Importer
       data[:title]       = input 'titel'
       data[:subtitle]    = input 'untertitel'
       data[:number]      = input 'seminarnr0'
+      data[:category_ids] = (0...count_categories).map { |i| select("thema#{i}") }.uniq
       data[:teacher_ids] = (0...count_teachers).map { |i| select("referent#{i}") }.uniq
       data[:location_id] = select('ort0')
       data[:benefit]     = textarea 'nutzen'
@@ -86,6 +87,7 @@ module Importer
   def self.import
     reset Seminar, Teacher, Location
     ActiveRecord::Base.logger.level = 1
+    import_categories
     import_files_for Teacher,  TeacherPage,  'ref_*'
     import_files_for Location, LocationPage, 'ort_*'
     import_files_for Seminar,  SeminarPage,  'sem_*'
@@ -97,6 +99,10 @@ module Importer
       model.delete_all
       ActiveRecord::Base.connection.reset_pk_sequence!(model.table_name)
     end
+  end
+
+  def self.import_categories
+    puts 'run "rake db:seed"'
   end
 
   def self.import_files_for(model, page, suffix)

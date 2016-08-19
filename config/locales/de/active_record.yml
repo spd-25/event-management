@@ -23,6 +23,9 @@ de:
     zip:            PLZ
   activerecord:
     models:
+      category:
+        one: Thema
+        other: Themen
       invoice:
         one: Rechnung
         other: Rechnungen
@@ -36,6 +39,9 @@ de:
         one: Referent
         other: Referenten
     attributes:
+      category:
+        category: Oberthema
+        categories: Unterthemen
       invoice:
         date: Rechnungsdatum
         number: Rechnungsnummer
