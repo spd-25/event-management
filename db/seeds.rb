@@ -17,7 +17,7 @@ categories = {
     subs: {
       196 => 'Verwaltung und Sekretariat',
       197 => 'Personalführung und Leitungstätigkeit',
-      198 => 'Recht &amp; Betriebswirtschaftliches/Finanzen',
+      198 => 'Recht & Betriebswirtschaftliches/Finanzen',
       199 => 'PC Kurse',
       200 => 'Zertifikatskurse',
     }
@@ -30,7 +30,7 @@ categories = {
     }
   },
   204 => {
-    name: 'Umgang mit Kindern &amp; Jugendlichen',
+    name: 'Umgang mit Kindern & Jugendlichen',
     subs: {
       205 => 'Allgemeines und Grundlagen',
       206 => 'Auffälligkeiten, Störungsbilder, Erkrankungen',
