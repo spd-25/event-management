@@ -32,11 +32,11 @@
         table.table.table-condensed.table-hover.events-table
           thead
             tr
-              th.date Datum
-              th.time von
-              th.time bis
-              th.location Ort
-              th Bemerk.
+              th.date = Event.human_attribute_name :date
+              th.time = Event.human_attribute_name :start_time
+              th.time = Event.human_attribute_name :end_time
+              th.location = Event.human_attribute_name :location
+              th = Event.human_attribute_name :notes
           tbody
             = f.simple_fields_for :events do |event_form|
               - event = event_form.object

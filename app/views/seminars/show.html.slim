@@ -14,11 +14,11 @@
   label.col-md-2 => Seminar.human_attribute_name(:subtitle)
   .col-md-10 = @seminar.subtitle
 .row
-  label.col-md-2 => Seminar.human_attribute_name(:categories)
+  label.col-md-2 => Seminar.human_attribute_name(:teachers)
   .col-md-10
     ul.list-unstyled
-      - @seminar.categories.each do |category|
-        li = link_to category.name, category
+      - @seminar.teachers.each do |teacher|
+        li = link_to teacher.name, teacher
 .row
   label.col-md-2 => Seminar.human_attribute_name(:location)
   .col-md-10 = link_to @seminar.location.name, @seminar.location
@@ -26,14 +26,23 @@
   label.col-md-2 => Seminar.human_attribute_name(:max_attendees)
   .col-md-10 = @seminar.max_attendees
 .row
-  label.col-md-2 => Seminar.human_attribute_name(:teachers)
+  label.col-md-2 => Seminar.human_attribute_name(:categories)
   .col-md-10
     ul.list-unstyled
-      - @seminar.teachers.each do |teacher|
-        li = link_to teacher.name, teacher
-/.row
-  label.col-md-2 => Seminar.human_attribute_name(:teacher)
-  .col-md-10 = @seminar.teacher
+      - @seminar.categories.each do |category|
+        li = link_to category.name, category
+.row
+  label.col-md-2 => Seminar.human_attribute_name(:events)
+  .col-md-10
+    table.table.table-condensed.table-hover.table-striped
+      tbody
+        - @seminar.events.order(:date).each do |event|
+          tr
+            td = ldate event.date
+            td = event.start_time
+            td = event.end_time
+            td = link_to event.location.name, event.location
+            td = event.notes
 .row
   label.col-md-2 => Seminar.human_attribute_name(:benefit)
   .col-md-10 = @seminar.benefit&.html_safe
@@ -43,6 +52,4 @@
 .row
   label.col-md-2 => Seminar.human_attribute_name(:notes)
   .col-md-10 = @seminar.notes&.html_safe
-/.row
-  label.col-md-2 => Seminar.human_attribute_name(:location)
-  .col-md-10 = @seminar.location
+

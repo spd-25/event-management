@@ -41,25 +41,34 @@ module Importer
       count_teachers   = input('refs').to_i
       count_categories = input('themen').to_i
       #  time location_text date year
-      data[:year]        = 2016
-      data[:id]          = input 'id'
-      data[:title]       = input 'titel'
-      data[:subtitle]    = input 'untertitel'
-      data[:number]      = input 'seminarnr0'
+      data[:year]         = 2016
+      data[:id]           = input 'id'
+      data[:title]        = input 'titel'
+      data[:subtitle]     = input 'untertitel'
+      data[:number]       = input 'seminarnr0'
       data[:category_ids] = (0...count_categories).map { |i| select("thema#{i}") }.uniq
-      data[:teacher_ids] = (0...count_teachers).map { |i| select("referent#{i}") }.uniq
-      data[:location_id] = select('ort0')
-      data[:benefit]     = textarea 'nutzen'
-      data[:content]     = textarea 'inhalt'
-      data[:notes]       = textarea 'bemerkungen'
-      data[:price_text]  = textarea 'gebuehr'
-      data[:due_date]    = textarea 'anmeldeschluss'
+      data[:teacher_ids]  = (0...count_teachers).map { |i| select("referent#{i}") }.uniq
+      data[:location_id]  = select('ort0')
+      data[:benefit]      = textarea 'nutzen'
+      data[:content]      = textarea 'inhalt'
+      data[:notes]        = textarea 'bemerkungen'
+      data[:price_text]   = textarea 'gebuehr'
+      data[:due_date]     = textarea 'anmeldeschluss'
+      start_time          = input('zeitvon')
+      end_time            = input('zeitbis')
+      data[:events_attributes] = (0...count_dates).map do |i|
+        start_date  = input("datumvon#{i}")
+        end_date    = input("datumbis#{i}")
+        end_date    = '' if start_date == end_date
+        location_id = select("ort#{i}")
+        { date: start_date, start_time: start_time, end_time: end_time, notes: end_date, location_id: location_id }
+      end
       data[:others] = {
-        categories:  (0...count_categories).map { |i| select("thema#{i}") },
-        dates_from:  (0...count_dates).map { |i| input("datumvon#{i}") },
-        dates_to:    (0...count_dates).map { |i| input("datumbis#{i}") },
-        time_from:   input('zeitvon'),
-        time_to:     input('zeitbis'),
+        # categories:  (0...count_categories).map { |i| select("thema#{i}") },
+        # dates_from:  (0...count_dates).map { |i| input("datumvon#{i}") },
+        # dates_to:    (0...count_dates).map { |i| input("datumbis#{i}") },
+        # time_from:   input('zeitvon'),
+        # time_to:     input('zeitbis'),
         free_places: checkbox('freieplaetze'),
         in_calendar: checkbox('inkalender'),
         locations:   (0...count_dates).map { |i| select("ort#{i}") }

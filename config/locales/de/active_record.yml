@@ -9,23 +9,30 @@ de:
     description:    Beschreibung
     email:          E-Mail
     end_date:       Ende
+    end_time:       bis
     first_name:     Vorname
     gender:         Geschlecht
     last_name:      Nachname
     mobile:         Mobil
+    notes:          Bemerkungen
     phone:          Telefon
     price:          Preis
     salut:          Anrede
     start_date:     Beginn
+    start_time:     von
     street:         Straße/Nr.
     title:          Titel
     updated_at:     Bearbeitet
     zip:            PLZ
+    location:       Veranstaltungsort
   activerecord:
     models:
       category:
         one: Thema
         other: Themen
+      event:
+        one: Termin
+        other: Termine
       invoice:
         one: Rechnung
         other: Rechnungen
@@ -67,6 +74,7 @@ de:
         location: Veranstaltungsort
         notes: Bemerkungen
         year: Jahr
+        events: Termine
       teacher:
         profession: Tätigkeit
         seminars: Seminare

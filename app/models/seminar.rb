@@ -9,7 +9,7 @@ class Seminar < ApplicationRecord
                                 reject_if: lambda { |attr| attr['date'].blank? }
 
   validates :number, :title, presence: true
-  validate :validate_events
+  # validate :validate_events
 
   def name
     title
