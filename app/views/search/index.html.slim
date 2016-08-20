@@ -1,0 +1,6 @@
+- content_for :title, t('.title')
+.page-header
+  h2 #{@result.count} Treffer für Suche nach "#{@query}"
+ul.list-group
+  - @result.each do |result|
+    li.list-group-item = link_to display_name_for(result), result

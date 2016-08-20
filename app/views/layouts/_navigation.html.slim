@@ -47,11 +47,11 @@
             li class=('active' if controller_name == 'sellers')
               = link_to title_for_model(Seller), sellers_url
 
-        /ul.nav.navbar-nav.navbar-right
+        ul.nav.navbar-nav.navbar-right
           li
             form.navbar-form.navbar-right role="search" action=search_url
               .form-group
                 input.form-control type="text" placeholder="Suche" name="q" value=@query autofocus=(params[:controller] == 'search') tabindex="-1"
-          = navbar_dropdown current_user.username do
+          /= navbar_dropdown current_user.username do
             li = link_to 'Passwort ändern', edit_user_registration_url(current_user.username)
             li = link_to 'Abmelden', destroy_user_session_path, method: 'delete', title: current_user.username
