@@ -188,6 +188,10 @@ GEM
     parser (2.3.1.2)
       ast (~> 2.2)
     pg (0.18.4)
+    pg_search (1.0.6)
+      activerecord (>= 3.1)
+      activesupport (>= 3.1)
+      arel
     pkg-config (1.1.7)
     powerpack (0.1.1)
     pry (0.10.4)
@@ -372,6 +376,7 @@ DEPENDENCIES
   listen (~> 3.0.5)
   mechanize
   pg
+  pg_search
   pry-rails
   pry-rescue
   puma (~> 3.0)
