@@ -1,4 +1,4 @@
-$(document).on 'ready page:load turbolinks:load', ->
+$(document).on 'turbolinks:load', ->
   $('table.table-clickable > tbody > tr').click (el) =>
     url = $(el.currentTarget).data().url
     Turbolinks.visit(url) if url?

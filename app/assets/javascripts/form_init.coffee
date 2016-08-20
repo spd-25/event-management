@@ -1,4 +1,4 @@
-$(document).on 'ready page:load turbolinks:load', ->
+$(document).on 'turbolinks:load', ->
   $('.editor').froalaEditor( language: 'de' )
   $('input.date').each (i, input) ->
     $input = $(input)
@@ -22,5 +22,6 @@ $(document).on 'ready page:load turbolinks:load', ->
     $input = $(input)
     placeholder = $input.data().placeholder
     $input.select2
+      width: '100%'
       theme: "bootstrap"
       placeholder: placeholder
