@@ -8,6 +8,8 @@
       li role="presentation"
         a aria-controls="settings" data-toggle="tab" href="#categories" role="tab"  Themen
       li role="presentation"
+        a aria-controls="settings" data-toggle="tab" href="#events" role="tab"  Termine
+      li role="presentation"
         a aria-controls="profile" data-toggle="tab" href="#benefit" role="tab"  Nutzen
       li role="presentation"
         a aria-controls="messages" data-toggle="tab" href="#content" role="tab"  Inhalt
@@ -21,12 +23,30 @@
         = f.input :subtitle
         .row
           .col-md-4 = f.association :teachers, input_html: { class: 'select2' }, collection: Teacher.order(:last_name)
-          .col-md-4 = f.association :location, collection: Location.order(:name)
+          .col-md-4 = f.association :location, collection: Location.order(:name), input_html: { class: 'select2' }
           .col-md-4 = f.input :max_attendees
 
       #categories.tab-pane role="tabpanel"
-        .form-inputs
-          = f.association :categories, collection: categories_for_select, as: :check_boxes, label: false
+        = f.association :categories, collection: categories_for_select, as: :check_boxes, label: false
+      #events.tab-pane role="tabpanel"
+        table.table.table-condensed.table-hover.events-table
+          thead
+            tr
+              th.date Datum
+              th.time von
+              th.time bis
+              th.location Ort
+              th Bemerk.
+          tbody
+            = f.simple_fields_for :events do |event_form|
+              - event = event_form.object
+              tr class=('hidden' if event.new_record?)
+                td = event_form.input :date, label: false, as: :string, input_html: { class: 'date' }
+                td = event_form.input :start_time, label: false
+                td = event_form.input :end_time, label: false
+                td = event_form.association :location, collection: Location.order(:name), input_html: { class: 'select2' }, label: false
+                td = event_form.input :notes, label: false
+        = link_to fa_icon('plus'), '#', class: 'add-event btn btn-default', tabindex: -1
       #benefit.tab-pane role="tabpanel"
         .form-inputs = f.input :benefit, input_html: { class: 'editor' }, label: false
       #content.tab-pane role="tabpanel"
@@ -40,3 +60,29 @@
       .pull-right
         => link_to t(:cancel), 'javascript: window.history.back();', class: 'btn btn-default'
         = f.submit t(:save), class: 'btn btn-primary'
+
+coffee:
+  $ ->
+    addButtonClicked = (event) ->
+      event.preventDefault()
+      console.log $('table.events-table tbody tr.hidden').first()
+      $('table.events-table tbody tr.hidden').first().removeClass('hidden')
+    $('.add-event').off 'click', addButtonClicked
+    $('.add-event').on 'click', addButtonClicked
+
+sass:
+  table.events-table
+    tbody>tr>td
+      padding: 3px
+      /*input, select*/
+        /*border: none*/
+        /*box-shadow: none*/
+      p
+        margin: 8px 0 3px
+    th
+      &.date
+        width: 15%
+      &.time
+        width: 10%
+      &.location
+        width: 30%
