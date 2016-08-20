@@ -7,15 +7,17 @@
     => @category.name
     small = Category.model_name.human
 
-.row
-  label.col-md-2 => Category.human_attribute_name(:category)
-  .col-md-10 = link_to @category.category.name, @category.category unless @category.parent?
-.row
-  label.col-md-2 => Category.human_attribute_name(:categories)
-  .col-md-10
-    ul.list-unstyled
-      - @category.categories.each do |category|
-        li = link_to category.name, category
+- if @category.parent?
+  .row
+    label.col-md-2 => Category.human_attribute_name(:categories)
+    .col-md-10
+      ul.list-unstyled
+        - @category.categories.each do |category|
+          li = link_to "#{category.name} (#{category.seminars.count})", category
+- else
+  .row
+    label.col-md-2 => Category.human_attribute_name(:category)
+    .col-md-10 = link_to "#{@category.category.name} (#{@category.category.seminars.count})", @category.category
 
 = render 'seminars/table', seminars: @category.seminars
 
