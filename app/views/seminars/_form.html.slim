@@ -17,8 +17,7 @@
       #general.tab-pane.active role="tabpanel"
         .row
           .col-md-2 = f.input :number
-          .col-md-10
-        = f.input :title
+          .col-md-10 = f.input :title
         = f.input :subtitle
         .row
           .col-md-4 = f.association :teachers, input_html: { class: 'select2' }, collection: Teacher.order(:last_name)

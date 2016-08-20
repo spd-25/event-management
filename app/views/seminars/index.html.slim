@@ -4,5 +4,5 @@
   h2
     => @seminars.count
     = Seminar.model_name.human count: @seminars.count
-      
+
 = render 'table', seminars: @seminars

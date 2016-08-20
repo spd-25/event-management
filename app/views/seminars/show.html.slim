@@ -4,24 +4,21 @@
   = edit_link edit_seminar_url(@seminar)
   = delete_link @seminar
   h2
-    => @seminar.name
+    => @seminar.number
     small = Seminar.model_name.human
 
-.row
-  label.col-md-2 => Seminar.human_attribute_name(:number)
-  .col-md-10 = @seminar.number
-.row
-  label.col-md-2 => Seminar.human_attribute_name(:categories)
-  .col-md-10
-    ul.list-unstyled
-      - @seminar.categories.each do |category|
-        li = link_to category.name, category
 .row
   label.col-md-2 => Seminar.human_attribute_name(:title)
   .col-md-10 = @seminar.title
 .row
   label.col-md-2 => Seminar.human_attribute_name(:subtitle)
   .col-md-10 = @seminar.subtitle
+.row
+  label.col-md-2 => Seminar.human_attribute_name(:categories)
+  .col-md-10
+    ul.list-unstyled
+      - @seminar.categories.each do |category|
+        li = link_to category.name, category
 .row
   label.col-md-2 => Seminar.human_attribute_name(:location)
   .col-md-10 = link_to @seminar.location.name, @seminar.location
