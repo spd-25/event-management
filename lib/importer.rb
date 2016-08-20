@@ -100,6 +100,7 @@ module Importer
     import_files_for Teacher,  TeacherPage,  'ref_*'
     import_files_for Location, LocationPage, 'ort_*'
     import_files_for Seminar,  SeminarPage,  'sem_*'
+    rebuild_search_index
     ActiveRecord::Base.logger.level = 0
   end
 
@@ -125,6 +126,12 @@ module Importer
     model.create! data
   rescue StandardError => e
     puts e.message, data, file
+  end
+
+  def self.rebuild_search_index
+    PgSearch::Multisearch.rebuild(Teacher)
+    PgSearch::Multisearch.rebuild(Location)
+    PgSearch::Multisearch.rebuild(Seminar)
   end
 
 end

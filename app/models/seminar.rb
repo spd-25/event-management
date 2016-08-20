@@ -1,4 +1,6 @@
 class Seminar < ApplicationRecord
+  include PgSearch
+
   has_and_belongs_to_many :teachers
   has_and_belongs_to_many :categories
   belongs_to :location, optional: true
@@ -10,6 +12,8 @@ class Seminar < ApplicationRecord
 
   validates :number, :title, presence: true
   # validate :validate_events
+
+  multisearchable against: [:number, :title, :subtitle, :benefit, :content, :notes, :due_date, :price_text]
 
   def name
     title

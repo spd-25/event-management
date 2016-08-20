@@ -74,3 +74,5 @@ categories.each do |id, cat|
     end
   end
 end
+
+PgSearch::Multisearch.rebuild(Category)
