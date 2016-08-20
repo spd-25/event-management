@@ -34,6 +34,7 @@ gem 'slim-rails'
 gem 'font-awesome-rails'
 gem 'wysiwyg-rails'
 gem 'select2-rails'
+gem 'bootstrap-datepicker-rails'
 
 group :development do
   gem 'better_errors'

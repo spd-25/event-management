@@ -17,6 +17,7 @@
 //= require froala_editor
 //= require select2
 //  require select2-full
+//= require bootstrap-datepicker
 //= require form_init
 //= require table
 //= require_tree .
