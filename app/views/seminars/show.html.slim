@@ -32,7 +32,7 @@
       - @seminar.categories.each do |category|
         li = link_to category.name, category
 .row
-  label.col-md-2 => Seminar.human_attribute_name(:events)
+  label.col-md-2 #{Seminar.human_attribute_name(:events)} (#{@seminar.events.count})
   .col-md-10
     table.table.table-condensed.table-hover.table-striped
       tbody

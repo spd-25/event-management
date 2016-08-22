@@ -11,6 +11,7 @@
           th = Seminar.human_attribute_name(:subtitle)
           - unless scope == :location
             th = Seminar.human_attribute_name(:location)
+          th = Seminar.human_attribute_name(:events)
           th = Seminar.human_attribute_name(:teachers)
       tbody
         - seminars.order(:number).each do |seminar|
@@ -21,6 +22,7 @@
             td = seminar.subtitle
             - unless scope == :location
               td = seminar.location&.name
+            td = seminar.events.count
             td
               ul.list-inline
                 - seminar.teachers.each do |teacher|
