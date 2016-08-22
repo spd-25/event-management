@@ -7,10 +7,6 @@ module Importer
     def initialize(file_name)
       @file_name = file_name
       @doc = Nokogiri::HTML(File.open(file_name), nil, 'UTF-8')
-      @data = {}
-      read
-    rescue StandardError => e
-      puts e.message, file_name
     end
 
     def input(name)
@@ -36,60 +32,77 @@ module Importer
   end
 
   class SeminarPage < PageImport
-    def read
-      count_dates      = input('termine').to_i
-      count_teachers   = input('refs').to_i
-      count_categories = input('themen').to_i
-      #  time location_text date year
-      data[:year]         = 2016
-      data[:id]           = input 'id'
-      data[:title]        = input 'titel'
-      data[:subtitle]     = input 'untertitel'
-      data[:number]       = input 'seminarnr0'
-      data[:category_ids] = (0...count_categories).map { |i| select("thema#{i}") }.uniq
-      data[:teacher_ids]  = (0...count_teachers).map { |i| select("referent#{i}") }.uniq
-      data[:location_id]  = select('ort0')
-      data[:benefit]      = textarea 'nutzen'
-      data[:content]      = textarea 'inhalt'
-      data[:notes]        = textarea 'bemerkungen'
-      data[:price_text]   = textarea 'gebuehr'
-      data[:due_date]     = textarea 'anmeldeschluss'
+    def to_h
+      {
+        year:              2016,
+        id:                input('id'),
+        title:             input('titel'),
+        subtitle:          input('untertitel'),
+        number:            input('seminarnr0'),
+        category_ids:      category_ids,
+        teacher_ids:       teacher_ids,
+        location_id:       select('ort0'),
+        benefit:           textarea('nutzen'),
+        content:           textarea('inhalt'),
+        notes:             textarea('bemerkungen'),
+        price_text:        textarea('gebuehr'),
+        due_date:          textarea('anmeldeschluss'),
+        events_attributes: event_attributes,
+        others:            others,
+      }
+    end
+
+    def teacher_ids
+      (0...input('refs').to_i).map { |i| select("referent#{i}") }.uniq
+    end
+
+    def category_ids
+      (0...input('themen').to_i).map { |i| select("thema#{i}") }.uniq
+    end
+
+    def event_attributes
+      count_dates = input('termine').to_i
+      res = []
       start_time          = input('zeitvon')
       end_time            = input('zeitbis')
-      data[:events_attributes] = (0...count_dates).map do |i|
+      (0...count_dates).each do |i|
+        location_id = select("ort#{i}")
         start_date  = input("datumvon#{i}")
         end_date    = input("datumbis#{i}")
-        end_date    = '' if start_date == end_date
-        location_id = select("ort#{i}")
-        { date: start_date, start_time: start_time, end_time: end_time, notes: end_date, location_id: location_id }
+        if start_date.present?
+          begin
+            (Date.parse(start_date)..Date.parse(end_date)).each do |date|
+              res << { date: date, start_time: start_time, end_time: end_time,
+                       notes: end_date, location_id: location_id }
+            end
+          rescue ArgumentError => e
+            res << { start_time: start_time, end_time: end_time, notes: end_date, location_id: location_id }
+            puts "Could not parse date #{input("datumvon#{i}")} or #{input("datumbis#{i}")} for seminar #{input 'seminarnr0'}"
+          end
+        else
+          res << { start_time: start_time, end_time: end_time, notes: end_date, location_id: location_id }
+        end
       end
-      data[:others] = {
-        # categories:  (0...count_categories).map { |i| select("thema#{i}") },
-        # dates_from:  (0...count_dates).map { |i| input("datumvon#{i}") },
-        # dates_to:    (0...count_dates).map { |i| input("datumbis#{i}") },
-        # time_from:   input('zeitvon'),
-        # time_to:     input('zeitbis'),
-        free_places: checkbox('freieplaetze'),
-        in_calendar: checkbox('inkalender'),
-        locations:   (0...count_dates).map { |i| select("ort#{i}") }
-      }
+      res
+    end
+
+    def others
+      { free_places: checkbox('freieplaetze'), in_calendar: checkbox('inkalender') }
     end
   end
 
   class TeacherPage < PageImport
-    def read
-      data[:id]         = input 'id'
-      data[:first_name] = input 'vorname'
-      data[:last_name]  = input 'name'
-      data[:profession] = input 'titel'
+    def to_h
+      {
+        id:         input('id'),      profession: input('titel'),
+        first_name: input('vorname'), last_name:  input('name'),
+      }
     end
   end
 
   class LocationPage < PageImport
-    def read
-      data[:id]          = input 'id'
-      data[:name]        = input 'ortkurz'
-      data[:description] = textarea 'ort'
+    def to_h
+      { id: input('id'), name: input('ortkurz'), description: textarea('ort') }
     end
   end
 
@@ -118,14 +131,14 @@ module Importer
   def self.import_files_for(model, page, suffix)
     files = Dir[Rails.root.join('db', 'seeds', suffix)]
     puts "import of #{files.count} #{model.name} files"
-    files.each { |file| create! model, page.new(file).data, file }
+    files.each do |file|
+      begin
+        model.create! page.new(file).to_h
+      rescue StandardError => e
+        puts e.message, file
+      end
+    end
     puts "#{model.count} #{model.name} imported"
-  end
-
-  def self.create!(model, data, file)
-    model.create! data
-  rescue StandardError => e
-    puts e.message, data, file
   end
 
   def self.rebuild_search_index
