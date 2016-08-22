@@ -7,13 +7,27 @@
       h4 = t('.error')
 
   section
-    .col-md-6
+    .col-md-4
       .form-inputs
+        = f.input :title
         = f.input :first_name
         = f.input :last_name
-        = f.input :title
+        = f.input :profession, as: :text, input_html: { rows: 5 }
         /= f.input :address
         /= f.input :contact
+
+    .col-md-4
+      = f.simple_fields_for :address, f.object.address do |a|
+        = a.input :street
+        = a.input :zip
+        = a.input :city
+
+    .col-md-4
+      = f.simple_fields_for :contact, f.object.contact do |c|
+        = c.input :email, as: :email
+        = c.input :phone, as: :tel
+        = c.input :fax, as: :tel
+        = c.input :mobile, as: :tel
 
   section.action-buttons
     .col-md-12

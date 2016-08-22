@@ -8,6 +8,10 @@ class Teacher < ApplicationRecord
 
   scope :active, -> { where(id: Seminar.joins(:teachers).select('seminars_teachers.teacher_id')) }
 
+
+  acts_as_addressable
+  acts_as_contactable
+
   multisearchable against: [:title, :first_name, :last_name, :profession]
 
   def name

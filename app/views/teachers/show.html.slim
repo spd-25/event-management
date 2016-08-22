@@ -7,17 +7,11 @@
     => @teacher.name
     small = Teacher.model_name.human
 
-.row
-  label.col-md-2 => Teacher.human_attribute_name(:title)
-  .col-md-10 = @teacher.title
-.row
-  label.col-md-2 => Teacher.human_attribute_name(:first_name)
-  .col-md-10 = @teacher.first_name
-.row
-  label.col-md-2 => Teacher.human_attribute_name(:last_name)
-  .col-md-10 = @teacher.last_name
-.row
-  label.col-md-2 => Teacher.human_attribute_name(:profession)
-  .col-md-10 = @teacher.profession
+
+  .row
+    .col-md-4
+      p = @teacher.profession
+    .col-md-4 = render @teacher.address
+    .col-md-4 = render @teacher.contact
 
 = render 'seminars/table', seminars: @teacher.seminars

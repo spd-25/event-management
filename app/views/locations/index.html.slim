@@ -10,9 +10,11 @@
     thead
       tr
         th = Location.human_attribute_name(:name)
+        th = Location.human_attribute_name(:city)
         th = Location.human_attribute_name(:seminars)
     tbody
       - @locations.each do | location |
         tr data = {url: url_for(location)}
           td = location.name
+          td = location.city
           td = location.seminars.count

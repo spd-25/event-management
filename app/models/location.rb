@@ -6,6 +6,8 @@ class Location < ApplicationRecord
 
   validates :name, presence: true
 
+  acts_as_addressable
+
   multisearchable against: [:name, :description, :address]
 
 end

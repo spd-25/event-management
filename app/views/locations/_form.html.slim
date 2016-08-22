@@ -8,6 +8,11 @@
         = f.input :description, input_html: { class: 'editor' }
         /= f.input :address
 
+    .col-md-6
+      = f.simple_fields_for :address, f.object.address do |a|
+        = a.input :street
+        = a.input :zip
+        = a.input :city
   section.action-buttons
     .col-md-12
       .pull-right

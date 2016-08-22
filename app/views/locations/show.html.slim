@@ -7,8 +7,9 @@
     => @location.name
     small = Location.model_name.human
 
-.row
-  label.col-md-2 => Location.human_attribute_name(:description)
-  .col-md-10 = @location.description.html_safe
+  .row
+    .col-md-6
+      p = @location.description.html_safe
+    .col-md-6 = render @location.address
 
 = render 'seminars/table', seminars: @location.seminars, scope: :location

@@ -1,0 +1,27 @@
+/= panel_box title: 'Kontaktdaten' do
+h4 Kontaktdaten
+.row
+  .col-md-5: label> Ansprechpartner
+  .col-md-7 = contact.person
+.row
+  .col-md-5: label> Adresse
+  address.col-md-7
+    = link_to address.gmaps_search_link, target: '_blank' do
+      = address.street
+      br
+      => address.zip
+      = address.city
+.row
+  .col-md-3: label> E-Mail
+  .col-md-9 = contact.email
+.row
+  .col-md-3: label> Telefon
+  .col-md-9 = contact.phone
+.row
+  .col-md-3: label> Fax
+  .col-md-9 = contact.fax
+.row
+  .col-md-3: label> Homepage
+  .col-md-9
+    - if contact.homepage.present?
+      = link_to contact.homepage

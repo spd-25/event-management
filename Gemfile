@@ -36,6 +36,7 @@ gem 'font-awesome-rails'
 gem 'wysiwyg-rails'
 gem 'select2-rails'
 gem 'bootstrap-datepicker-rails'
+gem 'virtus'
 
 group :development do
   gem 'better_errors'
