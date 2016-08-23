@@ -1,5 +1,5 @@
 set :application, 'events'
-set :repo_url, 'git@github.com:quaas-gas/qg.git'
+set :repo_url, 'git@github.com:fs-sozialwesen/event-management'
 
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
 
