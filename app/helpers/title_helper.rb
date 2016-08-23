@@ -15,4 +15,8 @@ module TitleHelper
     categories_icon title_for_model(Category)
   end
 
+  def users_title
+    users_icon title_for_model(User)
+  end
+
 end

@@ -15,6 +15,10 @@ module IconHelper
     fa_icon 'tags', text: text
   end
 
+  def users_icon(text = nil)
+    fa_icon 'users', text: text
+  end
+
   def invoice_icon(text = nil)
     fa_icon 'file', text: text
   end

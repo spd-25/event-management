@@ -1,0 +1,21 @@
+- title_for User
+.page-header
+  = new_link new_user_path
+  h2
+    => @users.count
+    = User.model_name.human count: @users.count
+
+.table-responsive
+  table.table.table-striped.table-bordered.table-hover.table-clickable
+    thead
+      tr
+        - %i(name username email role last_sign_in_at).each do |attr|
+          th = User.human_attribute_name(attr)
+    tbody
+      - @users.each do |user|
+        tr data = { url: url_for(user) }
+          td = user.name
+          td = user.username
+          td = user.email
+          td = t("users.roles.#{user.role}")
+          td = ldate user.last_sign_in_at

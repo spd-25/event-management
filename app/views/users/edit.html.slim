@@ -1,0 +1,7 @@
+- title_for @user, :name
+.page-header
+  h2
+    => @user.name
+    small = User.model_name.human
+
+= render 'form'

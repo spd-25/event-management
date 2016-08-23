@@ -38,6 +38,10 @@ de:
   search:
     index:
       title: Suchergebnisse
+  users:
+    roles:
+      admin: Admin
+      user: Benutzer
   delete: Löschen
   edit: Bearbeiten
   list: Liste
