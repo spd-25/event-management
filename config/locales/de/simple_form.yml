@@ -20,7 +20,3 @@ de:
         email: E-Mail-Adresse
         mobile: Mobiltelefon
         phone: Telefon
-    hints:
-      user:
-        username: 'User name to sign in.'
-        password: 'No special characters, please.'
