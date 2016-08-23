@@ -2,6 +2,7 @@
 .page-header
   = list_link seminars_url
   = edit_link edit_seminar_url(@seminar)
+  = copy_link new_seminar_url(copy_from: @seminar.id)
   = delete_link @seminar
   h2
     => @seminar.number
@@ -13,6 +14,9 @@
 .row
   label.col-md-2 => Seminar.human_attribute_name(:subtitle)
   .col-md-10 = @seminar.subtitle
+.row
+  label.col-md-2 => Seminar.human_attribute_name(:year)
+  .col-md-10 = @seminar.year
 .row
   label.col-md-2 => Seminar.human_attribute_name(:teachers)
   .col-md-10

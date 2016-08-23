@@ -20,7 +20,10 @@
         .row
           .col-md-2 = f.input :number
           .col-md-10 = f.input :title
-        = f.input :subtitle
+        .row
+          - current_year = Date.current.year
+          .col-md-2 = f.input :year, collection: ((current_year - 2)..(current_year + 10)).to_a, include_blank: false
+          .col-md-10 = f.input :subtitle
         .row
           .col-md-4 = f.association :teachers, input_html: { class: 'select2' }, collection: Teacher.order(:last_name)
           .col-md-4 = f.association :location, collection: Location.order(:name), input_html: { class: 'select2' }

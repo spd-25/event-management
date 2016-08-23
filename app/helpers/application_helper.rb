@@ -71,6 +71,10 @@ module ApplicationHelper
     link_to fa_icon('pencil', text: t(:edit)), url, class: 'btn btn-primary'
   end
 
+  def copy_link(url)
+    link_to fa_icon('clone', text: t(:copy)), url, class: 'btn btn-default'
+  end
+
   def pdf_link(url)
     link_to fa_icon('file-pdf-o', text: 'PDF'), url, class: 'btn btn-default', target: '_blank'
   end

@@ -11,6 +11,7 @@ class Seminar < ApplicationRecord
                                 reject_if: lambda { |attr| attr['date'].blank? }
 
   validates :number, :title, presence: true
+  validates :number, uniqueness: true
   # validate :validate_events
 
   multisearchable against: [:number, :title, :subtitle, :benefit, :content, :notes, :due_date, :price_text]

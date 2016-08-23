@@ -5,7 +5,7 @@ class SeminarsController < ApplicationController
 
   def index
     authorize Seminar
-    @seminars = Seminar.order(:number).includes(:teachers).all
+    @seminars = Seminar.order(:number).includes(:teachers, :events, :location).all
   end
 
   def show
@@ -13,7 +13,12 @@ class SeminarsController < ApplicationController
 
   def new
     authorize Seminar
-    @seminar = Seminar.new
+    attrs = {}
+    if params[:copy_from].present? && (sem = Seminar.find(params[:copy_from]))
+      attrs = sem.attributes.except('id').merge(categories: sem.categories, teachers: sem.teachers)
+    end
+    @seminar = Seminar.new attrs
+    10.times { @seminar.events.build }
   end
 
   def edit
@@ -27,6 +32,7 @@ class SeminarsController < ApplicationController
     if @seminar.save
       redirect_to @seminar, notice: t(:created, model: Seminar.model_name.human)
     else
+      10.times { @seminar.events.build }
       render :new
     end
   end
@@ -35,6 +41,7 @@ class SeminarsController < ApplicationController
     if @seminar.update seminar_params
       redirect_to @seminar, notice: t(:updated, model: Seminar.model_name.human)
     else
+      10.times { @seminar.events.build }
       render :edit
     end
   end
@@ -54,7 +61,7 @@ class SeminarsController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def seminar_params
-    params.require(:seminar).permit(:number, :title, :subtitle, :benefit, :content, :notes,
+    params.require(:seminar).permit(:number, :year, :title, :subtitle, :benefit, :content, :notes,
                                     :max_attendees, :location_id, teacher_ids: [], category_ids: [],
                                     events_attributes: [:id, :location_id, :date, :start_time, :end_time, :notes])
   end
