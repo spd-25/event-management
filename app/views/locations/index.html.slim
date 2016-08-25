@@ -1,9 +1,7 @@
-- page_title_for Location
+- page_title_for @locations
 .page-header
   = new_link new_location_path
-  h2
-    => @locations.count
-    = Location.model_name.human count: @locations.count
+  h2 = title_for @locations
 
 .table-responsive
   table.table.table-striped.table-bordered.table-hover.table-clickable

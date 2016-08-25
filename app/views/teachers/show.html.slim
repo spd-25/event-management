@@ -3,10 +3,7 @@
   = list_link teachers_url
   = edit_link edit_teacher_url(@teacher)
   = delete_link @teacher
-  h2
-    => @teacher.name
-    small = Teacher.model_name.human
-
+  h2 = title_for @teacher
 
   .row
     .col-md-4

@@ -1,7 +1,5 @@
 - page_title_for @teacher, :name
 .page-header
-  h2
-    => @teacher.name
-    small = Teacher.model_name.human
+  h2 = title_for @teacher
 
 = render 'form'

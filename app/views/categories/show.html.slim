@@ -3,9 +3,7 @@
   = list_link categories_url
   = edit_link edit_category_url(@category)
   = delete_link @category
-  h2
-    => @category.name
-    small = Category.model_name.human
+  h2 = title_for @category
 
 - if @category.parent?
   .row

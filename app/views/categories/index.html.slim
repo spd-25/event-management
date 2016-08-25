@@ -1,9 +1,7 @@
-- page_title_for Category
+- page_title_for @categories
 .page-header
   = new_link new_category_path
-  h2
-    => Category.count
-    = Category.model_name.human count: @categories.count
+  h2 = title_for @categories, count: Category.count
 
 ul
   - @categories.each do |category|

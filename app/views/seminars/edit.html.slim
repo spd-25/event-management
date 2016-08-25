@@ -1,7 +1,5 @@
 - page_title_for @seminar, :number
 .page-header
-  h2
-    => @seminar.number
-    small = Seminar.model_name.human
+  h2 = title_for @seminar, :number
 
 = render 'form'

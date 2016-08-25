@@ -3,9 +3,7 @@
   = list_link locations_url
   = edit_link edit_location_url(@location)
   = delete_link @location
-  h2
-    => @location.name
-    small = Location.model_name.human
+  h2 = title_for @location
 
   .row
     .col-md-6

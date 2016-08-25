@@ -17,6 +17,7 @@ de:
     new:
       title: Veranstaltungsort anlegen
   teachers:
+    icon: graduation-cap
     single:
       title: "%{id}"
     form:
@@ -24,6 +25,8 @@ de:
     new:
       title: Referent anlegen
   seminars:
+    icon: university
+    icon: map-marker
     single:
       title: "%{id}"
     form:
@@ -39,6 +42,7 @@ de:
     index:
       title: Suchergebnisse
   users:
+    icon: 'users'
     roles:
       admin: Admin
       user: Benutzer

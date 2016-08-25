@@ -1,9 +1,7 @@
-- page_title_for User
+- page_title_for @users
 .page-header
   = new_link new_user_path
-  h2
-    => @users.count
-    = User.model_name.human count: @users.count
+  h2 = title_for @users
 
 .table-responsive
   table.table.table-striped.table-bordered.table-hover.table-clickable

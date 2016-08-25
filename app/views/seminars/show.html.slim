@@ -4,9 +4,7 @@
   = edit_link edit_seminar_url(@seminar)
   = copy_link new_seminar_url(copy_from: @seminar.id)
   = delete_link @seminar
-  h2
-    => @seminar.number
-    small = Seminar.model_name.human
+  h2 = title_for @seminar, :number
 
 .row
   label.col-md-2 => Seminar.human_attribute_name(:title)
@@ -56,4 +54,21 @@
 .row
   label.col-md-2 => Seminar.human_attribute_name(:notes)
   .col-md-10 = @seminar.notes&.html_safe
-
+.row
+  label.col-md-2 => Seminar.human_attribute_name(:price_text)
+  .col-md-10 = @seminar.price_text&.html_safe
+.row
+  label.col-md-2
+    => Seminar.human_attribute_name(:bookings)
+    br
+    = new_link new_booking_url(seminar_id: @seminar.id)
+  .col-md-10
+    table.table.table-condensed.table-hover.table-striped
+      tbody
+        - @seminar.bookings.order(:created_at).each do |booking|
+          tr
+            td = ldate booking.created_at
+            /td = booking.start_time
+            /td = booking.end_time
+            /td = link_to booking.location.name, booking.location
+            /td = booking.notes

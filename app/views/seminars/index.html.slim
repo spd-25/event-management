@@ -1,8 +1,6 @@
-- page_title_for Seminar
+- page_title_for @seminars
 .page-header
   = new_link new_seminar_path
-  h2
-    => @seminars.count
-    = Seminar.model_name.human count: @seminars.count
+  h2 = title_for @seminars
 
 = render 'table', seminars: @seminars

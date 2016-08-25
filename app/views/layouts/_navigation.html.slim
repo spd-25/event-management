@@ -21,19 +21,20 @@
           span.icon-bar
           span.icon-bar
           span.icon-bar
-        = link_to 'Home', root_path, class: 'navbar-brand', tabindex: -1
+        /= link_to 'Home', root_path, class: 'navbar-brand', tabindex: -1
       .collapse.navbar-collapse
         ul.nav.navbar-nav
           li class=('active' if controller_name == 'seminars')
-            = link_to seminars_title, seminars_url, tabindex: -1
+            = link_to title_for_model(Seminar, with_icon: true), seminars_url, tabindex: -1
           li class=('active' if controller_name == 'locations')
-            = link_to locations_title, locations_url, tabindex: -1
+            = link_to title_for_model(Location, with_icon: true), locations_url, tabindex: -1
           li class=('active' if controller_name == 'teachers')
-            = link_to teachers_title, teachers_url, tabindex: -1
-          li class=('active' if controller_name == 'categories')
-            = link_to categories_title, categories_url, tabindex: -1
-          li class=('active' if controller_name == 'users')
-            = link_to users_title, users_url, tabindex: -1
+            = link_to title_for_model(Teacher, with_icon: true), teachers_url, tabindex: -1
+          = navbar_dropdown 'Stammdaten' do
+            li class=('active' if controller_name == 'categories')
+              = link_to title_for_model(Category, with_icon: true), categories_url, tabindex: -1
+            li class=('active' if controller_name == 'users')
+              = link_to title_for_model(User, with_icon: true), users_url, tabindex: -1
 
         ul.nav.navbar-nav.navbar-right
           li

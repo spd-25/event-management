@@ -1,11 +1,9 @@
-- page_title_for @<%= file_name %>, :name
+- page_title_for @<%= file_name %>
 .page-header
   = list_link <%= index_helper %>_url
   = edit_link edit_<%= singular_table_name %>_url(@<%= file_name %>)
   = delete_link @<%= file_name %>
-  h2
-    => @<%= file_name %>.name
-    small = <%= class_name %>.model_name.human
+  h2 = title_for @<%= file_name %>
 
 .row
   .col-md-6 = panel_box title: <%= class_name %>.model_name.human do

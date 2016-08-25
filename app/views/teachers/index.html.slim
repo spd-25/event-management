@@ -1,9 +1,7 @@
-- page_title_for Teacher
+- page_title_for @teachers
 .page-header
   = new_link new_teacher_path
-  h2
-    => @teachers.count
-    = Teacher.model_name.human count: @teachers.count
+  h2 = title_for @teachers
 
 .table-responsive
   table.table.table-striped.table-bordered.table-hover.table-clickable

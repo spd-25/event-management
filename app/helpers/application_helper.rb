@@ -85,26 +85,62 @@ module ApplicationHelper
     link_to label, record, method: :delete, data: { confirm: confirm }, class: 'btn btn-danger'
   end
 
-  def page_title_for(model_or_record, attr = nil)
-    title = if model_or_record.is_a? ActiveRecord::Base
-      title_for_record model_or_record, attr
-    else
-      title_for_model model_or_record, attr
-    end
+  def page_title_for(record_or_collection, attr = nil)
+    title = title_for record_or_collection, attr, with_icon: false, with_model: false, counts: false
     content_for :title, title
   end
 
-  def title_for_record(record, attr = nil)
-    attr ||= :id
-    id = attr.is_a?(Symbol) ? record.send(attr) : attr
-    t("#{record.class.model_name.name.tableize}.single.title", id: id)
+  def title_for(record_or_collection, attr = nil, with_icon: true, with_model: true, counts: true, count: nil)
+    title = if record_or_collection.is_a? ActiveRecord::Relation
+      collection_title_for(record_or_collection, counts: counts, count: count)
+    else
+      member_title_for(record_or_collection, attr, with_model: with_model)
+    end
+    title = icon_for record_or_collection, text: title if with_icon
+    title
   end
 
-  def title_for_model(model, attr = nil)
-    if attr
-      t("#{model.model_name.name.tableize}.#{attr}.title")
+  # def title_for_record(record, attr = nil)
+  #   if record.new_record?
+  #     t("#{record.class.model_name.name.tableize}.new.title")
+  #   else
+  #     attr ||= :id
+  #     id = attr.is_a?(Symbol) ? record.send(attr) : attr
+  #     t("#{record.class.model_name.name.tableize}.single.title", id: id)
+  #   end
+  # end
+
+  def title_for_model(model, count: 2, with_icon: false)
+    title = model.model_name.human count: count
+    title = icon_for model, text: title if with_icon
+    title
+  end
+
+  def icon_for(model_or_record, text: '')
+    model = model_or_record.is_a?(ActiveRecord::Base) ? model_or_record.class : model_or_record
+    icon = t("#{model.model_name.name.tableize}.icon")
+    fa_icon icon, text: text
+  end
+
+  def model_for_collection(collection)
+    collection.class.to_s.split('::').first.constantize
+  end
+
+  def collection_title_for(collection, count: nil, counts: true)
+    model = model_for_collection collection
+    count ||= collection.count
+    title = title_for_model model, count: count
+    title = "#{count} #{title}" if counts
+    title
+  end
+
+  def member_title_for(record, attr = nil, with_model: true)
+    return t("#{record.class.model_name.name.tableize}.new.title") if record.new_record?
+    attr ||= :name
+    if with_model
+      [record.send(attr), content_tag(:small, record.class.model_name.human)].join(' ').html_safe
     else
-      model.model_name.human count: 2
+      record.send(attr)
     end
   end
 end
