@@ -85,7 +85,7 @@ module ApplicationHelper
     link_to label, record, method: :delete, data: { confirm: confirm }, class: 'btn btn-danger'
   end
 
-  def title_for(model_or_record, attr = nil)
+  def page_title_for(model_or_record, attr = nil)
     title = if model_or_record.is_a? ActiveRecord::Base
       title_for_record model_or_record, attr
     else
