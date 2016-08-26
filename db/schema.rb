@@ -10,10 +10,41 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160823091400) do
+ActiveRecord::Schema.define(version: 20160824113353) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "attendees", force: :cascade do |t|
+    t.integer  "seminar_id"
+    t.integer  "booking_id"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "status"
+    t.jsonb    "address",    default: "{}"
+    t.jsonb    "contact",    default: "{}"
+    t.string   "profession"
+    t.string   "gender"
+    t.integer  "age"
+    t.jsonb    "other",      default: "{}"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.index ["booking_id"], name: "index_attendees_on_booking_id", using: :btree
+    t.index ["seminar_id"], name: "index_attendees_on_seminar_id", using: :btree
+  end
+
+  create_table "bookings", force: :cascade do |t|
+    t.integer  "seminar_id"
+    t.boolean  "company"
+    t.jsonb    "invoice_address", default: "{}"
+    t.jsonb    "contact",         default: "{}"
+    t.string   "company_name"
+    t.integer  "places",          default: 1
+    t.jsonb    "other",           default: "{}"
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.index ["seminar_id"], name: "index_bookings_on_seminar_id", using: :btree
+  end
 
   create_table "categories", force: :cascade do |t|
     t.string  "name"
@@ -128,6 +159,9 @@ ActiveRecord::Schema.define(version: 20160823091400) do
     t.index ["username"], name: "index_users_on_username", unique: true, using: :btree
   end
 
+  add_foreign_key "attendees", "bookings", on_delete: :cascade
+  add_foreign_key "attendees", "seminars"
+  add_foreign_key "bookings", "seminars", on_delete: :cascade
   add_foreign_key "categories", "categories", on_delete: :cascade
   add_foreign_key "categories_seminars", "categories", on_delete: :cascade
   add_foreign_key "categories_seminars", "seminars", on_delete: :cascade

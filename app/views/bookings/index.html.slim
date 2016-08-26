@@ -1,0 +1,23 @@
+- page_title_for @bookings
+.page-header
+  /= new_link new_booking_path
+  h2 = title_for @bookings
+
+.table-responsive
+  table.table.table-striped.table-bordered.table-hover.table-clickable
+    thead
+      tr
+        th = Booking.human_attribute_name(:date)
+        th = Booking.human_attribute_name(:seminar)
+        th = Booking.human_attribute_name(:company)
+        th = Booking.human_attribute_name(:company_name)
+        th = Booking.human_attribute_name(:attendees)
+    tbody
+      - @bookings.each do | booking |
+        tr data = {url: url_for(booking)}
+          td = ldate booking.created_at
+          td = link_to booking.seminar.number, booking.seminar
+          td = bool_icon booking.company
+          td = booking.company_name
+          td = booking.attendees.map(&:name).join('<br>').html_safe
+

@@ -9,7 +9,24 @@ de:
   updated: "%{model} gespeichert."
   destroyed: "%{model} gelöscht."
   confirm_delete: "%{model} löschen?"
+  bookings:
+    single:
+      title: "%{id}"
+    form:
+      error: Anmeldung konnte nicht gespeichert werden.
+    new:
+      title: Neue Anmeldung
+    icon: book
+  categories:
+    single:
+      title: "%{id}"
+    form:
+      error: Thema konnte nicht gespeichert werden.
+    new:
+      title: Neues Thema
+    icon: tags
   locations:
+    icon: map-marker
     single:
       title: "%{id}"
     form:
@@ -26,7 +43,6 @@ de:
       title: Referent anlegen
   seminars:
     icon: university
-    icon: map-marker
     single:
       title: "%{id}"
     form:

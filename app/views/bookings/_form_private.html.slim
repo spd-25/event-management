@@ -1,0 +1,20 @@
+label = Attendee.model_name.human
+.row
+  = f.simple_fields_for :attendees do |attendee_form|
+    - attendee = attendee_form.object
+    - if attendee_form.index == 0
+      .col-md-3
+        = attendee_form.input :first_name, label: false
+        = attendee_form.input :last_name, label: false
+        = attendee_form.input :profession, label: false
+      .col-md-3
+        = attendee_form.simple_fields_for :address, attendee.address do |a|
+          = a.input :street, label: false
+          = a.input :zip, label: false
+          = a.input :city, label: false
+      .col-md-3
+        = attendee_form.simple_fields_for :contact, attendee.contact do |c|
+          = c.input :email, as: :email, label: false
+          = c.input :phone, as: :tel, label: false
+          = c.input :mobile, as: :tel, label: false
+

@@ -26,7 +26,8 @@ class Address < JsonSerializer
     module ClassMethods
 
       def acts_as_addressable(options = {})
-        serialize :address, ::Address
+        field_name = options[:field_name] || :address
+        serialize field_name, ::Address
 
         ::Address.attribute_set.each do |attribute|
           delegate attribute.name, to: :address

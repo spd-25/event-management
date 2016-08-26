@@ -1,0 +1,21 @@
+- page_title_for @booking, :name
+.page-header
+  = list_link bookings_url
+  = edit_link edit_booking_url(@booking)
+  = delete_link @booking
+  h2 = title_for @booking
+
+.row
+  .col-md-6
+    .row
+      label.col-md-4 => Booking.human_attribute_name(:seminar)
+      .col-md-8 = link_to @booking.seminar.number, @booking.seminar
+    .row
+      label.col-md-4 => Booking.human_attribute_name(:company)
+      .col-md-8 = bool_icon @booking.company
+    .row
+      label.col-md-4 => Booking.human_attribute_name(:company_name)
+      .col-md-8 = @booking.company_name
+    .row
+      label.col-md-4 => Booking.human_attribute_name(:attendees)
+      .col-md-8 = @booking.attendees.map(&:name).join('<br>').html_safe

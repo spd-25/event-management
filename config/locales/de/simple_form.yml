@@ -10,11 +10,29 @@ de:
       # html: '<abbr title="required">*</abbr>'
     error_notification:
       default_message: "Bitte überprüfen Sie folgende Fehler:"
+    placeholders:
+      attendees:
+        first_name: Vorname
+        last_name: Nachname
+        profession: Tätigkeit
+      address:
+        city: Ort
+        street: Straße/Nr
+        zip: PLZ
+      contact:
+        person: Ansprechpartner
+        email: E-Mail-Adresse
+        mobile: Mobiltelefon
+        phone: Telefon
     labels:
       address:
         city: Ort
         street: Straße/Nr
         zip: PLZ
+      invoice_address:
+      city: Ort
+      street: Straße/Nr
+      zip: PLZ
       contact:
         person: Ansprechpartner
         email: E-Mail-Adresse
