@@ -16,11 +16,11 @@ class BookingsController < ApplicationController
     @seminar = Seminar.find params[:seminar_id]
     @booking = @seminar.bookings.build
     @booking.company = params[:company] == 'true'
-    10.times { @booking.attendees.build }
+    prepare_attendees
   end
 
   def edit
-    10.times { @booking.attendees.build }
+    prepare_attendees
   end
 
   def create
@@ -30,7 +30,7 @@ class BookingsController < ApplicationController
     if @booking.save
       redirect_to @booking, notice: t(:created, model: Booking.model_name.human)
     else
-      10.times { @booking.attendees.build }
+      prepare_attendees
       render :new
     end
   end
@@ -39,7 +39,7 @@ class BookingsController < ApplicationController
     if @booking.update booking_params
       redirect_to @booking, notice: t(:updated, model: Booking.model_name.human)
     else
-      10.times { @booking.attendees.build }
+      prepare_attendees
       render :edit
     end
   end
@@ -51,6 +51,10 @@ class BookingsController < ApplicationController
 
   private
 
+  def prepare_attendees
+    (@booking.company ? 10 : 1).times { @booking.attendees.build }
+  end
+
   # Use callbacks to share common setup or constraints between actions.
   def set_booking
     @booking = Booking.find params[:id]
@@ -59,14 +63,12 @@ class BookingsController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def booking_params
-    p                        = params.require(:booking).permit(:seminar_id, :company, :company_name,
+    params.require(:booking).permit(:seminar_id, :company, :company_name,
                                     attendees_attributes: %i(id first_name last_name profession) + [
                                       address: %i(street zip city),
                                       contact: %i(email phone mobile)
                                     ],
                                     invoice_address: %i(street zip city),
                                     contact: %i(email phone mobile))
-    p[:attendees_attributes] = p[:attendees_attributes].slice('0') if p[:company] == '0'
-    p
   end
 end
