@@ -60,6 +60,7 @@ de:
         invoice_address: Rechnungsadresse
         places: Plätze
         attendees: Teilnehmer
+        invoice_address: Rechnungsadresse
       category:
         category: Oberthema
         categories: Unterthemen

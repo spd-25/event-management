@@ -8,8 +8,6 @@ class Booking < ApplicationRecord
                                   attributes['first_name'].blank? || attributes['last_name'].blank?
                                 }
 
-  acts_as_addressable field_name: :invoice_address
-
   def name
     ''
   end

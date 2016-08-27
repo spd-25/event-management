@@ -3,7 +3,8 @@ class CreateBookings < ActiveRecord::Migration[5.0]
     create_table :bookings do |t|
       t.references :seminar
       t.boolean :company
-      t.jsonb :invoice_address, default: '{}'
+      # t.jsonb :invoice_address, default: '{}'
+      t.text :invoice_address
       t.jsonb :contact, default: '{}'
       t.string :company_name
       t.integer :places, default: 1

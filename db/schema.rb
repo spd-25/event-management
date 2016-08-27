@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 20160824113353) do
   create_table "bookings", force: :cascade do |t|
     t.integer  "seminar_id"
     t.boolean  "company"
-    t.jsonb    "invoice_address", default: "{}"
+    t.text     "invoice_address"
     t.jsonb    "contact",         default: "{}"
     t.string   "company_name"
     t.integer  "places",          default: 1
