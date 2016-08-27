@@ -20,7 +20,7 @@ class BookingsController < ApplicationController
   end
 
   def edit
-    prepare_attendees
+    prepare_attendees if @booking.company
   end
 
   def create

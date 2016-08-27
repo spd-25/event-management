@@ -3,23 +3,25 @@
 
   = f.input :company, as: :hidden
 
-  .row
-    .col-md-6
-      - if @booking.new_record?
-        .form-inputs
-          = f.input :seminar_id, as: :hidden
-          .form-group
-            .btn-group data-toggle="buttons"
-              label.btn.btn-default class=('active' if @booking.company)
-                input#option1 autocomplete="off" checked=(@booking.company) name="company" type="radio" value="1"
-                |  Firma
-              label.btn.btn-default class=('active' unless @booking.company)
-                input#option2 autocomplete="off" checked=(! @booking.company) name="company" type="radio" value="0"
-                | Privatperson
+  - if @booking.new_record?
+    = f.input :seminar_id, as: :hidden
+    .row
+      .col-md-6
+        .form-group
+          .btn-group
+            = link_to 'Privatperson', new_booking_path(seminar_id: @seminar.id, company: false),
+                class: "btn btn-default #{'active' unless @booking.company}",
+                data: { turbolinks_action: 'replace' }
+            = link_to 'Firma', new_booking_path(seminar_id: @seminar.id, company: true),
+                class: "btn btn-default #{'active' if @booking.company}",
+                data: { turbolinks_action: 'replace' }
+
   - if @booking.company
     = render 'form_company', f: f
   - else
-    = render 'form_private', f: f
+    = f.simple_fields_for :attendees do |attendee_form|
+      = render 'form_attendee', attendee_form: attendee_form, count: false
+
 
   .row
     .col-md-4

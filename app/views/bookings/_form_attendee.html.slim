@@ -1,0 +1,20 @@
+- attendee = attendee_form.object
+- label = Attendee.model_name.human
+- if count
+  - label = "#{ attendee_form.index + 1 }. #{label}"
+.attendee class=('new-record' if attendee.new_record?)
+  label = label
+  .row
+    .col-md-3 = attendee_form.input :first_name, label: false
+    .col-md-3 = attendee_form.input :last_name,  label: false
+    .col-md-3 = attendee_form.input :profession, label: false
+    .col-md-3 = attendee_form.simple_fields_for :contact, attendee.contact do |c|
+      = c.input :email, as: :email, label: false
+  .row
+    = attendee_form.simple_fields_for :address, attendee.address do |a|
+      .col-md-3 = a.input :street, label: false
+      .col-md-1 = a.input :zip,    label: false
+      .col-md-2 = a.input :city,   label: false
+    = attendee_form.simple_fields_for :contact, attendee.contact do |c|
+      .col-md-3 = c.input :phone, as: :tel, label: false
+      .col-md-3 = c.input :mobile, as: :tel, label: false

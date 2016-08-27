@@ -1,60 +1,23 @@
 = f.simple_fields_for :attendees do |attendee_form|
-  - attendee = attendee_form.object
+  = render 'form_attendee', attendee_form: attendee_form, count: true
 
-  .row.attendee class=('new-record' if attendee.new_record?)
-    .col-md-12
-      label #{ attendee_form.index + 1 }. #{Attendee.model_name.human}
-    .col-md-3
-      = attendee_form.input :first_name, label: false
-      = attendee_form.input :last_name, label: false
-      = attendee_form.input :profession, label: false
-    .col-md-3
-      = attendee_form.simple_fields_for :address, attendee.address do |a|
-        = a.input :street, label: false
-        = a.input :zip, label: false
-        = a.input :city, label: false
-    .col-md-3
-      = attendee_form.simple_fields_for :contact, attendee.contact do |c|
-        = c.input :email, as: :email, label: false
-        = c.input :phone, as: :tel, label: false
-        = c.input :mobile, as: :tel, label: false
 .row
-  .col-md-1
-    = link_to fa_icon('plus 2x'), '#', class: 'add-attendee btn btn-info', tabindex: -1, title: 'Neuer Teilnehmer'
+  .col-md-1 = link_to fa_icon('plus', text: 'Teilnehmer hinzufügen'), '#',
+    class: 'add-attendee btn btn-default', tabindex: -1, title: 'Neuer Teilnehmer'
 
-/.row.attendees
-  = f.simple_fields_for :attendees do |attendee_form|
-    - attendee = attendee_form.object
-    .col-md-3.attendee class=('new-record' if attendee.new_record?)
-      label #{ attendee_form.index + 1 }. #{Attendee.model_name.human}
-      = attendee_form.input :first_name, label: false
-      = attendee_form.input :last_name, label: false
-      = attendee_form.input :profession, label: false
-      = attendee_form.simple_fields_for :address, attendee.address do |a|
-        = a.input :street, label: false
-        = a.input :zip, label: false
-        = a.input :city, label: false
-      = attendee_form.simple_fields_for :contact, attendee.contact do |c|
-        = c.input :email, as: :email, label: false
-        = c.input :phone, as: :tel, label: false
-        = c.input :mobile, as: :tel, label: false
-
-  .col-md-1
-    = link_to fa_icon('plus 2x'), '#', class: 'add-attendee btn btn-info', tabindex: -1, title: 'Neuer Teilnehmer'
 .row
   .col-md-4
     = f.input :company_name
+
 coffee:
   $ ->
     $('.attendee.new-record').addClass('hidden')
     addButtonClicked = (event) ->
       event.preventDefault()
       $('.attendee.new-record.hidden').first().removeClass('hidden')
-    $('.add-attendee').off 'click', addButtonClicked
     $('.add-attendee').on 'click', addButtonClicked
     $('.add-attendee').click()
 
 sass:
   a.add-attendee
     margin-bottom: 25px
-    padding: 20px 25px
