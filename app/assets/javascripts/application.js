@@ -14,7 +14,8 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require bootstrap-sprockets
-//= require froala_editor
+//= require bootstrap-wysihtml5
+//= require bootstrap-wysihtml5/locales/de-DE
 
 //= require select2
 //  require select2-full

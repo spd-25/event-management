@@ -1,5 +1,10 @@
 $(document).on 'turbolinks:load', ->
-  $('.editor').froalaEditor( language: 'de' )
+  $('.editor').wysihtml5
+    toolbar:
+      fa: true
+      html: true
+    locale: "de-DE"
+
   $('input.date').each (i, input) ->
     $input = $(input)
     date = $input.val()
