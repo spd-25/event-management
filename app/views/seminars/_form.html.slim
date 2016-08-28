@@ -28,6 +28,7 @@
           .col-md-4 = f.association :teachers, input_html: { class: 'select2' }, collection: Teacher.order(:last_name)
           .col-md-4 = f.association :location, collection: Location.order(:name), input_html: { class: 'select2' }
           .col-md-4 = f.input :max_attendees
+        = f.input :price_text, input_html: { class: 'editor' }
 
       #categories.tab-pane role="tabpanel"
         = f.association :categories, collection: categories_for_select, as: :check_boxes, label: false
