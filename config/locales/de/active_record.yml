@@ -55,8 +55,8 @@ de:
         booking: Anmeldung
         seminar: Seminar
       booking:
-        company: Firmenanmeldung
-        company_name: Name Firma
+        company: Anmeldung
+        company_name: Firma
         invoice_address: Rechnungsadresse
         places: Plätze
         attendees: Teilnehmer

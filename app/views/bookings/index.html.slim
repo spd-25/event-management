@@ -9,7 +9,6 @@
       tr
         th = Booking.human_attribute_name(:date)
         th = Booking.human_attribute_name(:seminar)
-        th = Booking.human_attribute_name(:company)
         th = Booking.human_attribute_name(:company_name)
         th = Booking.human_attribute_name(:attendees)
     tbody
@@ -17,7 +16,6 @@
         tr data = {url: url_for(booking)}
           td = ldate booking.created_at
           td = link_to booking.seminar.number, booking.seminar
-          td = bool_icon booking.company
-          td = booking.company_name
+          td = booking.company ? booking.company_name : 'Privat'
           td = booking.attendees.map(&:name).join('<br>').html_safe
 

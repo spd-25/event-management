@@ -63,12 +63,17 @@
     br
     = new_link new_booking_url(seminar_id: @seminar.id)
   .col-md-10
-    table.table.table-condensed.table-hover.table-striped
-      tbody
-        - @seminar.bookings.order(:created_at).each do |booking|
+    .table-responsive
+      table.table.table-striped.table-bordered.table-hover.table-clickable
+        thead
           tr
-            td = ldate booking.created_at
-            /td = booking.start_time
-            /td = booking.end_time
-            /td = link_to booking.location.name, booking.location
-            /td = booking.notes
+            th = Booking.human_attribute_name(:date)
+            th = Booking.human_attribute_name(:company_name)
+            th = Booking.human_attribute_name(:attendees)
+        tbody
+          - @seminar.bookings.order(:created_at).each do |booking|
+            tr data = {url: url_for(booking)}
+              td = ldate booking.created_at
+              td = booking.company ? booking.company_name : 'Privat'
+              td = booking.attendees.count
+
