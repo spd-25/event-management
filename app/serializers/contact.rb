@@ -1,4 +1,4 @@
-class Contact < JsonSerializer
+class Contact < JsonObjectSerializer
 
   attribute :person,   String
   attribute :email,    String

@@ -1,4 +1,4 @@
-class Address < JsonSerializer
+class Address < JsonObjectSerializer
 
   attribute :street,    String
   attribute :zip,       String
