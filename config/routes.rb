@@ -15,5 +15,6 @@ Rails.application.routes.draw do
   resources :seminars
   resources :categories
   resources :bookings
+  resources :invoices
 
 end

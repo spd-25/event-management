@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160824113353) do
+ActiveRecord::Schema.define(version: 20160828225231) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,6 +71,21 @@ ActiveRecord::Schema.define(version: 20160824113353) do
     t.datetime "updated_at",  null: false
     t.index ["location_id"], name: "index_events_on_location_id", using: :btree
     t.index ["seminar_id"], name: "index_events_on_seminar_id", using: :btree
+  end
+
+  create_table "invoices", force: :cascade do |t|
+    t.integer  "booking_id"
+    t.string   "number",                      null: false
+    t.date     "date",                        null: false
+    t.text     "address"
+    t.text     "pre_message"
+    t.text     "post_message"
+    t.jsonb    "items",        default: "[]"
+    t.integer  "status",       default: 0
+    t.jsonb    "others"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.index ["booking_id"], name: "index_invoices_on_booking_id", using: :btree
   end
 
   create_table "locations", force: :cascade do |t|
@@ -167,6 +182,7 @@ ActiveRecord::Schema.define(version: 20160824113353) do
   add_foreign_key "categories_seminars", "seminars", on_delete: :cascade
   add_foreign_key "events", "locations"
   add_foreign_key "events", "seminars", on_delete: :cascade
+  add_foreign_key "invoices", "bookings"
   add_foreign_key "seminars", "locations"
   add_foreign_key "seminars_teachers", "seminars", on_delete: :cascade
   add_foreign_key "seminars_teachers", "teachers", on_delete: :cascade

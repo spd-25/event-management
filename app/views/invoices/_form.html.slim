@@ -1,0 +1,21 @@
+= simple_form_for(@invoice) do |f|
+  = f.error_notification
+
+  section
+    .col-md-6
+      .form-inputs
+        = f.association :booking
+        = f.input :number
+        = f.input :date
+        = f.input :address
+        = f.input :pre_message
+        = f.input :post_message
+        = f.input :items
+        = f.input :status
+        = f.input :others
+
+  section.action-buttons
+    .col-md-12
+      .pull-right
+        => link_to t(:cancel), 'javascript: window.history.back();', class: 'btn btn-default'
+        = f.submit t(:save), class: 'btn btn-primary'
