@@ -1,4 +1,4 @@
-class JsonSerializer
+class JsonObjectSerializer
   include Virtus.model
 
   def self.dump(options)
