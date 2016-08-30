@@ -7,4 +7,9 @@ class Invoice < ApplicationRecord
 
   validates :number, :date, presence: true
 
+  def self.next_number
+    invoice = order(number: :desc).first
+    invoice ? invoice.number.next : "#{Date.current.year}00001"
+  end
+
 end
