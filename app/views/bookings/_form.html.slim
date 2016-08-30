@@ -1,18 +1,24 @@
 = simple_form_for(@booking) do |f|
-  = f.error_notification
+  /= f.error_notification
+  - if @booking.errors.any?
+    .alert.alert-danger.alert-dismissable
+      button.close type="button" data-dismiss="alert"
+        span aria-hidden="true" &times;
+        span.sr-only Close
+      h4 = t('.error')
 
   = f.input :company, as: :hidden
 
   - if @booking.new_record?
     = f.input :seminar_id, as: :hidden
-    .row
+    section
       .col-md-6
         .form-group
           .btn-group
-            = link_to 'Privatperson', new_booking_path(seminar_id: @seminar.id, company: false),
+            = link_to 'Privatperson', new_booking_path(seminar_id: @booking.seminar_id, company: false),
                 class: "btn btn-default #{'active' unless @booking.company}",
                 data: { turbolinks_action: 'replace' }
-            = link_to 'Firma', new_booking_path(seminar_id: @seminar.id, company: true),
+            = link_to 'Firma', new_booking_path(seminar_id: @booking.seminar_id, company: true),
                 class: "btn btn-default #{'active' if @booking.company}",
                 data: { turbolinks_action: 'replace' }
 
@@ -20,12 +26,8 @@
     = render 'form_company', f: f
   - else
     = f.simple_fields_for :attendees do |attendee_form|
-      = render 'form_attendee', attendee_form: attendee_form, count: false
-
-
-  .row
-    .col-md-4
-      = f.input :invoice_address, input_html: { rows: 4 }
+      label = Attendee.model_name.human
+      = render 'form_attendee', attendee_form: attendee_form
 
   .row.action-buttons
     .col-md-12

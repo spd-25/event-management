@@ -30,7 +30,7 @@ class BookingsController < ApplicationController
     if @booking.save
       redirect_to @booking, notice: t(:created, model: Booking.model_name.human)
     else
-      prepare_attendees
+      prepare_attendees if @booking.company
       render :new
     end
   end
@@ -39,7 +39,7 @@ class BookingsController < ApplicationController
     if @booking.update booking_params
       redirect_to @booking, notice: t(:updated, model: Booking.model_name.human)
     else
-      prepare_attendees
+      prepare_attendees if @booking.company
       render :edit
     end
   end
@@ -63,8 +63,8 @@ class BookingsController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def booking_params
-    params.require(:booking).permit(:seminar_id, :company, :company_name,
-                                    attendees_attributes: %i(id first_name last_name profession) + [
+    params.require(:booking).permit(:seminar_id, :company, :company_name, :invoice_address,
+                                    attendees_attributes: %i(id first_name last_name profession _destroy) + [
                                       address: %i(street zip city),
                                       contact: %i(email phone mobile)
                                     ],
