@@ -11,10 +11,15 @@ class Downloader
   end
 
   def download_all
-    login
-    download_teachers
-    download_locations
-    download_seminars
+    # login_seminars
+    # download_teachers
+    # download_locations
+    # download_seminars
+    # logout
+
+    login_invoices
+    download_seminar_details
+    download_companies
     logout
   end
 
@@ -34,9 +39,20 @@ class Downloader
     download_pages 'sem', 'seminare'
   end
 
+  def download_seminar_details
+    agent.page.link_with(text: 'Seminar-Details').click
+    agent.page.link_with(text: '2016').click
+    download_pages 'sem_det', 'seminar_details'
+  end
+
+  def download_companies
+    agent.page.link_with(text: 'Firmen').click
+    download_pages 'comp', 'firmdaten_editieren'
+  end
+
   def download_pages(prefix, target)
     agent.page.links.each do |link|
-      next unless link.href.starts_with?("index.php?target=#{target}")
+      next unless link.href.include?("index.php?target=#{target}")
       download_page link.href, prefix
     end
   end
@@ -51,8 +67,16 @@ class Downloader
     puts e.message, link
   end
 
-  def login
-    agent.get('http://buchung.bildungswerk-lsa.de/admin/index.php')
+  def login_seminars
+    login 'http://buchung.bildungswerk-lsa.de/admin'
+  end
+
+  def login_invoices
+    login 'http://buchung.bildungswerk-lsa.de/rechnungen/'
+  end
+
+  def login(url)
+    agent.get(url)
     form = agent.page.forms.first
     form.username = ENV['PARI_USER']
     form.password = ENV['PARI_PW']
