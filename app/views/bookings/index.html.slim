@@ -4,13 +4,14 @@
   h2 = title_for @bookings
 
 .table-responsive
-  table.table.table-striped.table-bordered.table-hover.table-clickable
+  table.standard-table.table-clickable
     thead
       tr
         th = Booking.human_attribute_name(:date)
         th = Booking.human_attribute_name(:seminar)
         th = Booking.human_attribute_name(:company_name)
         th = Booking.human_attribute_name(:attendees)
+        th
     tbody
       - @bookings.each do | booking |
         tr data = {url: url_for(booking)}
