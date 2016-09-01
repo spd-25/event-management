@@ -3,77 +3,96 @@
   = list_link seminars_url
   = edit_link edit_seminar_url(@seminar)
   = copy_link new_seminar_url(copy_from: @seminar.id)
-  = delete_link @seminar
-  h2 = title_for @seminar, :number
+  /= delete_link @seminar
+  h2 = title_for @seminar, :number, with_model: false
 
 .row
-  label.col-md-2 => Seminar.human_attribute_name(:title)
-  .col-md-10 = @seminar.title
-.row
-  label.col-md-2 => Seminar.human_attribute_name(:subtitle)
-  .col-md-10 = @seminar.subtitle
-.row
-  label.col-md-2 => Seminar.human_attribute_name(:year)
-  .col-md-10 = @seminar.year
-.row
-  label.col-md-2 => Seminar.human_attribute_name(:teachers)
-  .col-md-10
+  .col-md-8
+
+    h3 = @seminar.title
+    h4 = @seminar.subtitle
+
+    .table-responsive
+      table.standard-table.table-clickable
+        caption
+          .pull-right = link_to fa_icon('plus', text: 'Neue Anmeldung'), new_booking_url(seminar_id: @seminar.id), class: 'btn btn-default'
+          = Seminar.human_attribute_name(:bookings)
+        - @seminar.bookings.order(:created_at).each do |booking|
+          - invoice = booking.invoice
+          tr data={url: url_for(booking)} class=(invoice ? 'warning' : 'danger')
+            td = ldate booking.created_at
+            td
+              - if booking.company
+                = fa_icon'industry', text: booking.company_name
+              - else
+                = fa_icon 'user', text: booking.name
+            td
+              - if invoice
+                => link_to "Rechnung #{invoice.number}", invoice
+                = pdf_link invoice_path(invoice, format: :pdf), text: ''
+              - else
+                = link_to fa_icon('pencil', text: 'Rechnung'), new_invoice_path(booking_id: booking.id), class: 'btn btn-primary btn-xs'
+
+    .table-responsive
+      table.standard-table
+        caption = Seminar.human_attribute_name(:attendees)
+        - @seminar.attendees.order(:last_name).each do |attendee|
+          tr
+            td = attendee.name
+            td = attendee.booking.company ? attendee.booking.company_name : ''
+
+  .col-md-4
     ul.list-unstyled
+      - @seminar.grouped_categories.each do |parent, categories|
+        li
+          - icon = parent.in?(@seminar.categories) ? 'check-circle' : 'circle-o'
+          = fa_icon "#{icon} fw", text: parent.name
+          ul.list-inline style="padding-left: 20px"
+            - categories.each do |cat|
+              li: span.label.label-default => cat.name
+
+    ul.list-inline
       - @seminar.teachers.each do |teacher|
-        li = link_to teacher.name, teacher
-.row
-  label.col-md-2 => Seminar.human_attribute_name(:location)
-  .col-md-10 = link_to @seminar.location.name, @seminar.location
-.row
-  label.col-md-2 => Seminar.human_attribute_name(:max_attendees)
-  .col-md-10 = @seminar.max_attendees
-.row
-  label.col-md-2 => Seminar.human_attribute_name(:categories)
-  .col-md-10
-    ul.list-unstyled
-      - @seminar.categories.each do |category|
-        li = link_to category.name, category
-.row
-  label.col-md-2 #{Seminar.human_attribute_name(:events)} (#{@seminar.events.count})
-  .col-md-10
-    table.table.table-condensed.table-hover.table-striped
-      tbody
+        li = link_to icon_for(teacher, text: teacher.name), teacher
+
+    .table-responsive
+      table.standard-table
+        caption = Seminar.human_attribute_name(:events)
         - @seminar.events.order(:date).each do |event|
           tr
             td = ldate event.date
-            td = event.start_time
-            td = event.end_time
+            td #{event.start_time} - #{event.end_time}
             td = link_to event.location.name, event.location
             td = event.notes
-.row
-  label.col-md-2 => Seminar.human_attribute_name(:benefit)
-  .col-md-10 = @seminar.benefit&.html_safe
-.row
-  label.col-md-2 => Seminar.human_attribute_name(:content)
-  .col-md-10 = @seminar.content&.html_safe
-.row
-  label.col-md-2 => Seminar.human_attribute_name(:notes)
-  .col-md-10 = @seminar.notes&.html_safe
-.row
-  label.col-md-2 => Seminar.human_attribute_name(:price_text)
-  .col-md-10 = @seminar.price_text&.html_safe
-.row
-  label.col-md-2
-    => Seminar.human_attribute_name(:bookings)
-    br
-    = new_link new_booking_url(seminar_id: @seminar.id)
-  .col-md-10
-    .table-responsive
-      table.table.table-striped.table-bordered.table-hover.table-clickable
-        thead
-          tr
-            th = Booking.human_attribute_name(:date)
-            th = Booking.human_attribute_name(:company_name)
-            th = Booking.human_attribute_name(:attendees)
-        tbody
-          - @seminar.bookings.order(:created_at).each do |booking|
-            tr data = {url: url_for(booking)}
-              td = ldate booking.created_at
-              td = booking.company ? booking.company_name : 'Privat'
-              td = booking.attendees.count
 
+    = panel_box title: Seminar.human_attribute_name(:price_text) do
+      = @seminar.price_text&.html_safe
+    = panel_box title: Seminar.human_attribute_name(:benefit), toggle: true do
+      = @seminar.benefit&.html_safe
+    = panel_box title: Seminar.human_attribute_name(:content), toggle: true do
+      = @seminar.content&.html_safe
+    = panel_box title: Seminar.human_attribute_name(:notes), toggle: true do
+      = @seminar.notes&.html_safe
+
+
+coffee:
+  #$ -> $('[data-toggle="popover"]').popover(html: true)
+
+sass:
+  .panel-heading
+    padding: 5px 15px
+    &.with-icon
+      padding-left: 3px
+    a
+      display: block
+      text-decoration: none
+      .right
+        display: none
+      .down
+        display: inline-block
+
+      &.collapsed
+        .right
+          display: inline-block
+        .down
+          display: none

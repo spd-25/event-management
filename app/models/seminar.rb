@@ -6,7 +6,7 @@ class Seminar < ApplicationRecord
   belongs_to :location, optional: true
   has_many :events
   has_many :bookings
-  has_many :attendees
+  has_many :attendees, through: :bookings
 
   accepts_nested_attributes_for :events,
                                 allow_destroy: true,
@@ -20,6 +20,16 @@ class Seminar < ApplicationRecord
 
   def name
     title
+  end
+
+  def grouped_categories
+    parent_categories.each_with_object({}) do |parent, res|
+      res[parent] = categories.to_a.find_all { |cat| cat.category == parent }
+    end
+  end
+
+  def parent_categories
+    (categories.select(&:parent?) + categories.map(&:category)).compact.uniq.sort_by(&:name)
   end
 
   private
