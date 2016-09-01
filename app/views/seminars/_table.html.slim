@@ -13,6 +13,7 @@
             th = Seminar.human_attribute_name(:location)
           th = Seminar.human_attribute_name(:events)
           th = Seminar.human_attribute_name(:teachers)
+          th = Seminar.human_attribute_name(:attendees)
       tbody
         - seminars.order(:number).each do |seminar|
           tr data = {url: url_for(seminar)}
@@ -27,5 +28,6 @@
               ul.list-inline
                 - seminar.teachers.each do |teacher|
                   li = link_to teacher.name, teacher
+            td = seminar.attendees.count
 - else
   p Keine Seminare
