@@ -21,6 +21,8 @@
             = link_to 'Firma', new_booking_path(seminar_id: @booking.seminar_id, company: true),
                 class: "btn btn-default #{'active' if @booking.company}",
                 data: { turbolinks_action: 'replace' }
+  - else
+    h3 = t("bookings.company_#{@booking.company}")
 
   - if @booking.company
     = render 'form_company', f: f

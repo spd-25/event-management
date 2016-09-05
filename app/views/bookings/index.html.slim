@@ -14,9 +14,15 @@
         th
     tbody
       - @bookings.each do | booking |
-        tr data = {url: url_for(booking)}
+        - invoice = booking.invoice
+        tr data = {url: url_for(booking)} class=(invoice ? 'warning' : 'danger')
           td = ldate booking.created_at
           td = link_to booking.seminar.number, booking.seminar
           td = booking.company ? booking.company_name : 'Privat'
           td = booking.attendees.map(&:name).join('<br>').html_safe
+          td
+            - if invoice
+              = link_to "Rechnung #{invoice.number}", invoice
+            - else
+              = link_to 'Rechnung schreiben', new_invoice_path(booking_id: booking.id), class: 'btn btn-primary'
 

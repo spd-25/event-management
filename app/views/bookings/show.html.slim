@@ -3,19 +3,27 @@
   = list_link bookings_url
   = edit_link edit_booking_url(@booking)
   = delete_link @booking
+  = link_to 'Rechnung schreiben', new_invoice_path(booking_id: @booking.id), class: 'btn btn-primary'
   h2 = title_for @booking
 
 .row
   .col-md-6
     .row
+      label.col-md-4 => Booking.human_attribute_name(:date)
+      .col-md-8 = ldate @booking.created_at
+    .row
       label.col-md-4 => Booking.human_attribute_name(:seminar)
       .col-md-8 = link_to @booking.seminar.number, @booking.seminar
     .row
       label.col-md-4 => Booking.human_attribute_name(:company)
-      .col-md-8 = bool_icon @booking.company
+      .col-md-8 = t("bookings.company_#{@booking.company}")
     .row
       label.col-md-4 => Booking.human_attribute_name(:company_name)
       .col-md-8 = @booking.company_name
     .row
       label.col-md-4 => Booking.human_attribute_name(:attendees)
       .col-md-8 = @booking.attendees.map(&:name).join('<br>').html_safe
+
+
+    /= booking.company ? booking.company_name : 'Privat'
+    /= booking.attendees.map(&:name).join('<br>').html_safe
