@@ -1,21 +1,45 @@
 = simple_form_for(@invoice) do |f|
   = f.error_notification
 
-  section
-    .col-md-6
-      .form-inputs
-        = f.association :booking
-        = f.input :number
-        = f.input :date
-        = f.input :address
-        = f.input :pre_message
-        = f.input :post_message
-        = f.input :items
-        = f.input :status
-        = f.input :others
+  = f.input :booking_id, as: :hidden
 
-  section.action-buttons
-    .col-md-12
-      .pull-right
-        => link_to t(:cancel), 'javascript: window.history.back();', class: 'btn btn-default'
-        = f.submit t(:save), class: 'btn btn-primary'
+  .row
+    .col-md-9
+      section
+        .col-md-6
+          .form-inputs
+            = f.input :address, input_html: { rows: 5 }
+        .col-md-6
+          .form-inputs
+            = f.input :date, as: :string, input_html: { class: :date }
+            = f.input :number
+
+      .form-inputs = f.input :pre_message, input_html: { rows: 5 }
+
+      label Teilnehmer:
+      - @invoice.items.each do |item|
+        = f.simple_fields_for :item, item do |item_fields|
+          .row
+            .col-md-6 = item_fields.input :attendee, label: false, input_html: { name: 'invoice[items][][attendee]' }
+            .col-md-3 = item_fields.input :price, label: false, input_html: { name: 'invoice[items][][price]' }
+
+      .form-inputs = f.input :post_message, input_html: { rows: 5 }
+
+      section.action-buttons
+        .col-md-12
+          .pull-right
+            => link_to t(:cancel), 'javascript: window.history.back();', class: 'btn btn-default'
+            = f.submit t(:save), class: 'btn btn-primary'
+
+    .col-md-3
+      = panel_box title: 'Seminar' do
+        ul.list-unstyled
+          li = link_to @booking.seminar.number, @booking.seminar
+          li = @booking.seminar.title
+          li = @booking.seminar.teachers.map(&:name).join(', ').html_safe
+          li = @booking.seminar.price_text.html_safe
+      = panel_box title: 'Buchung' do
+        ul.list-unstyled
+          li = link_to ldate(@booking.created_at), @booking
+          li = @booking.name
+

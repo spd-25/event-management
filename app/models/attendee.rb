@@ -11,4 +11,7 @@ class Attendee < ApplicationRecord
     "#{first_name} #{last_name}"
   end
 
+  def full_address
+    [name, address.street, "#{address.zip} #{address.city}"].join("\n")
+  end
 end

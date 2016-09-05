@@ -6,31 +6,33 @@
   h2 = title_for @invoice
 
 .row
-  .col-md-6 = panel_box title: Invoice.model_name.human do
-    .row
-      label.col-md-4 => Invoice.human_attribute_name(:booking)
-      .col-md-8 = @invoice.booking
-    .row
-      label.col-md-4 => Invoice.human_attribute_name(:number)
-      .col-md-8 = @invoice.number
-    .row
-      label.col-md-4 => Invoice.human_attribute_name(:date)
-      .col-md-8 = @invoice.date
-    .row
-      label.col-md-4 => Invoice.human_attribute_name(:address)
-      .col-md-8 = @invoice.address
-    .row
-      label.col-md-4 => Invoice.human_attribute_name(:pre_message)
-      .col-md-8 = @invoice.pre_message
-    .row
-      label.col-md-4 => Invoice.human_attribute_name(:post_message)
-      .col-md-8 = @invoice.post_message
-    .row
-      label.col-md-4 => Invoice.human_attribute_name(:items)
-      .col-md-8 = @invoice.items
-    .row
-      label.col-md-4 => Invoice.human_attribute_name(:status)
-      .col-md-8 = @invoice.status
-    .row
-      label.col-md-4 => Invoice.human_attribute_name(:others)
-      .col-md-8 = @invoice.others
+  .col-md-9
+    section
+      .col-md-9 = simple_format @invoice.address
+      .col-md-3
+        p = ldate @invoice.date
+        p = @invoice.number
+
+    p = @invoice.pre_message
+
+    label Teilnehmer:
+    table.table
+      - @invoice.items.each do |item|
+        tr
+          td = item.attendee
+          td = item.price
+
+    p = @invoice.post_message
+
+  .col-md-3
+    - @booking = @invoice.booking
+    = panel_box title: 'Seminar' do
+      ul.list-unstyled
+        li = link_to @booking.seminar.number, @booking.seminar
+        li = @booking.seminar.title
+        li = @booking.seminar.teachers.map(&:name).join(', ').html_safe
+        li = @booking.seminar.price_text.html_safe
+    = panel_box title: 'Buchung' do
+      ul.list-unstyled
+        li = link_to ldate(@booking.created_at), @booking
+        li = @booking.name

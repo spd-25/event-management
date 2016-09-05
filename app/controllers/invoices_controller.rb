@@ -13,10 +13,12 @@ class InvoicesController < ApplicationController
 
   def new
     authorize Invoice
-    @invoice = Invoice.new
+    @booking = Booking.find params[:booking_id]
+    @invoice = @booking.generate_invoice
   end
 
   def edit
+    @booking = @invoice.booking
   end
 
   def create
@@ -53,6 +55,8 @@ class InvoicesController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def invoice_params
-    params.require(:invoice).permit(:booking_id, :number, :date, :address, :pre_message, :post_message, :items, :status, :others)
+    params.require(:invoice).permit(:booking_id, :number, :date, :address,
+                                    :pre_message, :post_message,
+                                    items: [:attendee, :price])
   end
 end
