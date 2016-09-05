@@ -11,7 +11,7 @@
           th = User.human_attribute_name(attr)
     tbody
       - @users.each do |user|
-        tr data = { url: url_for(user) }
+        tr data = { url: edit_user_url(user) }
           td = user.name
           td = user.username
           td = user.email

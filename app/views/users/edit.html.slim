@@ -1,5 +1,11 @@
 - page_title_for @user
 .page-header
+  = delete_link @user
   h2 = title_for @user
 
 = render 'form'
+
+
+p = @user.username
+p = @user.email
+p = t("users.roles.#{@user.role}")

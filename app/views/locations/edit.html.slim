@@ -1,5 +1,8 @@
 - page_title_for @location, :name
 .page-header
+  = delete_link @location
   h2 = title_for @location
 
 = render 'form'
+
+= render 'seminars/table', seminars: @location.seminars, scope: :location

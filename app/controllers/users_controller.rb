@@ -1,14 +1,11 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
   after_action :verify_authorized
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:edit, :update, :destroy]
 
   def index
     authorize User
     @users = User.all
-  end
-
-  def show
   end
 
   def new
@@ -24,7 +21,7 @@ class UsersController < ApplicationController
     @user = User.new user_params
 
     if @user.save
-      redirect_to @user, notice: t(:created, model: User.model_name.human)
+      redirect_to users_url, notice: t(:created, model: User.model_name.human)
     else
       render :new
     end
@@ -32,7 +29,7 @@ class UsersController < ApplicationController
 
   def update
     if @user.update user_params
-      redirect_to @user, notice: t(:updated, model: User.model_name.human)
+      redirect_to users_url, notice: t(:updated, model: User.model_name.human)
     else
       render :edit
     end

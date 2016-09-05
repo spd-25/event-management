@@ -1,6 +1,10 @@
 = simple_form_for(@seminar) do |f|
-  = f.error_notification
-
+  - if @seminar.errors.any?
+    .alert.alert-danger.alert-dismissable
+      button.close type="button" data-dismiss="alert"
+        span aria-hidden="true" &times;
+        span.sr-only Close
+      h4 = t('.error')
   div
     ul.nav.nav-tabs role="tablist"
       li.active role="presentation"

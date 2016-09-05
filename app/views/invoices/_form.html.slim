@@ -1,6 +1,10 @@
 = simple_form_for(@invoice) do |f|
-  = f.error_notification
-
+  - if @invoice.errors.any?
+    .alert.alert-danger.alert-dismissable
+      button.close type="button" data-dismiss="alert"
+        span aria-hidden="true" &times;
+        span.sr-only Close
+      h4 = t('.error')
   = f.input :booking_id, as: :hidden
 
   .row

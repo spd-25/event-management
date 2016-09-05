@@ -1,14 +1,11 @@
 class CategoriesController < ApplicationController
   before_action :authenticate_user!
   after_action :verify_authorized
-  before_action :set_category, only: [:show, :edit, :update, :destroy]
+  before_action :set_category, only: [:edit, :update, :destroy]
 
   def index
     authorize Category
     @categories = Category.cat_parents.order(:name)
-  end
-
-  def show
   end
 
   def new
@@ -24,7 +21,7 @@ class CategoriesController < ApplicationController
     @category = Category.new category_params
 
     if @category.save
-      redirect_to @category, notice: t(:created, model: Category.model_name.human)
+      redirect_to categories_url, notice: t(:created, model: Category.model_name.human)
     else
       render :new
     end
@@ -32,7 +29,7 @@ class CategoriesController < ApplicationController
 
   def update
     if @category.update category_params
-      redirect_to @category, notice: t(:updated, model: Category.model_name.human)
+      redirect_to categories_url, notice: t(:updated, model: Category.model_name.human)
     else
       render :edit
     end
