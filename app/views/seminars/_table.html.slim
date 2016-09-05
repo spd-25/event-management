@@ -17,7 +17,7 @@
       tbody
         - seminars.order(:number).each do |seminar|
           tr data = {url: url_for(seminar)}
-            td.number = seminar.number
+            td.number = link_to seminar.number, edit_seminar_path(seminar)
             td = seminar.year
             td = seminar.title
             td = seminar.subtitle

@@ -33,7 +33,7 @@
       #categories.tab-pane role="tabpanel"
         = f.association :categories, collection: categories_for_select, as: :check_boxes, label: false
       #events.tab-pane role="tabpanel"
-        table.table.table-condensed.table-hover.events-table
+        table.standard-table.events-table
           thead
             tr
               th.date = Event.human_attribute_name :date

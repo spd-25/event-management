@@ -15,7 +15,8 @@
     .table-responsive
       table.standard-table.table-clickable
         caption
-          .pull-right = link_to fa_icon('plus', text: 'Neue Anmeldung'), new_booking_url(seminar_id: @seminar.id), class: 'btn btn-default'
+          .pull-right = link_to fa_icon('plus', text: 'Neue Anmeldung'),
+              new_booking_url(seminar_id: @seminar.id), class: 'btn btn-default btn-xs'
           = Seminar.human_attribute_name(:bookings)
         - @seminar.bookings.order(:created_at).each do |booking|
           - invoice = booking.invoice

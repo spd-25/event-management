@@ -17,6 +17,9 @@ de:
     new:
       title: Neue Anmeldung
     icon: book
+    company_true: Firmenanmeldung
+    company_false: Privat
+    private:
   categories:
     single:
       title: "%{id}"
