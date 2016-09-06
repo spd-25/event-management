@@ -5,7 +5,7 @@ class TeachersController < ApplicationController
 
   def index
     authorize Teacher
-    @teachers = Teacher.active.order(:last_name).all
+    @teachers = Teacher.order(:last_name).all
   end
 
   def new
@@ -50,7 +50,8 @@ class TeachersController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def teacher_params
-    params.require(:teacher).permit(:first_name, :last_name, :title, address: %i(street zip city),
-                                    contact: %i(email phone mobile))
+    params.require(:teacher).permit(:first_name, :last_name, :profession, :title,
+                                    address: %i(street zip city),
+                                    contact: %i(email phone mobile fax))
   end
 end

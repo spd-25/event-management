@@ -1,18 +1,22 @@
 module Features
   module SessionHelpers
-    def sign_up_with(email, password, confirmation)
-      visit new_user_registration_path
-      fill_in 'Email', with: email
-      fill_in 'Password', with: password
-      fill_in 'Password confirmation', :with => confirmation
-      click_button 'Sign up'
+
+    def sign_in(username, password)
+      visit new_user_session_path
+      fill_in User.human_attribute_name(:username), with: username
+      fill_in User.human_attribute_name(:password), with: password
+      click_button I18n.t('devise.sessions.new.sign_in')
     end
 
-    def signin(email, password)
-      visit new_user_session_path
-      fill_in 'Email', with: email
-      fill_in 'Password', with: password
-      click_button 'Sign in'
+    def sign_out
+      click_on @current_user.name, match: :first
+      click_on 'Abmelden'
+    end
+
+    def sign_in_as_admin
+      @current_user = admin = FactoryGirl.create(:user) { |user| user.admin! }
+      sign_in(admin.username, admin.password)
+      admin
     end
   end
 end

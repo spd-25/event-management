@@ -61,7 +61,12 @@ de:
     index:
       title: Suchergebnisse
   users:
+    cannot_delete_yourself: Du kannst dich nicht selber löschen
     icon: 'users'
+    form:
+      error: Benutzer konnte nicht gespeichert werden.
+    new:
+      title: Benutzer anlegen
     roles:
       admin: Admin
       user: Benutzer

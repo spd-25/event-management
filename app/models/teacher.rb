@@ -6,9 +6,6 @@ class Teacher < ApplicationRecord
 
   validates :last_name, presence: true
 
-  scope :active, -> { where(id: Seminar.joins(:teachers).select('seminars_teachers.teacher_id')) }
-
-
   acts_as_addressable
   acts_as_contactable
 
