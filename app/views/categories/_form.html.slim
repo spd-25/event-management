@@ -8,8 +8,10 @@
   section
     .col-md-6
       .form-inputs
-        = f.input :name
         = f.association :category
+    .col-md-6
+      .form-inputs
+        = f.input :name
 
   section.action-buttons
     .col-md-12

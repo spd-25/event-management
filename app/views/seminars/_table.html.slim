@@ -1,28 +1,29 @@
 - if seminars.any?
   - scope = local_assigns[:scope]
-  h4 = Seminar.model_name.human count: 2
+  h4
+    - count = seminars.count
+    => count
+    = Seminar.model_name.human count: count
   .table-responsive
     table.standard-table.table-clickable
       thead
         tr
           th = Seminar.human_attribute_name(:number)
-          th = Seminar.human_attribute_name(:year)
           th = Seminar.human_attribute_name(:title)
-          th = Seminar.human_attribute_name(:subtitle)
-          - unless scope == :location
-            th = Seminar.human_attribute_name(:location)
           th = Seminar.human_attribute_name(:events)
           th = Seminar.human_attribute_name(:teachers)
           th = Seminar.human_attribute_name(:attendees)
       tbody
         - seminars.order(:number).each do |seminar|
           tr data = {url: url_for(seminar)}
-            td.number = link_to seminar.number, edit_seminar_path(seminar)
-            td = seminar.year
-            td = seminar.title
-            td = seminar.subtitle
-            - unless scope == :location
-              td = seminar.location&.name
+            td.number
+              = seminar.number
+              br
+              small: em = seminar.year
+            td
+              = seminar.title
+              br
+              small = seminar.subtitle
             td = seminar.events.count
             td
               ul.list-inline

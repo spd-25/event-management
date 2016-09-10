@@ -5,7 +5,13 @@ class SeminarsController < ApplicationController
 
   def index
     authorize Seminar
-    @seminars = Seminar.order(:number).includes(:teachers, :events, :location).all
+    category_id = params[:category_id]
+    if category_id
+      @category = Category.find category_id
+      @seminars = @category.seminars.order(:number).includes(:teachers, :events, :location).all
+    else
+      @seminars = Seminar.order(:number).includes(:teachers, :events, :location).all
+    end
   end
 
   def show

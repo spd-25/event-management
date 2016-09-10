@@ -1,0 +1,15 @@
+@import "bootstrap/mixins/gradients"
+
+.overflow
+  .content
+    overflow-y: scroll
+    min-height: 20px
+    max-height: 70px
+  &:after
+    @include gradient-vertical(rgba(255,255,255,0), rgba(255,255,255, 1))
+    content: " "
+    display: block
+    height: 30px
+    position: absolute
+    bottom: 0
+    width: 100%

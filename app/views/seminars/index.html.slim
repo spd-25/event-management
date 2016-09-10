@@ -1,6 +1,27 @@
 - page_title_for @seminars
 .page-header
-  = new_link new_seminar_path
-  h2 = title_for @seminars
+  .buttons = new_link new_seminar_path
+  h2 = icon_for Seminar, text: Seminar.model_name.human(count: 2)
 
-= render 'table', seminars: @seminars
+.row
+  .col-md-3
+    ul.list-group
+      - Category.cat_parents.order(:name).each do |category|
+        li.list-group-item
+          = link_to "#{category.name} (#{category.seminars.count})", '#', data: { category_id: category.id }, class: 'parent'
+          ul.list-unstyled style="margin-left: 20px;white-space:nowrap; overflow:hidden" class=('hidden' unless @category.in?(category.categories) || @category == category)
+            - category.categories.order(:name).each do |sub_cat|
+              - label = "#{sub_cat.name} (#{sub_cat.seminars.count})"
+              li = link_to label, '#', title: label, data: { category_id: sub_cat.id }, class: (sub_cat == @category ? 'active' : '')
+
+  .col-md-8 = render 'table', seminars: @seminars
+
+coffee:
+  $ ->
+    $('.list-group-item a.parent').click (e) ->
+      e.preventDefault()
+      $(e.target).siblings('ul').toggleClass('hidden')
+    $('.list-group-item a').click (e) ->
+      e.preventDefault()
+      categoryId = $(e.target).data('category-id')
+      Turbolinks.visit('/seminars?cat_id=' + categoryId)

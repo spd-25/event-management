@@ -40,7 +40,7 @@ module ApplicationHelper
     end
   end
 
-  def panel_box_with_table(title: nil, css_class: '', &block)
+  def panel_box_with_table(title: nil, css_class: '', toggle: false, &block)
     content = capture(&block)
     content_tag(:div, class: "panel panel-default #{css_class}") do
       head = panel_heading title:   title

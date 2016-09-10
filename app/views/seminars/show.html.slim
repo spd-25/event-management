@@ -1,10 +1,14 @@
 - page_title_for @seminar, :number
+
 .page-header
-  = list_link seminars_url
-  = edit_link edit_seminar_url(@seminar)
-  = copy_link new_seminar_url(copy_from: @seminar.id)
+  .buttons
+    /= list_link seminars_url
+    => edit_link edit_seminar_url(@seminar)
+    = copy_link new_seminar_url(copy_from: @seminar.id)
   /= delete_link @seminar
-  h2 = title_for @seminar, :number, with_model: false
+  h2
+    => link_to fa_icon('angle-left'), seminars_url
+    = title_for @seminar, :number, with_model: false
 
 .row
   .col-md-8
@@ -15,16 +19,17 @@
     .table-responsive
       table.standard-table.table-clickable
         caption
-          .pull-right = link_to fa_icon('plus', text: 'Neue Anmeldung'),
+          => @seminar.bookings.count
+          => Seminar.human_attribute_name(:bookings)
+          = link_to fa_icon('plus', text: 'Neue Anmeldung'),
               new_booking_url(seminar_id: @seminar.id), class: 'btn btn-default btn-xs'
-          = Seminar.human_attribute_name(:bookings)
         - @seminar.bookings.order(:created_at).each do |booking|
           - invoice = booking.invoice
           tr data={url: url_for(booking)} class=(invoice ? 'warning' : 'danger')
             td = ldate booking.created_at
             td
               - if booking.company
-                = fa_icon'industry', text: booking.company_name
+                = fa_icon'users', text: "#{booking.company_name} (#{booking.attendees.count} #{Seminar.human_attribute_name(:attendees)})"
               - else
                 = fa_icon 'user', text: booking.name
             td
@@ -36,29 +41,32 @@
 
     .table-responsive
       table.standard-table
-        caption = Seminar.human_attribute_name(:attendees)
+        caption
+          => @seminar.attendees.count
+          = Seminar.human_attribute_name(:attendees)
         - @seminar.attendees.order(:last_name).each do |attendee|
           tr
             td = attendee.name
             td = attendee.booking.company ? attendee.booking.company_name : ''
 
   .col-md-4
-    ul.list-unstyled
-      - @seminar.grouped_categories.each do |parent, categories|
-        li
-          - icon = parent.in?(@seminar.categories) ? 'check-circle' : 'circle-o'
-          = fa_icon "#{icon} fw", text: parent.name
-          ul.list-inline style="padding-left: 20px"
-            - categories.each do |cat|
-              li: span.label.label-default => cat.name
-
     ul.list-inline
       - @seminar.teachers.each do |teacher|
         li = link_to icon_for(teacher, text: teacher.name), teacher
 
-    .table-responsive
+    = panel_box_with_table title: 'Themen' do
+      ul.list-group
+        - @seminar.grouped_categories.each do |parent, categories|
+          li.list-group-item
+            - icon = parent.in?(@seminar.categories) ? 'check-circle' : 'circle-o'
+            = link_to fa_icon("#{icon} fw", text: parent.name), seminars_url(category_id: parent.id)
+            ul.list-inline style="padding-left: 20px"
+              - categories.each do |cat|
+                li => link_to seminars_url(category_id: cat.id) do
+                  span.label.label-default = cat.name
+
+    = panel_box_with_table title: Seminar.human_attribute_name(:events), toggle: true do
       table.standard-table
-        caption = Seminar.human_attribute_name(:events)
         - @seminar.events.order(:date).each do |event|
           tr
             td = ldate event.date
@@ -66,7 +74,7 @@
             td = link_to event.location.name, event.location
             td = event.notes
 
-    = panel_box title: Seminar.human_attribute_name(:price_text) do
+    = panel_box title: Seminar.human_attribute_name(:price_text), toggle: true do
       = @seminar.price_text&.html_safe
     = panel_box title: Seminar.human_attribute_name(:benefit), toggle: true do
       = @seminar.benefit&.html_safe
@@ -74,10 +82,6 @@
       = @seminar.content&.html_safe
     = panel_box title: Seminar.human_attribute_name(:notes), toggle: true do
       = @seminar.notes&.html_safe
-
-
-coffee:
-  #$ -> $('[data-toggle="popover"]').popover(html: true)
 
 sass:
   .panel-heading

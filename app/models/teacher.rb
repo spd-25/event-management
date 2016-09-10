@@ -14,4 +14,5 @@ class Teacher < ApplicationRecord
   def name
     [title, first_name, last_name].select(&:present?).join(' ')
   end
+
 end
