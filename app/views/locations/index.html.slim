@@ -12,7 +12,7 @@
         th = Location.human_attribute_name(:seminars)
     tbody
       - @locations.each do | location |
-        tr data = {url: edit_location_url(location)}
+        tr data = {url: url_for(location)}
           td = location.name
           td = location.city
           td = location.seminars.count

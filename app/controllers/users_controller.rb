@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
   after_action :verify_authorized
-  before_action :set_user, only: [:edit, :update, :destroy]
+  before_action :set_user, only: [:show, :update, :destroy]
 
   def index
     authorize User
@@ -13,7 +13,7 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
-  def edit
+  def show
   end
 
   def create
@@ -31,7 +31,7 @@ class UsersController < ApplicationController
     if @user.update user_params
       redirect_to users_url, notice: t(:updated, model: User.model_name.human)
     else
-      render :edit
+      render :show
     end
   end
 

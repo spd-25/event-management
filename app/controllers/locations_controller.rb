@@ -1,7 +1,7 @@
 class LocationsController < ApplicationController
   before_action :authenticate_user!
   after_action :verify_authorized
-  before_action :set_location, only: [:edit, :update, :destroy]
+  before_action :set_location, only: [:show, :update, :destroy]
 
   def index
     authorize Location
@@ -13,7 +13,7 @@ class LocationsController < ApplicationController
     @location = Location.new
   end
 
-  def edit
+  def show
   end
 
   def create
@@ -31,7 +31,7 @@ class LocationsController < ApplicationController
     if @location.update location_params
       redirect_to locations_url, notice: t(:updated, model: Location.model_name.human)
     else
-      render :edit
+      render :show
     end
   end
 

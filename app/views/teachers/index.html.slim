@@ -11,7 +11,7 @@
           th = Teacher.human_attribute_name(attr)
     tbody
       - @teachers.each do |teacher|
-        tr data = { url: edit_teacher_url(teacher) }
+        tr data = { url: url_for(teacher) }
           td = teacher.name
           td = teacher.city
           td = teacher.email

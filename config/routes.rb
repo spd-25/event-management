@@ -9,11 +9,11 @@ Rails.application.routes.draw do
 
   get 'search', to: 'search#index', as: :search
 
-  resources :users,      except: :show
-  resources :locations,  except: :show
-  resources :teachers,   except: :show
+  resources :users,      except: :edit
+  resources :locations,  except: :edit
+  resources :teachers,   except: :edit
   resources :seminars
-  resources :categories, except: :show
+  resources :categories, except: :edit
   resources :bookings
   resources :invoices
 

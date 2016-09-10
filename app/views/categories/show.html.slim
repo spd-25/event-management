@@ -1,0 +1,17 @@
+- page_title_for @category, :name
+.page-header
+  = delete_link @category
+  h2 = title_for @category
+
+- if @category.parent?
+  section
+    - @category.categories.order(:name).each do |category|
+      .col-md-4 = link_to "#{category.name} (#{category.seminars.count})", category
+- else
+  ul.list-unstyled
+    li = link_to "#{@category.category.name} (#{@category.category.seminars.count})", @category.category
+
+
+= render 'form'
+
+= render 'seminars/table', seminars: @category.seminars

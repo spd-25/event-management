@@ -1,19 +1,19 @@
 class CategoriesController < ApplicationController
   before_action :authenticate_user!
   after_action :verify_authorized
-  before_action :set_category, only: [:edit, :update, :destroy]
+  before_action :set_category, only: [:show, :update, :destroy]
 
   def index
     authorize Category
     @categories = Category.cat_parents.order(:name)
   end
 
+  def show
+  end
+
   def new
     authorize Category
     @category = Category.new
-  end
-
-  def edit
   end
 
   def create

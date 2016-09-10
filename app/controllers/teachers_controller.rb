@@ -1,7 +1,7 @@
 class TeachersController < ApplicationController
   before_action :authenticate_user!
   after_action :verify_authorized
-  before_action :set_teacher, only: [:edit, :update, :destroy]
+  before_action :set_teacher, only: [:show, :update, :destroy]
 
   def index
     authorize Teacher
@@ -13,7 +13,7 @@ class TeachersController < ApplicationController
     @teacher = Teacher.new
   end
 
-  def edit
+  def show
   end
 
   def create
@@ -31,7 +31,7 @@ class TeachersController < ApplicationController
     if @teacher.update teacher_params
       redirect_to teachers_url, notice: t(:updated, model: Teacher.model_name.human)
     else
-      render :edit
+      render :show
     end
   end
 

@@ -3,10 +3,10 @@
   = new_link new_category_path
   h2 = title_for @categories, count: Category.count
 
-ul
+ul.list-group
   - @categories.each do |category|
-    li
-      = link_to "#{category.name} (#{category.seminars.count})", edit_category_url(category)
+    li.list-group-item
+      = link_to "#{category.name} (#{category.seminars.count})", category
       ul
-        - category.categories.each do |sub_cat|
-          li = link_to "#{sub_cat.name} (#{sub_cat.seminars.count})", edit_category_url(sub_cat)
+        - category.categories.order(:name).each do |sub_cat|
+          li = link_to "#{sub_cat.name} (#{sub_cat.seminars.count})", sub_cat
