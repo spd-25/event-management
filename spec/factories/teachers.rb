@@ -1,9 +1,8 @@
 FactoryGirl.define do
   factory :teacher do
-    first_name "MyString"
-    last_name "MyString"
-    title "MyString"
-    address ""
-    contact ""
+    first_name 'John'
+    last_name 'Teacher'
+    title 'Dr.'
+    profession 'Teacher for interesting stuff'
   end
 end
