@@ -1,78 +1,30 @@
 - page_title_for @seminar, :number
 
+ol.breadcrumb
+  li = link_to Seminar.model_name.human(count: 2), seminars_url
+  - sub_cat = @seminar.categories.first
+  - parent = sub_cat.parent? ? sub_cat : sub_cat.category
+  li = link_to parent.name, seminars_url(category_id: parent.id)
+  - unless parent == sub_cat
+    li = link_to sub_cat.name, seminars_url(category_id: sub_cat.id)
+
 .page-header
   .buttons
-    /= list_link seminars_url
     => edit_link edit_seminar_url(@seminar)
     = copy_link new_seminar_url(copy_from: @seminar.id)
-  /= delete_link @seminar
   h2
-    => link_to fa_icon('angle-left'), seminars_url
-    = title_for @seminar, :number, with_model: false
+    => icon_for @seminar, text: "#{@seminar.number} - #{@seminar.title}"
+    br
+    small = @seminar.subtitle
 
 .row
   .col-md-8
-
-    h3 = @seminar.title
-    h4 = @seminar.subtitle
-
-    .table-responsive
-      table.standard-table.table-clickable
-        caption
-          => @seminar.bookings.count
-          => Seminar.human_attribute_name(:bookings)
-          = link_to fa_icon('plus', text: 'Neue Anmeldung'),
-              new_booking_url(seminar_id: @seminar.id), class: 'btn btn-default btn-xs'
-        - @seminar.bookings.order(:created_at).each do |booking|
-          - invoice = booking.invoice
-          tr data={url: url_for(booking)} class=(invoice ? 'warning' : 'danger')
-            td = ldate booking.created_at
-            td
-              - if booking.company
-                = fa_icon'users', text: "#{booking.company_name} (#{booking.attendees.count} #{Seminar.human_attribute_name(:attendees)})"
-              - else
-                = fa_icon 'user', text: booking.name
-            td
-              - if invoice
-                => link_to "Rechnung #{invoice.number}", invoice
-                = pdf_link invoice_path(invoice, format: :pdf), text: ''
-              - else
-                = link_to fa_icon('pencil', text: 'Rechnung'), new_invoice_path(booking_id: booking.id), class: 'btn btn-primary btn-xs'
-
-    .table-responsive
-      table.standard-table
-        caption
-          => @seminar.attendees.count
-          = Seminar.human_attribute_name(:attendees)
-        - @seminar.attendees.order(:last_name).each do |attendee|
-          tr
-            td = attendee.name
-            td = attendee.booking.company ? attendee.booking.company_name : ''
-
+    = render 'seminars/show/bookings'
+    = render 'seminars/show/attendees'
   .col-md-4
-    ul.list-inline
-      - @seminar.teachers.each do |teacher|
-        li = link_to icon_for(teacher, text: teacher.name), teacher
-
-    = panel_box_with_table title: 'Themen' do
-      ul.list-group
-        - @seminar.grouped_categories.each do |parent, categories|
-          li.list-group-item
-            - icon = parent.in?(@seminar.categories) ? 'check-circle' : 'circle-o'
-            = link_to fa_icon("#{icon} fw", text: parent.name), seminars_url(category_id: parent.id)
-            ul.list-inline style="padding-left: 20px"
-              - categories.each do |cat|
-                li => link_to seminars_url(category_id: cat.id) do
-                  span.label.label-default = cat.name
-
-    = panel_box_with_table title: Seminar.human_attribute_name(:events), toggle: true do
-      table.standard-table
-        - @seminar.events.order(:date).each do |event|
-          tr
-            td = ldate event.date
-            td #{event.start_time} - #{event.end_time}
-            td = link_to event.location.name, event.location
-            td = event.notes
+    = render 'seminars/show/teachers'
+    = render 'seminars/show/events'
+    = render 'seminars/show/categories'
 
     = panel_box title: Seminar.human_attribute_name(:price_text), toggle: true do
       = @seminar.price_text&.html_safe
@@ -84,6 +36,8 @@
       = @seminar.notes&.html_safe
 
 sass:
+  ol.breadcrumb
+    margin-top: 20px
   .panel-heading
     padding: 5px 15px
     &.with-icon

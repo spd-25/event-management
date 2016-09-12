@@ -43,7 +43,7 @@
           li = @booking.seminar.title
           li = @booking.seminar.teachers.map(&:name).join(', ').html_safe
           li = @booking.seminar.price_text&.html_safe
-      = panel_box title: 'Buchung' do
+      = panel_box title: 'Anmeldung' do
         ul.list-unstyled
           li = link_to ldate(@booking.created_at), @booking
           li = @booking.name

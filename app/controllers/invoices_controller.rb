@@ -1,7 +1,7 @@
 class InvoicesController < ApplicationController
   before_action :authenticate_user!
   after_action :verify_authorized
-  before_action :set_invoice, only: [:show, :edit, :update, :destroy]
+  before_action :set_invoice, only: [:show, :update, :destroy]
 
   def index
     authorize Invoice
@@ -17,16 +17,14 @@ class InvoicesController < ApplicationController
     @invoice = @booking.generate_invoice
   end
 
-  def edit
-    @booking = @invoice.booking
-  end
-
   def create
     authorize Invoice
+    @booking = Booking.find params[:booking_id]
     @invoice = Invoice.new invoice_params
+    @invoice.booking = @booking
 
     if @invoice.save
-      redirect_to @invoice, notice: t(:created, model: Invoice.model_name.human)
+      redirect_to @booking.seminar, notice: t(:created, model: Invoice.model_name.human)
     else
       render :new
     end
@@ -34,7 +32,7 @@ class InvoicesController < ApplicationController
 
   def update
     if @invoice.update invoice_params
-      redirect_to @invoice, notice: t(:updated, model: Invoice.model_name.human)
+      redirect_to @booking.seminar, notice: t(:updated, model: Invoice.model_name.human)
     else
       render :edit
     end
@@ -50,6 +48,7 @@ class InvoicesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_invoice
     @invoice = Invoice.find params[:id]
+    @booking = @invoice.booking
     authorize @invoice
   end
 

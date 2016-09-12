@@ -1,7 +1,7 @@
 class BookingsController < ApplicationController
   before_action :authenticate_user!
   after_action :verify_authorized
-  before_action :set_booking, only: [:show, :edit, :update, :destroy]
+  before_action :set_booking, only: [:show, :update, :destroy]
 
   def index
     authorize Booking
@@ -9,6 +9,7 @@ class BookingsController < ApplicationController
   end
 
   def show
+    prepare_attendees if @booking.company
   end
 
   def new
@@ -19,16 +20,12 @@ class BookingsController < ApplicationController
     prepare_attendees
   end
 
-  def edit
-    prepare_attendees if @booking.company
-  end
-
   def create
     authorize Booking
     @booking = Booking.new booking_params
 
     if @booking.save
-      redirect_to @booking, notice: t(:created, model: Booking.model_name.human)
+      redirect_to @booking.seminar, notice: t(:created, model: Booking.model_name.human)
     else
       prepare_attendees if @booking.company
       render :new
@@ -37,7 +34,7 @@ class BookingsController < ApplicationController
 
   def update
     if @booking.update booking_params
-      redirect_to @booking, notice: t(:updated, model: Booking.model_name.human)
+      redirect_to @booking.seminar, notice: t(:updated, model: Booking.model_name.human)
     else
       prepare_attendees if @booking.company
       render :edit

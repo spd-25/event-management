@@ -1,34 +1,30 @@
 - if seminars.any?
   - scope = local_assigns[:scope]
-  h4
-    - count = seminars.count
-    => count
-    = Seminar.model_name.human count: count
+  - unless local_assigns[:header] == false
+    h4
+      - count = seminars.count
+      => count
+      = Seminar.model_name.human count: count
   .table-responsive
-    table.standard-table.table-clickable
-      thead
-        tr
-          th = Seminar.human_attribute_name(:number)
-          th = Seminar.human_attribute_name(:title)
-          th = Seminar.human_attribute_name(:events)
-          th = Seminar.human_attribute_name(:teachers)
-          th = Seminar.human_attribute_name(:attendees)
+    table.standard-table.table-clickable.table-no-border
       tbody
         - seminars.order(:number).each do |seminar|
-          tr data = {url: url_for(seminar)}
+          tr data = {url: url_for(seminar)} class=('danger' if seminar.open_bookings.any?)
             td.number
               = seminar.number
               br
-              small: em = seminar.year
+              small.text-muted = seminar.year
             td
               = seminar.title
               br
-              small = seminar.subtitle
-            td = seminar.events.count
+              small.text-muted = seminar.subtitle
             td
+              => fa_icon 'users', text: seminar.attendees.count
+              => fa_icon 'calendar', text: seminar.events.count
+              => fa_icon 'book', text: seminar.bookings.count
+              => "(#{seminar.open_bookings.count})"
               ul.list-inline
                 - seminar.teachers.each do |teacher|
-                  li = link_to teacher.name, teacher
-            td = seminar.attendees.count
+                  li = link_to icon_for(teacher, text: teacher.name), teacher
 - else
   p Keine Seminare

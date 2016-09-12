@@ -1,38 +1,5 @@
 - page_title_for @invoice
 .page-header
-  = list_link invoices_url
-  = edit_link edit_invoice_url(@invoice)
-  = delete_link @invoice
   h2 = title_for @invoice
 
-.row
-  .col-md-9
-    section
-      .col-md-9 = simple_format @invoice.address
-      .col-md-3
-        p = ldate @invoice.date
-        p = @invoice.number
-
-    p = @invoice.pre_message
-
-    label Teilnehmer:
-    table.table
-      - @invoice.items.each do |item|
-        tr
-          td = item.attendee
-          td = item.price
-
-    p = @invoice.post_message
-
-  .col-md-3
-    - @booking = @invoice.booking
-    = panel_box title: 'Seminar' do
-      ul.list-unstyled
-        li = link_to @booking.seminar.number, @booking.seminar
-        li = @booking.seminar.title
-        li = @booking.seminar.teachers.map(&:name).join(', ').html_safe
-        li = @booking.seminar.price_text.html_safe
-    = panel_box title: 'Buchung' do
-      ul.list-unstyled
-        li = link_to ldate(@booking.created_at), @booking
-        li = @booking.name
+= render 'form'

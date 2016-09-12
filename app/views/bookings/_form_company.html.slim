@@ -30,7 +30,8 @@ coffee:
     $('.remove-attendee').on 'click', (event) ->
       event.preventDefault()
       toggleAttendee $(this).parents('.attendee'), true
-    toggleAttendee $('.attendee.new-record.hidden').first(), false
+    if $('form.new_booking').length
+      toggleAttendee $('.attendee.new-record.hidden').first(), false
 
 sass:
   a.add-attendee

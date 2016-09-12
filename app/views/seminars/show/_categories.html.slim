@@ -1,0 +1,25 @@
+= panel_box title: Seminar.human_attribute_name(:categories), toggle: true do
+  ul.nav.nav-pills.nav-stacked.categories
+    - @seminar.grouped_categories.each do |parent, categories|
+      - active = parent.in?(@seminar.categories)
+      li class=('active' if active)
+        - label = parent.name
+        = link_to seminars_url(category_id: parent.id), title: label do
+          strong = label
+        ul.nav.nav-pills.nav-stacked
+          - categories.each do |cat|
+            - label = cat.name
+            li.active
+              = link_to label, seminars_url(category_id: cat.id), title: label
+
+sass:
+  ul.categories
+    /*white-space: nowrap*/
+    overflow: hidden
+
+    ul
+      margin-left: 30px
+      margin-top: 5px
+
+      a
+        padding: 3px 8px

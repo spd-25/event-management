@@ -1,0 +1,22 @@
+.table-responsive
+  table.standard-table.table-clickable
+    caption
+      => @seminar.bookings.count
+      => Seminar.human_attribute_name(:bookings)
+      = link_to fa_icon('plus', text: 'Neue Anmeldung'),
+          new_booking_url(seminar_id: @seminar.id), class: 'btn btn-default btn-xs'
+    - @seminar.bookings.order(:created_at).each do |booking|
+      - invoice = booking.invoice
+      tr data={url: url_for(booking)} class=(booking.open? ? 'danger' : 'warning')
+        td = ldate booking.created_at
+        td
+          - if booking.company
+            = fa_icon'users', text: "#{booking.company_name} (#{booking.attendees.count} #{Seminar.human_attribute_name(:attendees)})"
+          - else
+            = fa_icon 'user', text: booking.name
+        td
+          - if invoice
+            => link_to "Rechnung #{invoice.number}", invoice
+            = pdf_link invoice_path(invoice, format: :pdf), text: ''
+          - else
+            = link_to fa_icon('pencil', text: 'Rechnung'), new_invoice_path(booking_id: booking.id), class: 'btn btn-primary btn-xs'

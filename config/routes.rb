@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   resources :teachers,   except: :edit
   resources :seminars
   resources :categories, except: :edit
-  resources :bookings
-  resources :invoices
+  resources :bookings,   except: :edit
+  resources :invoices,   except: :edit
 
 end
