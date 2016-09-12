@@ -19,7 +19,9 @@
 
 //= require select2
 //  require select2-full
-//= require bootstrap-datepicker
+//  require bootstrap-datepicker
+//= require bootstrap-datepicker/core
+//= require bootstrap-datepicker/locales/bootstrap-datepicker.de.js
 //= require form_init
 //= require table
 //= require_tree .
