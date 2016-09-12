@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160828225231) do
+ActiveRecord::Schema.define(version: 20160911212038) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +43,8 @@ ActiveRecord::Schema.define(version: 20160828225231) do
     t.jsonb    "other",           default: "{}"
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
+    t.integer  "invoice_id"
+    t.index ["invoice_id"], name: "index_bookings_on_invoice_id", using: :btree
     t.index ["seminar_id"], name: "index_bookings_on_seminar_id", using: :btree
   end
 
@@ -74,7 +76,6 @@ ActiveRecord::Schema.define(version: 20160828225231) do
   end
 
   create_table "invoices", force: :cascade do |t|
-    t.integer  "booking_id"
     t.string   "number",                      null: false
     t.date     "date",                        null: false
     t.text     "address"
@@ -85,7 +86,6 @@ ActiveRecord::Schema.define(version: 20160828225231) do
     t.jsonb    "others"
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
-    t.index ["booking_id"], name: "index_invoices_on_booking_id", using: :btree
   end
 
   create_table "locations", force: :cascade do |t|
@@ -176,13 +176,13 @@ ActiveRecord::Schema.define(version: 20160828225231) do
 
   add_foreign_key "attendees", "bookings", on_delete: :cascade
   add_foreign_key "attendees", "seminars"
+  add_foreign_key "bookings", "invoices"
   add_foreign_key "bookings", "seminars", on_delete: :cascade
   add_foreign_key "categories", "categories", on_delete: :cascade
   add_foreign_key "categories_seminars", "categories", on_delete: :cascade
   add_foreign_key "categories_seminars", "seminars", on_delete: :cascade
   add_foreign_key "events", "locations"
   add_foreign_key "events", "seminars", on_delete: :cascade
-  add_foreign_key "invoices", "bookings"
   add_foreign_key "seminars", "locations"
   add_foreign_key "seminars_teachers", "seminars", on_delete: :cascade
   add_foreign_key "seminars_teachers", "teachers", on_delete: :cascade

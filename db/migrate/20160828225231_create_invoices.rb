@@ -1,7 +1,6 @@
 class CreateInvoices < ActiveRecord::Migration[5.0]
   def change
     create_table :invoices do |t|
-      t.references :booking, foreign_key: true
       t.string :number, null: false
       t.date :date, null: false
       t.text :address

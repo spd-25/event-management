@@ -5,7 +5,8 @@
         span aria-hidden="true" &times;
         span.sr-only Close
       h4 = t('.error')
-  = f.input :booking_id, as: :hidden
+
+  input type='hidden' name='booking_id' value=@booking.id
 
   .row
     .col-md-9
@@ -41,7 +42,7 @@
           li = link_to @booking.seminar.number, @booking.seminar
           li = @booking.seminar.title
           li = @booking.seminar.teachers.map(&:name).join(', ').html_safe
-          li = @booking.seminar.price_text.html_safe
+          li = @booking.seminar.price_text&.html_safe
       = panel_box title: 'Buchung' do
         ul.list-unstyled
           li = link_to ldate(@booking.created_at), @booking

@@ -1,14 +1,14 @@
 class Booking < ApplicationRecord
   belongs_to :seminar
   has_many :attendees
-  has_one :invoice
+  belongs_to :invoice, inverse_of: :booking
 
   accepts_nested_attributes_for :attendees, allow_destroy: true
 
   validates :company_name, :invoice_address, presence: true, if: :company
   validate :validate_attendees
 
-  scope :created,         -> { where.not(id: Invoice.select(:booking_id)) }
+  scope :created,         -> { where(invoice_id: nil) }
   scope :invoice_created, -> { joins(:invoice).where('invoices.status' => Invoice.statuses[:created]) }
   scope :invoice_sent,    -> { joins(:invoice).where('invoices.status' => Invoice.statuses[:sent]) }
   scope :invoice_payed,   -> { joins(:invoice).where('invoices.status' => Invoice.statuses[:payed]) }
@@ -30,6 +30,10 @@ class Booking < ApplicationRecord
 
   def company_address
     "#{company_name}\n#{invoice_address}"
+  end
+
+  def open?
+    invoice.nil?
   end
 
   private
