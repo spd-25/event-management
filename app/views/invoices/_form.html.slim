@@ -26,7 +26,10 @@
         = f.simple_fields_for :item, item do |item_fields|
           .row
             .col-md-6 = item_fields.input :attendee, label: false, input_html: { name: 'invoice[items][][attendee]' }
-            .col-md-3 = item_fields.input :price, label: false, input_html: { name: 'invoice[items][][price]' }
+            .col-md-3 = item_fields.input :price, label: false, input_html: {value: number_with_precision(item_fields.object.price), name: 'invoice[items][][price]' }
+      .row
+        .col-md-3.col-md-offset-6
+          p.sum = number_to_currency @invoice.items.map(&:price).sum
 
       .form-inputs = f.input :post_message, input_html: { rows: 5 }
 
@@ -47,4 +50,27 @@
         ul.list-unstyled
           li = link_to ldate(@booking.created_at), @booking
           li = @booking.name
+
+sass:
+  .invoice_item_price
+    input
+      text-align: right
+  .sum
+    text-align: right
+    font-weight: bold
+
+coffee:
+  $ ->
+    calculateSum = ->
+      sum = .0
+      $('.invoice_item_price input').each (index, input) =>
+        val = parseFloat($(input).val().replace(',', '.'))
+        sum += val unless isNaN(val)
+      $('.sum').html(sum.toLocaleString('de', style: 'currency', currency: 'EUR'))
+
+    $('.invoice_item_price input').change (event) =>
+      calculateSum()
+      input = $(event.target)
+      val = parseFloat(input.val().replace(',', '.'))
+      input.val(val.toLocaleString('de', minimumFractionDigits: 2 ))
 

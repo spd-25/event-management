@@ -54,8 +54,10 @@ class InvoicesController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def invoice_params
-    params.require(:invoice).permit(:booking_id, :number, :date, :address,
-                                    :pre_message, :post_message,
-                                    items: [:attendee, :price])
+    p = params.require(:invoice).permit(:booking_id, :number, :date, :address,
+                                        :pre_message, :post_message,
+                                        items: [:attendee, :price])
+    p[:items].each { |item| item['price'] = item['price'].sub(',', '.').to_f }
+    p
   end
 end
