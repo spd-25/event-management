@@ -34,3 +34,11 @@ table
   @extend .table-striped
   @extend .table-bordered
   @extend .table-hover
+
+  tr
+    &.open
+      @extend .danger
+    &.pending
+      @extend .warning
+    &.payed
+      @extend .success

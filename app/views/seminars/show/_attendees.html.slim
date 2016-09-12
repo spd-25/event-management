@@ -1,9 +1,12 @@
+h4
+  - count = @seminar.attendees.count
+  => count
+  => Attendee.model_name.human(count: count)
+  = link_to fa_icon('table', text: 'Exportieren'), '#', class: 'btn btn-default btn-xs disabled'
+
 .table-responsive
-  table.standard-table
-    caption
-      => @seminar.attendees.count
-      = Seminar.human_attribute_name(:attendees)
+  table.standard-table.table-clickable
     - @seminar.attendees.order(:last_name).each do |attendee|
-      tr
+      tr data={url: url_for(attendee.booking)} class=css_class_for(attendee.booking)
         td = attendee.name
         td = attendee.booking.company ? attendee.booking.company_name : ''

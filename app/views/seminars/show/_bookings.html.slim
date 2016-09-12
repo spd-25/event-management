@@ -1,22 +1,26 @@
+h4
+  - count = @seminar.bookings.count
+  => count
+  => Booking.model_name.human(count: count)
+  = link_to fa_icon('plus', text: 'Neue Anmeldung'),
+    new_booking_url(seminar_id: @seminar.id), class: 'btn btn-default btn-xs'
+
 .table-responsive
   table.standard-table.table-clickable
-    caption
-      => @seminar.bookings.count
-      => Seminar.human_attribute_name(:bookings)
-      = link_to fa_icon('plus', text: 'Neue Anmeldung'),
-          new_booking_url(seminar_id: @seminar.id), class: 'btn btn-default btn-xs'
     - @seminar.bookings.order(:created_at).each do |booking|
-      - invoice = booking.invoice
-      tr data={url: url_for(booking)} class=(booking.open? ? 'danger' : 'warning')
+      tr data={url: url_for(booking)} class=css_class_for(booking)
+        td = fa_icon booking.company ? 'users' : 'user'
         td = ldate booking.created_at
+        td = booking.company_name
         td
-          - if booking.company
-            = fa_icon'users', text: "#{booking.company_name} (#{booking.attendees.count} #{Seminar.human_attribute_name(:attendees)})"
-          - else
-            = fa_icon 'user', text: booking.name
+          - booking.attendees.each do |attendee|
+            = attendee.name
+            br
         td
+          - invoice = booking.invoice
           - if invoice
             => link_to "Rechnung #{invoice.number}", invoice
-            = pdf_link invoice_path(invoice, format: :pdf), text: ''
+            => pdf_link invoice_path(invoice, format: :pdf), text: ''
+            => link_to 'bezahlt', '#', class: 'btn btn-info btn-xs', remote: true
           - else
             = link_to fa_icon('pencil', text: 'Rechnung'), new_invoice_path(booking_id: booking.id), class: 'btn btn-primary btn-xs'

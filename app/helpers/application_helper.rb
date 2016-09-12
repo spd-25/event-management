@@ -130,9 +130,10 @@ module ApplicationHelper
     title
   end
 
-  def icon_for(model_or_record, text: '')
+  def icon_for(model_or_record, text: '', size: nil)
     model = model_or_record.is_a?(ActiveRecord::Base) ? model_or_record.class : model_or_record
-    icon = t("#{model.model_name.name.tableize}.icon")
+    icon  = t("#{model.model_name.name.tableize}.icon")
+    icon  = "#{icon} #{size}x" if size
     fa_icon icon, text: text
   end
 

@@ -31,11 +31,7 @@ class Booking < ApplicationRecord
   def company_address
     "#{company_name}\n#{invoice_address}"
   end
-
-  def open?
-    invoice.nil?
-  end
-
+  
   private
 
   def validate_attendees

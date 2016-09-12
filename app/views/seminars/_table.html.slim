@@ -6,10 +6,10 @@
       => count
       = Seminar.model_name.human count: count
   .table-responsive
-    table.standard-table.table-clickable.table-no-border
+    table.standard-table.table-clickable.table-no-border.seminars
       tbody
         - seminars.order(:number).each do |seminar|
-          tr data = {url: url_for(seminar)} class=('danger' if seminar.open_bookings.any?)
+          tr data = {url: url_for(seminar)} class=css_class_for(seminar)
             td.number
               = seminar.number
               br
@@ -18,13 +18,18 @@
               = seminar.title
               br
               small.text-muted = seminar.subtitle
-            td
+            td.icons
               => fa_icon 'users', text: seminar.attendees.count
               => fa_icon 'calendar', text: seminar.events.count
-              => fa_icon 'book', text: seminar.bookings.count
-              => "(#{seminar.open_bookings.count})"
+              - if seminar.bookings.any?
+                = progress_bar_for_bookings(seminar)
               ul.list-inline
                 - seminar.teachers.each do |teacher|
                   li = link_to icon_for(teacher, text: teacher.name), teacher
 - else
   p Keine Seminare
+
+sass:
+  table.seminars
+    td.icons
+      width: 25%
