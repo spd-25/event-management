@@ -24,7 +24,7 @@ class Booking < ApplicationRecord
 
   def generate_invoice
     address = company ? company_address : attendees.first.full_address
-    items = attendees.map{ |attendee| { attendee: attendee.name, price: 23.87 } }
+    items = attendees.map{ |attendee| { attendee: attendee.name, price: seminar.price || 0 } }
     build_invoice number: Invoice.next_number, date: Date.current, address: address, items: items
   end
 

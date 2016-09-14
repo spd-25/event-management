@@ -30,7 +30,8 @@ ol.breadcrumb
     = render 'seminars/show/events'
     = render 'seminars/show/categories'
 
-    = panel_box title: Seminar.human_attribute_name(:price_text), toggle: true do
+    = panel_box title: Seminar.human_attribute_name(:price), toggle: true do
+      p = number_to_currency @seminar.price
       = @seminar.price_text&.html_safe
     = panel_box title: Seminar.human_attribute_name(:benefit), toggle: true do
       = @seminar.benefit&.html_safe
