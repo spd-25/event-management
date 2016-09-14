@@ -1,5 +1,19 @@
 - page_title_for @booking
 .page-header
-  h2 = t(".title")
+  h2
+    => icon_for @seminar, text: "#{@seminar.number} - #{@seminar.title}"
+    br
+    small = @seminar.subtitle
+
+.row
+  .col-md-4
+    label = Seminar.human_attribute_name(:benefit)
+    p = @seminar.benefit&.html_safe
+  .col-md-4
+    label = Seminar.human_attribute_name(:content)
+    p = @seminar.content&.html_safe
+  .col-md-4
+    label = Seminar.human_attribute_name(:notes)
+    p = @seminar.notes&.html_safe
 
 = render 'form'

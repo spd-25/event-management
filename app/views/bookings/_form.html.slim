@@ -32,7 +32,7 @@
       = render 'form_attendee', attendee_form: attendee_form
 
   .row.action-buttons
-    .col-md-12
+    .col-md-8
       .pull-right
         => link_to t(:cancel), 'javascript: window.history.back();', class: 'btn btn-default'
         = f.submit t(:save), class: 'btn btn-primary'

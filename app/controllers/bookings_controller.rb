@@ -55,6 +55,7 @@ class BookingsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_booking
     @booking = Booking.find params[:id]
+    @seminar = @booking.seminar
     authorize @booking
   end
 

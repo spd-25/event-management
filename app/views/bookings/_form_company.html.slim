@@ -1,3 +1,9 @@
+.row
+  .col-md-4
+    = f.input :company_name, required: true
+  .col-md-4
+    = f.input :invoice_address, required: true, input_html: { rows: 4 }
+
 = f.simple_fields_for :attendees do |attendee_form|
   - attendee = attendee_form.object
   .attendee class=('new-record' if attendee.new_record?)
@@ -11,12 +17,6 @@
 .row
   .col-md-1 = link_to fa_icon('plus', text: 'Teilnehmer hinzufügen'), '#',
     class: 'add-attendee btn btn-default', tabindex: -1, title: 'Neuer Teilnehmer'
-
-.row
-  .col-md-4
-    = f.input :company_name
-    = f.input :invoice_address, input_html: { rows: 4 }
-
 coffee:
   $ ->
     toggleAttendee = (attendee, hidden) ->
