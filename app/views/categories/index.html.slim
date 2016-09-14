@@ -6,7 +6,7 @@
 ul.list-group
   - @categories.each do |category|
     li.list-group-item
-      = link_to "#{category.name} (#{category.seminars.count})", category
+      = link_to "#{category.display_name} (#{category.seminars.count})", category
       ul
-        - category.categories.order(:name).each do |sub_cat|
-          li = link_to "#{sub_cat.name} (#{sub_cat.seminars.count})", sub_cat
+        - category.categories.order(:number).each do |sub_cat|
+          li = link_to "#{sub_cat.display_name} (#{sub_cat.seminars.count})", sub_cat

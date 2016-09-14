@@ -14,4 +14,7 @@ class Category < ApplicationRecord
     category.blank?
   end
 
+  def display_name
+    "#{number} #{name}"
+  end
 end

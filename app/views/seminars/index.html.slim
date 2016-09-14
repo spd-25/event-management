@@ -12,15 +12,15 @@
 section
   .col-md-3
     ul.nav.nav-pills.nav-stacked.categories
-      - Category.cat_parents.order(:name).each do |category|
+      - Category.cat_parents.order(:number).each do |category|
         - active = @category.in?(category.categories + [category])
         li class=('active' if active)
-          - label = "#{category.name} (#{category.seminars.count + category.categories.map {|cat| cat.seminars.count }.sum})"
+          - label = "#{category.display_name} (#{category.seminars.count + category.categories.map {|cat| cat.seminars.count }.sum})"
           = link_to label, seminars_url(category_id: category.id), title: label
           - if active
             ul.nav.nav-pills.nav-stacked
-              - category.categories.order(:name).each do |sub_cat|
-                - label = "#{sub_cat.name} (#{sub_cat.seminars.count})"
+              - category.categories.order(:number).each do |sub_cat|
+                - label = "#{sub_cat.display_name} (#{sub_cat.seminars.count})"
                 li class=('active' if @category == sub_cat)
                   = link_to label, seminars_url(category_id: sub_cat.id), title: label
 

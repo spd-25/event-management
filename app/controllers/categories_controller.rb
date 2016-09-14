@@ -5,7 +5,7 @@ class CategoriesController < ApplicationController
 
   def index
     authorize Category
-    @categories = Category.cat_parents.order(:name)
+    @categories = Category.cat_parents.order(:number)
   end
 
   def show
@@ -50,6 +50,6 @@ class CategoriesController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def category_params
-    params.require(:category).permit(:name, :category_id)
+    params.require(:category).permit(:name, :number, :category_id)
   end
 end

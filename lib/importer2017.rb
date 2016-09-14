@@ -8,6 +8,7 @@ module Importer2017
     import_seminars
     import_categories
     import_categories_seminars
+    split_number_of_categories
     ActiveRecord::Base.logger.level = 0
   end
 
@@ -47,6 +48,13 @@ module Importer2017
       rescue ActiveRecord::RecordNotFound
         puts row.to_h
       end
+    end
+  end
+
+  def self.split_number_of_categories
+    Category.all.each do |category|
+      number, name = category.name.split(' - ', 2)
+      category.update name: name, number: number
     end
   end
 
