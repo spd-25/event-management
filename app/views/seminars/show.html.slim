@@ -23,6 +23,10 @@ ol.breadcrumb
     = render 'seminars/show/attendees'
   .col-md-4
     = render 'seminars/show/teachers'
+    p
+      - location = @seminar.location
+      - if location
+        = link_to icon_for(location, text: location.name, size: 2), location
     = render 'seminars/show/events'
     = render 'seminars/show/categories'
 

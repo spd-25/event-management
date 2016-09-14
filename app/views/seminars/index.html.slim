@@ -15,7 +15,7 @@ section
       - Category.cat_parents.order(:name).each do |category|
         - active = @category.in?(category.categories + [category])
         li class=('active' if active)
-          - label = "#{category.name} (#{category.seminars.count})"
+          - label = "#{category.name} (#{category.seminars.count + category.categories.map {|cat| cat.seminars.count }.sum})"
           = link_to label, seminars_url(category_id: category.id), title: label
           - if active
             ul.nav.nav-pills.nav-stacked

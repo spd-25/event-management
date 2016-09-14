@@ -4,5 +4,5 @@
       tr
         td = ldate event.date
         td #{event.start_time} - #{event.end_time}
-        td = link_to event.location.name, event.location
+        /td = link_to event.location.name, event.location
         td = event.notes
