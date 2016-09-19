@@ -8,7 +8,7 @@ h4
 .table-responsive
   table.standard-table.table-clickable
     - @seminar.bookings.order(:created_at).each do |booking|
-      tr data={url: url_for(booking)} class=css_class_for(booking)
+      tr data={url: url_for(booking)}
         td = fa_icon booking.company ? 'users' : 'user'
         td = ldate booking.created_at
         td = booking.company_name
