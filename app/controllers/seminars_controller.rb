@@ -12,7 +12,8 @@ class SeminarsController < ApplicationController
       # @seminars = Seminar.order(:number).includes(:teachers, :events, :location).all
       Category.cat_parents.first
     end
-    @seminars = @category.seminars.order(:number).includes(:teachers, :events, :location).all
+    @seminars = @category ? @category.seminars : Seminar
+    @seminars = @seminars.order(:number).includes(:teachers, :events, :location).all
   end
 
   def show

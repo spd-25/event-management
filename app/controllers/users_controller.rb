@@ -37,7 +37,7 @@ class UsersController < ApplicationController
 
   def destroy
     if @user == current_user
-      redirect_to edit_user_url(@user), alert: t('users.cannot_delete_yourself')
+      redirect_to @user, alert: t('users.cannot_delete_yourself')
     else
       @user.destroy
       redirect_to users_url, notice: t(:destroyed, model: User.model_name.human)
