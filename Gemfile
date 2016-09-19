@@ -38,6 +38,7 @@ gem 'bootstrap-wysihtml5-rails'
 gem 'select2-rails'
 gem 'bootstrap-datepicker-rails'
 gem 'virtus'
+gem 'rollbar'
 
 group :development do
   gem 'better_errors'
