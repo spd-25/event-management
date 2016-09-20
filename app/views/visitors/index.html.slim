@@ -1,19 +1,20 @@
-- @category = @category.category if @category.category.present?
+- @category = @category.category if @category&.category.present?
 section
   .categories
     ul
       - @categories.each do |category|
-        - active = @category.in?(category.categories + [category])
+        - active = @category&.in?(category.categories + [category])
         li class=('active' if active)
           - label = "#{category.display_name} (#{category.seminars.count + category.categories.map {|cat| cat.seminars.count }.sum})"
           strong = link_to label, root_url(category_id: category.id), title: label
   .subcategories
-    ul
-      - @category.categories.each do |category|
-        - active = @category.in?(category.categories + [category])
-        li class=('active' if active)
-          - label = "#{category.display_name} (#{category.seminars.count + category.categories.map {|cat| cat.seminars.count }.sum})"
-          = link_to label, root_url(category_id: category.id), title: label
+    - if @category
+      ul
+        - @category.categories.each do |category|
+          - active = @category.in?(category.categories + [category])
+          li class=('active' if active)
+            - label = "#{category.display_name} (#{category.seminars.count + category.categories.map {|cat| cat.seminars.count }.sum})"
+            = link_to label, root_url(category_id: category.id), title: label
 
 table
   tbody
