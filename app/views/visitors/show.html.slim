@@ -57,6 +57,10 @@ h1 = @seminar.title
     .nutzenueber Anmeldeschluss
     .nutzentext
       = @seminar.due_date.html_safe
+
+
+
+= link_to 'Anmelden', new_booking_url(seminar_id: @seminar.id)
 /| Da dieses Seminar bereits abgelaufen ist, ist eine Anmeldung leider nicht mehr möglich!
 /br/
 /br/

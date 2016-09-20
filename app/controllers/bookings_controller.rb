@@ -1,5 +1,5 @@
 class BookingsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:new, :create]
   after_action :verify_authorized
   before_action :set_booking, only: [:show, :update, :destroy]
 
@@ -25,8 +25,13 @@ class BookingsController < ApplicationController
     @booking = Booking.new booking_params
 
     if @booking.save
-      redirect_to @booking.seminar, notice: t(:created, model: Booking.model_name.human)
+      if user_signed_in?
+        redirect_to @booking.seminar, notice: t(:created, model: Booking.model_name.human)
+      else
+        redirect_to root_url, notice: t('bookings.created')
+      end
     else
+      @seminar = @booking.seminar
       prepare_attendees if @booking.company
       render :new
     end
