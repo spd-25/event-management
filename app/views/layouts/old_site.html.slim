@@ -64,9 +64,11 @@ html lang="de" xmlns="http://www.w3.org/1999/xhtml"
             | Fax: (0391) 6293555
             br
             | bildungswerk@paritaet-lsa.de
-          /#moresuche
-            p
-              a href="http://buchung.bildungswerk-lsa.de/suche.php" Zur Suche im Buchungskatalog
+
+          .overview = link_to 'zur Seminarübersicht', root_path
+          .search
+            form action=seminar_search_url
+              input name="q" placeholder="Suche" value=params[:q]
         #left
           #hintergrund
           #textlinks = yield
@@ -144,6 +146,13 @@ html lang="de" xmlns="http://www.w3.org/1999/xhtml"
       background-color: #eeeeee
       overflow: hidden
 
+      .search
+        padding-top: 20px
+        form
+          padding: 5px
+          input
+            font-size: large
+            width: 96%
     #left
       background-color: #eeeeee
       min-height: 450px

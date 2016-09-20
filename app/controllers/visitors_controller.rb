@@ -22,4 +22,10 @@ class VisitorsController < ApplicationController
   def show
     @seminar = Seminar.find params[:id]
   end
+
+  def search
+    @query = params[:q]
+    @seminars = PgSearch.multisearch(@query).where(searchable_type: 'Seminar').to_a.map(&:searchable)
+    render :index
+  end
 end

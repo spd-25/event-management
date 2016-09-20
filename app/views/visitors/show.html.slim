@@ -16,7 +16,7 @@ h1 = @seminar.title
                 = link_to label, root_url(category_id: cat.id), title: label
 
     /Verwaltung und Sekretariat | Demenz | Pflege, Begleitung, Betreuung, Beschäftigung | Zusätzliche Betreuungs- und Aktivierungskräfte
-  .seminaruebersicht = link_to 'zur Seminarübersicht', root_path
+  /.seminaruebersicht = link_to 'zur Seminarübersicht', root_path
 - if @seminar.benefit.present?
   .nutzenklammer
     .nutzenueber Nutzen
