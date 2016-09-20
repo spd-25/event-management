@@ -2,9 +2,13 @@ doctype html
 html lang="de" xmlns="http://www.w3.org/1999/xhtml"
   head
     meta content=("text/html; charset=UTF-8") http-equiv="Content-Type"
-    title Buchungsscript des Paritätischen Bildungswerkes Sachsen-Anhalt
+    title
+      | Paritätischen Bildungswerkes Sachsen-Anhalt
+      - if content_for? :page_title
+        | -
+        =< content_for :page_title
     meta content="webkartell.de" name="author"
-    meta content=("Das Paritätische Bildungswerk stellt sich vor.") name="description"
+    meta content=content_for(:page_description) name="description"
     meta content="parität, bildung, bildungswerk, sachsen, anhalt, paritätisches, " name="keywords"
     link href="http://buchung.bildungswerk-lsa.de/chancen2.ico" rel=("shortcut icon")
     /!
@@ -72,7 +76,7 @@ html lang="de" xmlns="http://www.w3.org/1999/xhtml"
               | bildungswerk@paritaet-lsa.de
 
         #left
-          .overview = link_to '&lt;&lt; zur Seminarübersicht'.html_safe, root_path
+          .overview = link_to '&laquo; zur Seminarübersicht'.html_safe, root_path
           .search
             form action=seminar_search_url
               input name="q" placeholder="Suche" value=params[:q]

@@ -45,6 +45,14 @@ class Seminar < ApplicationRecord
     end
   end
 
+  def to_param
+    "#{id}-#{slug}"
+  end
+
+  def slug
+    title.downcase.gsub(/"/, '').gsub(/[^a-z0-9]+/, '-')
+  end
+
   private
 
   def validate_events

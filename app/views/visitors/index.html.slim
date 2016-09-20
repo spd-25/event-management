@@ -1,3 +1,4 @@
+- content_for :page_title, 'Seminarübersicht'
 - if @category
   - if @category.parent?
     - parent = @category
@@ -24,8 +25,8 @@ table.seminars
   tbody
     - @seminars.each do |seminar|
       tr
-        td.number = link_to seminar.number, seminar_visitor_url(seminar.id)
-        td.title = link_to seminar.title, seminar_visitor_url(seminar.id)
+        td.number = link_to seminar.number, seminar_visitor_url(seminar)
+        td.title = link_to seminar.title, seminar_visitor_url(seminar)
         td = seminar.location&.name
         td = seminar.teachers.map(&:name).join(', ')
         td = ldate(seminar.events.order(:date).first&.date)
@@ -40,11 +41,12 @@ sass:
       width: 45%
       height: 330px
       float: left
+      font-size: 1.1em
     .subcategories
       margin-left: 50%
       height: 330px
       ol
-        list-style-type: upper-latin
+        list-style-type: lower-latin
     ol
       /*list-style: none*/
       padding-left: 17px
