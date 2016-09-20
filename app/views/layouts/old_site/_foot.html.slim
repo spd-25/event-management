@@ -1,0 +1,33 @@
+.foot
+  a> href="http://bildungswerk-lsa.de/index.php?article_id=50"  Karriere
+  | |
+  a> href="http://bildungswerk-lsa.de/index.php?article_id=8"  Sitemap
+  | |
+  a> href="http://bildungswerk-lsa.de/index.php?article_id=13"  Kontakt
+  | |
+  a> href="http://bildungswerk-lsa.de/index.php?article_id=7"  Impressum
+  | |
+  a> href="http://bildungswerk-lsa.de/index.php?article_id=27"  AGBs
+  | |
+  a> href="http://bildungswerk-lsa.de/index.php?article_id=1"  Startseite
+  | |
+  =< link_to 'Anmelden', new_user_session_url
+
+sass:
+  .foot
+    background-color: #eeeeee
+    clear: both
+    text-align: right
+    font-size: 0.8em
+    color: #9e9e9e
+    padding-right: 12px
+    padding-bottom: 3px
+    margin-top: -50x
+    a
+      color: #9e9e9e
+      &:link, &:visited
+        color: #9e9e9e
+        text-decoration: none
+      &:focus, &:hover, &:active
+        color: black
+        text-decoration: underline

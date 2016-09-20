@@ -1,0 +1,228 @@
+doctype html
+html lang="de" xmlns="http://www.w3.org/1999/xhtml"
+  head
+    meta content=("text/html; charset=UTF-8") http-equiv="Content-Type"
+    title Buchungsscript des Paritätischen Bildungswerkes Sachsen-Anhalt
+    meta content="webkartell.de" name="author"
+    meta content=("Das Paritätische Bildungswerk stellt sich vor.") name="description"
+    meta content="parität, bildung, bildungswerk, sachsen, anhalt, paritätisches, " name="keywords"
+    link href="http://buchung.bildungswerk-lsa.de/chancen2.ico" rel=("shortcut icon")
+    /!
+      | <link rel="stylesheet" href="css/xc2_default.css" type="text/css" /
+      | <style type="text/css">@import url(http://buchung.bildungswerk-lsa.de/css/xc2_default.css) all;</style
+    /link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css"
+    /link href="/old_site/template_cssall.css" rel="stylesheet" type="text/css"
+
+    /link href="./old_site/admin.css" rel="stylesheet" type="text/css" /
+    /link href="./old_site/print.css" media="print" rel="stylesheet" type="text/css" /
+    /css:
+      @import url(http://buchung.bildungswerk-lsa.de/template_cssall.css) all;
+    /![if lt IE 7]
+      | <style type="text/css">@import url(http://buchung.bildungswerk-lsa.de/ie.css);</style
+    css:
+      #errorbox {
+        border:        3px solid #ff0000;
+        font-weight:   bold;
+        background:    url(/old_site/dialog-warning.png) no-repeat 3px center;
+        max-width:     460px;
+        padding:       6px 5px 6px 40px;
+        margin-bottom: 20px;
+        min-height:    24px;
+      }
+      p { margin-top: 0px; }
+      ul {
+        margin-top:   0px;
+        padding-left: 15px;
+      }
+      li { padding-left: 0px; }
+
+  body
+    #mutterelement
+      a#top
+      #head
+        #sprung
+          a href="#textlinks"
+            img alt=("direkt zum Text springen") src="/old_site/sprung.gif" /
+        #obenlinks
+          a href="/"
+            img alt=("zur Startseite") src="/old_site/parit.png" /
+      /#queer
+      = render 'layouts/old_site/navigation'
+      #ganzgross
+        #right
+          a target="_blank" href="http://maps.google.de/maps?f=d&amp;source=s_d&amp;saddr=&amp;daddr=Wiener+Stra%C3%9Fe+2,+39112+Magdeburg&amp;hl=de&amp;geocode=Cca_koeBjhhbFRAiGwMdrEyxACl_ihuI6fWlRzGipCqJexAt5w&amp;mra=mi&amp;sll=52.10984,11.6195&amp;sspn=0.008856,0.027874&amp;g=wiener+stra%C3%9Fe+2+magdeburg&amp;ie=UTF8&amp;z=16"
+            img alt=("Per Mausklick die Anfahrt zum Bildungswerk berechnen lassen") src="/old_site/anfahrt.jpg" title=("Per Mausklick die Anfahrt zum Bildungswerk berechnen lassen") /
+          #textrechts
+            strong Paritätisches Bildungswerk
+            br
+            | Wiener Straße 2
+            br
+            | 39112 Magdeburg
+            br
+            | Tel.: (0391) 6293313
+            br
+            | Fax: (0391) 6293555
+            br
+            | bildungswerk@paritaet-lsa.de
+          /#moresuche
+            p
+              a href="http://buchung.bildungswerk-lsa.de/suche.php" Zur Suche im Buchungskatalog
+        #left
+          #hintergrund
+          #textlinks = yield
+          /div style=("border-bottom:1px solid #014670; text-align:right; padding-bottom:2px; padding-top:10px; margin-bottom:10px;")
+            | Bildungskalender:
+            a href="http://buchung.bildungswerk-lsa.de/katalog.php?jahr=2016" style="font-weight:bold;"  2016
+          /div style=("border:1px solid #014670; margin-bottom:15px;")
+            div style=("background-color:#014670; color:#ffffff; font-weight:bold; padding:3px;")
+              | Unsere neuesten Seminare
+            ul style=("padding-left:20px; margin:2px;")
+              li
+                a href="http://buchung.bildungswerk-lsa.de/seminar.php?id=2348"
+                  | "Interkulturelle
+                  | Sensibilisierung und kulturelle Identität"
+
+
+          p.righter
+            a href="#top"
+              img> alt="" src="/old_site/oben.gif"
+              |  nach oben
+      = render 'layouts/old_site/foot'
+
+  sass:
+    body
+      font-size: 100.01%
+      color: black
+      font-family: Verdana, Arial, Helvetica, sans-serif
+      background-color: #f8b028
+      background-image: url(/old_site/bg.gif)
+      background-repeat: repeat-x
+      padding: 0
+      margin-top: 0
+      margin-bottom: 0
+      text-align: left
+
+    .red
+      font-weight: bold
+      color: #cc0d14
+
+    #mutterelement
+      min-width: 800px
+      max-width: 1000px
+      margin-left: auto
+      margin-right: auto
+      text-align: left
+      background-color: #f2f2f2
+      min-width: 770px
+
+    #ganzgross
+      font-size: 0.8em
+      background-color: #f2f2f2
+      min-height: 400px
+      margin-bottom: -5px
+      text-align: left
+      padding-top: 0px
+      padding-bottom: 0px
+      color: #3F3F3F
+      overflow: hidden
+
+    #head
+      background-image: url(/old_site/backgr.jpg)
+      background-position: right
+      background-repeat: no-repeat
+      height: 130px
+      background-color: white
+      margin-top: -5px
+
+    #queer
+      background-color: transparent
+      height: 5px
+
+    #right
+      float: right
+      width: 240px
+      background-color: #eeeeee
+      overflow: hidden
+
+    #left
+      background-color: #eeeeee
+      min-height: 450px
+      overflow: hidden
+
+    #sprung
+      float: right
+
+    h1
+      color: #015ba7
+      font-size: 1.8em
+      border-top: 1px solid #015ba7
+      border-bottom: 1px solid #015ba7
+
+    h2
+      color: #015ba7
+      font-size: 1.6em
+
+    h3
+      color: #015ba7
+      font-size: 1.2em
+      border-bottom: 1px dashed #015ba7
+      font-weight: lighter
+
+    #left
+      h1, h2, h3
+        font-family: Georgia
+        font-weight: lighter
+
+    p
+      line-height: 1.5em
+
+    img
+      border: 0px solid black
+
+    #obenlinks
+      width: 230px
+      height: 148px
+      background-image: url(obenlinks.jpg)
+
+    #text
+      width: 100%
+      float: left
+      background-color: #f2f2f2
+
+
+
+    #hintergrund
+      background-image: url(/old_site/hintergrund.jpg)
+      background-repeat: no-repeat
+      height: 193px
+
+    #textlinks
+      padding-top: 5px
+      margin-left: 26px
+      margin-right: 26px
+      padding-bottom: 15px
+
+    #textrechts
+      padding-top: 10px
+      padding-bottom: 10px
+      padding-left: 5px
+      padding-right: 5px
+      text-align: left
+      color: #034991
+      background-color: #fac052
+      margin-bottom: 5px
+      margin-right: 1px
+      width: 240px
+      margin-top: 0px
+
+    /*table, tr*/
+      /*padding: 0px*/
+      /*margin: 0px*/
+
+    /*td*/
+      /*vertical-align: top*/
+      /*padding: 0px*/
+      /*margin: 0px*/
+
+    .righter
+      text-align: right

@@ -1,0 +1,141 @@
+h1 = @seminar.title
+.seminarklammer
+  .seminarnummer = @seminar.number
+  .seminarthema
+    ul
+      - @seminar.grouped_categories.each do |parent, categories|
+        - active = parent.in?(@seminar.categories)
+        li class=('active' if active)
+          - label = parent.name
+          = link_to root_url(category_id: parent.id), title: label do
+            strong = label
+          ul
+            - categories.each do |cat|
+              - label = cat.name
+              li.active
+                = link_to label, root_url(category_id: cat.id), title: label
+
+    /Verwaltung und Sekretariat | Demenz | Pflege, Begleitung, Betreuung, Beschäftigung | Zusätzliche Betreuungs- und Aktivierungskräfte
+  .seminaruebersicht = link_to 'zur Seminarübersicht', root_path
+- if @seminar.benefit.present?
+  .nutzenklammer
+    .nutzenueber Nutzen
+    .nutzentext = @seminar.benefit.html_safe
+.nutzenklammer
+  .nutzenueber Referenten
+  .nutzentext
+    - @seminar.teachers.each do |teacher|
+      p
+        strong = teacher.name
+        = teacher.profession
+.nutzenklammer
+  .nutzenueber Datum
+  .nutzentext
+    table cellspacing="0"
+      tbody
+        - @seminar.events.order(:date).each do |event|
+          tr
+            td = ldate event.date
+.nutzenklammer
+  .nutzenueber Zeit
+  .nutzentext
+    - @seminar.events.map {|e| e.time }.uniq.each do |time|
+      = time
+- if @seminar.price_text.present?
+  .nutzenklammer
+    .nutzenueber Gebühr
+    .nutzentext
+      = @seminar.price_text.html_safe
+- if @seminar.due_date.present?
+  .nutzenklammer
+    .nutzenueber Anmeldeschluss
+    .nutzentext
+      = @seminar.due_date.html_safe
+/| Da dieses Seminar bereits abgelaufen ist, ist eine Anmeldung leider nicht mehr möglich!
+/br/
+/br/
+/a href="zusatz.php"  zurück zum Suchergebnis
+/p.righter
+/  a href="#mutterelement"
+/    img alt="" src="oben.gif" /
+/  a href="#mutterelement"  nach oben
+
+sass:
+  ul
+    list-style: none
+
+  a
+    color: black
+
+  #textlinks a
+    color: #cc0d14
+    &:link, &:visited
+      color: #cc0d14
+      text-decoration: none
+    &:focus, &:hover, &:active
+      color: black
+      text-decoration: underline
+
+  .seminaruebersicht
+    padding: 5px
+    background-color: white
+    color: #4e4e4e
+    float: left
+    margin-right: 10px
+
+  .seminarklammer
+    overflow: hidden
+    margin-bottom: 10px
+    margin-top: 10px
+  .seminarnummer
+    padding: 5px
+    background-color: white
+    color: #4e4e4e
+    font-weight: bold
+    float: left
+    margin-right: 10px
+  .seminarthema
+    padding: 5px
+    background-color: white
+    color: #4e4e4e
+    float: left
+    margin-right: 10px
+    max-width: 57%
+  .titel
+    margin-bottom: 0
+  .untertitel
+    margin-top: 0px
+    margin-bottom: 0px
+    padding: 3px
+    border-bottom: 1px solid #015ba7 !important
+    background-color: #f9f9f9
+
+
+  .nutzenklammer
+    padding-left: 5px
+    padding-right: 5px
+    background-color: white
+    margin-bottom: 20px
+
+  .nutzenueber
+    font-size: 0.85em
+    font-weight: bold
+    padding-bottom: 5px
+    padding-top: 5px
+    color: #015ba7
+    float: left
+    width: 150px
+
+  .nutzentext
+    font-size: 0.85em
+    margin-left: 150px
+    padding: 5px
+
+  .button
+    background-color: #015ba7
+    padding-top: 10px
+    padding-bottom: 10px
+    padding-right: 20px
+    padding-left: 20px
+    color: white
+

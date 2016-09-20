@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
+
   root to: 'visitors#index'
+  get 'seminare/:id', to: 'visitors#show', as: :seminar_visitor
 
   devise_for :users, :skip => [:registrations]
   as :user do

@@ -4,4 +4,8 @@ class Event < ApplicationRecord
 
   # validates :date, presence: true
 
+  def time
+    "#{start_time} - #{end_time}"
+  end
+
 end

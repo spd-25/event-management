@@ -1,0 +1,60 @@
+- @category = @category.category if @category.category.present?
+section
+  .categories
+    ul
+      - @categories.each do |category|
+        - active = @category.in?(category.categories + [category])
+        li class=('active' if active)
+          - label = "#{category.display_name} (#{category.seminars.count + category.categories.map {|cat| cat.seminars.count }.sum})"
+          strong = link_to label, root_url(category_id: category.id), title: label
+  .subcategories
+    ul
+      - @category.categories.each do |category|
+        - active = @category.in?(category.categories + [category])
+        li class=('active' if active)
+          - label = "#{category.display_name} (#{category.seminars.count + category.categories.map {|cat| cat.seminars.count }.sum})"
+          = link_to label, root_url(category_id: category.id), title: label
+
+table
+  tbody
+    - @seminars.each do |seminar|
+      tr
+        td.number = link_to seminar.number, seminar_visitor_url(seminar.id)
+        td = link_to seminar.title, seminar_visitor_url(seminar.id)
+        td = ldate(seminar.events.order(:date).first&.date)
+
+sass:
+  section
+    width: 100%
+    height: 300px
+    margin: auto
+    padding: 10px
+    .categories
+      width: 50%
+      height: 300px
+      float: left
+    .subcategories
+      margin-left: 50%
+      height: 300px
+    ul
+      list-style: none
+      li
+        padding: 5px
+
+    a
+      color: red
+      text-decoration: none
+      &:hover
+        text-decoration: underline
+
+  table
+    td
+      padding: 3px
+      &.number
+        width: 80px
+
+      a
+        color: cornflowerblue
+        text-decoration: none
+        &:hover
+          text-decoration: underline
