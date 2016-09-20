@@ -50,45 +50,40 @@ html lang="de" xmlns="http://www.w3.org/1999/xhtml"
       = render 'layouts/old_site/navigation'
       #ganzgross
         #right
-          a target="_blank" href="http://maps.google.de/maps?f=d&amp;source=s_d&amp;saddr=&amp;daddr=Wiener+Stra%C3%9Fe+2,+39112+Magdeburg&amp;hl=de&amp;geocode=Cca_koeBjhhbFRAiGwMdrEyxACl_ihuI6fWlRzGipCqJexAt5w&amp;mra=mi&amp;sll=52.10984,11.6195&amp;sspn=0.008856,0.027874&amp;g=wiener+stra%C3%9Fe+2+magdeburg&amp;ie=UTF8&amp;z=16"
-            img alt=("Per Mausklick die Anfahrt zum Bildungswerk berechnen lassen") src="/old_site/anfahrt.jpg" title=("Per Mausklick die Anfahrt zum Bildungswerk berechnen lassen") /
-          #textrechts
-            strong Paritätisches Bildungswerk
-            br
-            | Wiener Straße 2
-            br
-            | 39112 Magdeburg
-            br
-            | Tel.: (0391) 6293313
-            br
-            | Fax: (0391) 6293555
-            br
-            | bildungswerk@paritaet-lsa.de
+          div style="display: inline-block"
+            .crop
+              img src="/old_site/hintergrund.jpg"
+          div style="display: inline-block"
+            .map-link
+              a target="_blank" href="http://maps.google.de/maps?f=d&amp;source=s_d&amp;saddr=&amp;daddr=Wiener+Stra%C3%9Fe+2,+39112+Magdeburg&amp;hl=de&amp;geocode=Cca_koeBjhhbFRAiGwMdrEyxACl_ihuI6fWlRzGipCqJexAt5w&amp;mra=mi&amp;sll=52.10984,11.6195&amp;sspn=0.008856,0.027874&amp;g=wiener+stra%C3%9Fe+2+magdeburg&amp;ie=UTF8&amp;z=16"
+                img alt=("Per Mausklick die Anfahrt zum Bildungswerk berechnen lassen") src="/old_site/anfahrt.jpg" title=("Per Mausklick die Anfahrt zum Bildungswerk berechnen lassen") /
+          div style="float: right"
+            #textrechts
+              strong Paritätisches Bildungswerk
+              br
+              | Wiener Straße 2
+              br
+              | 39112 Magdeburg
+              br
+              | Tel.: (0391) 6293313
+              br
+              | Fax: (0391) 6293555
+              br
+              | bildungswerk@paritaet-lsa.de
 
-          .overview = link_to 'zur Seminarübersicht', root_path
+        #left
+          .overview = link_to '&lt;&lt; zur Seminarübersicht'.html_safe, root_path
           .search
             form action=seminar_search_url
               input name="q" placeholder="Suche" value=params[:q]
-        #left
-          #hintergrund
-          #textlinks = yield
-          /div style=("border-bottom:1px solid #014670; text-align:right; padding-bottom:2px; padding-top:10px; margin-bottom:10px;")
-            | Bildungskalender:
-            a href="http://buchung.bildungswerk-lsa.de/katalog.php?jahr=2016" style="font-weight:bold;"  2016
-          /div style=("border:1px solid #014670; margin-bottom:15px;")
-            div style=("background-color:#014670; color:#ffffff; font-weight:bold; padding:3px;")
-              | Unsere neuesten Seminare
-            ul style=("padding-left:20px; margin:2px;")
-              li
-                a href="http://buchung.bildungswerk-lsa.de/seminar.php?id=2348"
-                  | "Interkulturelle
-                  | Sensibilisierung und kulturelle Identität"
 
+          #textlinks = yield
 
           p.righter
             a href="#top"
               img> alt="" src="/old_site/oben.gif"
               |  nach oben
+
       = render 'layouts/old_site/foot'
 
   sass:
@@ -96,9 +91,7 @@ html lang="de" xmlns="http://www.w3.org/1999/xhtml"
       font-size: 100.01%
       color: black
       font-family: Verdana, Arial, Helvetica, sans-serif
-      background-color: #f8b028
-      background-image: url(/old_site/bg.gif)
-      background-repeat: repeat-x
+      background: #f8b028 url(/old_site/bg.gif) repeat-x
       padding: 0
       margin-top: 0
       margin-bottom: 0
@@ -109,7 +102,6 @@ html lang="de" xmlns="http://www.w3.org/1999/xhtml"
       color: #cc0d14
 
     #mutterelement
-      min-width: 800px
       max-width: 1000px
       margin-left: auto
       margin-right: auto
@@ -129,11 +121,8 @@ html lang="de" xmlns="http://www.w3.org/1999/xhtml"
       overflow: hidden
 
     #head
-      background-image: url(/old_site/backgr.jpg)
-      background-position: right
-      background-repeat: no-repeat
       height: 130px
-      background-color: white
+      background: white url(/old_site/backgr.jpg) no-repeat right
       margin-top: -5px
 
     #queer
@@ -141,22 +130,36 @@ html lang="de" xmlns="http://www.w3.org/1999/xhtml"
       height: 5px
 
     #right
-      float: right
-      width: 240px
       background-color: #eeeeee
       overflow: hidden
 
-      .search
-        padding-top: 20px
-        form
-          padding: 5px
-          input
-            font-size: large
-            width: 96%
+      .crop
+        width: 542px
+        height: 200px
+        overflow: hidden
+        img
+          margin: 0 0 0 -70px
     #left
       background-color: #eeeeee
       min-height: 450px
       overflow: hidden
+
+      .overview
+        display: inline-block
+        width: 500px
+        padding: 10px
+      .search
+        display: inline-block
+        width: 400px
+        padding-top: 20px
+        form
+          padding: 5px
+          input
+            border-radius: 14px
+            border: 1px solid lightgrey
+            font-size: large
+            padding-left: 15px
+            width: 96%
 
     #sprung
       float: right
@@ -185,9 +188,6 @@ html lang="de" xmlns="http://www.w3.org/1999/xhtml"
     p
       line-height: 1.5em
 
-    img
-      border: 0px solid black
-
     #obenlinks
       width: 230px
       height: 148px
@@ -197,35 +197,28 @@ html lang="de" xmlns="http://www.w3.org/1999/xhtml"
       float: left
       background-color: #f2f2f2
 
-
-
-    #hintergrund
-      background-image: url(/old_site/hintergrund.jpg)
-      background-repeat: no-repeat
-      height: 193px
-
     #textlinks
       padding-top: 5px
       margin-left: 26px
       margin-right: 26px
       padding-bottom: 15px
 
+    .map-link
+      /*float: left*/
+      /*padding-left: 525px*/
+      /*width: 200px*/
     #textrechts
-      padding-top: 10px
-      padding-bottom: 10px
-      padding-left: 5px
-      padding-right: 5px
+      /*float: right*/
       text-align: left
       color: #034991
       background-color: #fac052
-      margin-bottom: 5px
-      margin-right: 1px
-      width: 240px
-      margin-top: 0px
+      padding: 10px
+      height: 180px
+      /*width: 200px*/
 
-    /*table, tr*/
-      /*padding: 0px*/
-      /*margin: 0px*/
+      /*table, tr*/
+        /*padding: 0px*/
+        /*margin: 0px*/
 
     /*td*/
       /*vertical-align: top*/
@@ -234,3 +227,4 @@ html lang="de" xmlns="http://www.w3.org/1999/xhtml"
 
     .righter
       text-align: right
+      padding-right: 15px
