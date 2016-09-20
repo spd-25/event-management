@@ -20,12 +20,14 @@
               - label = "#{category.name} (#{category.seminars.count})"
               = link_to label, root_url(category_id: category.id), title: label
 
-table
+table.seminars
   tbody
     - @seminars.each do |seminar|
       tr
         td.number = link_to seminar.number, seminar_visitor_url(seminar.id)
-        td = link_to seminar.title, seminar_visitor_url(seminar.id)
+        td.title = link_to seminar.title, seminar_visitor_url(seminar.id)
+        td = seminar.location&.name
+        td = seminar.teachers.map(&:name).join(', ')
         td = ldate(seminar.events.order(:date).first&.date)
 
 sass:
@@ -59,12 +61,16 @@ sass:
       &:hover
         text-decoration: underline
 
-  table
+  table.seminars
+    padding-top: 50px
     td
-      padding: 3px
+      padding: 3px 3px 10px
       vertical-align: top
+      border-top: 1px dotted lightgray
       &.number
         width: 80px
+      &.title
+        width: 280px
 
       a
         color: cornflowerblue
