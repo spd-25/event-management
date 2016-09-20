@@ -33,9 +33,15 @@ h1 = @seminar.title
   .nutzentext
     table cellspacing="0"
       tbody
-        - @seminar.events.order(:date).each do |event|
+        - @seminar.dates.each do |date|
           tr
-            td = ldate event.date
+            td
+              - if date.is_a? Range
+                => ldate date.first
+                | -
+                =< ldate date.last
+              - else
+                = ldate date
 .nutzenklammer
   .nutzenueber Zeit
   .nutzentext

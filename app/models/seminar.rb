@@ -34,6 +34,17 @@ class Seminar < ApplicationRecord
     (categories.select(&:parent?) + categories.map(&:category)).compact.uniq.sort_by(&:name)
   end
 
+  def dates
+    _dates = events.map(&:date).compact.sort
+    start_date = nil
+    _dates.each_with_object({}) do |date, res|
+      start_date      = date unless date.yesterday.in? _dates
+      res[start_date] = date
+    end.map do |start_date, end_date|
+      start_date == end_date ? start_date : (start_date..end_date)
+    end
+  end
+
   private
 
   def validate_events

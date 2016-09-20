@@ -1,23 +1,24 @@
-- if @category.parent?
-  - parent = @category
-- else
-  - parent = @category.category
-section
-  .categories
-    h4 Thema
-    ol
-      - @categories.each do |category|
-        li class=('active' if parent == category)
-          - label = "#{category.name} (#{category.seminars.count + category.categories.map {|cat| cat.seminars.count }.sum})"
-          = link_to label, root_url(category_id: category.id), title: label
-  .subcategories
-    h4 Unterthema
-    - if @category
+- if @category
+  - if @category.parent?
+    - parent = @category
+  - else
+    - parent = @category.category
+  section
+    .categories
+      h4 Thema
       ol
-        - parent.categories.each do |category|
-          li class=('active' if @category == category)
-            - label = "#{category.name} (#{category.seminars.count})"
+        - @categories.each do |category|
+          li class=('active' if parent == category)
+            - label = "#{category.name} (#{category.seminars.count + category.categories.map {|cat| cat.seminars.count }.sum})"
             = link_to label, root_url(category_id: category.id), title: label
+    .subcategories
+      h4 Unterthema
+      - if @category
+        ol
+          - parent.categories.each do |category|
+            li class=('active' if @category == category)
+              - label = "#{category.name} (#{category.seminars.count})"
+              = link_to label, root_url(category_id: category.id), title: label
 
 table
   tbody
