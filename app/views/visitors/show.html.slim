@@ -1,5 +1,5 @@
 - content_for :page_title, @seminar.title
-- content_for :page_description, strip_tags(@seminar.content) + strip_tags(@seminar.benefit) + strip_tags(@seminar.notes)
+- content_for :page_description, "#{strip_tags(@seminar.content)} #{strip_tags(@seminar.benefit)} #{strip_tags(@seminar.notes)}"
 h1 = @seminar.title
 .seminarklammer
   .seminarnummer = @seminar.number
