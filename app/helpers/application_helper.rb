@@ -22,6 +22,7 @@ module ApplicationHelper
 
   def ldate(date, options = nil)
     return '' unless date.present?
+    return "#{ldate date.begin, options} - #{ldate date.end, options}" if date.is_a?(Range)
     l date, options
   end
 

@@ -22,23 +22,14 @@ h1 = @seminar.title
         = teacher.profession
 .nutzenklammer
   .nutzenueber Datum
-  .nutzentext
-    table cellspacing="0"
-      tbody
-        - @seminar.dates.each do |date|
-          tr
-            td
-              - if date.is_a? Range
-                => ldate date.first
-                | -
-                =< ldate date.last
-              - else
-                = ldate date
+  .nutzentext = @seminar.dates.map { |date| ldate date }.join('; ').html_safe
 .nutzenklammer
   .nutzenueber Zeit
-  .nutzentext
-    - @seminar.events.map {|e| e.time }.uniq.each do |time|
-      = time
+  .nutzentext = @seminar.events.map(&:time).uniq.compact.join('; ').html_safe
+- if @seminar.location.present?
+  .nutzenklammer
+    .nutzenueber Ort
+    .nutzentext = @seminar.location.name
 - if @seminar.price_text.present?
   .nutzenklammer
     .nutzenueber Gebühr
