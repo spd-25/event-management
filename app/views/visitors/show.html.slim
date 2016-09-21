@@ -1,28 +1,18 @@
 - content_for :page_title, @seminar.title
 - content_for :page_description, "#{strip_tags(@seminar.content)} #{strip_tags(@seminar.benefit)} #{strip_tags(@seminar.notes)}"
 h1 = @seminar.title
-.seminarklammer
-  .seminarnummer = @seminar.number
-  .seminarthema
-    ul
-      - @seminar.grouped_categories.each do |parent, categories|
-        - active = parent.in?(@seminar.categories)
-        li class=('active' if active)
-          - label = parent.name
-          = link_to root_url(category_id: parent.id), title: label do
-            strong = label
-          ul
-            - categories.each do |cat|
-              - label = cat.name
-              li.active
-                = link_to label, root_url(category_id: cat.id), title: label
+.nutzenklammer
+  .nutzenueber Seminarnummer
+  .nutzentext = @seminar.number
 
-    /Verwaltung und Sekretariat | Demenz | Pflege, Begleitung, Betreuung, Beschäftigung | Zusätzliche Betreuungs- und Aktivierungskräfte
-  /.seminaruebersicht = link_to 'zur Seminarübersicht', root_path
 - if @seminar.benefit.present?
   .nutzenklammer
     .nutzenueber Nutzen
     .nutzentext = @seminar.benefit.html_safe
+- if @seminar.content.present?
+  .nutzenklammer
+    .nutzenueber Inhalt
+    .nutzentext = @seminar.content.html_safe
 .nutzenklammer
   .nutzenueber Referenten
   .nutzentext
@@ -59,6 +49,10 @@ h1 = @seminar.title
     .nutzenueber Anmeldeschluss
     .nutzentext
       = @seminar.due_date.html_safe
+- if @seminar.notes.present?
+  .nutzenklammer
+    .nutzenueber Bemerkungen
+    .nutzentext = @seminar.notes.html_safe
 
 
 
@@ -106,13 +100,7 @@ sass:
     font-weight: bold
     float: left
     margin-right: 10px
-  .seminarthema
-    padding: 5px
-    background-color: white
-    color: #4e4e4e
-    float: left
-    margin-right: 10px
-    max-width: 54%
+
   .titel
     margin-bottom: 0
   .untertitel
