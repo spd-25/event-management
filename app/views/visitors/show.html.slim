@@ -54,19 +54,15 @@ h1 = @seminar.title
     .nutzenueber Bemerkungen
     .nutzentext = @seminar.notes.html_safe
 
-
-
-= link_to 'Anmelden', new_booking_url(seminar_id: @seminar.id)
-/| Da dieses Seminar bereits abgelaufen ist, ist eine Anmeldung leider nicht mehr möglich!
-/br/
-/br/
-/a href="zusatz.php"  zurück zum Suchergebnis
-/p.righter
-/  a href="#mutterelement"
-/    img alt="" src="oben.gif" /
-/  a href="#mutterelement"  nach oben
+= link_to 'Anmelden', new_booking_url(seminar_id: @seminar.id), class: 'new-booking-link'
 
 sass:
+  a.new-booking-link
+    display: inline-block
+    background-color: #015ba7
+    padding: 15px
+    font-size: 20px
+    color: white !important
   ul
     list-style: none
 
