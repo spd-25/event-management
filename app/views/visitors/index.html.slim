@@ -1,82 +1,40 @@
 - content_for :page_title, 'Seminarübersicht'
-- if @category
-  - if @category.parent?
-    - parent = @category
-  - else
-    - parent = @category.category
-  section
-    .categories
-      h4 Thema
-      ol
-        - @categories.each do |category|
-          li class=('active' if parent == category)
-            - label = "#{category.name} (#{category.seminars.count + category.categories.map {|cat| cat.seminars.count }.sum})"
-            = link_to label, root_url(category_id: category.id), title: label
-    .subcategories
-      h4 Unterthema
-      - if @category
-        ol
-          - parent.categories.each do |category|
-            li class=('active' if @category == category)
-              - label = "#{category.name} (#{category.seminars.count})"
-              = link_to label, root_url(category_id: category.id), title: label
+- parent = @category&.parent? ? @category : @category&.category
+section
+  .col-md-3
+    ol.nav.nav-pills.nav-stacked
+      - @categories.each do |category|
+        li class=('active' if parent == category)
+          - label = category.display_name
+          = link_to label, root_url(category_id: category.id), title: label
+  .col-md-9
+    - if parent&.categories&.any?
+      ul.nav.nav-tabs
+        - parent.categories.each do |category|
+          - active = @category == category
+          li class=('active' if active)
+            - label = active ? category.display_name : category.number
+            = link_to label, root_url(category_id: category.id), title: category.display_name
 
-table.seminars
-  tbody
-    - @seminars.each do |seminar|
-      tr
-        td.number = link_to seminar.number, seminar_visitor_url(seminar)
-        td.title = link_to seminar.title, seminar_visitor_url(seminar)
-        td = seminar.location&.name
-        td = seminar.teachers.map(&:name).join(', ')
-        td = ldate(seminar.events.order(:date).first&.date)
+      /ol.nav.nav-pills.subcategories
+        - parent.categories.each do |category|
+          li class=('active' if @category == category)
+            - label = category.display_name
+            = link_to label, root_url(category_id: category.id), title: label
+    .table-responsive
+      table.table
+        tbody
+          - @seminars.each do |seminar|
+            tr
+              td.number = link_to seminar.number, seminar_visitor_url(seminar)
+              td.title = link_to seminar.title, seminar_visitor_url(seminar)
+              td = seminar.location&.name
+              td = seminar.teachers.map(&:name).join(', ')
+              td = ldate(seminar.events.order(:date).first&.date)
 
 sass:
-  section
-    width: 100%
-    height: 330px
-    margin: auto
-    padding: 10px
-    .categories
-      width: 45%
-      height: 330px
-      float: left
-      font-size: 1.1em
-    .subcategories
-      margin-left: 50%
-      height: 330px
-      ol
-        list-style-type: lower-latin
-    ol
-      /*list-style: none*/
-      padding-left: 17px
-      li
-        padding: 5px
-        &.active
-          a
-            font-weight: bold
-          /*list-style: disc*/
-          /*background: grey*/
-    a
-      color: red
-      text-decoration: none
-      &:hover
-        text-decoration: underline
-
-  table.seminars
-    padding-top: 10px
-    width: 100%
-    td
-      padding: 3px 3px 10px
-      vertical-align: top
-      border-top: 1px dotted lightgray
-      &.number
-        width: 80px
-      &.title
-        width: 280px
-
-      a
-        color: #015ba7
-        text-decoration: none
-        &:hover
-          text-decoration: underline
+  .subcategories
+    margin-bottom: 50px
+  table
+    td.number
+      width: 120px

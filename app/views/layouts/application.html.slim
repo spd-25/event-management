@@ -2,13 +2,13 @@ doctype html
 html
   head
     meta[name="viewport" content="width=device-width, initial-scale=1.0"]
-    title = content_for?(:title) ? yield(:title) : 'Event Management'
+    title = content_for?(:title) ? yield(:title) : 'Paritätisches Bildungswerk Sachsen-Anhalt'
     == stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
     == javascript_include_tag 'application', 'data-turbolinks-track' => true
     == csrf_meta_tags
   body
     header
       == render 'layouts/navigation'
-    main[role="main"]
+    main.container-fluid[role="main"]
       == render 'layouts/messages'
       == yield

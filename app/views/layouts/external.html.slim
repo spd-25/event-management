@@ -1,0 +1,43 @@
+doctype html
+html
+  head
+    meta[name="viewport" content="width=device-width, initial-scale=1.0"]
+    title = content_for?(:title) ? yield(:title) : 'Paritätisches Bildungswerk Sachsen-Anhalt'
+    == stylesheet_link_tag 'external', media: 'all', 'data-turbolinks-track' => true
+    == javascript_include_tag 'external', 'data-turbolinks-track' => true
+    == csrf_meta_tags
+  body
+    header
+      /== render 'layouts/navigation'
+      /div = link_to root_url do
+        = image_tag 'parit.png', alt: 'zur Startseite'
+      nav.navbar
+        .container
+
+          .navbar-header
+            button.navbar-toggle[type='button' data-toggle='collapse' data-target='.navbar-collapse']
+              span.sr-only Toggle navigation
+              span.icon-bar
+              span.icon-bar
+              span.icon-bar
+            /= link_to 'Start', root_path, class: 'navbar-brand', tabindex: -1
+            /= link_to title_for_model(Seminar, with_icon: true), seminars_url, class: 'navbar-brand', tabindex: -1
+            = link_to root_url, class: 'navbar-brand' do
+              = image_tag 'parit.png', alt: 'zur Startseite'
+          .collapse.navbar-collapse
+            ul.nav.navbar-nav
+              li.active
+                = link_to 'WIR ÜBER UNS', root_url
+              li class=('active' if false)
+                = link_to 'TEAM', 'http://bildungswerk-lsa.de/index.php?article_id=22'
+              li class=('active' if false)
+                = link_to 'FORT- & WEITERBILDUNG', root_url
+              /<div class="linki">
+              /  <a href="http://bildungswerk-lsa.de/index.php?article_id=22">WIR ÜBER UNS</a></div>
+              /<div class="linki2"><a href="http://bildungswerk-lsa.de/index.php?article_id=42">TEAM</a></div>
+              /<div class="linki2"><a href="http://bildungswerk-lsa.de/index.php?article_id=43">FORT- &amp; WEITERBILDUNG</a></div>
+              /<div class="linki2"><a href="http://bildungswerk-lsa.de/index.php?article_id=44">AUSBILDUNG</a></div>
+
+    main.container[role="main"]
+      == render 'layouts/messages'
+      == yield

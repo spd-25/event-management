@@ -1,6 +1,7 @@
 class VisitorsController < ApplicationController
 
-  layout 'old_site'
+  # layout 'old_site'
+  layout 'external'
 
   def index
     if user_signed_in?
@@ -14,7 +15,7 @@ class VisitorsController < ApplicationController
         # @seminars = Seminar.order(:number).includes(:teachers, :events, :location).all
         Category.cat_parents.first
       end
-      @seminars = @category ? @category.seminars : Seminar
+      @seminars = @category ? @category.all_seminars : Seminar
       @seminars = @seminars.order('events.date').includes(:teachers, :events, :location).all
     end
   end

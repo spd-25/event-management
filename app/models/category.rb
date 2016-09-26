@@ -14,7 +14,15 @@ class Category < ApplicationRecord
     category.blank?
   end
 
-  def display_name
-    "#{number} #{name}"
+  def all_seminars
+    category_ids = [id] + categories.pluck(:id)
+    Seminar.joins(:categories).where('categories.id' => category_ids)
+  end
+
+  def display_name(with_number: true, with_counts: true)
+    res = name
+    res = "#{number} #{res}" if with_number
+    res = "#{res} (#{all_seminars.count})" if with_counts
+    res
   end
 end
