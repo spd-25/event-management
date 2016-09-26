@@ -25,7 +25,7 @@ class VisitorsController < ApplicationController
 
   def search
     @query = params[:q]
-    @seminars = PgSearch.multisearch(@query).where(searchable_type: 'Seminar').to_a.map(&:searchable)
+    @seminars = PgSearch.multisearch(@query).where(searchable_type: 'Seminar').to_a.map(&:searchable).compact
     render :index
   end
 end
