@@ -3,10 +3,11 @@
 ol.breadcrumb
   li = link_to Seminar.model_name.human(count: 2), seminars_url
   - sub_cat = @seminar.categories.first
-  - parent = sub_cat.parent? ? sub_cat : sub_cat.category
-  li = link_to parent.name, seminars_url(category_id: parent.id)
-  - unless parent == sub_cat
-    li = link_to sub_cat.name, seminars_url(category_id: sub_cat.id)
+  - if sub_cat
+    - parent = sub_cat.parent? ? sub_cat : sub_cat.category
+    li = link_to parent.name, seminars_url(category_id: parent.id)
+    - unless parent == sub_cat
+      li = link_to sub_cat.name, seminars_url(category_id: sub_cat.id)
 
 .page-header
   .buttons
