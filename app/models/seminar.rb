@@ -5,6 +5,8 @@ class Seminar < ApplicationRecord
   has_and_belongs_to_many :categories
   belongs_to :location, optional: true
   has_many :events
+  belongs_to :parent,    class_name: 'Seminar', inverse_of: :sub_modules
+  has_many :sub_modules, class_name: 'Seminar', inverse_of: :parent, foreign_key: 'parent_id'
   has_many :bookings
   has_many :open_bookings,  -> { where(invoice_id: nil) }, class_name: 'Booking'
   has_many :payed_bookings, -> { joins(:invoice).where('invoices.status' => Invoice.statuses[:payed]) }, class_name: 'Booking'
