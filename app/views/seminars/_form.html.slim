@@ -21,6 +21,11 @@
         a aria-controls="settings" data-toggle="tab" href="#notes" role="tab"  Bemerkungen
     .tab-content
       #general.tab-pane.active role="tabpanel"
+        = f.association :parent,
+            label_method: ->(s){ "#{s.number} - #{s.title}" },
+            collection: Seminar.where(parent_id: nil).order(:number),
+            input_html: { class: 'select2' },
+            label: 'Dieses Seminar ist ein Modul von'
         .row
           .col-md-2 = f.input :number
           .col-md-10 = f.input :title
