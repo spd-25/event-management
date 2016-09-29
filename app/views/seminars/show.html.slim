@@ -40,11 +40,13 @@ ol.breadcrumb
               td = sub_module.teachers.map(&:name).join(', ').html_safe
               td = sub_module.dates.map { |date| ldate date }.join('<br>').html_safe
               td = sub_module.price
-    = render 'seminars/show/teachers'
-    p
-      - location = @seminar.location
-      - if location
-        = link_to icon_for(location, text: location.name, size: 2), location
+    .row
+      .col-md-6 = render 'seminars/show/teachers'
+      .col-md-6
+        p
+          - location = @seminar.location
+          - if location
+            = link_to icon_for(location, text: location.name, size: 2), location
     = render 'seminars/show/events'
     = render 'seminars/show/categories'
 
