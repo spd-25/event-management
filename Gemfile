@@ -58,6 +58,7 @@ group :development do
   gem 'rb-inotify', :require=>false
   gem 'spring-commands-rspec'
   gem 'mechanize'
+  gem 'binding_of_caller'
 end
 
 group :development, :test do
