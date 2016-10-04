@@ -74,13 +74,13 @@ class BookingsController < ApplicationController
     params.require(:booking).permit(:seminar_id, :company, :company_name, :invoice_address,
                                     :member, :member_institution, :graduate, :school, :year,
                                     :terms_of_service,
+                                    :contact_person, :contact_email, :contact_phone, :contact_mobile,
+                                    :contact_fax, :address_street, :address_zip, :address_city,
                                     attendees_attributes: %i(id first_name last_name profession _destroy) + [
                                       address: %i(street zip city),
                                       contact: %i(email phone mobile)
-                                    ],
-                                    invoice_address: %i(street zip city),
-                                    address: %i(street zip city),
-                                    contact: %i(person email phone mobile fax))
+                                    ]
+                                    )
   end
 
   def set_layout

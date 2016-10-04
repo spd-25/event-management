@@ -3,14 +3,17 @@ class Booking < ApplicationRecord
   has_many :attendees
   belongs_to :invoice, inverse_of: :booking
 
-  accepts_nested_attributes_for :attendees, allow_destroy: true
-
-  validates :company_name, :invoice_address, presence: true, if: :company
-  validate :validate_attendees
-  validates :terms_of_service, acceptance: true
-
   acts_as_addressable
   acts_as_contactable
+  accepts_nested_attributes_for :attendees, allow_destroy: true
+
+  validate :validate_attendees
+  validates :terms_of_service, acceptance: true
+  validates :contact_email, presence: true
+  validates :contact_phone, presence: true
+  validates :address_street, presence: true
+  validates :address_zip, presence: true
+  validates :address_city, presence: true
 
   scope :created,         -> { where(invoice_id: nil) }
   scope :invoice_created, -> { joins(:invoice).where('invoices.status' => Invoice.statuses[:created]) }

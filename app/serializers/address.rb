@@ -30,8 +30,8 @@ class Address < JsonObjectSerializer
         serialize field_name, ::Address
 
         ::Address.attribute_set.each do |attribute|
-          delegate attribute.name, to: :address
-          delegate "#{attribute.name}=", to: :address
+          delegate attribute.name, to: :address, prefix: true
+          delegate "#{attribute.name}=", to: :address, prefix: true
         end
       end
     end

@@ -19,6 +19,11 @@ de:
         city: Ort
         street: Straße/Nr
         zip: PLZ
+      contact_person: Ansprechpartner
+      contact_email: E-Mail-Adresse
+      contact_mobile: Mobiltelefon
+      contact_phone: Telefon
+      contact_fax: Fax
       contact:
         person: Ansprechpartner
         email: E-Mail-Adresse
@@ -34,6 +39,11 @@ de:
       city: Ort
       street: Straße/Nr
       zip: PLZ
+      contact_person: Ansprechpartner
+      contact_email: E-Mail-Adresse
+      contact_mobile: Mobiltelefon
+      contact_phone: Telefon
+      contact_fax: Fax
       contact:
         person: Ansprechpartner
         email: E-Mail-Adresse

@@ -1,7 +1,7 @@
 = simple_form_for(@booking) do |f|
   = f.input :seminar_id, as: :hidden
   /= f.error_notification
-  - if @booking.errors.any?
+  - if user_signed_in? && @booking.errors.any?
     .alert.alert-danger.alert-dismissable
       button.close type="button" data-dismiss="alert"
         span aria-hidden="true" &times;
@@ -27,20 +27,22 @@
 
       fieldset
         legend Kontakt
-        .row = f.simple_fields_for :contact, f.object.contact do |c|
-          .col-md-6 = c.input :email,  as: :email, required: true, label: false
-          .col-md-6 = c.input :phone,  as: :tel, required: true, label: false
-          .col-md-6 = c.input :fax,    as: :tel, required: false, label: false
-          .col-md-6 = c.input :mobile, as: :tel, required: false, label: false
+        /.row
+          .col-md-6 = f.input :contact_email,  as: :email, label: false, placeholder: 'E-Mail-Adresse'
+        .row
+          .col-md-6 = f.input :contact_email,  as: :email, label: false, placeholder: 'E-Mail-Adresse'
+          .col-md-6 = f.input :contact_phone,  as: :tel, label: false, placeholder: 'Telefon'
+          .col-md-6 = f.input :contact_fax,    as: :tel, label: false, placeholder: 'Fax (optional)'
+          .col-md-6 = f.input :contact_mobile, as: :tel, label: false, placeholder: 'Mobil (optional)'
 
       fieldset
         legend Rechnungsadresse
-        .row = f.simple_fields_for :contact, f.object.contact do |c|
-          .col-md-6 = c.input :person, required: true, label: false
-        .row = f.simple_fields_for :address, f.object.address do |c|
-          .col-md-5 = c.input :street, required: true, label: false
-          .col-md-2 = c.input :zip,  as: :tel, required: true, label: false
-          .col-md-5 = c.input :city, required: true, label: false
+        .row
+          .col-md-6 = f.input :contact_person, label: false, placeholder: 'Ansprechpartner'
+        .row
+          .col-md-5 = f.input :address_street, label: false, placeholder: 'Straße/Nr'
+          .col-md-2 = f.input :address_zip,  as: :tel, label: false, placeholder: 'PLZ'
+          .col-md-5 = f.input :address_city, label: false, placeholder: 'Ort'
 
       fieldset
         legend Paritätische
