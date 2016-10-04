@@ -14,5 +14,5 @@
       - @locations.each do | location |
         tr data = {url: url_for(location)}
           td = location.name
-          td = location.city
+          td = location.address_city
           td = location.seminars.count
