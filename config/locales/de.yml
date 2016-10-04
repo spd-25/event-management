@@ -12,14 +12,14 @@ de:
   bookings:
     single:
       title: "%{id}"
-    form:
-      error: Anmeldung konnte nicht gespeichert werden.
     new:
       title: Neue Anmeldung
+      error: Anmeldung konnte nicht gespeichert werden. Bitte überprüfen Sie die markierten Felder.
     icon: book
     company_true: Firmenanmeldung
     company_false: Privat
     private:
+    created: Sie haben sich erfolgreich für dieses Seminar angemeldet. Sie sollten in wenigen Minuten eine Bestätigung per E-Mail erhalten.
   categories:
     single:
       title: "%{id}"

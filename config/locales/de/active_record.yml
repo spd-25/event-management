@@ -62,6 +62,7 @@ de:
         invoice_address: Rechnungsadresse
         places: Plätze
         invoice_address: Rechnungsadresse
+        contact_email: E-Mail-Adresse
       category:
         category: Oberthema
         categories: Unterthemen

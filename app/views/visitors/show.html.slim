@@ -54,11 +54,13 @@
         .col-md-4: h5 Bemerkungen
         .col-md-8 = @seminar.notes.html_safe
 
-.row
-  .col-md-3
+.row.action-buttons
+  .col-md-4.col-md-offset-4
     = link_to 'Anmelden', new_booking_url(seminar_id: @seminar.id), class: 'btn btn-primary btn-block btn-lg'
 
 sass:
+  .action-buttons
+    margin-top: 30px
   .additional
     label
       margin: 0

@@ -1,0 +1,91 @@
+p Sehr geehrte Damen und Herren,
+
+p
+  | hiermit bedanken wir uns für Ihre Anmeldung und übersenden Ihnen noch einmal zur Kontrolle
+    die eingegangenen Anmeldedaten. Eine Anmeldebestätigung und die Rechnung senden wir
+    Ihnen ca. zwei Wochen vor dem Seminartermin an Ihre Rechnungsadresse zu.
+
+h4
+  | Seminar
+  = @seminar.title
+p
+  strong> Seminar-Nr.:
+  = @seminar.number
+p
+  strong> Datum:
+  = @seminar.dates.map { |date| ldate date }.join('; ').html_safe
+p
+  strong> Zeit:
+  = @seminar.events.map(&:time).uniq.compact.join('; ').html_safe
+p
+  strong> Referenten:
+  = @seminar.teachers.map(&:name).join(', ').html_safe
+p
+  strong> Ort:
+  = @seminar.location.name
+p
+  strong> Gebühr:
+  = @seminar.price_text.html_safe
+
+
+h4 Teilnehmer:
+p
+  - @booking.attendees.each do |attendee|
+    = attendee.name
+    br
+h4 Kontakt:
+p = @booking.contact_email
+p title="Telefon" = @booking.contact_phone
+- if @booking.contact_fax.present?
+  p title="Fax" = @booking.contact_fax
+- if @booking.contact_mobile.present?
+  p title="Mobil" = @booking.contact_mobile
+
+h4 Rechnungsadresse
+p
+  - if @booking.contact_person.present?
+    = @booking.contact_person
+    br
+  = @booking.address_street
+  br
+  => @booking.address_zip
+  = @booking.address_city
+
+- if @booking.member || @booking.member_institution || @booking.graduate
+  h4 Paritätische
+  p
+    - if @booking.member
+      | Mitglied im PARITÄTISCHEN LSA:
+    - if @booking.member_institution
+      | Einrichtung des PARITÄTISCHEN LSA:
+    - if @booking.graduate
+      | Absolvent*in der Fachschule:
+      => @booking.school
+      = @booking.year
+
+
+p Freundliche Grüße
+
+
+.address
+  p
+    | PARITÄTISCHES Bildungswerk
+      (PBW)
+
+  p
+    | www.bildungswerk-lsa.de
+      bildungswerk@paritaet-lsa.de
+
+  p
+    |
+      Landesverband Sachsen-Anhalt e.V.
+      Wiener Str. 2
+      39112 Magdeburg
+
+  p Tel. 0391/6293-311
+  p Fax. 0391/6293-555
+
+  p Amtsgericht Magdeburg, Vereinsregister Nr. VR 1430
+  p USt-Nr.: 101/142/02695
+  p Vorstandsvorsitzende:
+  p Dr. Gabriele Girke

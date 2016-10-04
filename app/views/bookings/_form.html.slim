@@ -1,7 +1,7 @@
 = simple_form_for(@booking) do |f|
   = f.input :seminar_id, as: :hidden
   /= f.error_notification
-  - if user_signed_in? && @booking.errors.any?
+  /- if @booking.errors.any?
     .alert.alert-danger.alert-dismissable
       button.close type="button" data-dismiss="alert"
         span aria-hidden="true" &times;
@@ -18,8 +18,8 @@
           .attendee class=('new-record' if attendee.new_record?)
             = attendee_form.input :_destroy, as: :hidden, input_html: { value: attendee.new_record? }
             .row
-              .col-md-6 = attendee_form.input :first_name, label: false
-              .col-md-6 = attendee_form.input :last_name,  label: false
+              .col-md-6 = attendee_form.input :first_name, label: false, placeholder: '* Vorname'
+              .col-md-6 = attendee_form.input :last_name,  label: false, placeholder: '* Nachname'
 
         .row
           .col-md-1 = link_to fa_icon('plus', text: 'Teilnehmer hinzufügen'), '#',
@@ -30,8 +30,8 @@
         /.row
           .col-md-6 = f.input :contact_email,  as: :email, label: false, placeholder: 'E-Mail-Adresse'
         .row
-          .col-md-6 = f.input :contact_email,  as: :email, label: false, placeholder: 'E-Mail-Adresse'
-          .col-md-6 = f.input :contact_phone,  as: :tel, label: false, placeholder: 'Telefon'
+          .col-md-6 = f.input :contact_email,  as: :email, label: false, placeholder: '* E-Mail-Adresse'
+          .col-md-6 = f.input :contact_phone,  as: :tel, label: false, placeholder: '* Telefon'
           .col-md-6 = f.input :contact_fax,    as: :tel, label: false, placeholder: 'Fax (optional)'
           .col-md-6 = f.input :contact_mobile, as: :tel, label: false, placeholder: 'Mobil (optional)'
 
@@ -40,9 +40,9 @@
         .row
           .col-md-6 = f.input :contact_person, label: false, placeholder: 'Ansprechpartner'
         .row
-          .col-md-5 = f.input :address_street, label: false, placeholder: 'Straße/Nr'
-          .col-md-2 = f.input :address_zip,  as: :tel, label: false, placeholder: 'PLZ'
-          .col-md-5 = f.input :address_city, label: false, placeholder: 'Ort'
+          .col-md-5 = f.input :address_street, label: false, placeholder: '* Straße/Nr '
+          .col-md-2 = f.input :address_zip,  as: :tel, label: false, placeholder: '* PLZ'
+          .col-md-5 = f.input :address_city, label: false, placeholder: '* Ort'
 
       fieldset
         legend Paritätische
@@ -52,20 +52,20 @@
         .row
           .col-md-4 = f.input :graduate, as: :boolean, label: 'Absolvent*in der Fachschule'
           .col-md-4 = f.input :school, collection: %w(Aschersleben Drübeck), prompt: 'Schule', label: false
-          .col-md-4 = f.input :year, as: :integer, placeholder: 'Jahr', label: false
+          .col-md-4 = f.input :year, placeholder: 'Jahr', label: false
 
       fieldset
         legend AGB
-        = f.input :terms_of_service, as: :boolean, label: 'Hiermit erkenne ich die Allgemeinen Geschäftsbedingungen des PARITÄTISCHEN Bildungswerkes LSA an.'
+        = f.input :terms_of_service, as: :boolean, required: true, label: 'Hiermit erkenne ich die Allgemeinen Geschäftsbedingungen des PARITÄTISCHEN Bildungswerkes LSA an.'
 
   .row.action-buttons
     .col-md-8
-      .pull-right
-        - if user_signed_in?
+      - if user_signed_in?
+        .pull-right
           => link_to t(:cancel), 'javascript: window.history.back();', class: 'btn btn-default'
           = f.submit t(:save), class: 'btn btn-primary'
-        - else
-          = f.submit 'Jetzt anmelden', class: 'btn btn-primary'
+      - else
+        = f.submit 'Jetzt anmelden', class: 'btn btn-primary btn-block btn-lg'
 
 
 coffee:

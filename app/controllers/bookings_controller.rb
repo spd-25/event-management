@@ -30,10 +30,11 @@ class BookingsController < ApplicationController
 
     if @booking.save
       BookingMailer.new_booking_email(@booking).deliver_later
+      BookingMailer.booking_confirmation_email(@booking).deliver_later
       if user_signed_in?
         redirect_to @booking.seminar, notice: t(:created, model: Booking.model_name.human)
       else
-        redirect_to root_url, notice: t('bookings.created')
+        redirect_to seminar_visitor_url(@booking.seminar), notice: t('bookings.created')
       end
     else
       @seminar = Seminar.find @booking.seminar_id

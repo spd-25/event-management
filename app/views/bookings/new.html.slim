@@ -1,5 +1,12 @@
 - page_title_for @booking
 
+- if @booking.errors.any?
+  .alert.alert-danger.alert-dismissable
+    button.close type="button" data-dismiss="alert"
+      span aria-hidden="true" &times;
+      span.sr-only Close
+    h4 = t('.error')
+
 - unless user_signed_in?
 
   h3 Ich melde mich verbindlich für folgende Veranstaltung an:
