@@ -1,128 +1,66 @@
 - content_for :page_title, @seminar.title
 - content_for :page_description, "#{strip_tags(@seminar.content)} #{strip_tags(@seminar.benefit)} #{strip_tags(@seminar.notes)}"
-h1 = @seminar.title
-.nutzenklammer
-  .nutzenueber Seminarnummer
-  .nutzentext = @seminar.number
+- content_for :back_link, link_to('&laquo; zur Seminarübersicht'.html_safe, root_path)
 
-- if @seminar.benefit.present?
-  .nutzenklammer
-    .nutzenueber Nutzen
-    .nutzentext = @seminar.benefit.html_safe
-- if @seminar.content.present?
-  .nutzenklammer
-    .nutzenueber Inhalt
-    .nutzentext = @seminar.content.html_safe
-.nutzenklammer
-  .nutzenueber Referenten
-  .nutzentext
-    - @seminar.teachers.each do |teacher|
-      p
-        strong = teacher.name
-        = teacher.profession
-.nutzenklammer
-  .nutzenueber Datum
-  .nutzentext = @seminar.dates.map { |date| ldate date }.join('; ').html_safe
-.nutzenklammer
-  .nutzenueber Zeit
-  .nutzentext = @seminar.events.map(&:time).uniq.compact.join('; ').html_safe
-- if @seminar.location.present?
-  .nutzenklammer
-    .nutzenueber Ort
-    .nutzentext = @seminar.location.name
-- if @seminar.price_text.present?
-  .nutzenklammer
-    .nutzenueber Gebühr
-    .nutzentext
-      = @seminar.price_text.html_safe
-- if @seminar.due_date.present?
-  .nutzenklammer
-    .nutzenueber Anmeldeschluss
-    .nutzentext
-      = @seminar.due_date.html_safe
-- if @seminar.notes.present?
-  .nutzenklammer
-    .nutzenueber Bemerkungen
-    .nutzentext = @seminar.notes.html_safe
+.row
+  .col-md-8
+    h2
+      = @seminar.title
+      - if @seminar.subtitle.present?
+        br
+        small = @seminar.subtitle
+  .col-md-4
+    h3
+      | Seminar-Nr.:
+      br
+      =< @seminar.number
 
-= link_to 'Anmelden', new_booking_url(seminar_id: @seminar.id), class: 'new-booking-link'
+
+.row
+  .col-md-8
+    - if @seminar.benefit.present?
+      h4 Ihr Nutzen
+      = @seminar.benefit.html_safe
+    - if @seminar.content.present?
+      h4 Seminarinhalt
+      = @seminar.content.html_safe
+
+  .col-md-4.additional
+    .row.line
+      .col-md-4: label Datum
+      .col-md-8 = @seminar.dates.map { |date| ldate date }.join('; ').html_safe
+    .row.line
+      .col-md-4: label Zeit
+      .col-md-8 = @seminar.events.map(&:time).uniq.compact.join('; ').html_safe
+    .row.line
+      .col-md-4: h5 Referenten
+      .col-md-8
+        - @seminar.teachers.each do |teacher|
+          p title=teacher.profession = teacher.name
+    - if @seminar.location.present?
+      .row.line
+        .col-md-4: h5 Ort
+        .col-md-8 = @seminar.location.name
+    - if @seminar.price_text.present?
+      .row.line
+        .col-md-4: h5 Gebühr
+        .col-md-8 = @seminar.price_text.html_safe
+    - if @seminar.due_date.present?
+      .row.line
+        .col-md-4: h5 Anmeldeschluss
+        .col-md-8 = @seminar.due_date.html_safe
+    - if @seminar.notes.present?
+      .row.line
+        .col-md-4: h5 Bemerkungen
+        .col-md-8 = @seminar.notes.html_safe
+
+.row
+  .col-md-3
+    = link_to 'Anmelden', new_booking_url(seminar_id: @seminar.id), class: 'btn btn-primary btn-block btn-lg'
 
 sass:
-  a.new-booking-link
-    display: inline-block
-    background-color: #015ba7
-    padding: 15px
-    font-size: 20px
-    color: white !important
-  ul
-    list-style: none
-
-  a
-    color: black
-
-  #textlinks a
-    color: #cc0d14
-    &:link, &:visited
-      color: #cc0d14
-      text-decoration: none
-    &:focus, &:hover, &:active
-      color: black
-      text-decoration: underline
-
-  .seminaruebersicht
-    padding: 5px
-    background-color: white
-    color: #4e4e4e
-    float: left
-    margin-right: 10px
-
-  .seminarklammer
-    overflow: hidden
-    margin-bottom: 10px
-    margin-top: 10px
-  .seminarnummer
-    padding: 5px
-    background-color: white
-    color: #4e4e4e
-    font-weight: bold
-    float: left
-    margin-right: 10px
-
-  .titel
-    margin-bottom: 0
-  .untertitel
-    margin-top: 0px
-    margin-bottom: 0px
-    padding: 3px
-    border-bottom: 1px solid #015ba7 !important
-    background-color: #f9f9f9
-
-
-  .nutzenklammer
-    padding-left: 5px
-    padding-right: 5px
-    background-color: white
+  .additional
+    label
+      margin: 0
+  .line
     margin-bottom: 20px
-
-  .nutzenueber
-    font-size: 0.85em
-    font-weight: bold
-    padding-bottom: 5px
-    padding-top: 5px
-    color: #015ba7
-    float: left
-    width: 150px
-
-  .nutzentext
-    font-size: 0.85em
-    margin-left: 150px
-    padding: 5px
-
-  .button
-    background-color: #015ba7
-    padding-top: 10px
-    padding-bottom: 10px
-    padding-right: 20px
-    padding-left: 20px
-    color: white
-

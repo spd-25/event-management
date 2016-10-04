@@ -1,6 +1,6 @@
 class VisitorsController < ApplicationController
 
-  layout 'old_site'
+  layout 'external'
 
   def index
     if user_signed_in?

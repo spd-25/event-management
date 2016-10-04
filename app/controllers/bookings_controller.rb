@@ -84,6 +84,6 @@ class BookingsController < ApplicationController
   end
 
   def set_layout
-    user_signed_in? ? 'application' : 'old_site'
+    user_signed_in? ? 'application' : 'external'
   end
 end

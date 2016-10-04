@@ -1,27 +1,24 @@
 - content_for :page_title, 'Seminarübersicht'
 - if @category
-  - if @category.parent?
-    - parent = @category
-  - else
-    - parent = @category.category
-  section
-    .categories
+  - parent = @category.parent? ? @category : @category.category
+  .row
+    .col-md-6
       h4 Thema
-      ol
+      ul.list-unstyled
         - @categories.each do |category|
           li class=('active' if parent == category)
-            - label = "#{category.name} (#{category.seminars.count + category.categories.map {|cat| cat.seminars.count }.sum})"
+            - label = category.display_name
             = link_to label, root_url(category_id: category.id), title: label
-    .subcategories
+    .col-md-6
       h4 Unterthema
       - if @category
-        ol
-          - parent.categories.each do |category|
+        ul.list-unstyled
+          - parent.categories.order(:number, :name).each do |category|
             li class=('active' if @category == category)
-              - label = "#{category.name} (#{category.seminars.count})"
+              - label = category.display_name
               = link_to label, root_url(category_id: category.id), title: label
 
-table.seminars
+table.seminars.table
   tbody
     - @seminars.each do |seminar|
       tr
@@ -32,22 +29,28 @@ table.seminars
         td = ldate(seminar.events.order(:date).first&.date)
 
 sass:
+  form
+    input
+      input
+        border-radius: 14px
+        /*border: 1px solid lightgrey*/
+        font-size: large
   section
-    width: 100%
-    height: 330px
-    margin: auto
-    padding: 10px
-    .categories
+    /*width: 100%*/
+    /*height: 330px*/
+    /*margin: auto*/
+    /*padding: 10px*/
+    /*.categories*/
       width: 45%
       height: 330px
       float: left
       font-size: 1.1em
-    .subcategories
+    /*.subcategories*/
       margin-left: 50%
       height: 330px
       ol
         list-style-type: lower-latin
-    ol
+    /*ol*/
       /*list-style: none*/
       padding-left: 17px
       li
@@ -57,25 +60,25 @@ sass:
             font-weight: bold
           /*list-style: disc*/
           /*background: grey*/
-    a
+    /*a*/
       color: red
       text-decoration: none
       &:hover
         text-decoration: underline
 
   table.seminars
-    padding-top: 10px
-    width: 100%
+    margin: 30px 0 50px
+    /*width: 100%*/
     td
-      padding: 3px 3px 10px
-      vertical-align: top
-      border-top: 1px dotted lightgray
+      /*padding: 3px 3px 10px*/
+      /*vertical-align: top*/
+      /*border-top: 1px dotted lightgray*/
       &.number
-        width: 80px
+        width: 100px
       &.title
         width: 280px
 
-      a
+      /*a*/
         color: #015ba7
         text-decoration: none
         &:hover

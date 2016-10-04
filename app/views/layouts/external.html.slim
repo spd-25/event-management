@@ -1,0 +1,48 @@
+doctype html
+html
+  head
+    meta[name="viewport" content="width=device-width, initial-scale=1.0"]
+    title
+      | Paritätischen Bildungswerkes Sachsen-Anhalt
+      - if content_for? :page_title
+        | -
+        =< content_for :page_title
+    meta content=content_for(:page_description) name="description"
+    meta content="parität, bildung, bildungswerk, sachsen, anhalt, paritätisches, " name="keywords"
+
+    == stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
+    == javascript_include_tag 'application', 'data-turbolinks-track' => true
+    == csrf_meta_tags
+  body
+    #main.container
+      header
+        a href="/"
+          img alt=("zur Startseite") src="/old_site/parit.png"
+      == render 'layouts/old_site/navigation'
+      == render 'layouts/messages'
+
+      == render 'layouts/old_site/header_block'
+
+
+      .content
+        .row
+          .col-md-6 = content_for :back_link if content_for? :back_link
+          .col-md-6.search
+            form.form action=seminar_search_url
+              .form-group
+                input.form-control type="text" name="q" placeholder="Suche" value=params[:q]
+        == yield
+
+      = render 'layouts/old_site/foot'
+
+  sass:
+    body
+      background: #f8b028 url(/old_site/bg.gif) repeat-x
+
+      #main.container
+        background-color: #f2f2f2
+        padding-left: 0
+        padding-right: 0
+
+        .content
+          padding: 20px
