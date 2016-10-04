@@ -24,6 +24,7 @@ de:
         email: E-Mail-Adresse
         mobile: Mobiltelefon
         phone: Telefon
+        fax: Fax
     labels:
       address:
         city: Ort
@@ -38,3 +39,4 @@ de:
         email: E-Mail-Adresse
         mobile: Mobiltelefon
         phone: Telefon
+        fax: Fax

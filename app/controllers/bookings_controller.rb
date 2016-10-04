@@ -2,6 +2,7 @@ class BookingsController < ApplicationController
   before_action :authenticate_user!, except: [:new, :create]
   after_action :verify_authorized
   before_action :set_booking, only: [:show, :update, :destroy]
+  layout :set_layout
 
   def index
     authorize Booking
@@ -16,8 +17,11 @@ class BookingsController < ApplicationController
     authorize Booking
     @seminar = Seminar.find params[:seminar_id]
     @booking = @seminar.bookings.build
-    @booking.company = params[:company] == 'true'
+    # @booking.company = params[:company] == 'true'
     prepare_attendees
+    # layout = user_signed_in? ? :default : 'old_site'
+    # layout = :default
+    # render layout: layout
   end
 
   def create
@@ -31,8 +35,9 @@ class BookingsController < ApplicationController
         redirect_to root_url, notice: t('bookings.created')
       end
     else
-      @seminar = @booking.seminar
+      @seminar = Seminar.find @booking.seminar_id
       prepare_attendees if @booking.company
+      # layout = user_signed_in? ? :default : 'old_site'
       render :new
     end
   end
@@ -54,7 +59,7 @@ class BookingsController < ApplicationController
   private
 
   def prepare_attendees
-    (@booking.company ? 10 : 1).times { @booking.attendees.build }
+    10.times { @booking.attendees.build }
   end
 
   # Use callbacks to share common setup or constraints between actions.
@@ -67,11 +72,18 @@ class BookingsController < ApplicationController
   # Only allow a trusted parameter "white list" through.
   def booking_params
     params.require(:booking).permit(:seminar_id, :company, :company_name, :invoice_address,
+                                    :member, :member_institution, :graduate, :school, :year,
+                                    :terms_of_service,
                                     attendees_attributes: %i(id first_name last_name profession _destroy) + [
                                       address: %i(street zip city),
                                       contact: %i(email phone mobile)
                                     ],
                                     invoice_address: %i(street zip city),
-                                    contact: %i(email phone mobile))
+                                    address: %i(street zip city),
+                                    contact: %i(person email phone mobile fax))
+  end
+
+  def set_layout
+    user_signed_in? ? 'application' : 'old_site'
   end
 end

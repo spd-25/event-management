@@ -7,6 +7,10 @@ class Booking < ApplicationRecord
 
   validates :company_name, :invoice_address, presence: true, if: :company
   validate :validate_attendees
+  validates :terms_of_service, acceptance: true
+
+  acts_as_addressable
+  acts_as_contactable
 
   scope :created,         -> { where(invoice_id: nil) }
   scope :invoice_created, -> { joins(:invoice).where('invoices.status' => Invoice.statuses[:created]) }
@@ -31,7 +35,7 @@ class Booking < ApplicationRecord
   def company_address
     "#{company_name}\n#{invoice_address}"
   end
-  
+
   private
 
   def validate_attendees
