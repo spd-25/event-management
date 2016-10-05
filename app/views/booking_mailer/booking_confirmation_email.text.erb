@@ -18,10 +18,10 @@ Kontakt: <%= @booking.contact_email %>, <%= @booking.contact_phone %>, <%= @book
 <%= @booking.address_zip %> <%= @booking.address_city %>
 
 <% if @booking.member || @booking.member_institution || @booking.graduate %>
-<%= t('simple_form.labels.booking.member') if @booking.member %>
-<%= t('simple_form.labels.booking.member_institution') if @booking.member_institution %>
+<%= t('bookings.form.member') if @booking.member %>
+<%= t('bookings.form.member_institution') if @booking.member_institution %>
 <% if @booking.graduate %>
-<%= t('simple_form.labels.booking.graduate') %>: <%= @booking.school %>, <%= @booking.year %>
+<%= t('bookings.form.graduate') %>: <%= @booking.school %>, <%= @booking.year %>
 <% end %>
 <% end %>
 

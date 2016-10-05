@@ -52,10 +52,10 @@ table
     tr
       th Paritätische
       td
-        p = t('simple_form.labels.booking.member') if @booking.member
-        p = t('simple_form.labels.booking.member_institution') if @booking.member_institution
+        p = t('bookings.form.member') if @booking.member
+        p = t('bookings.form.member_institution') if @booking.member_institution
         - if @booking.graduate
-          p #{t('simple_form.labels.booking.graduate')}: #{@booking.school} #{@booking.year}
+          p #{t('bookings.form.graduate')}: #{@booking.school} #{@booking.year}
 
 
 p Freundliche Grüße <br> PARITÄTISCHES Bildungswerk <br> (PBW)

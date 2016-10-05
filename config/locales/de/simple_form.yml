@@ -57,9 +57,4 @@ de:
         mobile: Mobiltelefon
         phone: Telefon
         fax: Fax
-      booking:
-        member: Mitglied im PARITÄTISCHEN LSA
-        member_institution: Einrichtung des PARITÄTISCHEN LSA
-        graduate: Absolvent*in der Fachschule
-        terms_of_service: 'Hiermit erkenne ich die Allgemeinen Geschäftsbedingungen des PARITÄTISCHEN Bildungswerkes LSA an.'
-        school: Schule
+
