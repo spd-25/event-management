@@ -20,6 +20,9 @@ de:
     company_false: Privat
     private:
     created: Sie haben sich erfolgreich für dieses Seminar angemeldet. Sie sollten in wenigen Minuten eine Bestätigung per E-Mail erhalten.
+    schools:
+      - Aschersleben
+      - Drübeck
   categories:
     single:
       title: "%{id}"

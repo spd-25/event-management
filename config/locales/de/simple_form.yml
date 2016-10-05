@@ -19,13 +19,20 @@ de:
         city: Ort
         street: Straße/Nr
         zip: PLZ
-      contact_person: Ansprechpartner
-      contact_email: E-Mail-Adresse
-      contact_mobile: Mobiltelefon
-      contact_phone: Telefon
-      contact_fax: Fax
+      booking:
+        contact_person: Ansprechpartner
+        contact_email: '* E-Mail-Adresse'
+        contact_mobile: Mobiltelefon
+        contact_phone: '* Telefon'
+        contact_fax: Fax
+        year: Jahr
+        address_street: '* Straße/Nr'
+        address_zip: '* PLZ'
+        address_city: '* Ort'
+        attendees:
+          first_name: '* Vorname'
+          last_name: '* Nachname'
       contact:
-        person: Ansprechpartner
         email: E-Mail-Adresse
         mobile: Mobiltelefon
         phone: Telefon
@@ -50,3 +57,9 @@ de:
         mobile: Mobiltelefon
         phone: Telefon
         fax: Fax
+      booking:
+        member: Mitglied im PARITÄTISCHEN LSA
+        member_institution: Einrichtung des PARITÄTISCHEN LSA
+        graduate: Absolvent*in der Fachschule
+        terms_of_service: 'Hiermit erkenne ich die Allgemeinen Geschäftsbedingungen des PARITÄTISCHEN Bildungswerkes LSA an.'
+        school: Schule

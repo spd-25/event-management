@@ -2,26 +2,26 @@ Sehr geehrte Damen und Herren,
 
 hiermit bedanken wir uns für Ihre Anmeldung und übersenden Ihnen noch einmal zur Kontrolle die eingegangenen Anmeldedaten. Eine Anmeldebestätigung und die Rechnung senden wir Ihnen ca. zwei Wochen vor dem Seminartermin an Ihre Rechnungsadresse zu.
 
-Seminar: <%= @seminar.title %>
-Seminar-Nr.: <%= @seminar.number %>
-Datum: <%= @seminar.dates.map { |date| ldate date }.join('; ').html_safe %>
-Zeit: <%= @seminar.events.map(&:time).uniq.compact.join('; ').html_safe %>
-Referent(en): <%= @seminar.teachers.map(&:name).join(', ').html_safe %>
-Ort: <%= @seminar.location.name %>
-Gebühr: <%= strip_tags(@seminar.price_text).html_safe %>
-Teilnehmer: <%= @booking.attendees.map(&:name).join(', ').html_safe %>
+<%= Seminar.model_name.human               %>: <%= @seminar.title %>
+<%= Seminar.human_attribute_name :number   %>: <%= @seminar.number %>
+<%= Seminar.human_attribute_name :date     %>: <%= @seminar.dates.map { |date| ldate date }.join('; ').html_safe %>
+<%= Seminar.human_attribute_name :time     %>: <%= @seminar.events.map(&:time).uniq.compact.join('; ').html_safe %>
+<%= Teacher.model_name.human count: @seminar.teachers.count    %>: <%= @seminar.teachers.map(&:name).join(', ').html_safe %>
+<%= Seminar.human_attribute_name :location %>: <%= @seminar.location.name %>
+<%= Seminar.human_attribute_name :price_text %>: <%= strip_tags(@seminar.price_text).html_safe %>
+<%= Attendee.model_name.human(count: @booking.attendees.count) %>: <%= @booking.attendees.map(&:name).join(', ').html_safe %>
 Kontakt: <%= @booking.contact_email %>, <%= @booking.contact_phone %>, <%= @booking.contact_fax %> (Fax), <%= @booking.contact_mobile %> (Mobil)
 
-Rechnungsadresse:
+<%= Booking.human_attribute_name(:invoice_address) %>:
 <%= @booking.contact_person %>
 <%= @booking.address_street %>
 <%= @booking.address_zip %> <%= @booking.address_city %>
 
 <% if @booking.member || @booking.member_institution || @booking.graduate %>
-<%= 'Mitglied im PARITÄTISCHEN LSA' if @booking.member %>
-<%= 'Einrichtung des PARITÄTISCHEN LSA' if @booking.member_institution %>
+<%= t('simple_form.labels.booking.member') if @booking.member %>
+<%= t('simple_form.labels.booking.member_institution') if @booking.member_institution %>
 <% if @booking.graduate %>
-Absolvent*in der Fachschule: <%= @booking.school %>, <%= @booking.year %>
+<%= t('simple_form.labels.booking.graduate') %>: <%= @booking.school %>, <%= @booking.year %>
 <% end %>
 <% end %>
 

@@ -1,25 +1,18 @@
 = simple_form_for(@booking) do |f|
   = f.input :seminar_id, as: :hidden
-  /= f.error_notification
-  /- if @booking.errors.any?
-    .alert.alert-danger.alert-dismissable
-      button.close type="button" data-dismiss="alert"
-        span aria-hidden="true" &times;
-        span.sr-only Close
-      h4 = t('.error')
 
   .row style="padding-top: 30px"
     .col-md-8
       fieldset
-        legend Teilnehmer
+        legend = Attendee.model_name.human(count: 2)
 
         = f.simple_fields_for :attendees do |attendee_form|
           - attendee = attendee_form.object
           .attendee class=('new-record' if attendee.new_record?)
             = attendee_form.input :_destroy, as: :hidden, input_html: { value: attendee.new_record? }
             .row
-              .col-md-6 = attendee_form.input :first_name, label: false, placeholder: '* Vorname'
-              .col-md-6 = attendee_form.input :last_name,  label: false, placeholder: '* Nachname'
+              .col-md-6 = attendee_form.input :first_name, label: false
+              .col-md-6 = attendee_form.input :last_name,  label: false
 
         .row
           .col-md-1 = link_to fa_icon('plus', text: 'Teilnehmer hinzufügen'), '#',
@@ -27,36 +20,34 @@
 
       fieldset
         legend Kontakt
-        /.row
-          .col-md-6 = f.input :contact_email,  as: :email, label: false, placeholder: 'E-Mail-Adresse'
         .row
-          .col-md-6 = f.input :contact_email,  as: :email, label: false, placeholder: '* E-Mail-Adresse'
-          .col-md-6 = f.input :contact_phone,  as: :tel, label: false, placeholder: '* Telefon'
-          .col-md-6 = f.input :contact_fax,    as: :tel, label: false, placeholder: 'Fax (optional)'
-          .col-md-6 = f.input :contact_mobile, as: :tel, label: false, placeholder: 'Mobil (optional)'
+          .col-md-6 = f.input :contact_email,  as: :email, label: false
+          .col-md-6 = f.input :contact_phone,  as: :tel, label: false
+          .col-md-6 = f.input :contact_fax,    as: :tel, label: false
+          .col-md-6 = f.input :contact_mobile, as: :tel, label: false
 
       fieldset
-        legend Rechnungsadresse
+        legend = Booking.human_attribute_name(:invoice_address)
         .row
-          .col-md-6 = f.input :contact_person, label: false, placeholder: 'Ansprechpartner'
+          .col-md-6 = f.input :contact_person, label: false
         .row
-          .col-md-5 = f.input :address_street, label: false, placeholder: '* Straße/Nr '
-          .col-md-2 = f.input :address_zip,  as: :tel, label: false, placeholder: '* PLZ'
-          .col-md-5 = f.input :address_city, label: false, placeholder: '* Ort'
+          .col-md-5 = f.input :address_street, label: false
+          .col-md-2 = f.input :address_zip,  as: :tel, label: false
+          .col-md-5 = f.input :address_city, label: false
 
       fieldset
         legend Paritätische
         .row
-          .col-md-6 = f.input :member, as: :boolean, label: 'Mitglied im PARITÄTISCHEN LSA'
-          .col-md-6 = f.input :member_institution, as: :boolean, label: 'Einrichtung des PARITÄTISCHEN LSA'
+          .col-md-6 = f.input :member
+          .col-md-6 = f.input :member_institution
         .row
-          .col-md-4 = f.input :graduate, as: :boolean, label: 'Absolvent*in der Fachschule'
-          .col-md-4 = f.input :school, collection: %w(Aschersleben Drübeck), prompt: 'Schule', label: false
-          .col-md-4 = f.input :year, placeholder: 'Jahr', label: false
+          .col-md-4 = f.input :graduate
+          .col-md-4 = f.input :school, collection:t('bookings.schools'), prompt: t('simple_form.labels.booking.school'), label: false
+          .col-md-4 = f.input :year, label: false
 
       fieldset
         legend AGB
-        = f.input :terms_of_service, as: :boolean, required: true, label: 'Hiermit erkenne ich die Allgemeinen Geschäftsbedingungen des PARITÄTISCHEN Bildungswerkes LSA an.'
+        = f.input :terms_of_service, as: :boolean, required: true
 
   .row.action-buttons
     .col-md-8
