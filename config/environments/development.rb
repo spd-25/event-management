@@ -43,13 +43,13 @@ Rails.application.configure do
   config.assets.debug = true
 
   config.action_mailer.smtp_settings = {
-    address: "smtp.gmail.com",
-    port: 587,
-    domain: Rails.application.secrets.domain_name,
-    authentication: "plain",
-    enable_starttls_auto: true,
-    user_name: Rails.application.secrets.email_provider_username,
-    password: Rails.application.secrets.email_provider_password
+    address:              Setting.email_address,
+    port:                 Setting.email_port,
+    domain:               Setting.email_domain,
+    authentication:       Setting.email_authentication,
+    enable_starttls_auto: Setting.email_enable_starttls_auto.present?,
+    user_name:            Setting.email_user_name,
+    password:             Setting.email_password
   }
   # ActionMailer Config
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }

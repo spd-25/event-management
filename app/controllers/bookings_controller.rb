@@ -29,7 +29,6 @@ class BookingsController < ApplicationController
     @booking = Booking.new booking_params
 
     if @booking.save
-      BookingMailer.new_booking_email(@booking).deliver_later
       BookingMailer.booking_confirmation_email(@booking).deliver_later
       if user_signed_in?
         redirect_to @booking.seminar, notice: t(:created, model: Booking.model_name.human)
