@@ -17,4 +17,17 @@ class Category < ApplicationRecord
   def display_name
     "#{number} #{name}"
   end
+
+  def self.seminars_count
+    res = {}
+    Seminar.joins(:categories).group('categories.category_id', 'categories.id').count.each do |(parent, cat), count|
+      if parent.nil?
+        res[cat] = count
+      else
+        res[parent] ||= {}
+        res[parent][cat] = count
+      end
+    end
+    res
+  end
 end

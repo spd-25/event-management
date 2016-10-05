@@ -16,6 +16,7 @@ class VisitorsController < ApplicationController
       end
       @seminars = @category ? @category.seminars : Seminar
       @seminars = @seminars.order('events.date').includes(:teachers, :events, :location).all
+      @seminars_count = Category.seminars_count
     end
   end
 
