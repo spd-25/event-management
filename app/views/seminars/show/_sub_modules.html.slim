@@ -1,0 +1,9 @@
+- if @seminar.sub_modules.any?
+  = panel_box_with_table title: 'Module' do
+    table.standard-table
+      - @seminar.sub_modules.order(:number).each do |sub_module|
+        tr
+          td = link_to sub_module.number, sub_module
+          td = sub_module.teachers.map(&:name).join(', ').html_safe
+          td = sub_module.dates.map { |date| ldate date }.join('<br>').html_safe
+          td = sub_module.price
