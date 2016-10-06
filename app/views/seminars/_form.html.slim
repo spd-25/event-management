@@ -44,6 +44,7 @@
       #categories.tab-pane role="tabpanel"
         = f.association :categories, collection: categories_for_select, as: :check_boxes, label: false
       #events.tab-pane role="tabpanel"
+        .form-inputs = f.input :date_text, input_html: { class: 'editor' }, label: false
         table.standard-table.events-table
           thead
             tr

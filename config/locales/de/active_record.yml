@@ -82,6 +82,7 @@ de:
         seminars: Seminare
       seminar:
         bookings: Anmeldungen
+        date_text: Termine (Text)
         number: Nummer
         max_attendees: Max. Anzahl Teilnehmer
         subtitle: Untertitel

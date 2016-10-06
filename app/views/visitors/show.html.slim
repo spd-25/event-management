@@ -27,11 +27,14 @@
 
   .col-md-4.additional
     .row.line
-      .col-md-4: label Datum
-      .col-md-8 = @seminar.dates.map { |date| ldate date }.join('; ').html_safe
-    .row.line
-      .col-md-4: label Zeit
-      .col-md-8 = @seminar.events.map(&:time).uniq.compact.join('; ').html_safe
+      .col-md-4: label Termin
+      .col-md-8
+        - if strip_tags(@seminar.date_text || '').blank?
+          = @seminar.dates.map { |date| ldate date }.join('; ').html_safe
+          br
+          = @seminar.events.map(&:time).uniq.compact.join('; ').html_safe
+        - else
+          = @seminar.date_text.html_safe
     .row.line
       .col-md-4: h5 Referenten
       .col-md-8

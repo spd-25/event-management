@@ -37,6 +37,9 @@ de:
         mobile: Mobiltelefon
         phone: Telefon
         fax: Fax
+    hints:
+      seminar:
+        date_text: 'Wenn dieses Feld gefüllt ist, wird der Inhalt anstatt der Termine angezeigt (z.B. "Termin noch offen").'
     labels:
       address:
         city: Ort
