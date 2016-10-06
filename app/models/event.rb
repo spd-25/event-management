@@ -4,6 +4,8 @@ class Event < ApplicationRecord
 
   # validates :date, presence: true
 
+  has_paper_trail
+
   def time
     "#{start_time} - #{end_time}"
   end

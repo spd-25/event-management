@@ -8,6 +8,8 @@ class Location < ApplicationRecord
 
   acts_as_addressable
 
+  has_paper_trail
+
   multisearchable against: [:name, :description, :address]
 
 end

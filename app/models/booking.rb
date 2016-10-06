@@ -20,6 +20,8 @@ class Booking < ApplicationRecord
   scope :invoice_sent,    -> { joins(:invoice).where('invoices.status' => Invoice.statuses[:sent]) }
   scope :invoice_payed,   -> { joins(:invoice).where('invoices.status' => Invoice.statuses[:payed]) }
 
+  has_paper_trail
+
   def name
     if company
       company_name

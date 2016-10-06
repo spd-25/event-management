@@ -8,6 +8,8 @@ class Category < ApplicationRecord
 
   scope :cat_parents, -> { where category_id: nil }
 
+  has_paper_trail
+
   multisearchable against: [:name]
 
   def parent?

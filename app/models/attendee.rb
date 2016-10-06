@@ -7,6 +7,8 @@ class Attendee < ApplicationRecord
 
   validates :first_name, :last_name, presence: true
 
+  has_paper_trail
+
   def name
     "#{first_name} #{last_name}"
   end

@@ -39,6 +39,8 @@ gem 'select2-rails'
 gem 'bootstrap-datepicker-rails'
 gem 'virtus'
 gem 'rollbar'
+gem 'paper_trail'
+# gem 'reverse_markdown'
 
 group :development do
   gem 'better_errors'

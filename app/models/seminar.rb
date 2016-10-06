@@ -20,6 +20,8 @@ class Seminar < ApplicationRecord
   validates :number, uniqueness: true
   # validate :validate_events
 
+  has_paper_trail
+
   multisearchable against: [:number, :title, :subtitle, :benefit, :content, :notes, :due_date, :price_text]
 
   def name

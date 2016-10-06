@@ -7,6 +7,8 @@ class Invoice < ApplicationRecord
 
   validates :number, :date, presence: true
 
+  has_paper_trail
+
   def name
     number
   end

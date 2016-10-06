@@ -9,6 +9,8 @@ class Teacher < ApplicationRecord
   acts_as_addressable
   acts_as_contactable
 
+  has_paper_trail
+
   multisearchable against: [:title, :first_name, :last_name, :profession]
 
   def name

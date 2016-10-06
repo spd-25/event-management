@@ -4,6 +4,8 @@ class User < ApplicationRecord
 
   validates :email, :username, :role, presence: true
 
+  has_paper_trail
+
   def set_default_role
     self.role ||= :user
   end
