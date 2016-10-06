@@ -9,9 +9,9 @@ h4
   table.standard-table.table-clickable
     - @seminar.bookings.order(:created_at).each do |booking|
       tr data={url: url_for(booking)}
-        td = fa_icon booking.company ? 'users' : 'user'
+        /td = fa_icon booking.company ? 'users' : 'user'
         td = ldate booking.created_at
-        td = booking.company_name
+        /td = booking.company_name
         td
           - booking.attendees.each do |attendee|
             = attendee.name

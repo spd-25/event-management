@@ -45,9 +45,10 @@
           .col-md-4 = f.input :school, collection:t('bookings.schools'), include_blank: false
           .col-md-4 = f.input :year
 
-      fieldset
-        legend AGB
-        = f.input :terms_of_service, as: :boolean, required: true, label: t('.terms_of_service')
+      - unless user_signed_in?
+        fieldset
+          legend AGB
+          = f.input :terms_of_service, as: :boolean, required: true, label: t('.terms_of_service')
 
   .row.action-buttons
     .col-md-8

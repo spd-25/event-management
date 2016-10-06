@@ -2,4 +2,11 @@
 .page-header
   h2 = title_for @booking
 
+- if @booking.errors.any?
+  .alert.alert-danger.alert-dismissable
+    button.close type="button" data-dismiss="alert"
+      span aria-hidden="true" &times;
+      span.sr-only Close
+    h4 = t('.error')
+
 = render 'form'

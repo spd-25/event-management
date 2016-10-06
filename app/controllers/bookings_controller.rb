@@ -38,7 +38,6 @@ class BookingsController < ApplicationController
     else
       @seminar = Seminar.find @booking.seminar_id
       prepare_attendees if @booking.company
-      # layout = user_signed_in? ? :default : 'old_site'
       render :new
     end
   end
@@ -47,8 +46,7 @@ class BookingsController < ApplicationController
     if @booking.update booking_params
       redirect_to @booking.seminar, notice: t(:updated, model: Booking.model_name.human)
     else
-      prepare_attendees if @booking.company
-      render :edit
+      render :show
     end
   end
 
