@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161004092422) do
+ActiveRecord::Schema.define(version: 20161006135426) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 20161004092422) do
     t.boolean  "graduate",           default: false
     t.string   "school"
     t.string   "year"
+    t.string   "ip_address"
     t.index ["invoice_id"], name: "index_bookings_on_invoice_id", using: :btree
     t.index ["seminar_id"], name: "index_bookings_on_seminar_id", using: :btree
   end

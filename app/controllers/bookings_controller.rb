@@ -27,6 +27,7 @@ class BookingsController < ApplicationController
   def create
     authorize Booking
     @booking = Booking.new booking_params
+    @booking.ip_address = request.remote_ip
 
     if @booking.save
       BookingMailer.booking_confirmation_email(@booking).deliver_later
