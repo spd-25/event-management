@@ -1,6 +1,6 @@
 - content_for :page_title, @seminar.title
 - content_for :page_description, "#{strip_tags(@seminar.content)} #{strip_tags(@seminar.benefit)} #{strip_tags(@seminar.notes)}"
-- content_for :back_link, link_to('&laquo; zur Seminarübersicht'.html_safe, root_path)
+- content_for :back_link, link_to('&laquo; zur Seminarübersicht'.html_safe, seminare_visitor_path)
 
 .row
   .col-md-8
@@ -58,7 +58,7 @@
         .col-md-8 = @seminar.notes.html_safe
 
 .row.action-buttons
-  .col-md-4.col-md-offset-4
+  .col-md-4
     = link_to 'Anmelden', new_booking_url(seminar_id: @seminar.id), class: 'btn btn-primary btn-block btn-lg'
 
 sass:

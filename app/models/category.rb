@@ -32,4 +32,16 @@ class Category < ApplicationRecord
     end
     res
   end
+
+  def to_param
+    "#{id}-#{slug}"
+  end
+
+  def slug
+    s = I18n.transliterate(name.downcase).gsub(/"/, '').gsub(/[^a-z0-9]+/, '-')
+    n = number.gsub(' ', '')
+    # n = "#{category.number}.#{n}" if category.present?
+    "#{n}-#{s}"
+  end
+
 end

@@ -54,7 +54,7 @@ class Seminar < ApplicationRecord
   end
 
   def slug
-    title.downcase.gsub(/"/, '').gsub(/[^a-z0-9]+/, '-')
+    I18n.transliterate(name.downcase).gsub(/"/, '').gsub(/[^a-z0-9]+/, '-')
   end
 
   private

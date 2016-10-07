@@ -1,5 +1,5 @@
 - content_for :page_title, 'Seminarübersicht'
-- content_for :back_link, link_to('&laquo; zur Seminarübersicht'.html_safe, root_path) if @query.present?
+- content_for :back_link, link_to('&laquo; zur Seminarübersicht'.html_safe, seminare_visitor_url) if @query.present?
 - if @category
   - parent = @category.parent? ? @category : @category.category
   .row.categories
@@ -11,7 +11,7 @@
             - sem_count = @seminars_count[category.id]
             - sem_count = sem_count.is_a?(Hash) ? sem_count.values.sum : sem_count.to_i
             - label = "#{category.display_name} (#{sem_count})"
-            = link_to label, root_url(category_id: category.id), title: label
+            = link_to label, seminare_visitor_url(category_id: category.to_param), title: label
     .col-md-6
       /h4 Unterthema
       - if @category
@@ -19,7 +19,7 @@
           - parent.categories.order(:number, :name).each do |category|
             li class=('active' if @category == category)
               - label = "#{category.display_name} (#{@seminars_count.dig(parent.id, category.id).to_i})"
-              = link_to label, root_url(category_id: category.id), title: label
+              = link_to label, seminare_visitor_path(category_id: category.to_param), title: label
 
 table.seminars.table
   tbody

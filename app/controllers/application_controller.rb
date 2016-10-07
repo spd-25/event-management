@@ -15,4 +15,8 @@ class ApplicationController < ActionController::Base
     redirect_to (request.referrer || root_path)
   end
 
+  # Overwriting the sign_out redirect path method
+  def after_sign_out_path_for(resource_or_scope)
+    seminare_visitor_path
+  end
 end
