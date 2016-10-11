@@ -1,23 +1,20 @@
 #hauptmenu
   .linki
     a href="http://bildungswerk-lsa.de/index.php?article_id=22"  WIR ÜBER UNS
-  .linki2
+  .linki.linki2
     a href="http://bildungswerk-lsa.de/index.php?article_id=42"  TEAM
-  .linki2
-    a href="http://bildungswerk-lsa.de/index.php?article_id=43"  FORT- &amp; WEITERBILDUNG
-  .linki2
+  .linki.linki2
+    a href=seminare_visitor_path FORT- &amp; WEITERBILDUNG
+  .linki.linki2
     a href="http://bildungswerk-lsa.de/index.php?article_id=44"  AUSBILDUNG
 
 sass:
   #hauptmenu
     width: 100%
-    font-size: 0.8em
     background-color: #f0dfc1
     background-image: url(/old_site/menu1.gif)
     background-repeat: repeat-x
     min-height: 25px
-    overflow: hidden
-
     .linki
       float: left
       margin-left: 26px
@@ -34,6 +31,7 @@ sass:
         text-decoration: none
         padding-top: 7px
         padding-left: 5px
+        padding-bottom: 7px
         &:link, &:visited
           color: white
           text-decoration: none
@@ -43,29 +41,5 @@ sass:
           background-color: #fac052
           background-image: url(/old_site/menu3.gif)
           background-repeat: repeat-x
-
-    .linki2
-      float: left
-      margin-left: 12px
-      font-size: 0.85em
-      text-align: left
-      a
-        display: block
-        width: 170px
-        background-color: #0069aa
-        background-image: url(/old_site/menu2.gif)
-        background-repeat: repeat-x
-        min-height: 18px
-        color: white
-        text-decoration: none
-        padding-top: 7px
-        padding-left: 5px
-        &:link, &:visited
-          color: white
-          text-decoration: none
-        &:focus, &:hover, &:active
-          color: #0067aa
-          text-decoration: none
-          background-color: #fac052
-          background-image: url(/old_site/menu3.gif)
-          background-repeat: repeat-x
+      &.linki2
+        margin-left: 12px
