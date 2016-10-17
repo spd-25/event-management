@@ -27,6 +27,12 @@ table
     td: strong = Attendee.model_name.human(count: @booking.attendees.count)
     td = @booking.attendees.map(&:name).join('<br>').html_safe
   tr
+    td: strong Arbeitgeber
+    td
+      p = @booking.company_title
+      p = @booking.company_street
+      p #{@booking.company_zip} #{@booking.company_city}
+  tr
     td: strong Kontakt
     td
       p = @booking.contact_email
@@ -39,9 +45,9 @@ table
   tr
     td: strong = Booking.human_attribute_name(:invoice_address)
     td
-      p = @booking.contact_person if @booking.contact_person.present?
-      p = @booking.address_street
-      p #{@booking.address_zip} #{@booking.address_city}
+      p = @booking.invoice_title
+      p = @booking.invoice_street
+      p #{@booking.invoice_zip} #{@booking.invoice_city}
 
   - if @booking.member || @booking.member_institution || @booking.graduate
     tr

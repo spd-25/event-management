@@ -10,10 +10,15 @@ Eine neue Anmeldung für ein Seminar liegt vor:
 <%= Attendee.model_name.human(count: @booking.attendees.count) %>: <%= @booking.attendees.map(&:name).join(', ').html_safe %>
 Kontakt: <%= @booking.contact_email %>, <%= @booking.contact_phone %>, <%= @booking.contact_fax %> (Fax), <%= @booking.contact_mobile %> (Mobil)
 
+Arbeitgeber:
+<%= @booking.company_title %>
+<%= @booking.company_street %>
+<%= @booking.company_zip %> <%= @booking.company_city %>
+
 <%= Booking.human_attribute_name(:invoice_address) %>:
-<%= @booking.contact_person %>
-<%= @booking.address_street %>
-<%= @booking.address_zip %> <%= @booking.address_city %>
+<%= @booking.invoice_title %>
+<%= @booking.invoice_street %>
+<%= @booking.invoice_zip %> <%= @booking.invoice_city %>
 
 <% if @booking.member || @booking.member_institution || @booking.graduate %>
 <%= t('bookings.form.member') if @booking.member %>
