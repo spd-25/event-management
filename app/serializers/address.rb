@@ -1,8 +1,9 @@
 class Address < JsonObjectSerializer
 
-  attribute :street,    String
-  attribute :zip,       String
-  attribute :city,      String
+  attribute :title,  String
+  attribute :street, String
+  attribute :zip,    String
+  attribute :city,   String
 
   attribute :location, GeoLocation
 
@@ -27,11 +28,12 @@ class Address < JsonObjectSerializer
 
       def acts_as_addressable(options = {})
         field_name = options[:field_name] || :address
+        prefix = options.has_key?(:prefix) ? options[:prefix] : true
         serialize field_name, ::Address
 
         ::Address.attribute_set.each do |attribute|
-          delegate attribute.name, to: :address, prefix: true
-          delegate "#{attribute.name}=", to: :address, prefix: true
+          delegate attribute.name, to: field_name, prefix: prefix
+          delegate "#{attribute.name}=", to: field_name, prefix: prefix
         end
       end
     end

@@ -3,17 +3,15 @@ class Booking < ApplicationRecord
   has_many :attendees
   belongs_to :invoice, inverse_of: :booking
 
-  acts_as_addressable
+  acts_as_addressable field_name: :invoice_address, prefix: :invoice
+  acts_as_addressable field_name: :company_address, prefix: :company
   acts_as_contactable
   accepts_nested_attributes_for :attendees, allow_destroy: true
 
   validate :validate_attendees
   validates :terms_of_service, acceptance: true
-  validates :contact_email, presence: true
-  validates :contact_phone, presence: true
-  validates :address_street, presence: true
-  validates :address_zip, presence: true
-  validates :address_city, presence: true
+  validates :contact_email, :contact_phone, presence: true
+  validates :invoice_title, :invoice_street, :invoice_zip, :invoice_city, presence: true
 
   scope :created,         -> { where(invoice_id: nil) }
   scope :invoice_created, -> { joins(:invoice).where('invoices.status' => Invoice.statuses[:created]) }
@@ -23,12 +21,8 @@ class Booking < ApplicationRecord
   has_paper_trail
 
   def name
-    if company
-      company_name
-    else
-      attendee = attendees.first
-      "#{attendee.first_name} #{attendee.last_name}"
-    end
+    attendee = attendees.first
+    "#{attendee.first_name} #{attendee.last_name}"
   end
 
   def generate_invoice
@@ -37,9 +31,10 @@ class Booking < ApplicationRecord
     build_invoice number: Invoice.next_number, date: Date.current, address: address, items: items
   end
 
-  def company_address
-    "#{company_name}\n#{invoice_address}"
-  end
+  # def company_address
+  #   # "#{company_name}\n#{invoice_address}"
+  #   ''
+  # end
 
   private
 

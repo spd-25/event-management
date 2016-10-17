@@ -10,7 +10,7 @@ class BookingsController < ApplicationController
   end
 
   def show
-    prepare_attendees if @booking.company
+    prepare_attendees
   end
 
   def new
@@ -39,7 +39,7 @@ class BookingsController < ApplicationController
       end
     else
       @seminar = Seminar.find @booking.seminar_id
-      prepare_attendees if @booking.company
+      prepare_attendees
       render :new
     end
   end
@@ -72,16 +72,16 @@ class BookingsController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def booking_params
-    params.require(:booking).permit(:seminar_id, :company, :company_name, :invoice_address,
-                                    :member, :member_institution, :graduate, :school, :year,
-                                    :terms_of_service,
-                                    :contact_person, :contact_email, :contact_phone, :contact_mobile,
-                                    :contact_fax, :address_street, :address_zip, :address_city,
-                                    attendees_attributes: %i(id first_name last_name profession _destroy) + [
-                                      address: %i(street zip city),
-                                      contact: %i(email phone mobile)
-                                    ]
-                                    )
+    attrs = [
+      :seminar_id, :member, :member_institution, :graduate, :school, :year, :terms_of_service,
+      :contact_person, :contact_email, :contact_phone, :contact_mobile, :contact_fax,
+      :company_title, :company_street, :company_zip, :company_city,
+      :invoice_title, :invoice_street, :invoice_zip, :invoice_city,
+      attendees_attributes: %i(id first_name last_name profession _destroy) + [
+        address: %i(street zip city), contact: %i(email phone mobile)
+      ]
+    ]
+    params.require(:booking).permit(attrs)
   end
 
   def set_layout

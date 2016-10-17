@@ -17,6 +17,14 @@
         .row
           .col-md-1 = link_to fa_icon('plus', text: 'Teilnehmer hinzufügen'), '#',
             class: 'add-attendee btn btn-default', tabindex: -1, title: 'Neuer Teilnehmer'
+      fieldset
+        legend Arbeitgeber
+        .row
+          .col-md-6 = f.input :company_title
+        .row
+          .col-md-5 = f.input :company_street
+          .col-md-2 = f.input :company_zip,  as: :tel
+          .col-md-5 = f.input :company_city
 
       fieldset
         legend Kontakt
@@ -29,11 +37,11 @@
       fieldset
         legend = Booking.human_attribute_name(:invoice_address)
         .row
-          .col-md-6 = f.input :contact_person
+          .col-md-6 = f.input :invoice_title
         .row
-          .col-md-5 = f.input :address_street
-          .col-md-2 = f.input :address_zip,  as: :tel
-          .col-md-5 = f.input :address_city
+          .col-md-5 = f.input :invoice_street
+          .col-md-2 = f.input :invoice_zip,  as: :tel
+          .col-md-5 = f.input :invoice_city
 
       fieldset
         legend Paritätische

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161006140534) do
+ActiveRecord::Schema.define(version: 20161017125450) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,10 +35,7 @@ ActiveRecord::Schema.define(version: 20161006140534) do
 
   create_table "bookings", force: :cascade do |t|
     t.integer  "seminar_id"
-    t.boolean  "company"
-    t.text     "invoice_address"
     t.jsonb    "contact",            default: "{}"
-    t.string   "company_name"
     t.integer  "places",             default: 1
     t.jsonb    "other",              default: "{}"
     t.datetime "created_at",                         null: false
@@ -51,6 +48,8 @@ ActiveRecord::Schema.define(version: 20161006140534) do
     t.string   "school"
     t.string   "year"
     t.string   "ip_address"
+    t.jsonb    "company_address",    default: "{}"
+    t.jsonb    "invoice_address",    default: "{}"
     t.index ["invoice_id"], name: "index_bookings_on_invoice_id", using: :btree
     t.index ["seminar_id"], name: "index_bookings_on_seminar_id", using: :btree
   end

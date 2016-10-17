@@ -9,4 +9,4 @@ h4
     - @seminar.attendees.order(:last_name).each do |attendee|
       tr data={url: url_for(attendee.booking)}
         td = attendee.name
-        td = attendee.booking.company ? attendee.booking.company_name : ''
+        td
