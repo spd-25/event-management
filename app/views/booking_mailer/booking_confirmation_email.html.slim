@@ -7,32 +7,32 @@ p
 
 table
   tr
-    th = Seminar.model_name.human
+    td: strong = Seminar.model_name.human
     td = @seminar.title
   tr
-    th = Seminar.human_attribute_name :number
+    td: strong = Seminar.human_attribute_name :number
     td= @seminar.number
   tr
-    th = Seminar.human_attribute_name :date
+    td: strong = Seminar.human_attribute_name :date
     td = @seminar.dates.map { |date| ldate date }.join('; ').html_safe
   tr
-    th = Seminar.human_attribute_name :time
+    td: strong = Seminar.human_attribute_name :time
     td = @seminar.events.map(&:time).uniq.compact.join('; ').html_safe
   tr
-    th = Teacher.model_name.human count: @seminar.teachers.count
+    td: strong = Teacher.model_name.human count: @seminar.teachers.count
     td = @seminar.teachers.map(&:name).join(', ').html_safe
   tr
-    th = Seminar.human_attribute_name :location
+    td: strong = Seminar.human_attribute_name :location
     td = @seminar.location.name
   tr
-    th = Seminar.human_attribute_name :price_text
+    td: strong = Seminar.human_attribute_name :price_text
     td #{@seminar.price_text.html_safe} <br><br>
 
   tr.attendee
-    th = Attendee.model_name.human(count: @booking.attendees.count)
+    td: strong = Attendee.model_name.human(count: @booking.attendees.count)
     td = @booking.attendees.map(&:name).join('<br>').html_safe
   tr
-    th Kontakt
+    td: strong Kontakt
     td
       p = @booking.contact_email
       p = @booking.contact_phone
@@ -42,7 +42,7 @@ table
         p #{@booking.contact_mobile} (Mobil)
 
   tr
-    th = Booking.human_attribute_name(:invoice_address)
+    td: strong = Booking.human_attribute_name(:invoice_address)
     td
       p = @booking.contact_person if @booking.contact_person.present?
       p = @booking.address_street
@@ -50,7 +50,7 @@ table
 
   - if @booking.member || @booking.member_institution || @booking.graduate
     tr
-      th Paritätische
+      td: strong Paritätische
       td
         p = t('bookings.form.member') if @booking.member
         p = t('bookings.form.member_institution') if @booking.member_institution
@@ -73,17 +73,3 @@ p Freundliche Grüße <br> PARITÄTISCHES Bildungswerk <br> (PBW)
     USt-Nr.: 101/142/02695 <br>
     Vorstandsvorsitzende: <br>
     Dr. Gabriele Girke
-
-sass:
-  table
-    p
-      margin: 0
-    th, td
-      vertical-align: top
-    th
-      text-align: right
-      padding-right: 20px
-      padding-bottom: 10px
-    tr.attendee
-      th, td
-        padding-top: 30px

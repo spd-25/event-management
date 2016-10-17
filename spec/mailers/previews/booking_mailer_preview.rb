@@ -3,4 +3,9 @@ class BookingMailerPreview < ActionMailer::Preview
   def booking_confirmation_email
     BookingMailer.booking_confirmation_email(Booking.last)
   end
+
+  def booking_notification_email
+    BookingMailer.booking_notification_email(Booking.last)
+  end
+
 end
