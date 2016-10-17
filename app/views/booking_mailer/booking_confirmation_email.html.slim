@@ -41,23 +41,6 @@ table
       - if @booking.contact_mobile.present?
         p #{@booking.contact_mobile} (Mobil)
 
-  tr
-    td: strong = Booking.human_attribute_name(:invoice_address)
-    td
-      p = @booking.contact_person if @booking.contact_person.present?
-      p = @booking.address_street
-      p #{@booking.address_zip} #{@booking.address_city}
-
-  - if @booking.member || @booking.member_institution || @booking.graduate
-    tr
-      td: strong Paritätische
-      td
-        p = t('bookings.form.member') if @booking.member
-        p = t('bookings.form.member_institution') if @booking.member_institution
-        - if @booking.graduate
-          p #{t('bookings.form.graduate')}: #{@booking.school} #{@booking.year}
-
-
 p Freundliche Grüße <br> PARITÄTISCHES Bildungswerk <br> (PBW)
 
 .address

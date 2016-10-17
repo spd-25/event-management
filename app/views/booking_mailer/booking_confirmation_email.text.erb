@@ -12,19 +12,6 @@ hiermit bedanken wir uns für Ihre Anmeldung und übersenden Ihnen noch einmal z
 <%= Attendee.model_name.human(count: @booking.attendees.count) %>: <%= @booking.attendees.map(&:name).join(', ').html_safe %>
 Kontakt: <%= @booking.contact_email %>, <%= @booking.contact_phone %>, <%= @booking.contact_fax %> (Fax), <%= @booking.contact_mobile %> (Mobil)
 
-<%= Booking.human_attribute_name(:invoice_address) %>:
-<%= @booking.contact_person %>
-<%= @booking.address_street %>
-<%= @booking.address_zip %> <%= @booking.address_city %>
-
-<% if @booking.member || @booking.member_institution || @booking.graduate %>
-<%= t('bookings.form.member') if @booking.member %>
-<%= t('bookings.form.member_institution') if @booking.member_institution %>
-<% if @booking.graduate %>
-<%= t('bookings.form.graduate') %>: <%= @booking.school %>, <%= @booking.year %>
-<% end %>
-<% end %>
-
 Freundliche Grüße
 PARITÄTISCHES Bildungswerk
 (PBW)
