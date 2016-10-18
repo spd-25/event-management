@@ -21,7 +21,7 @@ class SeminareController < ApplicationController
 
   def search
     @query = params[:q]
-    @seminars = PgSearch.multisearch(@query).where(searchable_type: 'Seminar').to_a.map(&:searchable).compact
+    @seminars = Seminar.external_search @query
     render :index
   end
 end

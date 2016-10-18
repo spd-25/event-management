@@ -22,7 +22,14 @@ class Seminar < ApplicationRecord
 
   has_paper_trail
 
-  multisearchable against: [:number, :title, :subtitle, :benefit, :content, :notes, :due_date, :price_text]
+  multisearchable against: %i(number title subtitle benefit content notes due_date price_text)
+  pg_search_scope :external_search,
+                  against: %i(number title subtitle benefit content notes due_date price_text),
+                  associated_against: {
+                    teachers: %i(first_name last_name profession),
+                    categories: %i(name),
+                    location: %i(name description address)
+                  }
 
   def name
     title
