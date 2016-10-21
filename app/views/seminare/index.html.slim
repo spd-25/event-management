@@ -8,16 +8,21 @@
       ul.nav.nav-pills.nav-stacked
         - @categories.each do |category|
           li class=('active' if parent == category)
-            - label = "#{category.display_name} (#{category.all_seminars.count})"
-            = link_to label, seminare_visitor_url(category_id: category.to_param), title: label
+            = link_to seminare_visitor_url(category_id: category.to_param) do
+              .cat-name
+                span.cat-number = category.number
+                | #{category.name} (#{category.all_seminars.count})
+
     .col-md-6
       /h4 Unterthema
       - if @category
         ul.nav.nav-pills.nav-stacked
           - parent.categories.order(:number, :name).each do |category|
             li class=('active' if @category == category)
-              - label = "#{category.display_name} (#{category.all_seminars.count})"
-              = link_to label, seminare_visitor_path(category_id: category.to_param), title: label
+              = link_to seminare_visitor_path(category_id: category.to_param) do
+                .cat-name
+                  span.cat-number = category.number
+                  | #{category.name} (#{category.all_seminars.count})
 
 table.seminars.table
   tbody
@@ -36,6 +41,12 @@ sass:
         border-radius: 14px
         font-size: large
 
+  .categories
+    .cat-number
+      position: absolute
+      left: 7px
+    .cat-name
+      margin-left: 30px
   table.seminars
     margin: 30px 0 50px
     td
