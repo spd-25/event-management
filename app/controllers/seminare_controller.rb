@@ -5,14 +5,10 @@ class SeminareController < ApplicationController
   def index
     @categories = Category.cat_parents.order(:number)
     category_id = params[:category_id]
-    @category = if category_id
-      Category.find category_id
-    else
-      Category.cat_parents.first
-    end
-    @seminars = @category ? @category.seminars : Seminar
-    @seminars = @seminars.order('events.date').includes(:teachers, :events, :location).all
-    @seminars_count = Category.seminars_count
+    @category   = category_id ? Category.find(category_id) : Category.cat_parents.first
+    @seminars   = @category ? @category.seminars : Seminar
+    @seminars   = @seminars.order('events.date').includes(:teachers, :events, :location).all
+    # @seminars = @seminars.order(:number).includes(:teachers, :events, :location).all
   end
 
   def show

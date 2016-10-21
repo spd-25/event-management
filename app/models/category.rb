@@ -27,19 +27,19 @@ class Category < ApplicationRecord
   def seminars_for_sub_categories
     Seminar.where(id: categories.joins(:seminars).select(:seminar_id))
   end
-
-  def self.seminars_count
-    res = {}
-    Seminar.joins(:categories).group('categories.category_id', 'categories.id').count.each do |(parent, cat), count|
-      if parent.nil?
-        res[cat] = count
-      else
-        res[parent] ||= {}
-        res[parent][cat] = count
-      end
-    end
-    res
-  end
+  #
+  # def self.seminars_count
+  #   res = {}
+  #   Seminar.joins(:categories).group('categories.category_id', 'categories.id').count.each do |(parent, cat), count|
+  #     if parent.nil?
+  #       res[cat] = count
+  #     else
+  #       res[parent] ||= {}
+  #       res[parent][cat] = count
+  #     end
+  #   end
+  #   res
+  # end
 
   def to_param
     "#{id}-#{slug}"

@@ -8,9 +8,7 @@
       ul.nav.nav-pills.nav-stacked
         - @categories.each do |category|
           li class=('active' if parent == category)
-            - sem_count = @seminars_count[category.id]
-            - sem_count = sem_count.is_a?(Hash) ? sem_count.values.sum : sem_count.to_i
-            - label = "#{category.display_name} (#{sem_count})"
+            - label = "#{category.display_name} (#{category.all_seminars.count})"
             = link_to label, seminare_visitor_url(category_id: category.to_param), title: label
     .col-md-6
       /h4 Unterthema
@@ -18,7 +16,7 @@
         ul.nav.nav-pills.nav-stacked
           - parent.categories.order(:number, :name).each do |category|
             li class=('active' if @category == category)
-              - label = "#{category.display_name} (#{@seminars_count.dig(parent.id, category.id).to_i})"
+              - label = "#{category.display_name} (#{category.all_seminars.count})"
               = link_to label, seminare_visitor_path(category_id: category.to_param), title: label
 
 table.seminars.table
