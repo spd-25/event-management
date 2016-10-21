@@ -40,6 +40,7 @@ gem 'bootstrap-datepicker-rails'
 gem 'virtus'
 gem 'rollbar'
 gem 'paper_trail'
+gem 'kaminari'
 # gem 'reverse_markdown'
 
 group :development do
