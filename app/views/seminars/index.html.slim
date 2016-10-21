@@ -4,18 +4,21 @@
   .col-md-9.col-md-offset-3
     .page-header
       h2
-        = title_for @seminars
+        - count = @seminars.count
+        - title = "#{count} #{Seminar.model_name.human count: count}"
+        - title += " (#{@seminars.total_count})" unless @seminars.total_count == count
+        = icon_for Seminar, text: title
         .buttons = new_link new_seminar_path
-.row
+/.row
   .col-md-9.col-md-offset-3
-    | Filter
+
 section
   .col-md-3
     ul.nav.nav-pills.nav-stacked.categories
       - Category.cat_parents.order(:number).each do |category|
         - active = @category.in?(category.categories + [category])
         li class=('active' if active)
-          - label = "#{category.display_name} (#{category.seminars.count + category.categories.map {|cat| cat.seminars.count }.sum})"
+          - label = "#{category.display_name} (#{category.all_seminars.count})"
           = link_to label, seminars_url(category_id: category.id), title: label
           - if active
             ul.nav.nav-pills.nav-stacked
@@ -24,7 +27,10 @@ section
                 li class=('active' if @category == sub_cat)
                   = link_to label, seminars_url(category_id: sub_cat.id), title: label
 
-  .col-md-8 = render 'table', seminars: @seminars, header: false
+  .col-md-8
+    .row: .col-md-12: .pull-right = paginate @seminars
+    = render 'table', seminars: @seminars, header: false
+    .row: .col-md-12: .pull-right = paginate @seminars
 
 coffee:
   $ ->

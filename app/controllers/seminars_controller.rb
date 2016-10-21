@@ -6,14 +6,10 @@ class SeminarsController < ApplicationController
   def index
     authorize Seminar
     category_id = params[:category_id]
-    @category = if category_id
-      Category.find category_id
-    else
-      # @seminars = Seminar.order(:number).includes(:teachers, :events, :location).all
-      Category.cat_parents.first
-    end
-    @seminars = @category ? @category.seminars : Seminar
-    @seminars = @seminars.order(:number).includes(:teachers, :events, :location).all
+    @category   = category_id ? Category.find(category_id) : Category.cat_parents.first
+    @seminars   = @category ? @category.all_seminars : Seminar
+    @seminars   = @seminars.page(params[:page]).order(:number)
+      .includes(:teachers, :events, :location).all
   end
 
   def show

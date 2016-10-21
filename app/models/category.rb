@@ -20,6 +20,14 @@ class Category < ApplicationRecord
     "#{number} #{name}"
   end
 
+  def all_seminars
+    Seminar.where(id: seminars).or seminars_for_sub_categories
+  end
+
+  def seminars_for_sub_categories
+    Seminar.where(id: categories.joins(:seminars).select(:seminar_id))
+  end
+
   def self.seminars_count
     res = {}
     Seminar.joins(:categories).group('categories.category_id', 'categories.id').count.each do |(parent, cat), count|
