@@ -21,7 +21,9 @@
         a aria-controls="settings" data-toggle="tab" href="#notes" role="tab"  Bemerkungen
     .tab-content
       #general.tab-pane.active role="tabpanel"
-        = f.input :archived
+        .row
+          .col-md-3 = f.input :archived
+          .col-md-3 = f.input :published
         = f.association :parent,
             label_method: ->(s){ "#{s.number} - #{s.title}" },
             collection: Seminar.where(parent_id: nil).order(:number),

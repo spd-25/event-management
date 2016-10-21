@@ -20,7 +20,7 @@ class Seminar < ApplicationRecord
   validates :number, uniqueness: true
   # validate :validate_events
 
-  default_scope { where archived: false }
+  default_scope { where archived: false, published: true }
 
   has_paper_trail
 

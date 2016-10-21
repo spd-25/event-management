@@ -12,9 +12,6 @@ ol.breadcrumb
   - if (module_parent)
     li = link_to module_parent.number, module_parent
 
-- if @seminar.archived
-  .alert.alert-warning Seminar archiviert.
-
 .page-header
   .buttons
     => link_to fa_icon('external-link', text: 'Externe Ansicht'), seminar_visitor_url(@seminar), class: 'btn btn-default'
@@ -35,6 +32,13 @@ ol.breadcrumb
     = render 'seminars/show/bookings'
     = render 'seminars/show/attendees'
   .col-md-6
+    - if @seminar.archived
+      .alert.alert-warning Seminar archiviert.
+    - elsif @seminar.published
+      .alert.alert-success Seminar freigegeben.
+    - else
+      .alert.alert-danger Seminar nicht freigegeben.
+
     = render 'seminars/show/sub_modules'
     .row
       .col-md-6 = render 'seminars/show/teachers'
