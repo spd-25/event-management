@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161018075350) do
+ActiveRecord::Schema.define(version: 20161021180806) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -114,10 +114,10 @@ ActiveRecord::Schema.define(version: 20161018075350) do
   end
 
   create_table "seminars", force: :cascade do |t|
-    t.string   "number",                       null: false
-    t.string   "title",                        null: false
+    t.string   "number",                        null: false
+    t.string   "title",                         null: false
     t.string   "subtitle"
-    t.integer  "year",                         null: false
+    t.integer  "year",                          null: false
     t.text     "benefit"
     t.text     "content"
     t.text     "notes"
@@ -129,12 +129,13 @@ ActiveRecord::Schema.define(version: 20161018075350) do
     t.integer  "max_attendees"
     t.jsonb    "others",        default: "{}"
     t.integer  "location_id"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
     t.float    "price"
     t.float    "price_reduced"
     t.integer  "parent_id"
     t.jsonb    "price_info",    default: "{}"
+    t.boolean  "archived",      default: false
     t.index ["location_id"], name: "index_seminars_on_location_id", using: :btree
     t.index ["parent_id"], name: "index_seminars_on_parent_id", using: :btree
   end

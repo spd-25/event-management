@@ -59,15 +59,18 @@ class SeminarsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_seminar
-    @seminar = Seminar.find params[:id]
+    @seminar = Seminar.unscoped.find params[:id]
     authorize @seminar
   end
 
   # Only allow a trusted parameter "white list" through.
   def seminar_params
-    params.require(:seminar).permit(:number, :year, :title, :subtitle, :benefit, :content, :notes,
-                                    :price, :price_text, :parent_id, :date_text,
-                                    :max_attendees, :location_id, teacher_ids: [], category_ids: [],
-                                    events_attributes: [:id, :location_id, :date, :start_time, :end_time, :notes])
+    attrs = [
+      :number, :year, :title, :subtitle, :benefit, :content, :notes, :price, :price_text,
+      :parent_id, :date_text, :max_attendees, :location_id, :archived,
+      teacher_ids: [], category_ids: [],
+      events_attributes: [:id, :location_id, :date, :start_time, :end_time, :notes]
+    ]
+    params.require(:seminar).permit(attrs)
   end
 end

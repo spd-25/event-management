@@ -20,6 +20,8 @@ class Seminar < ApplicationRecord
   validates :number, uniqueness: true
   # validate :validate_events
 
+  default_scope { where archived: false }
+
   has_paper_trail
 
   multisearchable against: %i(number title subtitle benefit content notes due_date price_text)

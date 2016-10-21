@@ -12,6 +12,9 @@ ol.breadcrumb
   - if (module_parent)
     li = link_to module_parent.number, module_parent
 
+- if @seminar.archived
+  .alert.alert-warning Seminar archiviert.
+
 .page-header
   .buttons
     => link_to fa_icon('external-link', text: 'Externe Ansicht'), seminar_visitor_url(@seminar), class: 'btn btn-default'
