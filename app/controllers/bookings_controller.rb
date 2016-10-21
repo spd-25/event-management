@@ -7,7 +7,7 @@ class BookingsController < ApplicationController
 
   def index
     authorize Booking
-    @bookings = Booking.includes(:seminar).order(created_at: :desc).all
+    @bookings = Booking.includes(:seminar).order(created_at: :desc).page(params[:page]).all
   end
 
   def show
