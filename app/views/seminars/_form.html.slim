@@ -54,7 +54,7 @@
               th.location = Event.human_attribute_name :location
               th = Event.human_attribute_name :notes
           tbody
-            = f.simple_fields_for :events, @seminar.events.order(:date) do |event_form|
+            = f.simple_fields_for :events do |event_form|
               - event = event_form.object
               tr class=('hidden' if event.new_record?)
                 td = event_form.input :date, label: false, as: :string, input_html: { class: 'date' }
