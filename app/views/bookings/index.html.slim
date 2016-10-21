@@ -15,10 +15,10 @@
     tbody
       - @bookings.each do | booking |
         - invoice = booking.invoice
-        tr data = {url: url_for(booking)} class=(invoice ? 'warning' : 'danger')
+        tr data = {url: url_for(booking)}
           td = ldate booking.created_at
           td = link_to booking.seminar.number, booking.seminar
-          td = booking.company ? booking.company_name : 'Privat'
+          td
           td = booking.attendees.map(&:name).join('<br>').html_safe
           td
             - if invoice

@@ -2,6 +2,7 @@ class BookingsController < ApplicationController
   before_action :authenticate_user!, except: [:new, :create]
   after_action :verify_authorized
   before_action :set_booking, only: [:show, :update, :destroy]
+  before_action :set_referer, only: [:new, :show]
   layout :set_layout
 
   def index
@@ -32,7 +33,7 @@ class BookingsController < ApplicationController
     if @booking.save
       BookingMailer.booking_notification_email(@booking).deliver_later
       if user_signed_in?
-        redirect_to @booking.seminar, notice: t(:created, model: Booking.model_name.human)
+        redirect_to (session[:back_url] || @booking.seminar), notice: t(:created, model: Booking.model_name.human)
       else
         BookingMailer.booking_confirmation_email(@booking).deliver_later
         redirect_to seminar_visitor_url(@booking.seminar), notice: t('bookings.created')
@@ -46,7 +47,7 @@ class BookingsController < ApplicationController
 
   def update
     if @booking.update booking_params
-      redirect_to @booking.seminar, notice: t(:updated, model: Booking.model_name.human)
+      redirect_to (session[:back_url] || @booking.seminar), notice: t(:updated, model: Booking.model_name.human)
     else
       render :show
     end
@@ -86,5 +87,9 @@ class BookingsController < ApplicationController
 
   def set_layout
     user_signed_in? ? 'application' : 'external'
+  end
+
+  def set_referer
+    session[:back_url] = request.referer
   end
 end

@@ -62,7 +62,7 @@
     .col-md-8
       - if user_signed_in?
         .pull-right
-          => link_to t(:cancel), 'javascript: window.history.back();', class: 'btn btn-default'
+          => link_to t(:cancel), (session[:back_url] || @booking.seminar), class: 'btn btn-default'
           = f.submit t(:save), class: 'btn btn-primary'
       - else
         = f.submit 'Jetzt anmelden', class: 'btn btn-primary btn-block btn-lg'
