@@ -7,7 +7,7 @@ class SeminareController < ApplicationController
     category_id = params[:category_id]
     @category   = category_id ? Category.find(category_id) : Category.cat_parents.first
     @seminars   = @category ? @category.seminars : Seminar
-    @seminars   = @seminars.order('events.date').includes(:teachers, :events, :location).all
+    @seminars   = @seminars.published.order('events.date').includes(:teachers, :events, :location).all
     # @seminars = @seminars.order(:number).includes(:teachers, :events, :location).all
   end
 
