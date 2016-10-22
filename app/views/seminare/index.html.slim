@@ -28,7 +28,10 @@ table.seminars.table
   tbody
     - @seminars.each do |seminar|
       tr
-        td.number = link_to seminar.number, seminar_visitor_url(seminar)
+        td.number
+          = link_to seminar.number, seminar_visitor_url(seminar)
+          br
+          small.text-muted = seminar.year
         td.title = link_to seminar.title, seminar_visitor_url(seminar)
         td = seminar.location&.name
         td = seminar.teachers.map(&:name).join(', ')
