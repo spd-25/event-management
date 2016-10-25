@@ -1,8 +1,8 @@
 class BookingsController < ApplicationController
   before_action :authenticate_user!, except: [:new, :create]
   after_action :verify_authorized
-  before_action :set_booking, only: [:show, :update, :destroy]
-  before_action :set_referer, only: [:new, :show]
+  before_action :set_booking, only: [:show, :update, :destroy, :cancel]
+  before_action :set_referer, only: [:new, :show, :cancel]
   layout :set_layout
 
   def index
@@ -18,11 +18,10 @@ class BookingsController < ApplicationController
     authorize Booking
     @seminar = Seminar.find params[:seminar_id]
     @booking = @seminar.bookings.build
-    # @booking.company = params[:company] == 'true'
     prepare_attendees
-    # layout = user_signed_in? ? :default : 'old_site'
-    # layout = :default
-    # render layout: layout
+  end
+
+  def cancel
   end
 
   def create
@@ -54,8 +53,8 @@ class BookingsController < ApplicationController
   end
 
   def destroy
-    @booking.destroy
-    redirect_to bookings_url, notice: t(:destroyed, model: Booking.model_name.human)
+    @booking.canceled!
+    redirect_to (session[:back_url] || @booking.seminar), notice: t('bookings.cancel.notice')
   end
 
   private
@@ -66,7 +65,7 @@ class BookingsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_booking
-    @booking = Booking.find params[:id]
+    @booking = Booking.find(params[:id] || params[:booking_id])
     @seminar = @booking.seminar
     authorize @booking
   end

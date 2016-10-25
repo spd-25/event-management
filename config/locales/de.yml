@@ -10,6 +10,11 @@ de:
   destroyed: "%{model} gelöscht."
   confirm_delete: "%{model} löschen?"
   bookings:
+    cancel:
+      title: Buchungsstornierung
+      button_label: Stornieren
+      notice: Buchung wurde storniert.
+      confirm: Soll die Buchung wirklich storniert werden?
     single:
       title: "%{id}"
     new:

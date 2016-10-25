@@ -11,21 +11,29 @@
       tr
         th = Booking.human_attribute_name(:date)
         th = Booking.human_attribute_name(:seminar)
-        th = Booking.human_attribute_name(:company_name)
         th = Booking.human_attribute_name(:attendees)
+        th = Booking.human_attribute_name(:contact_email)
+        th Arbeitgeber
+        th
         th
     tbody
       - @bookings.each do | booking |
         - invoice = booking.invoice
-        tr data = {url: url_for(booking)}
+        tr data = {url: url_for(booking)} class=('warning' if booking.canceled?)
           td = ldate booking.created_at
           td = link_to booking.seminar.number, booking.seminar
-          td
           td = booking.attendees.map(&:name).join('<br>').html_safe
+          td = booking.contact_email
+          td = booking.company_title
           td
             - if invoice
               = link_to "Rechnung #{invoice.number}", invoice
             - else
-              = link_to 'Rechnung schreiben', new_invoice_path(booking_id: booking.id), class: 'btn btn-primary'
+              = link_to 'Rechnung schreiben', new_invoice_path(booking_id: booking.id), class: 'btn btn-primary btn-xs'
+          td
+            - if booking.canceled?
+              |  storniert
+            - else
+              = link_to 'Stornieren', booking_cancel_url(booking), class: 'btn btn-danger btn-xs'
 
 = paginate @bookings

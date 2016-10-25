@@ -1,4 +1,6 @@
 class Booking < ApplicationRecord
+  enum status: { created: 0, canceled: 1 }
+
   belongs_to :seminar
   has_many :attendees
   belongs_to :invoice, inverse_of: :booking

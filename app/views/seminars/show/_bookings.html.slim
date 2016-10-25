@@ -8,14 +8,14 @@ h4
 .table-responsive
   table.standard-table.table-clickable
     - @seminar.bookings.order(:created_at).each do |booking|
-      tr data={url: url_for(booking)}
+      tr data={url: url_for(booking)} class=('warning' if booking.canceled?)
         /td = fa_icon booking.company ? 'users' : 'user'
         td = ldate booking.created_at
-        /td = booking.company_name
         td
           - booking.attendees.each do |attendee|
             = attendee.name
             br
+        td = booking.company_title
         td
           - invoice = booking.invoice
           - if invoice
@@ -23,3 +23,8 @@ h4
             => pdf_link invoice_path(invoice, format: :pdf), text: ''
           - else
             = link_to fa_icon('pencil', text: 'Rechnung'), new_invoice_path(booking_id: booking.id), class: 'btn btn-primary btn-xs'
+        td
+          - if booking.canceled?
+            |  storniert
+          - else
+            = link_to 'Stornieren', booking_cancel_url(booking), class: 'btn btn-danger btn-xs'
