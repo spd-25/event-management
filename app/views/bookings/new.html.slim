@@ -31,6 +31,6 @@
     .col-md-6 = @seminar.location&.name
   .row
     .col-md-2: label Gebühr
-    .col-md-6 = @seminar.price_text.html_safe
+    .col-md-6 = @seminar.price_text&.html_safe
 
 = render 'form'
