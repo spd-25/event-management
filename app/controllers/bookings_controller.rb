@@ -30,10 +30,10 @@ class BookingsController < ApplicationController
     @booking.ip_address = request.remote_ip
 
     if @booking.save
-      BookingMailer.booking_notification_email(@booking).deliver_later
       if user_signed_in?
         redirect_to (session[:back_url] || @booking.seminar), notice: t(:created, model: Booking.model_name.human)
       else
+        BookingMailer.booking_notification_email(@booking).deliver_later
         BookingMailer.booking_confirmation_email(@booking).deliver_later
         redirect_to seminar_visitor_url(@booking.seminar), notice: t('bookings.created')
       end
