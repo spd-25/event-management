@@ -28,6 +28,7 @@ class BookingsController < ApplicationController
     authorize Booking
     @booking = Booking.new booking_params
     @booking.ip_address = request.remote_ip
+    @booking.external = !user_signed_in?
 
     if @booking.save
       if user_signed_in?

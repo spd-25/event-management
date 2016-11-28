@@ -29,8 +29,8 @@
       fieldset
         legend Kontakt
         .row
-          .col-md-6 = f.input :contact_email,  as: :email
-          .col-md-6 = f.input :contact_phone,  as: :tel
+          .col-md-6 = f.input :contact_email,  as: :email, placeholder: (user_signed_in? ? 'E-Mail-Adresse' : '* E-Mail-Adresse')
+          .col-md-6 = f.input :contact_phone,  as: :tel,   placeholder: (user_signed_in? ? 'Telefon' : '* Telefon')
           .col-md-6 = f.input :contact_fax,    as: :tel
           .col-md-6 = f.input :contact_mobile, as: :tel
 
