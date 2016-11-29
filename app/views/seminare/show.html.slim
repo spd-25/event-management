@@ -39,7 +39,9 @@
       .col-md-4: h5 Referenten
       .col-md-8
         - @seminar.teachers.each do |teacher|
-          p title=teacher.profession = teacher.name
+          p
+            => teacher.name
+            small.profession = teacher.profession
     - if @seminar.location.present?
       .row.line
         .col-md-4: h5 Ort
@@ -69,3 +71,5 @@ sass:
       margin: 0
   .line
     margin-bottom: 20px
+  .profession
+    color: #666
