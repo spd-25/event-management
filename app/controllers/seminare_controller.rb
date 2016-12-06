@@ -12,12 +12,12 @@ class SeminareController < ApplicationController
   end
 
   def show
-    @seminar = Seminar.find params[:id]
+    @seminar = Seminar.published.find params[:id]
   end
 
   def search
     @query = params[:q]
-    @seminars = Seminar.external_search @query
+    @seminars = Seminar.published.external_search @query
     render :index
   end
 end
