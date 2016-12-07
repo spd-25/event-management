@@ -1,0 +1,28 @@
+- content_for :back_link, link_to('&laquo; zur Seminarübersicht'.html_safe, seminare_visitor_path)
+
+h2 Anmeldungsbestätigung
+
+.row
+  .col-md-2: label Seminarnr.
+  .col-md-6: strong = link_to @seminar.number, @seminar
+.row
+  .col-md-2: label Titel
+  .col-md-6 = link_to @seminar.title, seminar_visitor_url(@seminar)
+.row
+  .col-md-2
+  .col-md-6 = @seminar.subtitle
+.row
+  .col-md-2: label Datum
+  .col-md-6 = @seminar.dates.map { |date| ldate date }.join('; ').html_safe
+.row
+  .col-md-2: label Zeit
+  .col-md-6 = @seminar.events.map(&:time).uniq.compact.join('; ').html_safe
+.row
+  .col-md-2: label Ort
+  .col-md-6 = @seminar.location&.name
+.row
+  .col-md-2: label Gebühr
+  .col-md-6 = @seminar.price_text&.html_safe
+
+p = t('bookings.created')
+

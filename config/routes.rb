@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
 
+
+
+  get 'buchung/:seminar_id', to: 'buchung#new', as: :buchung_new
+  post 'buchung',      to: 'buchung#create', as: :buchung_create
+  get 'nachricht/:booking_id', to: 'buchung#show', as: :buchung_show
+
   root to: 'visitors#index'
   get 'seminare(/:category_id)', to: 'seminare#index', as: :seminare_visitor
   get 'seminar/:id', to: 'seminare#show', as: :seminar_visitor

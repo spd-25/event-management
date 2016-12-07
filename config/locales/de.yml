@@ -26,7 +26,7 @@ de:
     company_true: Firmenanmeldung
     company_false: Privat
     private:
-    created: Sie haben sich erfolgreich für dieses Seminar angemeldet. Sie sollten in wenigen Minuten eine Bestätigung per E-Mail erhalten.
+    created: Sie haben sich erfolgreich für das Seminar angemeldet. Sie sollten in wenigen Minuten eine Bestätigung per E-Mail erhalten.
     schools:
       - Aschersleben
       - Drübeck
@@ -36,6 +36,24 @@ de:
       graduate: Absolvent*in der Fachschule
       terms_of_service: 'Hiermit erkenne ich die Allgemeinen Geschäftsbedingungen des PARITÄTISCHEN Bildungswerkes LSA an.'
       school: Schule
+  buchung:
+    single:
+      title: "%{id}"
+    new:
+      title: Neue Anmeldung
+      error: Anmeldung konnte nicht gespeichert werden. Bitte überprüfen Sie die markierten Felder.
+      member: Mitglied im PARITÄTISCHEN LSA
+      member_institution: Einrichtung des PARITÄTISCHEN LSA
+      graduate: Absolvent*in der Fachschule
+      terms_of_service: 'Hiermit erkenne ich die Allgemeinen Geschäftsbedingungen des PARITÄTISCHEN Bildungswerkes LSA an.'
+      school: Schule
+    company_true: Firmenanmeldung
+    company_false: Privat
+    private:
+    created: Sie haben sich erfolgreich für dieses Seminar angemeldet. Sie sollten in wenigen Minuten eine Bestätigung per E-Mail erhalten.
+    schools:
+      - Aschersleben
+      - Drübeck
   categories:
     single:
       title: "%{id}"

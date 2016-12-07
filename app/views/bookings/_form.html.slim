@@ -1,72 +1,61 @@
 = simple_form_for(@booking, defaults: { label: false }) do |f|
   = f.input :seminar_id, as: :hidden
 
-  .row style="padding-top: 30px"
-    .col-md-8
-      fieldset
-        legend = Attendee.model_name.human(count: 2)
+  fieldset
+    legend = Attendee.model_name.human(count: 2)
 
-        = f.simple_fields_for :attendees do |attendee_form|
-          - attendee = attendee_form.object
-          .attendee class=('new-record' if attendee.new_record?)
-            = attendee_form.input :_destroy, as: :hidden, input_html: { value: attendee.new_record? }
-            .row
-              .col-md-6 = attendee_form.input :first_name
-              .col-md-6 = attendee_form.input :last_name
+    = f.simple_fields_for :attendees do |attendee_form|
+      - attendee = attendee_form.object
+      .attendee class=('new-record' if attendee.new_record?)
+        = attendee_form.input :_destroy, as: :hidden, input_html: { value: attendee.new_record? }
+        .row
+          a.btn.btn-danger.btn-xs.remove-attendee = fa_icon 'trash'
+          .col-md-6 = attendee_form.input :first_name
+          .col-md-6 = attendee_form.input :last_name
 
-        .row
-          .col-md-1 = link_to fa_icon('plus', text: 'Teilnehmer hinzufügen'), '#',
-            class: 'add-attendee btn btn-default', tabindex: -1, title: 'Neuer Teilnehmer'
-      fieldset
-        legend Arbeitgeber
-        .row
-          .col-md-6 = f.input :company_title
-        .row
-          .col-md-5 = f.input :company_street
-          .col-md-2 = f.input :company_zip,  as: :tel
-          .col-md-5 = f.input :company_city
+    .row
+      .col-md-1 = link_to fa_icon('plus', text: 'Teilnehmer hinzufügen'), '#',
+        class: 'add-attendee btn btn-default', tabindex: -1, title: 'Neuer Teilnehmer'
+  fieldset
+    legend Arbeitgeber
+    .row
+      .col-md-6 = f.input :company_title
+    .row
+      .col-md-5 = f.input :company_street
+      .col-md-2 = f.input :company_zip,  as: :tel
+      .col-md-5 = f.input :company_city
 
-      fieldset
-        legend Kontakt
-        .row
-          .col-md-6 = f.input :contact_email,  as: :email, placeholder: (user_signed_in? ? 'E-Mail-Adresse' : '* E-Mail-Adresse')
-          .col-md-6 = f.input :contact_phone,  as: :tel,   placeholder: (user_signed_in? ? 'Telefon' : '* Telefon')
-          .col-md-6 = f.input :contact_fax,    as: :tel
-          .col-md-6 = f.input :contact_mobile, as: :tel
+  fieldset
+    legend Kontakt
+    .row
+      .col-md-6 = f.input :contact_email,  as: :email, placeholder: 'E-Mail-Adresse'
+      .col-md-6 = f.input :contact_phone,  as: :tel,   placeholder: 'Telefon'
+      .col-md-6 = f.input :contact_fax,    as: :tel
+      .col-md-6 = f.input :contact_mobile, as: :tel
 
-      fieldset
-        legend = Booking.human_attribute_name(:invoice_address)
-        .row
-          .col-md-6 = f.input :invoice_title
-        .row
-          .col-md-5 = f.input :invoice_street
-          .col-md-2 = f.input :invoice_zip,  as: :tel
-          .col-md-5 = f.input :invoice_city
+  fieldset
+    legend = Booking.human_attribute_name(:invoice_address)
+    .row
+      .col-md-6 = f.input :invoice_title
+    .row
+      .col-md-5 = f.input :invoice_street
+      .col-md-2 = f.input :invoice_zip,  as: :tel
+      .col-md-5 = f.input :invoice_city
 
-      fieldset
-        legend Paritätische
-        .row
-          .col-md-6 = f.input :member, label: t('.member')
-          .col-md-6 = f.input :member_institution, label: t('.member_institution')
-        .row
-          .col-md-4 = f.input :graduate, label: t('.graduate')
-          .col-md-4 = f.input :school, collection:t('bookings.schools'), include_blank: false
-          .col-md-4 = f.input :year
+  fieldset
+    legend Paritätische
+    .row
+      .col-md-6 = f.input :member, label: t('.member')
+      .col-md-6 = f.input :member_institution, label: t('.member_institution')
+    .row
+      .col-md-4 = f.input :graduate, label: t('.graduate')
+      .col-md-4 = f.input :school, collection:t('bookings.schools'), include_blank: false
+      .col-md-4 = f.input :year
 
-      - unless user_signed_in?
-        fieldset
-          legend AGB
-          = f.input :terms_of_service, as: :boolean, required: true, label: t('.terms_of_service')
-
-  .row.action-buttons
-    .col-md-8
-      - if user_signed_in?
-        .pull-right
-          => link_to t(:cancel), (session[:back_url] || @booking.seminar), class: 'btn btn-default'
-          = f.submit t(:save), class: 'btn btn-primary'
-      - else
-        = f.submit 'Jetzt anmelden', class: 'btn btn-primary btn-block btn-lg'
-
+  .action-buttons
+    .pull-right
+      => link_to t(:cancel), (session[:back_url] || @booking.seminar), class: 'btn btn-default'
+      = f.submit t(:save), class: 'btn btn-primary'
 
 coffee:
   $ ->
@@ -94,3 +83,6 @@ coffee:
 sass:
   a.add-attendee
     margin-bottom: 25px
+  a.remove-attendee
+    position: absolute
+    right: -20px

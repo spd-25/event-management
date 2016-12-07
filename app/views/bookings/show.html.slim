@@ -9,4 +9,14 @@
       span.sr-only Close
     h4 = t('.error')
 
-= render 'form'
+h3
+  => link_to @seminar.number, @seminar
+  | -
+  =< @seminar.title
+  br
+  small = @seminar.subtitle
+
+.row style="padding-top: 30px"
+  .col-md-8 = render 'form'
+  .col-md-3.col-md-offset-1 = render 'seminar'
+

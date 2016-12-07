@@ -1,0 +1,131 @@
+- page_title_for @booking
+- content_for :back_link, link_to('&laquo; zur Seminarübersicht'.html_safe, seminare_visitor_path)
+
+- if @booking.errors.any?
+  .alert.alert-danger.alert-dismissable
+    button.close type="button" data-dismiss="alert"
+      span aria-hidden="true" &times;
+      span.sr-only Close
+    h4 = t('.error')
+
+
+h3 Ich melde mich verbindlich für folgende Veranstaltung an:
+
+.row
+  .col-md-2: label Seminarnr.
+  .col-md-6: strong = @seminar.number
+.row
+  .col-md-2: label Titel
+  .col-md-6 = @seminar.title
+.row
+  .col-md-2
+  .col-md-6 = @seminar.subtitle
+.row
+  .col-md-2: label Datum
+  .col-md-6 = @seminar.dates.map { |date| ldate date }.join('; ').html_safe
+.row
+  .col-md-2: label Zeit
+  .col-md-6 = @seminar.events.map(&:time).uniq.compact.join('; ').html_safe
+.row
+  .col-md-2: label Ort
+  .col-md-6 = @seminar.location&.name
+.row
+  .col-md-2: label Gebühr
+  .col-md-6 = @seminar.price_text&.html_safe
+
+= simple_form_for(@booking, url: buchung_create_url, defaults: { label: false }) do |f|
+  = f.input :seminar_id, as: :hidden
+
+  .row style="padding-top: 30px"
+    .col-md-8
+      fieldset
+        legend = Attendee.model_name.human(count: 2)
+
+        = f.simple_fields_for :attendees do |attendee_form|
+          - attendee = attendee_form.object
+          .attendee class=('new-record' if attendee.new_record?)
+            = attendee_form.input :_destroy, as: :hidden, input_html: { value: attendee.new_record? }
+            .row
+              a.btn.btn-danger.btn-xs.remove-attendee = fa_icon 'trash'
+              .col-md-6 = attendee_form.input :first_name
+              .col-md-6 = attendee_form.input :last_name
+
+        .row
+          .col-md-1 = link_to fa_icon('plus', text: 'Teilnehmer hinzufügen'), '#',
+            class: 'add-attendee btn btn-default', tabindex: -1, title: 'Neuer Teilnehmer'
+      fieldset
+        legend Arbeitgeber
+        .row
+          .col-md-6 = f.input :company_title
+        .row
+          .col-md-5 = f.input :company_street
+          .col-md-2 = f.input :company_zip,  as: :tel
+          .col-md-5 = f.input :company_city
+
+      fieldset
+        legend Kontakt
+        .row
+          .col-md-6 = f.input :contact_email,  as: :email, placeholder: '* E-Mail-Adresse'
+          .col-md-6 = f.input :contact_phone,  as: :tel,   placeholder: '* Telefon'
+          .col-md-6 = f.input :contact_fax,    as: :tel
+          .col-md-6 = f.input :contact_mobile, as: :tel
+
+      fieldset
+        legend = Booking.human_attribute_name(:invoice_address)
+        .row
+          .col-md-6 = f.input :invoice_title
+        .row
+          .col-md-5 = f.input :invoice_street
+          .col-md-2 = f.input :invoice_zip,  as: :tel
+          .col-md-5 = f.input :invoice_city
+
+      fieldset
+        legend Paritätische
+        .row
+          .col-md-6 = f.input :member, label: t('.member')
+          .col-md-6 = f.input :member_institution, label: t('.member_institution')
+        .row
+          .col-md-4 = f.input :graduate, label: t('.graduate')
+          .col-md-4 = f.input :school, collection:t('bookings.schools'), include_blank: false
+          .col-md-4 = f.input :year
+
+      fieldset
+        legend AGB
+        = f.input :terms_of_service, as: :boolean, required: true, label: t('.terms_of_service')
+
+  .row.action-buttons
+    .col-md-8 = f.submit 'Jetzt anmelden', class: 'btn btn-primary btn-block btn-lg'
+
+
+coffee:
+  $ ->
+    toggleAttendee = (attendee, hidden) ->
+      attendee.toggleClass('hidden', hidden)
+      attendee.find('.booking_attendees__destroy input').val(hidden)
+
+    $('.attendee.new-record').addClass('hidden')
+    $('.add-attendee').on 'click', (event) ->
+      event.preventDefault()
+      toggleAttendee $('.attendee.new-record.hidden').first(), false
+    $('.remove-attendee').on 'click', (event) ->
+      event.preventDefault()
+      if $('.attendee:visible').length > 1
+        attendee = $(this).parents('.attendee')
+        toggleAttendee attendee, true
+        attendee.find('input').val('')
+    if $('form.new_booking').length
+      toggleAttendee $('.attendee.new-record.hidden').first(), false
+
+    $('#booking_graduate').change ->
+      disabled = !$('#booking_graduate:checked').val()
+      $('#booking_school, #booking_year').attr('disabled', disabled)
+
+    $('#booking_graduate').change()
+
+
+sass:
+  a.add-attendee
+    margin-bottom: 25px
+  a.remove-attendee
+    position: absolute
+    right: -20px
