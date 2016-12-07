@@ -31,16 +31,19 @@ class BuchungController < ApplicationController
   end
 
   private
+  
   def booking_params
     attrs = [
       :seminar_id, :member, :member_institution, :graduate, :school, :year, :terms_of_service,
-      :contact_person, :contact_email, :contact_phone, :contact_mobile, :contact_fax,
+      :contact_email, :contact_phone, :contact_mobile, :contact_fax,
       :company_title, :company_street, :company_zip, :company_city,
       :invoice_title, :invoice_street, :invoice_zip, :invoice_city,
-      attendees_attributes: %i(id first_name last_name profession _destroy) + [
-        address: %i(street zip city), contact: %i(email phone mobile)
-      ]
+      attendees_attributes: %i(first_name last_name)
     ]
-    params.require(:booking).permit(attrs)
+    p = params.require(:booking).permit(attrs)
+    p['attendees_attributes'].reject! do |_, attr|
+      attr['first_name'].blank? && attr['last_name'].blank?
+    end
+    p
   end
 end

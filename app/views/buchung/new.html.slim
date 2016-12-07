@@ -43,10 +43,10 @@ h3 Ich melde mich verbindlich für folgende Veranstaltung an:
 
         = f.simple_fields_for :attendees do |attendee_form|
           - attendee = attendee_form.object
-          .attendee class=('new-record' if attendee.new_record?)
-            = attendee_form.input :_destroy, as: :hidden, input_html: { value: attendee.new_record? }
+          .attendee
             .row
-              a.btn.btn-danger.btn-xs.remove-attendee = fa_icon 'trash'
+              - if attendee_form.index > 0
+                a.btn.btn-danger.btn-xs.remove-attendee = fa_icon 'trash'
               .col-md-6 = attendee_form.input :first_name
               .col-md-6 = attendee_form.input :last_name
 
@@ -103,18 +103,18 @@ coffee:
       attendee.toggleClass('hidden', hidden)
       attendee.find('.booking_attendees__destroy input').val(hidden)
 
-    $('.attendee.new-record').addClass('hidden')
+    $('.attendee').addClass('hidden')
+    toggleAttendee $('.attendee.hidden').first(), false
+    toggleAttendee $('.attendee .has-error').parents('.attendee'), false
     $('.add-attendee').on 'click', (event) ->
       event.preventDefault()
-      toggleAttendee $('.attendee.new-record.hidden').first(), false
+      toggleAttendee $('.attendee.hidden').first(), false
     $('.remove-attendee').on 'click', (event) ->
       event.preventDefault()
       if $('.attendee:visible').length > 1
         attendee = $(this).parents('.attendee')
         toggleAttendee attendee, true
         attendee.find('input').val('')
-    if $('form.new_booking').length
-      toggleAttendee $('.attendee.new-record.hidden').first(), false
 
     $('#booking_graduate').change ->
       disabled = !$('#booking_graduate:checked').val()
