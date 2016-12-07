@@ -69,7 +69,10 @@ coffee:
       toggleAttendee $('.attendee.new-record.hidden').first(), false
     $('.remove-attendee').on 'click', (event) ->
       event.preventDefault()
-      toggleAttendee $(this).parents('.attendee'), true
+      if $('.attendee:visible').length > 1
+        attendee = $(this).parents('.attendee')
+        toggleAttendee attendee, true
+        attendee.find('input').val('')
     if $('form.new_booking').length
       toggleAttendee $('.attendee.new-record.hidden').first(), false
 
