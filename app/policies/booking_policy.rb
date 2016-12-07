@@ -1,9 +1,5 @@
 class BookingPolicy < ApplicationPolicy
 
-  def create?
-    true
-  end
-
   def cancel?
     destroy?
   end

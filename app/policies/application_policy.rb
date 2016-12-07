@@ -7,12 +7,12 @@ class ApplicationPolicy
   end
 
   def index?
-    user.admin?
+    user.admin? || user.editor?
   end
 
   def show?
     # scope.where(:id => record.id).exists?
-    user.admin?
+    user.admin? || user.editor?
   end
 
   def create?

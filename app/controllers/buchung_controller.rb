@@ -31,7 +31,7 @@ class BuchungController < ApplicationController
   end
 
   private
-  
+
   def booking_params
     attrs = [
       :seminar_id, :member, :member_institution, :graduate, :school, :year, :terms_of_service,

@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  enum role: { user: 0, admin: 1 }
+  enum role: { user: 0, admin: 1, editor: 2 }
   after_initialize :set_default_role, if: :new_record?
 
   validates :email, :username, :role, presence: true
