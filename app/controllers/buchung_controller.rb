@@ -2,14 +2,12 @@ class BuchungController < ApplicationController
   layout 'external'
 
   def new
-    authorize Booking
     @seminar = Seminar.published.find params[:seminar_id]
     @booking = @seminar.bookings.build
     10.times { @booking.attendees.build }
   end
 
   def create
-    authorize Booking
     @booking = Booking.new booking_params
     @booking.ip_address = request.remote_ip
     @booking.external = true
