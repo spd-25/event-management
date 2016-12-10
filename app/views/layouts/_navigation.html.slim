@@ -7,23 +7,23 @@
           span.icon-bar
           span.icon-bar
           span.icon-bar
-        /= link_to 'Start', root_path, class: 'navbar-brand', tabindex: -1
-        = link_to title_for_model(Seminar, with_icon: true), seminars_url, class: 'navbar-brand', tabindex: -1
+        = link_to 'Start', root_path, class: 'navbar-brand', tabindex: -1
+        /= link_to title_for_model(Seminar, with_icon: true), seminars_url, class: 'navbar-brand', tabindex: -1
       .collapse.navbar-collapse
         ul.nav.navbar-nav
-          /li class=('active' if controller_name == 'seminars')
+          li class=('active' if controller_name == 'seminars')
             = link_to title_for_model(Seminar, with_icon: true), seminars_url, tabindex: -1
           li class=('active' if controller_name == 'bookings')
             = link_to title_for_model(Booking, with_icon: true), bookings_url, tabindex: -1
-          /= navbar_dropdown 'Stammdaten', active: controller_name.in?(%w(locations teachers categories users)) do
-          li class=('active' if controller_name == 'locations')
-            = link_to title_for_model(Location, with_icon: true), locations_url, tabindex: -1
-          li class=('active' if controller_name == 'teachers')
-            = link_to title_for_model(Teacher, with_icon: true), teachers_url, tabindex: -1
-          li class=('active' if controller_name == 'categories')
-            = link_to title_for_model(Category, with_icon: true), categories_url, tabindex: -1
-          li class=('active' if controller_name == 'users')
-            = link_to title_for_model(User, with_icon: true), users_url, tabindex: -1
+          = navbar_dropdown 'Stammdaten', active: controller_name.in?(%w(locations teachers categories users)) do
+            li class=('active' if controller_name == 'locations')
+              = link_to title_for_model(Location, with_icon: true), locations_url, tabindex: -1
+            li class=('active' if controller_name == 'teachers')
+              = link_to title_for_model(Teacher, with_icon: true), teachers_url, tabindex: -1
+            li class=('active' if controller_name == 'categories')
+              = link_to title_for_model(Category, with_icon: true), categories_url, tabindex: -1
+            li class=('active' if controller_name == 'users')
+              = link_to title_for_model(User, with_icon: true), users_url, tabindex: -1
 
         ul.nav.navbar-nav.navbar-right
           li
