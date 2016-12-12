@@ -15,17 +15,17 @@ html
     == csrf_meta_tags
   body
     #main.container
-      header
+      header.hidden-print
         a href="/"
           img alt=("zur Startseite") src="/old_site/parit.png"
-      == render 'layouts/old_site/navigation'
+      .hidden-print == render 'layouts/old_site/navigation'
 
 
-      == render 'layouts/old_site/header_block'
+      .hidden-print == render 'layouts/old_site/header_block'
 
 
       .content
-        .row
+        .row.hidden-print
           .col-md-6 = content_for :back_link if content_for? :back_link
           .col-md-6.search
             p = link_to 'Seminare für 2016 finden Sie hier', 'http://buchung.bildungswerk-lsa.de/suche.php'
@@ -35,7 +35,7 @@ html
         == render 'layouts/messages'
         == yield
 
-      = render 'layouts/old_site/foot'
+      .hidden-print = render 'layouts/old_site/foot'
 
   sass:
     body
@@ -48,3 +48,6 @@ html
 
         .content
           padding: 20px
+    @media print
+      body
+        background: white
