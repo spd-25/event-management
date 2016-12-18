@@ -128,6 +128,19 @@ module Importer
     puts 'run "rake db:seed"'
   end
 
+  def self.import_companies
+    require 'csv'
+
+    puts
+    Company.transaction do
+      CSV.foreach(Rails.root.join('db/seeds/companies.csv'), headers: true) do |row|
+        Company.create! row.to_h.except('code_traeger', 'password', 'created')
+        print '.'
+      end
+    end
+    puts '', "#{Company.count} companies imported"
+  end
+
   def self.import_files_for(model, page, suffix)
     files = Dir[Rails.root.join('db', 'seeds', suffix)]
     puts "import of #{files.count} #{model.name} files"

@@ -144,7 +144,7 @@ module ApplicationHelper
 
   def collection_title_for(collection, count: nil, counts: true)
     model = model_for_collection collection
-    count ||= collection.count
+    count ||= (collection.respond_to?(:total_count) ? collection.total_count : collection.count)
     title = title_for_model model, count: count
     title = "#{count} #{title}" if counts
     title

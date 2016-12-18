@@ -22,6 +22,8 @@
               = link_to title_for_model(Teacher, with_icon: true), teachers_url, tabindex: -1
             li class=('active' if controller_name == 'categories')
               = link_to title_for_model(Category, with_icon: true), categories_url, tabindex: -1
+            li class=('active' if controller_name == 'companies')
+              = link_to title_for_model(Company, with_icon: true), companies_url, tabindex: -1
             li class=('active' if controller_name == 'users')
               = link_to title_for_model(User, with_icon: true), users_url, tabindex: -1
 

@@ -1,0 +1,24 @@
+- page_title_for @companies
+.page-header
+  = new_link new_company_path
+  h2 = title_for @companies
+
+= paginate @companies
+
+.table-responsive
+  table.standard-table.table-clickable
+    thead
+      tr
+        th = Company.human_attribute_name(:code)
+        th = Company.human_attribute_name(:name)
+        th = Company.human_attribute_name(:address)
+        th = %i{phone mobile fax}.map { |attr| Company.human_attribute_name(attr) }.join(', ')
+        th = Company.human_attribute_name(:email)
+    tbody
+      - @companies.each do | company |
+        tr data = {url: url_for(company)}
+          td = company.code
+          td #{company.name}<br>#{company.name2}
+          td #{company.street}<br>#{company.zip} #{company.city}<br>#{company.city_part}
+          td = [company.phone, company.mobile, company.fax].compact.join('<br>').html_safe
+          td = link_to(company.email, 'mailto:' + company.email) if company.email.present?

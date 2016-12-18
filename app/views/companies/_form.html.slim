@@ -1,0 +1,32 @@
+= simple_form_for(@company) do |f|
+  - if @company.errors.any?
+    .alert.alert-danger.alert-dismissable
+      button.close type="button" data-dismiss="alert"
+        span aria-hidden="true" &times;
+        span.sr-only Close
+      h4 = t('.error')
+
+  section
+    .col-md-4
+      .form-inputs
+        = f.input :code
+        = f.input :name
+        = f.input :name2
+    .col-md-4
+      .form-inputs
+        = f.input :street
+        = f.input :zip
+        = f.input :city
+        = f.input :city_part
+    .col-md-4
+      .form-inputs
+        = f.input :phone
+        = f.input :mobile
+        = f.input :fax
+        = f.input :email
+
+  section.action-buttons
+    .col-md-12
+      .pull-right
+        => link_to t(:cancel), 'javascript: window.history.back();', class: 'btn btn-default'
+        = f.submit t(:save), class: 'btn btn-primary'

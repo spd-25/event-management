@@ -39,6 +39,9 @@ de:
       category:
         one: Thema
         other: Themen
+      company:
+        one: Firma
+        other: Firmen
       event:
         one: Termin
         other: Termine
@@ -68,6 +71,10 @@ de:
       category:
         category: Oberthema
         categories: Unterthemen
+      company:
+        code: Code
+        name2: Name 2
+        city_part: Ortsteil
       invoice:
         date: Rechnungsdatum
         number: Rechnungsnummer

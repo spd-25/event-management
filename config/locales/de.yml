@@ -62,6 +62,14 @@ de:
     new:
       title: Neues Thema
     icon: tags
+  companies:
+    single:
+      title: "%{id}"
+    form:
+      error: Firma konnte nicht gespeichert werden.
+    new:
+      title: Neue Firma
+    icon: briefcase
   locations:
     icon: map-marker
     single:

@@ -28,5 +28,6 @@ Rails.application.routes.draw do
     get :cancel
   end
   resources :invoices,   except: :edit
+  resources :companies
 
 end
