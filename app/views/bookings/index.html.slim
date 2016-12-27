@@ -14,6 +14,7 @@
         th = Booking.human_attribute_name(:attendees)
         th = Booking.human_attribute_name(:contact_email)
         th Arbeitgeber
+        th Firma
         th
         th
     tbody
@@ -25,6 +26,7 @@
           td = booking.attendees.map(&:name).join('<br>').html_safe
           td = booking.contact_email
           td = booking.company_title
+          td = link_to_if booking.company, booking.company&.name, booking.company
           td
             - if invoice
               = link_to "Rechnung #{invoice.number}", invoice

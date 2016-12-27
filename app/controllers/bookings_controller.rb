@@ -68,7 +68,7 @@ class BookingsController < ApplicationController
   def booking_params
     attrs = [
       :seminar_id, :member, :member_institution, :graduate, :school, :year, :terms_of_service,
-      :contact_person, :contact_email, :contact_phone, :contact_mobile, :contact_fax,
+      :contact_person, :contact_email, :contact_phone, :contact_mobile, :contact_fax, :company_id,
       :company_title, :company_street, :company_zip, :company_city,
       :invoice_title, :invoice_street, :invoice_zip, :invoice_city,
       attendees_attributes: %i(id first_name last_name profession _destroy) + [

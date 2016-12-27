@@ -6,6 +6,7 @@ class Booking < ApplicationRecord
   belongs_to :seminar
   has_many :attendees
   belongs_to :invoice, inverse_of: :booking
+  belongs_to :company, inverse_of: :bookings, optional: true
 
   acts_as_addressable field_name: :invoice_address, prefix: :invoice
   acts_as_addressable field_name: :company_address, prefix: :company
