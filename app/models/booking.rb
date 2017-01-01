@@ -26,20 +26,16 @@ class Booking < ApplicationRecord
   has_paper_trail
 
   def name
-    attendee = attendees.first
-    "#{attendee.first_name} #{attendee.last_name}"
+    attendees.first.name
   end
 
   def generate_invoice
-    address = company ? company_address : attendees.first.full_address
-    items = attendees.map{ |attendee| { attendee: attendee.name, price: seminar.price || 0 } }
-    build_invoice number: Invoice.next_number, date: Date.current, address: address, items: items
+    address = (company || invoice_address).full_address
+    items = attendees.map { |attendee| { attendee: attendee.name, price: seminar.price || 0 } }
+    build_invoice number: Invoice.next_number, date: Date.current, address: address, items: items,
+        pre_message:  I18n.t('invoices.default_pre_message'),
+        post_message: I18n.t('invoices.default_post_message')
   end
-
-  # def company_address
-  #   # "#{company_name}\n#{invoice_address}"
-  #   ''
-  # end
 
   private
 

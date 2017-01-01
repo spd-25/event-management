@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/J-F-Liu/prawn-table
+  revision: 6e32ab811a162ca556644eaf942d757d8519f0be
+  specs:
+    prawn-table (0.2.3)
+      prawn (>= 1.3.0, < 3.0.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -215,6 +222,7 @@ GEM
       request_store (~> 1.1)
     parser (2.3.1.2)
       ast (~> 2.2)
+    pdf-core (0.6.1)
     pg (0.18.4)
     pg_search (1.0.6)
       activerecord (>= 3.1)
@@ -222,6 +230,9 @@ GEM
       arel
     pkg-config (1.1.7)
     powerpack (0.1.1)
+    prawn (2.1.0)
+      pdf-core (~> 0.6.1)
+      ttfunk (~> 1.4.0)
     pry (0.10.4)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -349,6 +360,7 @@ GEM
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (2.0.5)
+    ttfunk (1.4.0)
     turbolinks (5.0.1)
       turbolinks-source (~> 5)
     turbolinks-source (5.0.0)
@@ -417,6 +429,8 @@ DEPENDENCIES
   paper_trail
   pg
   pg_search
+  prawn
+  prawn-table!
   pry-rails
   pry-rescue
   puma (~> 3.0)

@@ -99,6 +99,21 @@ de:
       title: "Rechnung %{id}"
     new:
       title: Rechnung schreiben
+    default_pre_message: |
+      Sehr geehrte Damen und Herren,
+
+      wir bedanken uns für Ihre Anmeldung zum Seminar
+    default_post_message: |
+      Bitte überweisen Sie den Gesamtbetrag innerhalb von 7 Tagen auf unser Konto mit Angabe der Rechnungsnummer.
+
+      Bank für Sozialwirtschaft Magdeburg
+      IBAN: DE30810205000007419401
+      SWIFT/BIC: BFSWDE33MAG
+
+
+      Mit freundlichen Grüßen
+      Angelika May
+      Finanzbuchhaltung
   search:
     index:
       title: Suchergebnisse

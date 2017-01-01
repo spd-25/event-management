@@ -14,6 +14,14 @@ class Address < JsonObjectSerializer
     atts
   end
 
+  def to_s
+    "#{street}\n#{zip} #{city}"
+  end
+
+  def full_address
+    "#{title}\n#{to_s}"
+  end
+
   def gmaps_search_link
     ['https://maps.google.de?q=', street, zip, city].join(' ')
   end

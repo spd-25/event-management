@@ -9,6 +9,13 @@ class InvoicesController < ApplicationController
   end
 
   def show
+    respond_to do |format|
+      format.html
+      format.pdf do
+        pdf = InvoicePdf.new(@invoice)
+        send_data pdf.render, filename: pdf.filename, type: 'application/pdf', disposition: 'inline'
+      end
+    end
   end
 
   def new
@@ -34,7 +41,7 @@ class InvoicesController < ApplicationController
     if @invoice.update invoice_params
       redirect_to @booking.seminar, notice: t(:updated, model: Invoice.model_name.human)
     else
-      render :edit
+      render :show
     end
   end
 

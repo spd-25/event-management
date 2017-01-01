@@ -7,4 +7,12 @@ class Company < ApplicationRecord
 
   multisearchable against: [:code, :name, :name2, :city]
 
+  def address
+    "#{street}\n#{zip} #{city}\n#{city_part}"
+  end
+
+  def full_address
+    "#{name}\n#{address}"
+  end
+
 end

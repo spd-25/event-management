@@ -19,17 +19,19 @@
   fieldset
     legend Arbeitgeber
     .row
-      .col-md-6 = f.input :company_title
+      .col-md-6
+        = f.input :company_title
+        = f.input :company_street
+        .row
+          .col-md-4 = f.input :company_zip,  as: :tel
+          .col-md-8 = f.input :company_city
+
       .col-md-6 = f.association :company,
         label_method: ->(c){ "#{c.code} - #{c.name}, #{c.city}" },
         collection: Company.order(:name),
-        input_html: { class: 'select2' }
+        input_html: { class: 'select2' },
+        label: 'Firma'
 
-    .row
-      .col-md-6 = f.input :company_street
-    .row
-      .col-md-2 = f.input :company_zip,  as: :tel
-      .col-md-4 = f.input :company_city
 
   fieldset
     legend Kontakt

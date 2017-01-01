@@ -19,8 +19,8 @@ h4
         td
           - invoice = booking.invoice
           - if invoice
-            => link_to "Rechnung #{invoice.number}", invoice
-            => pdf_link invoice_path(invoice, format: :pdf), text: ''
+            => pdf_link invoice_path(invoice, format: :pdf), text: "Rechnung #{invoice.number}"
+            => link_to fa_icon('pencil'), invoice
           - else
             = link_to fa_icon('pencil', text: 'Rechnung'), new_invoice_path(booking_id: booking.id), class: 'btn btn-primary btn-xs'
         td

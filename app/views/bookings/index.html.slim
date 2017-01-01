@@ -29,7 +29,8 @@
           td = link_to_if booking.company, booking.company&.name, booking.company
           td
             - if invoice
-              = link_to "Rechnung #{invoice.number}", invoice
+              => pdf_link invoice_path(invoice, format: :pdf), text: "Rechnung #{invoice.number}"
+              => link_to fa_icon('pencil'), invoice
             - else
               = link_to 'Rechnung schreiben', new_invoice_path(booking_id: booking.id), class: 'btn btn-primary btn-xs'
           td

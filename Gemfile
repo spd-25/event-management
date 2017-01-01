@@ -42,6 +42,9 @@ gem 'rollbar'
 gem 'paper_trail'
 gem 'kaminari'
 # gem 'reverse_markdown'
+gem 'prawn'
+# See https://github.com/prawnpdf/prawn-table/pull/50
+gem 'prawn-table', git: 'https://github.com/J-F-Liu/prawn-table'
 
 group :development do
   gem 'better_errors'
