@@ -100,7 +100,6 @@ class InvoicePdf < ApplicationDocument
       [Seminar.human_attribute_name(:number), @seminar.number],
       [Seminar.human_attribute_name(:date), @seminar.dates.map { |date| ldate date }.join('; ')],
       [Seminar.human_attribute_name(:time), @seminar.events.map(&:time).uniq.compact.join('; ')],
-      [Teacher.model_name.human(count: @seminar.teachers.count), @seminar.teachers.map(&:name).join(', ')],
       [Seminar.human_attribute_name(:location), @seminar.location.name]
     ]
   end
