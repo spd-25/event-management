@@ -6,6 +6,7 @@ class Invoice < ApplicationRecord
   serialize :items, InvoiceItems
 
   validates :number, :date, presence: true
+  validates :number, uniqueness: true
 
   has_paper_trail
 
