@@ -2,11 +2,53 @@ h4
   - count = @seminar.attendees.count
   => count
   => Attendee.model_name.human(count: count)
-  = link_to fa_icon('table', text: 'Exportieren'), '#', class: 'btn btn-default btn-xs disabled'
+  => link_to fa_icon('table', text: 'Exportieren'), '#', class: 'btn btn-default btn-xs disabled'
+  = link_to fa_icon('plus', text: 'Neue Anmeldung'),
+      new_booking_url(seminar_id: @seminar.id), class: 'btn btn-default btn-xs'
 
 .table-responsive
   table.standard-table.table-clickable
     - @seminar.attendees.order(:last_name).each do |attendee|
-      tr data={url: url_for(attendee.booking)}
+      - booking = attendee.booking
+      - next if booking.canceled?
+      tr data={url: url_for(booking)}
         td = attendee.name
+        td = ldate booking.created_at
         td
+          => booking.company_title
+          - if booking.company.present?
+            br
+            = link_to booking.company.name, booking.company
+        td
+          - invoice = booking.invoice
+          - if invoice
+            => pdf_link invoice_path(invoice, format: :pdf), text: "Rechnung #{invoice.number}"
+            => link_to fa_icon('pencil'), invoice
+          - else
+            = link_to fa_icon('pencil', text: 'Rechnung'), new_invoice_path(booking_id: booking.id), class: 'btn btn-primary btn-xs'
+        td
+          - if booking.canceled?
+            |  storniert
+          - else
+            = link_to 'Stornieren', booking_cancel_url(booking), class: 'btn btn-danger btn-xs'
+
+- if @seminar.bookings.canceled.any?
+  h4 Stornierte Anmeldungen
+
+  .table-responsive
+    table.standard-table.table-clickable.muted
+      - @seminar.attendees.order(:last_name).each do |attendee|
+        - booking = attendee.booking
+        - next unless booking.canceled?
+        tr data={url: url_for(booking)}
+          td = attendee.name
+          td = ldate booking.created_at
+          td
+            => booking.company_title
+            - if booking.company.present?
+              br
+              = link_to booking.company.name, booking.company
+          td
+            - invoice = booking.invoice
+            - if invoice
+              => pdf_link invoice_path(invoice, format: :pdf), text: "Rechnung #{invoice.number}"

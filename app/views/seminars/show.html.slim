@@ -28,10 +28,9 @@ ol.breadcrumb
     small = @seminar.subtitle
 
 .row
-  .col-md-6
-    = render 'seminars/show/bookings'
+  .col-md-9
     = render 'seminars/show/attendees'
-  .col-md-6
+  .col-md-3
     - if @seminar.archived
       .alert.alert-warning Seminar archiviert.
     - elsif @seminar.published
