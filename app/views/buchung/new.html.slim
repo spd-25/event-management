@@ -73,11 +73,12 @@ h3 Ich melde mich verbindlich für folgende Veranstaltung an:
       fieldset
         legend = Booking.human_attribute_name(:invoice_address)
         .row
-          .col-md-6 = f.input :invoice_title
+          .col-md-6 = f.input :invoice_title, as: :text, input_html: { rows: 4 }
         .row
-          .col-md-5 = f.input :invoice_street
+          .col-md-6 = f.input :invoice_street
+        .row
           .col-md-2 = f.input :invoice_zip,  as: :tel
-          .col-md-5 = f.input :invoice_city
+          .col-md-4 = f.input :invoice_city
 
       fieldset
         legend Paritätische
