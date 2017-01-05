@@ -13,20 +13,22 @@
         th = Booking.human_attribute_name(:seminar)
         th = Booking.human_attribute_name(:attendees)
         th = Booking.human_attribute_name(:contact_email)
-        th Arbeitgeber
-        th Firma
+        th Firma / Arbeitgeber
         th
         th
     tbody
       - @bookings.each do | booking |
         - invoice = booking.invoice
         tr data = {url: url_for(booking)} class=('warning' if booking.canceled?)
-          td = ldate booking.created_at
+          td = ldate booking.created_at, format: :short2
           td = link_to booking.seminar.number, booking.seminar
           td = booking.attendees.map(&:name).join('<br>').html_safe
           td = booking.contact_email
-          td = booking.company_title
-          td = link_to_if booking.company, booking.company&.name, booking.company
+          td
+            - if booking.company
+              = link_to booking.company&.name, booking.company
+            - else
+              = [booking.company_title, booking.invoice_title].select(&:present?).first
           td
             - if invoice
               => pdf_link invoice_path(invoice, format: :pdf), text: "Rechnung #{invoice.number}"

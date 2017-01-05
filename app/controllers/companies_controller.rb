@@ -5,7 +5,7 @@ class CompaniesController < ApplicationController
 
   def index
     authorize Company
-    @companies = Company.page(params[:page]).all
+    @companies = Company.order(:name).page(params[:page]).all
   end
 
   def show
@@ -50,6 +50,7 @@ class CompaniesController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def company_params
-    params.require(:company).permit(:code, :name, :name2, :street, :zip, :city, :city_part, :phone, :mobile, :fax, :email)
+    params.require(:company)
+        .permit(:name, :name2, :street, :zip, :city, :city_part, :phone, :mobile, :fax, :email)
   end
 end

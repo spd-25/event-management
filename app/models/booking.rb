@@ -18,7 +18,7 @@ class Booking < ApplicationRecord
   validates :contact_email, :contact_phone, presence: true, if: :external
   validates :invoice_title, :invoice_street, :invoice_zip, :invoice_city, presence: true
 
-  scope :created,         -> { where(invoice_id: nil) }
+  # scope :created,         -> { where(invoice_id: nil) }
   scope :invoice_created, -> { joins(:invoice).where('invoices.status' => Invoice.statuses[:created]) }
   scope :invoice_sent,    -> { joins(:invoice).where('invoices.status' => Invoice.statuses[:sent]) }
   scope :invoice_payed,   -> { joins(:invoice).where('invoices.status' => Invoice.statuses[:payed]) }

@@ -9,7 +9,6 @@
   table.standard-table.table-clickable
     thead
       tr
-        th = Company.human_attribute_name(:code)
         th = Company.human_attribute_name(:name)
         th = Company.human_attribute_name(:address)
         th = %i{phone mobile fax}.map { |attr| Company.human_attribute_name(attr) }.join(', ')
@@ -17,8 +16,7 @@
     tbody
       - @companies.each do | company |
         tr data = {url: url_for(company)}
-          td = company.code
-          td #{company.name}<br>#{company.name2}
-          td #{company.street}<br>#{company.zip} #{company.city}<br>#{company.city_part}
-          td = [company.phone, company.mobile, company.fax].compact.join('<br>').html_safe
+          td = lines_for [company.name, company.name2]
+          td = lines_for [company.street, "#{company.zip} #{company.city}", company.city_part]
+          td = lines_for [company.phone, company.mobile, company.fax]
           td = link_to(company.email, 'mailto:' + company.email) if company.email.present?
