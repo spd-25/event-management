@@ -9,6 +9,8 @@ de:
   updated: "%{model} gespeichert."
   destroyed: "%{model} gelöscht."
   confirm_delete: "%{model} löschen?"
+  attendees:
+    icon: user
   bookings:
     cancel:
       title: Buchungsstornierung

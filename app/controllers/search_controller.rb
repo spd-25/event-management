@@ -6,6 +6,8 @@ class SearchController < ApplicationController
     authorize :search
     @query = params[:q]
     @result = PgSearch.multisearch(@query).to_a.map(&:searchable)
-    redirect_to @result.first if @result.count == 1
+    if @result.count == 1
+      redirect_to @result.first.is_a?(Attendee) ? @result.first.booking.seminar : @result.first
+    end
   end
 end

@@ -1,4 +1,6 @@
 class Attendee < ApplicationRecord
+  include PgSearch
+
   belongs_to :seminar
   belongs_to :booking
 
@@ -8,6 +10,8 @@ class Attendee < ApplicationRecord
   validates :first_name, :last_name, presence: true
 
   has_paper_trail
+
+  multisearchable against: %i(first_name last_name address contact)
 
   def name
     "#{first_name} #{last_name}"
