@@ -10,7 +10,7 @@ class Seminar < ApplicationRecord
   has_many :bookings
   has_many :open_bookings,  -> { where(invoice_id: nil) }, class_name: 'Booking'
   has_many :payed_bookings, -> { joins(:invoice).where('invoices.status' => Invoice.statuses[:payed]) }, class_name: 'Booking'
-  has_many :attendees, through: :bookings
+  has_many :attendees
 
   accepts_nested_attributes_for :events,
                                 allow_destroy: true,

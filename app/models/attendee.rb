@@ -1,8 +1,12 @@
 class Attendee < ApplicationRecord
   include PgSearch
 
-  belongs_to :seminar
-  belongs_to :booking
+  enum status: { booked: 0, canceled: 1, attended: 2 }
+
+  belongs_to :seminar, inverse_of: :attendees
+  belongs_to :booking, inverse_of: :attendees
+  belongs_to :invoice, inverse_of: :attendees
+  belongs_to :company, inverse_of: :attendees
 
   acts_as_addressable
   acts_as_contactable
