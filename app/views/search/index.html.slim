@@ -2,7 +2,7 @@
 .page-header
   h2 #{@result.count} Treffer für Suche nach "#{@query}"
 .row
-  - grouped_results = @result.group_by(&:class)
+  - grouped_results = @result.compact.group_by(&:class)
   - grouped_results.each do |model, results|
     div class=("col-md-#{search_col_width(grouped_results.keys.size)}")
       h4
