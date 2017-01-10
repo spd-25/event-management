@@ -1,7 +1,7 @@
 class Invoice < ApplicationRecord
   enum status: { created: 0, sent: 1, payed: 2 }
 
-  has_one :booking, inverse_of: :invoice
+  has_one :booking
   has_many :attendees, inverse_of: :invoice
 
   serialize :items, InvoiceItems
