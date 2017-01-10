@@ -4,8 +4,8 @@
 
 = render 'form'
 
-- count = @company.bookings.count
-h4 #{count} #{Booking.model_name.human count: count}
+- count = @company.attendees.count
+h4 #{count} #{Attendee.model_name.human count: count}
 
 .table-responsive
   table.standard-table.table-clickable.table-no-border.seminars
@@ -15,24 +15,22 @@ h4 #{count} #{Booking.model_name.human count: count}
         th = Booking.human_attribute_name(:seminar)
         th = Booking.human_attribute_name(:attendees)
         th = Booking.human_attribute_name(:contact_email)
-        th Arbeitgeber
         th
-        th
+        /th
     tbody
-      - @company.bookings.order(created_at: :desc).each do |booking|
-        - invoice = booking.invoice
-        tr data = {url: url_for(booking)} class=('warning' if booking.canceled?)
-          td = ldate booking.created_at
-          td = link_to booking.seminar.number, booking.seminar
-          td = booking.attendees.map(&:name).join('<br>').html_safe
-          td = booking.contact_email
-          td = booking.company_title
+      - @company.attendees.order(created_at: :desc).each do |attendee|
+        - invoice = attendee.invoice
+        tr data = {url: url_for(attendee)} class=('warning' if attendee.canceled?)
+          td = ldate attendee.created_at, format: :short2
+          td = link_to attendee.seminar.number, attendee.seminar
+          td = attendee.name
+          td = attendee.contact_email
           td
             - if invoice
               = link_to "Rechnung #{invoice.number}", invoice
-            - else
+            /- else
               = link_to 'Rechnung schreiben', new_invoice_path(booking_id: booking.id), class: 'btn btn-primary btn-xs'
-          td
+          /td
             - if booking.canceled?
               |  storniert
             - else
