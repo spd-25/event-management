@@ -10,6 +10,8 @@ class Attendee < ApplicationRecord
 
   acts_as_addressable
   acts_as_contactable
+  acts_as_addressable field_name: :invoice_address, prefix: :invoice
+  acts_as_addressable field_name: :company_address, prefix: :company
 
   validates :first_name, :last_name, presence: true
 

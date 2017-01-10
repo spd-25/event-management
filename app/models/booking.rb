@@ -5,8 +5,8 @@ class Booking < ApplicationRecord
 
   belongs_to :seminar
   has_many :attendees
-  belongs_to :invoice, inverse_of: :booking
-  belongs_to :company, inverse_of: :bookings, optional: true
+  # belongs_to :invoice, inverse_of: :booking
+  belongs_to :company #, inverse_of: :bookings, optional: true
 
   acts_as_addressable field_name: :invoice_address, prefix: :invoice
   acts_as_addressable field_name: :company_address, prefix: :company
@@ -19,23 +19,23 @@ class Booking < ApplicationRecord
   validates :invoice_title, :invoice_street, :invoice_zip, :invoice_city, presence: true, if: :external
 
   # scope :created,         -> { where(invoice_id: nil) }
-  scope :invoice_created, -> { joins(:invoice).where('invoices.status' => Invoice.statuses[:created]) }
-  scope :invoice_sent,    -> { joins(:invoice).where('invoices.status' => Invoice.statuses[:sent]) }
-  scope :invoice_payed,   -> { joins(:invoice).where('invoices.status' => Invoice.statuses[:payed]) }
+  # scope :invoice_created, -> { joins(:invoice).where('invoices.status' => Invoice.statuses[:created]) }
+  # scope :invoice_sent,    -> { joins(:invoice).where('invoices.status' => Invoice.statuses[:sent]) }
+  # scope :invoice_payed,   -> { joins(:invoice).where('invoices.status' => Invoice.statuses[:payed]) }
 
   has_paper_trail
 
   def name
-    attendees.first.name
+    ''
   end
 
-  def generate_invoice
-    address = (company || invoice_address).full_address
-    items = attendees.map { |attendee| { attendee: attendee.name, price: seminar.price || 0 } }
-    build_invoice number: Invoice.next_number, date: Date.current, address: address, items: items,
-        pre_message:  I18n.t('invoices.default_pre_message'),
-        post_message: I18n.t('invoices.default_post_message')
-  end
+  # def generate_invoice
+  #   address = (company || invoice_address).full_address
+  #   items = attendees.map { |attendee| { attendee: attendee.name, price: seminar.price || 0 } }
+  #   build_invoice number: Invoice.next_number, date: Date.current, address: address, items: items,
+  #       pre_message:  I18n.t('invoices.default_pre_message'),
+  #       post_message: I18n.t('invoices.default_post_message')
+  # end
 
   private
 

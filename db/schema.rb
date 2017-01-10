@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170109203222) do
+ActiveRecord::Schema.define(version: 20170110190355) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,17 +20,24 @@ ActiveRecord::Schema.define(version: 20170109203222) do
     t.integer  "booking_id"
     t.string   "first_name"
     t.string   "last_name"
-    t.jsonb    "address",    default: "{}"
-    t.jsonb    "contact",    default: "{}"
+    t.jsonb    "address",            default: "{}"
+    t.jsonb    "contact",            default: "{}"
     t.string   "profession"
     t.string   "gender"
     t.integer  "age"
-    t.jsonb    "other",      default: "{}"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.jsonb    "other",              default: "{}"
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
     t.integer  "company_id"
     t.integer  "invoice_id"
-    t.integer  "status",     default: 0
+    t.integer  "status",             default: 0
+    t.boolean  "member"
+    t.boolean  "member_institution"
+    t.boolean  "graduate"
+    t.string   "school"
+    t.string   "year"
+    t.jsonb    "company_address",    default: "{}"
+    t.jsonb    "invoice_address",    default: "{}"
     t.index ["booking_id"], name: "index_attendees_on_booking_id", using: :btree
     t.index ["company_id"], name: "index_attendees_on_company_id", using: :btree
     t.index ["invoice_id"], name: "index_attendees_on_invoice_id", using: :btree

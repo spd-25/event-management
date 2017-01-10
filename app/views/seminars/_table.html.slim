@@ -21,7 +21,7 @@
             td.icons
               => fa_icon 'users', text: seminar.attendees.count
               => fa_icon 'calendar', text: seminar.events.count
-              - if seminar.bookings.any?
+              /- if seminar.bookings.any?
                 = progress_bar_for_bookings(seminar)
               ul.list-inline
                 - seminar.teachers.each do |teacher|

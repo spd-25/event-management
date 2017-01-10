@@ -1,0 +1,31 @@
+- page_title_for @attendee, :name
+.page-header
+  h2 = title_for @attendee
+
+- if @attendee.errors.any?
+  .alert.alert-danger.alert-dismissable
+    button.close type="button" data-dismiss="alert"
+      span aria-hidden="true" &times;
+      span.sr-only Close
+    h4 = t('.error')
+
+h3
+  => link_to @seminar.number, @seminar
+  | -
+  =< @seminar.title
+  br
+  small = @seminar.subtitle
+
+
+.row style="padding-top: 30px"
+  .col-md-8 = render 'form'
+  .col-md-3.col-md-offset-1
+    - if @attendee.booking.attendees.count > 1
+      h4 Weitere angemeldete Teilnehmer
+      ul
+        - @attendee.booking.attendees.where.not(id: @attendee.id).all.each do |attendee|
+          li = link_to attendee.name, attendee
+    p = link_to 'Orginalanmeldung', @attendee.booking
+
+    = render 'seminar'
+

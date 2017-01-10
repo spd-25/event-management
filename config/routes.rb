@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
 
-
-
   get 'buchung/:seminar_id', to: 'buchung#new', as: :buchung_new
   post 'buchung',      to: 'buchung#create', as: :buchung_create
   get 'nachricht/:booking_id', to: 'buchung#show', as: :buchung_show
@@ -24,7 +22,8 @@ Rails.application.routes.draw do
   resources :teachers,   except: :edit
   resources :seminars
   resources :categories, except: :edit
-  resources :bookings,   except: :edit do
+  resources :bookings,   only: %i(show new create)
+  resources :attendees,  only: %i(index show update destroy) do
     get :cancel
   end
   resources :invoices,   except: :edit

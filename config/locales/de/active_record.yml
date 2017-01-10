@@ -61,10 +61,10 @@ de:
       attendee:
         booking: Anmeldung
         seminar: Seminar
+        invoice_address: Rechnungsadresse
       booking:
         company: Anmeldung
         company_name: Firma
-        invoice_address: Rechnungsadresse
         places: Plätze
         invoice_address: Rechnungsadresse
         contact_email: E-Mail-Adresse

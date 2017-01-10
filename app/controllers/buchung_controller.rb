@@ -11,6 +11,7 @@ class BuchungController < ApplicationController
     @booking = Booking.new booking_params
     @booking.ip_address = request.remote_ip
     @booking.external = true
+    copy_fields_to_attendees
 
     if @booking.save
       BookingMailer.booking_notification_email(@booking).deliver_later
@@ -29,6 +30,13 @@ class BuchungController < ApplicationController
   end
 
   private
+
+  def copy_fields_to_attendees
+    attributes = %w(seminar_id contact company_address invoice_address
+                      member member_institution school year graduate)
+    attributes = @booking.attributes.slice(*attributes)
+    @booking.attendees.each { |attendee| attendee.assign_attributes attributes }
+  end
 
   def booking_params
     attrs = [

@@ -8,46 +8,45 @@ h4
 
 .table-responsive
   table.standard-table.table-clickable
-    - @seminar.bookings.created.includes(:attendees).order(:created_at).each do |booking|
-      - attendees_count = booking.attendees.count
-      - booking.attendees.order(:last_name).each do |attendee|
-        tr data={url: url_for(booking)}
-          td width="25%" = attendee.name
-          - if attendee == booking.attendees.order(:last_name).first
-            td rowspan=attendees_count = ldate booking.created_at, format: :short2
-            td rowspan=attendees_count
-              - if booking.company
-                = link_to booking.company&.name, booking.company
-              - else
-                = [booking.company_title, booking.invoice_title].select(&:present?).first
-            td rowspan=attendees_count
-              - invoice = booking.invoice
-              - if invoice
-                => pdf_link invoice_path(invoice, format: :pdf), text: "Rechnung #{invoice.number}"
-                => link_to fa_icon('pencil'), invoice
-              - else
-                = link_to fa_icon('pencil', text: 'Rechnung'), new_invoice_path(booking_id: booking.id), class: 'btn btn-primary btn-xs'
-            td rowspan=attendees_count
-              - if booking.canceled?
-                |  storniert
-              - else
-                = link_to 'Stornieren', booking_cancel_url(booking), class: 'btn btn-danger btn-xs'
+    - @seminar.attendees.order(:created_at).each do |attendee|
+      - booking = attendee.booking
+      tr data={url: url_for(attendee)}
+        td = attendee.name
+        td = ldate attendee.created_at, format: :short2
+        td
+          - if attendee.company
+            = link_to attendee.company.name, attendee.company
+          - else
+            = [booking.company_title, booking.invoice_title].select(&:present?).first
+        /td
+          - invoice = attendee.invoice
+          - if invoice
+            => pdf_link invoice_path(invoice, format: :pdf), text: "Rechnung #{invoice.number}"
+            => link_to fa_icon('pencil'), invoice
+          - else
+            = link_to fa_icon('pencil', text: 'Rechnung'), new_invoice_path(booking_id: booking.id), class: 'btn btn-primary btn-xs'
+        td
+          - if attendee.canceled?
+            |  storniert
+          - else
+            = link_to 'Stornieren', attendee_cancel_url(attendee), class: 'btn btn-danger btn-xs'
 
-- if @seminar.bookings.canceled.any?
+- if @seminar.attendees.canceled.any?
   h4 Stornierte Anmeldungen
 
   .table-responsive
     table.standard-table.table-clickable.muted
-      - @seminar.bookings.canceled.each do |booking|
-        tr data={url: url_for(booking)}
-          td = lines_for booking.attendees.map(&:name)
-          td = ldate booking.created_at, format: :short2
+      - @seminar.attendees.canceled.each do |attendee|
+        - booking = attendee.booking
+        tr data={url: url_for(attendee)}
+          td = attendee.name
+          td = ldate attendee.created_at, format: :short2
           td
-            - if booking.company
-              = link_to booking.company&.name, booking.company
+            - if attendee.company
+              = link_to attendee.company.name, attendee.company
             - else
-              = [booking.company_title, booking.invoice_title].select(&:present?).first
-          td
-            - invoice = booking.invoice
+              = [attendee.company_title, attendee.invoice_title].select(&:present?).first
+          /td
+            - invoice = attendee.invoice
             - if invoice
               => pdf_link invoice_path(invoice, format: :pdf), text: "Rechnung #{invoice.number}"

@@ -11,6 +11,24 @@ de:
     error_notification:
       default_message: "Bitte überprüfen Sie folgende Fehler:"
     placeholders:
+      attendee:
+        company_title: Name der Arbeitsstelle
+        company_street: 'Straße/Nr'
+        company_zip: 'PLZ'
+        company_city: 'Ort'
+        contact_person: Ansprechpartner
+        contact_email: '* E-Mail-Adresse'
+        contact_mobile: Mobiltelefon
+        contact_phone: '* Telefon'
+        contact_fax: Fax
+        year: Jahr
+        invoice_title: '* Firmenname / Name'
+        invoice_street: '* Straße/Nr'
+        invoice_zip: '* PLZ'
+        invoice_city: '* Ort'
+        attendees:
+          first_name: '* Vorname'
+          last_name: '* Nachname'
       attendees:
         first_name: Vorname
         last_name: Nachname

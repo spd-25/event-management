@@ -6,7 +6,7 @@
 
     = f.simple_fields_for :attendees do |attendee_form|
       - attendee = attendee_form.object
-      .attendee class=('new-record' if attendee.new_record?)
+      .attendee
         = attendee_form.input :_destroy, as: :hidden, input_html: { value: attendee.new_record? }
         .row
           a.btn.btn-danger.btn-xs.remove-attendee = fa_icon 'trash'
@@ -18,21 +18,20 @@
         class: 'add-attendee btn btn-default', tabindex: -1, title: 'Neuer Teilnehmer'
   fieldset
     legend Arbeitgeber
-    .row
-      .col-md-6
-        = f.input :company_title, as: :text, input_html: { rows: 2 }
-        = f.input :company_street
-        .row
-          .col-md-4 = f.input :company_zip,  as: :tel
-          .col-md-8 = f.input :company_city
-
-      .col-md-6
-        = f.association :company,
-          label_method: ->(c){ "#{c.name} #{c.name2}, #{c.city}" },
-          collection: Company.order(:name),
-          input_html: { class: 'select2' },
-          label: 'Firma'
-        .display-company-address
+    /.row
+    /  .col-md-6
+    /    = f.input :company_title, as: :text, input_html: { rows: 2 }
+    /    = f.input :company_street
+    /    .row
+    /      .col-md-4 = f.input :company_zip,  as: :tel
+    /      .col-md-8 = f.input :company_city
+    /
+    /  .col-md-6
+    = f.association :company,
+      label_method: ->(c){ "#{c.name} #{c.name2}, #{c.city}" },
+      collection: Company.order(:name),
+      input_html: { class: 'select2' }
+    .display-company-address
 
   fieldset
     legend Kontakt
@@ -63,7 +62,7 @@
 
   .action-buttons
     .pull-right
-      => link_to t(:cancel), (session[:back_url] || @booking.seminar), class: 'btn btn-default'
+      => link_to t(:cancel), (session[:back_url] || @seminar), class: 'btn btn-default'
       = f.submit t(:save), class: 'btn btn-primary'
 
 coffee:
@@ -77,17 +76,11 @@ coffee:
         title = company.name
         title = "#{title}\n#{company.name2}" if company.name2 isnt null
         $('.display-company-address').html "#{title}<br>#{company.street}<br>#{company.zip} #{company.city}"
-        #if confirm('Rechnungsadresse überschreiben?')
-        #  for scope in ['company', 'invoice']
-        #    $("#booking_#{scope}_title").val title
-        #    $("#booking_#{scope}_street").val company.street
-        #    $("#booking_#{scope}_zip").val company.zip
-        #    $("#booking_#{scope}_city").val company.city
 
-    $('.attendee.new-record').addClass('hidden')
+    $('.attendee').addClass('hidden')
     $('.add-attendee').on 'click', (event) ->
       event.preventDefault()
-      toggleAttendee $('.attendee.new-record.hidden').first(), false
+      toggleAttendee $('.attendee.hidden').first(), false
     $('.remove-attendee').on 'click', (event) ->
       event.preventDefault()
       if $('.attendee:visible').length > 1
@@ -95,7 +88,7 @@ coffee:
         toggleAttendee attendee, true
         attendee.find('input').val('')
     if $('form.new_booking').length
-      toggleAttendee $('.attendee.new-record.hidden').first(), false
+      toggleAttendee $('.attendee.hidden').first(), false
 
     $('#booking_graduate').change ->
       disabled = !$('#booking_graduate:checked').val()
@@ -103,9 +96,7 @@ coffee:
 
     $('#booking_graduate').change()
 
-    $('#booking_company_id').change ->
-      fill_invoice_address $(this).val()
-
+    $('#booking_company_id').change -> fill_invoice_address $(this).val()
 
 sass:
   a.add-attendee

@@ -1,17 +1,12 @@
 class BookingsController < ApplicationController
-  before_action :authenticate_user!, except: [:new, :create]
+  before_action :authenticate_user!
   after_action :verify_authorized
-  before_action :set_booking, only: [:show, :update, :destroy, :cancel]
-  before_action :set_referer, only: [:new, :show, :cancel]
-  layout :set_layout
-
-  def index
-    authorize Booking
-    @bookings = Booking.includes(:seminar).order(created_at: :desc).page(params[:page]).all
-  end
+  before_action :set_referer, only: [:new, :show]
 
   def show
-    prepare_attendees
+    @booking = Booking.find(params[:id] || params[:booking_id])
+    @seminar = @booking.seminar
+    authorize @booking
   end
 
   def new
@@ -21,16 +16,14 @@ class BookingsController < ApplicationController
     prepare_attendees
   end
 
-  def cancel
-  end
-
   def create
     authorize Booking
     @booking = Booking.new booking_params
     @booking.external = false
+    copy_fields_to_attendees
 
     if @booking.save
-      redirect_to (session[:back_url] || @booking.seminar), notice: t(:created, model: Booking.model_name.human)
+      redirect_to (session[:back_url] || seminar_url(id: @booking.seminar_id)), notice: t(:created, model: Booking.model_name.human)
     else
       @seminar = Seminar.find @booking.seminar_id
       prepare_attendees
@@ -38,30 +31,17 @@ class BookingsController < ApplicationController
     end
   end
 
-  def update
-    if @booking.update booking_params
-      redirect_to (session[:back_url] || @booking.seminar), notice: t(:updated, model: Booking.model_name.human)
-    else
-      render :show
-    end
-  end
-
-  def destroy
-    @booking.canceled!
-    redirect_to (session[:back_url] || @booking.seminar), notice: t('bookings.cancel.notice')
-  end
-
   private
 
   def prepare_attendees
-    10.times { @booking.attendees.build }
+    10.times { @booking.attendees.build seminar_id: @booking.seminar_id }
   end
 
-  # Use callbacks to share common setup or constraints between actions.
-  def set_booking
-    @booking = Booking.find(params[:id] || params[:booking_id])
-    @seminar = @booking.seminar
-    authorize @booking
+  def copy_fields_to_attendees
+    attributes = %w(seminar_id company_id contact company_address invoice_address
+                      member member_institution school year graduate)
+    attributes = @booking.attributes.slice(*attributes)
+    @booking.attendees.each { |attendee| attendee.assign_attributes attributes }
   end
 
   # Only allow a trusted parameter "white list" through.
@@ -71,15 +51,11 @@ class BookingsController < ApplicationController
       :contact_person, :contact_email, :contact_phone, :contact_mobile, :contact_fax, :company_id,
       :company_title, :company_street, :company_zip, :company_city,
       :invoice_title, :invoice_street, :invoice_zip, :invoice_city,
-      attendees_attributes: %i(id first_name last_name profession _destroy) + [
+      attendees_attributes: %i(id first_name last_name profession _destroy seminar_id ) + [
         address: %i(street zip city), contact: %i(email phone mobile)
       ]
     ]
     params.require(:booking).permit(attrs)
-  end
-
-  def set_layout
-    user_signed_in? ? 'application' : 'external'
   end
 
   def set_referer
