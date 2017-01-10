@@ -4,7 +4,7 @@ h2 Anmeldungsbestätigung
 
 .row
   .col-md-2: label Seminarnr.
-  .col-md-6: strong = link_to @seminar.number, @seminar
+  .col-md-6: strong = link_to @seminar.number, seminar_visitor_url(@seminar)
 .row
   .col-md-2: label Titel
   .col-md-6 = link_to @seminar.title, seminar_visitor_url(@seminar)
