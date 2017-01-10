@@ -73,5 +73,5 @@
     .pull-right
       => link_to t(:cancel), (session[:back_url] || @attendee.seminar), class: 'btn btn-default'
       => link_to t('.button_label'),  @attendee,  method: :delete, data: { confirm: t('.confirm') }, class: 'btn btn-danger'
-      - if @attendee.booking.attendees.count > 1
+      /- if @attendee.booking.attendees.count > 1
         = link_to t('.button_all_label'),  @attendee,  method: :delete, data: { confirm: t('.confirm_all') }, class: 'btn btn-danger'
