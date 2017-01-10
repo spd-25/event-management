@@ -9,7 +9,7 @@
     table.standard-table.table-clickable.table-no-border.seminars
       tbody
         - seminars.order(:number).each do |seminar|
-          tr data = {url: url_for(seminar)} class=css_class_for(seminar)
+          tr data = {url: url_for(seminar)}
             td.number
               = seminar.number
               br
