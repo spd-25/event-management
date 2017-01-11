@@ -28,7 +28,6 @@ html
         .row.hidden-print
           .col-md-6 = content_for :back_link if content_for? :back_link
           .col-md-6.search
-            p = link_to 'Seminare für 2016 finden Sie hier', 'http://buchung.bildungswerk-lsa.de/suche.php'
             form.form action=seminar_search_url
               .form-group
                 input.form-control type="text" name="q" placeholder="Suche" value=params[:q]
