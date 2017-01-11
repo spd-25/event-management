@@ -25,11 +25,7 @@ h4
             => link_to fa_icon('pencil'), invoice
           - else
             = link_to fa_icon('pencil', text: 'Rechnung'), new_invoice_path(booking_id: booking.id), class: 'btn btn-primary btn-xs'
-        td
-          - if attendee.canceled?
-            |  storniert
-          - else
-            = link_to 'Stornieren', attendee_cancel_url(attendee), class: 'btn btn-danger btn-xs'
+        td = link_to 'Stornieren', attendee_cancel_url(attendee), class: 'btn btn-danger btn-xs'
 
 - if @seminar.attendees.canceled.any?
   h4 #{@seminar.attendees.canceled.count} Stornierte Anmeldungen
@@ -37,7 +33,6 @@ h4
   .table-responsive
     table.standard-table.table-clickable.muted
       - @seminar.attendees.canceled.each do |attendee|
-        - booking = attendee.booking
         tr data={url: url_for(attendee)}
           td = attendee.name
           td = ldate attendee.created_at, format: :short2
