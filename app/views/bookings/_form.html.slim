@@ -18,20 +18,19 @@
         class: 'add-attendee btn btn-default', tabindex: -1, title: 'Neuer Teilnehmer'
   fieldset
     legend Arbeitgeber
-    /.row
-    /  .col-md-6
-    /    = f.input :company_title, as: :text, input_html: { rows: 2 }
-    /    = f.input :company_street
-    /    .row
-    /      .col-md-4 = f.input :company_zip,  as: :tel
-    /      .col-md-8 = f.input :company_city
-    /
-    /  .col-md-6
-    = f.association :company,
-      label_method: ->(c){ "#{c.name} #{c.name2}, #{c.city}" },
-      collection: Company.order(:name),
-      input_html: { class: 'select2' }
-    .display-company-address
+    .row
+      .col-md-6
+        = f.input :company_title, as: :text, input_html: { rows: 2 }
+        = f.input :company_street
+        .row
+          .col-md-4 = f.input :company_zip,  as: :tel
+          .col-md-8 = f.input :company_city
+      .col-md-6
+        = f.association :company,
+          label_method: ->(c){ "#{c.name} #{c.name2}, #{c.city}" },
+          collection: Company.order(:name),
+          input_html: { class: 'select2' }
+        .display-company-address
 
   fieldset
     legend Kontakt
