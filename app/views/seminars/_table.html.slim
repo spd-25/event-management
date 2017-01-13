@@ -13,13 +13,15 @@
             td.number
               = seminar.number
               br
-              small.text-muted = seminar.year
+              - dates = seminar.dates.sort
+              small.text-muted
+                = [dates.first, dates.last].uniq.map { |date| ldate date }.join(' - ').html_safe
             td
               = seminar.title
               br
               small.text-muted = seminar.subtitle
             td.icons
-              => fa_icon 'users', text: seminar.attendees.count
+              => fa_icon 'users', text: seminar.attendees.booked.count
               => fa_icon 'calendar', text: seminar.events.count
               /- if seminar.bookings.any?
                 = progress_bar_for_bookings(seminar)
