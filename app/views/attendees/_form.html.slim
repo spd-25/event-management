@@ -58,6 +58,17 @@
       => link_to t(:cancel), (session[:back_url] || @seminar), class: 'btn btn-default'
       = f.submit t(:save), class: 'btn btn-primary'
 
+  coffee:
+    $ ->
+      fill_invoice_address = (company_id) ->
+        $.getJSON "/companies/#{company_id}.json", (company) ->
+          title = company.name
+          title = "#{title}\n#{company.name2}" if company.name2 isnt null
+          $('.display-company-address').html "#{title}<br>#{company.street}<br>#{company.zip} #{company.city}"
+
+      $('#attendee_company_id').change -> fill_invoice_address $(this).val()
+      $('#attendee_company_id').change()
+
 
 sass:
   a.add-attendee
