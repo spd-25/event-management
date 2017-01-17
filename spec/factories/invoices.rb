@@ -1,6 +1,5 @@
 FactoryGirl.define do
   factory :invoice do
-    booking nil
     number '1234'
     date { Date.current }
     address "John Meyer\nStreet\n01234 Berlin"
