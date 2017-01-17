@@ -20,18 +20,25 @@ class InvoicesController < ApplicationController
 
   def new
     authorize Invoice
-    @booking = Booking.find params[:booking_id]
-    @invoice = @booking.generate_invoice
+    options = params[:attendee_id].present? ?
+      { attendee: find_attendee } :
+      { company: find_company, seminar: find_seminar }
+    @invoice = InvoiceGenerator.new(options).invoice
+    puts
   end
 
   def create
     authorize Invoice
-    @booking = Booking.find params[:booking_id]
-    @invoice = Invoice.new invoice_params
-    @invoice.booking = @booking
+    options = params[:attendee_id].present? ?
+          { attendee: find_attendee } :
+          { company: find_company, seminar: find_seminar }
+    @invoice = InvoiceGenerator.new(options).invoice
+    @invoice.assign_attributes invoice_params
+
+    # @booking = Booking.find params[:booking_id]1
 
     if @invoice.save
-      redirect_to @booking.seminar, notice: t(:created, model: Invoice.model_name.human)
+      redirect_to @invoice.seminar, notice: t(:created, model: Invoice.model_name.human)
     else
       render :new
     end
@@ -39,7 +46,7 @@ class InvoicesController < ApplicationController
 
   def update
     if @invoice.update invoice_params
-      redirect_to @booking.seminar, notice: t(:updated, model: Invoice.model_name.human)
+      redirect_to @invoice.seminar, notice: t(:updated, model: Invoice.model_name.human)
     else
       render :show
     end
@@ -55,16 +62,27 @@ class InvoicesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_invoice
     @invoice = Invoice.find params[:id]
-    @booking = @invoice.booking
     authorize @invoice
   end
 
   # Only allow a trusted parameter "white list" through.
   def invoice_params
-    p = params.require(:invoice).permit(:booking_id, :number, :date, :address,
+    p = params.require(:invoice).permit(:number, :date, :address,
                                         :pre_message, :post_message,
                                         items: [:attendee, :price])
     p[:items].each { |item| item['price'] = item['price'].sub(',', '.').to_f }
     p
+  end
+
+  def find_attendee
+    Attendee.find params[:attendee_id]
+  end
+
+  def find_company
+    Company.find params[:company_id]
+  end
+
+  def find_seminar
+    Seminar.find params[:seminar_id]
   end
 end

@@ -1,0 +1,49 @@
+h4 Rechnungen zu schreiben
+.table-responsive
+  table.standard-table
+    thead
+      tr
+        th
+        th Empfänger
+        th Teilnehmer
+        th Gesamtbetrag
+        th
+    tbody
+      - @seminar.attendees.booked.where(invoice_id: nil).all.group_by(&:company).each do |company, attendees|
+        - if company
+          tr
+            td = icon_for Company
+            td = lines_for company.full_address.split("\n")
+            td = lines_for attendees.map(&:name)
+            td = number_to_currency @seminar.price * attendees.count
+            td = link_to 'Rechnung schreiben', new_invoice_path(company_id: company.id, seminar_id: @seminar.id), class: 'btn btn-primary'
+        - else
+          - attendees.each do |attendee|
+            tr
+              td = icon_for Attendee
+              td = lines_for attendee.invoice_address.full_address.split("\n")
+              td = attendee.name
+              td = number_to_currency @seminar.price
+              td = link_to 'Rechnung schreiben', new_invoice_path(attendee_id: attendee.id), class: 'btn btn-primary'
+
+
+h4 Geschriebene Rechnungen
+.table-responsive
+  table.standard-table.table-clickable
+    thead
+      tr
+        th Rechnungsnummer
+        th Rechnungsdatum
+        th Empfänger
+        th Teilnehmer
+        th Gesamtbetrag
+        th
+    tbody
+      - @seminar.invoices.each do |invoice|
+        tr data = {url: url_for(invoice)}
+          td = invoice.number
+          td = ldate invoice.date
+          td = lines_for invoice.address.split("\n")
+          td = lines_for invoice.items.map(&:attendee)
+          td = number_to_currency invoice.total_price
+          td = pdf_link invoice_path(invoice, format: :pdf)

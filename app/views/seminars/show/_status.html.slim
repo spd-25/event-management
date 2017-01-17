@@ -1,0 +1,6 @@
+- if @seminar.archived
+  .alert.alert-warning Seminar archiviert.
+- elsif @seminar.published
+  .alert.alert-success Seminar freigegeben.
+- else
+  .alert.alert-danger Seminar nicht freigegeben.

@@ -3,6 +3,7 @@ class Company < ApplicationRecord
 
   has_many :bookings, inverse_of: :company
   has_many :attendees, inverse_of: :company
+  has_many :invoices, inverse_of: :company
 
   validates :name, presence: true
 

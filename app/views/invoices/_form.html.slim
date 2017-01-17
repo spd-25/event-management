@@ -6,7 +6,11 @@
         span.sr-only Close
       h4 = t('.error')
 
-  input type='hidden' name='booking_id' value=@booking.id
+  - if @invoice.company
+    input type='hidden' name='company_id' value=@invoice.company.id
+    input type='hidden' name='seminar_id' value=@invoice.seminar.id
+  - else
+    input type='hidden' name='attendee_id' value=@invoice.attendees.first.id
 
   .row
     .col-md-9
@@ -42,11 +46,11 @@
     .col-md-3
       = panel_box title: 'Seminar' do
         ul.list-unstyled
-          li = link_to @booking.seminar.number, @booking.seminar
-          li = @booking.seminar.title
-          li = @booking.seminar.teachers.map(&:name).join(', ').html_safe
-          li = @booking.seminar.price_text&.html_safe
-      = panel_box title: 'Anmeldung' do
+          li = link_to @invoice.seminar.number, @invoice.seminar
+          li = @invoice.seminar.title
+          li = @invoice.seminar.teachers.map(&:name).join(', ').html_safe
+          li = @invoice.seminar.price_text&.html_safe
+      /= panel_box title: 'Anmeldung' do
         ul.list-unstyled
           li = link_to ldate(@booking.created_at), @booking
           li = @booking.name

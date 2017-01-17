@@ -1,0 +1,13 @@
+= render 'seminars/show/sub_modules'
+.row
+  .col-md-4
+    label Jahr
+    =< @seminar.year
+  .col-md-4 = render 'seminars/show/teachers'
+  - location = @seminar.location
+  .col-md-4 = link_to icon_for(location, text: location.name, size: 2), location if location
+.row
+  .col-md-4
+    label Preis
+    p = number_to_currency @seminar.price
+    p = @seminar.price_text&.html_safe

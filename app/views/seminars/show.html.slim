@@ -14,9 +14,11 @@ ol.breadcrumb
 
 .page-header
   .buttons
+
     => link_to fa_icon('external-link', text: 'Externe Ansicht'), seminar_visitor_url(@seminar), class: 'btn btn-default'
     => edit_link edit_seminar_url(@seminar)
     = copy_link new_seminar_url(copy_from: @seminar.id)
+    = render 'seminars/show/status'
   h2
     - if module_parent
       => link_to icon_for(module_parent, text: "#{module_parent.number} - #{module_parent.title}"), module_parent
@@ -27,52 +29,35 @@ ol.breadcrumb
     br
     small = @seminar.subtitle
 
-.row
-  .col-md-9
-    = render 'seminars/show/attendees'
-  .col-md-3
-    - if @seminar.archived
-      .alert.alert-warning Seminar archiviert.
-    - elsif @seminar.published
-      .alert.alert-success Seminar freigegeben.
-    - else
-      .alert.alert-danger Seminar nicht freigegeben.
 
-    = render 'seminars/show/sub_modules'
-    .row
-      .col-md-6 = render 'seminars/show/teachers'
-      - location = @seminar.location
-      .col-md-6 = link_to icon_for(location, text: location.name, size: 2), location if location
-    = render 'seminars/show/events'
-    = render 'seminars/show/categories'
-
-    p: label Preis
-    p = number_to_currency @seminar.price
-    p = @seminar.price_text&.html_safe
-    = panel_box title: Seminar.human_attribute_name(:benefit), toggle: true do
-      = @seminar.benefit&.html_safe
-    = panel_box title: Seminar.human_attribute_name(:content), toggle: true do
-      = @seminar.content&.html_safe
-    = panel_box title: Seminar.human_attribute_name(:notes), toggle: true do
-      = @seminar.notes&.html_safe
+div
+  ul.nav.nav-tabs role="tablist"
+    li.active role="presentation"
+      a aria-controls="home" data-toggle="tab" href="#attendees" role="tab"  Teilnehmer
+    li role="presentation"
+      a aria-controls="home" data-toggle="tab" href="#invoices" role="tab"  Rechnungen
+    li role="presentation"
+      a aria-controls="home" data-toggle="tab" href="#general" role="tab"  Allgemein
+    li role="presentation"
+      a aria-controls="settings" data-toggle="tab" href="#categories" role="tab"  Themen
+    li role="presentation"
+      a aria-controls="settings" data-toggle="tab" href="#events" role="tab"  Termine
+    li role="presentation"
+      a aria-controls="profile" data-toggle="tab" href="#benefit" role="tab" = Seminar.human_attribute_name(:benefit)
+    li role="presentation"
+      a aria-controls="messages" data-toggle="tab" href="#content" role="tab" = Seminar.human_attribute_name(:content)
+    li role="presentation"
+      a aria-controls="settings" data-toggle="tab" href="#notes" role="tab"  Bemerkungen
+  .tab-content
+    .tab-pane#attendees.active role="tabpanel" = render 'seminars/show/attendees'
+    .tab-pane#invoices         role="tabpanel" = render 'seminars/show/invoices'
+    .tab-pane#general          role="tabpanel" = render 'seminars/show/general'
+    .tab-pane#categories       role="tabpanel" = render 'seminars/show/categories'
+    .tab-pane#events           role="tabpanel" = render 'seminars/show/events'
+    .tab-pane#benefit          role="tabpanel" = @seminar.benefit&.html_safe
+    .tab-pane#content          role="tabpanel" = @seminar.content&.html_safe
+    .tab-pane#notes            role="tabpanel" = @seminar.notes&.html_safe
 
 sass:
   ol.breadcrumb
     margin-top: 20px
-  .panel-heading
-    padding: 5px 15px
-    &.with-icon
-      padding-left: 3px
-    a
-      display: block
-      text-decoration: none
-      .right
-        display: none
-      .down
-        display: inline-block
-
-      &.collapsed
-        .right
-          display: inline-block
-        .down
-          display: none

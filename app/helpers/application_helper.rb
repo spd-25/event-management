@@ -91,7 +91,7 @@ module ApplicationHelper
   end
 
   def pdf_link(url, text: 'PDF')
-    link_to fa_icon('file-pdf-o', text: text), url, class: 'btn btn-default btn-xs', target: '_blank'
+    link_to fa_icon('file-pdf-o', text: text), url, class: 'btn btn-default', target: '_blank'
   end
 
   def delete_link(record)

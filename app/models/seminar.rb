@@ -8,9 +8,8 @@ class Seminar < ApplicationRecord
   belongs_to :parent,    class_name: 'Seminar', inverse_of: :sub_modules
   has_many :sub_modules, class_name: 'Seminar', inverse_of: :parent, foreign_key: 'parent_id'
   has_many :bookings
-  # has_many :open_bookings,  -> { where(invoice_id: nil) }, class_name: 'Booking'
-  # has_many :payed_bookings, -> { joins(:invoice).where('invoices.status' => Invoice.statuses[:payed]) }, class_name: 'Booking'
-  has_many :attendees
+  has_many :attendees, inverse_of: :seminar
+  has_many :invoices, inverse_of: :seminar
 
   accepts_nested_attributes_for :events,
                                 allow_destroy: true,

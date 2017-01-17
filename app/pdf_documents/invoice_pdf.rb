@@ -11,9 +11,8 @@ class InvoicePdf < ApplicationDocument
     @margin_side   = 20.mm
     super(page_size: 'A4', margin: [@margin_top, @margin_side, @margin_bottom])
     @invoice = invoice
-    @booking = invoice.booking
-    @seminar = @booking.seminar
-    @company = OpenStruct.new name: 'Paritätische', phone: '0391/6293-313', fax: '', email: 'asdf'
+    @seminar = @invoice.seminar
+    @company = OpenStruct.new name: 'Paritätische', phone: '0391/6293-313', email: 'amay@paritaet-lsa.de'
     @header_text_options = { size: 30, style: :italic, align: :center }
     generate
   end
@@ -26,57 +25,63 @@ class InvoicePdf < ApplicationDocument
     stroke_bounds if @debug
     # write_header
     stroke_horizontal_rule if @debug
+    # move_down 20
+
     write_address
     write_right_box
+    move_down 15
     write_heading
-    move_down 20
-    text invoice.pre_message
+    move_down 15
+    text invoice.pre_message, size: 11
+    move_down 5
     write_seminar_box
     move_down 10
     write_positions
-    move_down 20
-    text invoice.post_message
+    move_down 10
+    text invoice.post_message, size: 11
     # write_footer
   end
 
-  def write_header
-    repeat(:all) do
-      height = @margin_top / 2
-      bounding_box [0, bounds.top + height], width: bounds.right, height: height do
-        text company.name, @header_text_options
-        # stroke_bounds if @debug
-      end
-    end
-  end
+  # def write_header
+  #   repeat(:all) do
+  #     height = @margin_top / 2
+  #     bounding_box [0, bounds.top + height], width: bounds.right, height: height do
+  #       text company.name, @header_text_options
+  #       # stroke_bounds if @debug
+  #     end
+  #   end
+  # end
 
   def write_address
-    y = bounds.top - (50.mm - @margin_top)
-    bounding_box([0, y], width: 90.mm, height: 45.mm) do
-      # text company.full_address.join(' • '), size: 8, style: :italic
-      stroke_horizontal_rule
-      move_down 10
-      text invoice.address
-      stroke_bounds if @debug
+    y = bounds.top - (55.mm - @margin_top)
+    font_size 10 do
+      bounding_box([5, y], width: 90.mm, height: 30.mm) do
+        # text company.full_address.join(' • '), size: 8, style: :italic
+        # stroke_horizontal_rule
+        text invoice.address
+        stroke_bounds if @debug
+      end
     end
   end
 
   def write_right_box
     font_size 10 do
-      y      = bounds.top - (50.mm - @margin_top)
-      height = 50.mm
+      y      = bounds.top - (55.mm - @margin_top)
+      height = 30.mm
       width  = 70.mm
       box_options = { width: width, height: height }
 
       x = bounds.right - width
-      bounding_box [x + 10, y], box_options do
+      bounding_box [x, y], box_options do
         data = [
           [t(:phone), company.phone],
-          [t(:fax), company.fax],
+          # [t(:fax), company.fax],
           [t(:email), company.email],
           [t(:invoice_date), ldate(invoice.date)],
         ]
         table data, { width: bounds.right, cell_style: { border_width: 0, padding: [1, 5] } }
 
+        stroke_bounds if @debug
       end
     end
   end
@@ -86,7 +91,7 @@ class InvoicePdf < ApplicationDocument
   end
 
   def write_seminar_box
-    font_size 11 do
+    font_size 10 do
       table seminar_data, seminar_table_options do |t|
         t.column(0).font_style = :bold
         t.cells.style { |c| c.align = :left }
@@ -115,12 +120,14 @@ class InvoicePdf < ApplicationDocument
   end
 
   def write_positions
-    text 'Folgende Teilnehmer/innen sind in dieser Rechnung berücksichtigt:'
+    text 'Folgende Teilnehmer/innen sind in dieser Rechnung berücksichtigt:', size: 11
     move_down 10
-    font_size 11 do
-      table positions_array, positions_table_options do |t|
-        t.row(-1).font_style = :bold
-        t.cells.style { |c| c.align = :right if c.column == 1 }
+    indent(20, 40) do
+      font_size 11 do
+        table positions_array, positions_table_options do |t|
+          t.row(-1).font_style = :bold
+          t.cells.style { |c| c.align = :right if c.column == 1 }
+        end
       end
     end
     move_down 20
@@ -136,9 +143,9 @@ class InvoicePdf < ApplicationDocument
     {
       row_colors:    %w( FFFFFF EEEEEE),
       # header:        false,
-      width:         3*bounds.right/4,
+      width:         bounds.right,
       column_widths: { 1 => 120 },
-      cell_style:    { borders: [:top, :bottom], border_width: 0.2, border_lines: [:solid, :dashed], padding: [4, 5] }
+      cell_style:    { borders: [:top, :bottom], border_width: 0.2, border_lines: [:solid, :dashed], padding: [3, 5] }
     }
   end
 

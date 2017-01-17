@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170110190355) do
+ActiveRecord::Schema.define(version: 20170117191458) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -64,7 +64,6 @@ ActiveRecord::Schema.define(version: 20170110190355) do
     t.integer  "status",             default: 0
     t.integer  "company_id"
     t.index ["company_id"], name: "index_bookings_on_company_id", using: :btree
-    t.index ["invoice_id"], name: "index_bookings_on_invoice_id", using: :btree
     t.index ["seminar_id"], name: "index_bookings_on_seminar_id", using: :btree
   end
 
@@ -124,6 +123,10 @@ ActiveRecord::Schema.define(version: 20170110190355) do
     t.jsonb    "others"
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
+    t.integer  "seminar_id"
+    t.integer  "company_id"
+    t.index ["company_id"], name: "index_invoices_on_company_id", using: :btree
+    t.index ["seminar_id"], name: "index_invoices_on_seminar_id", using: :btree
   end
 
   create_table "locations", force: :cascade do |t|
@@ -245,13 +248,13 @@ ActiveRecord::Schema.define(version: 20170110190355) do
   add_foreign_key "attendees", "invoices"
   add_foreign_key "attendees", "seminars"
   add_foreign_key "bookings", "companies"
-  add_foreign_key "bookings", "invoices"
   add_foreign_key "bookings", "seminars", on_delete: :cascade
   add_foreign_key "categories", "categories", on_delete: :cascade
   add_foreign_key "categories_seminars", "categories", on_delete: :cascade
   add_foreign_key "categories_seminars", "seminars", on_delete: :cascade
   add_foreign_key "events", "locations"
   add_foreign_key "events", "seminars", on_delete: :cascade
+  add_foreign_key "invoices", "seminars"
   add_foreign_key "seminars", "locations"
   add_foreign_key "seminars", "seminars", column: "parent_id"
   add_foreign_key "seminars_teachers", "seminars", on_delete: :cascade

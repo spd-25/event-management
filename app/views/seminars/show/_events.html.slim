@@ -1,9 +1,7 @@
 - if strip_tags(@seminar.date_text || '').blank?
-  = panel_box_with_table title: Seminar.human_attribute_name(:events), toggle: true do
-    table.standard-table
-      - @seminar.dates.each do |date|
-        tr
-          td = ldate date
+  table.standard-table
+    - @seminar.dates.each do |date|
+      tr
+        td = ldate date
 - else
-  = panel_box title: Seminar.human_attribute_name(:events), toggle: true do
-    = @seminar.date_text.html_safe
+  = @seminar.date_text.html_safe
