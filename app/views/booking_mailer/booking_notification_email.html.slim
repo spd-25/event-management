@@ -14,9 +14,6 @@ table
     td: strong = Seminar.human_attribute_name :time
     td = @seminar.events.map(&:time).uniq.compact.join('; ').html_safe
   tr
-    td: strong = Teacher.model_name.human count: @seminar.teachers.count
-    td = @seminar.teachers.map(&:name).join(', ').html_safe
-  tr
     td: strong = Seminar.human_attribute_name :location
     td = @seminar.location.name
   tr
