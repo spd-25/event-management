@@ -11,21 +11,23 @@ h4 #{count} #{Attendee.model_name.human count: count}
   table.standard-table.table-clickable.table-no-border.seminars
     thead
       tr
-        th = Booking.human_attribute_name(:date)
         th = Booking.human_attribute_name(:seminar)
+        th = Booking.human_attribute_name(:date)
         th = Booking.human_attribute_name(:attendees)
         th = Booking.human_attribute_name(:contact_email)
-        th
+        /th
         /th
     tbody
       - @company.attendees.order(created_at: :desc).each do |attendee|
-        - invoice = attendee.invoice
+        - seminar = attendee.seminar
+        /- invoice = attendee.invoice
         tr data = {url: url_for(attendee)} class=('warning' if attendee.canceled?)
-          td = ldate attendee.created_at, format: :short2
-          td = link_to attendee.seminar.number, attendee.seminar
+          td title=seminar.title
+            = link_to seminar.number, seminar
+          td = seminar.dates.map { |d| ldate d }.join(', ')
           td = attendee.name
           td = attendee.contact_email
-          td
+          /td
             - if invoice
               = link_to "Rechnung #{invoice.number}", invoice
             /- else
