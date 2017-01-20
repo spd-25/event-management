@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170120115720) do
+ActiveRecord::Schema.define(version: 20170120180524) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -172,6 +172,7 @@ ActiveRecord::Schema.define(version: 20170120115720) do
     t.jsonb    "price_info",    default: "{}"
     t.boolean  "archived",      default: false
     t.boolean  "published",     default: false
+    t.date     "date"
     t.index ["location_id"], name: "index_seminars_on_location_id", using: :btree
     t.index ["parent_id"], name: "index_seminars_on_parent_id", using: :btree
   end

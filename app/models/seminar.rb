@@ -19,9 +19,18 @@ class Seminar < ApplicationRecord
   validates :number, uniqueness: true
   # validate :validate_events
 
+  after_save :set_date
+
   default_scope { where archived: false }
 
   scope :published, -> { where published: true }
+  scope :by_date, -> (year: Date.current.year, month: nil) {
+    if month
+      where(year: year).where('extract(month from date) = ?', month)
+    else
+      where(year: year, date: nil)
+    end
+  }
 
   has_paper_trail
 
@@ -71,5 +80,10 @@ class Seminar < ApplicationRecord
 
   def validate_events
     errors.add(:events, :too_few) if events.empty?
+  end
+
+  def set_date
+    return unless events.any?
+    update_column :date, events.order(:date).first.date
   end
 end

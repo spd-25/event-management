@@ -1,0 +1,23 @@
+section
+  .col-md-2
+    ul.nav.nav-pills.nav-stacked.years
+      - @years.each do |year, count|
+        - year = year.to_i
+        li class=('active' if @year == year) = link_to year, seminars_path(by: 'date', year: year)
+
+    ul.nav.nav-pills.nav-stacked.months
+      - I18n.t('date.month_names').each.with_index do |month, index|
+        - if index == 0
+          li class=('active' if @month.nil?) = link_to 'Ohne Termin', seminars_path(by: 'date', year: @year)
+        - else
+          li class=('active' if @month == index) = link_to month, seminars_path(by: 'date', year: @year, month: index)
+  .col-md-10
+    /.row: .col-md-12: .pull-right = paginate @seminars
+    = render 'seminars/table', seminars: @seminars, header: false
+    /.row: .col-md-12: .pull-right = paginate @seminars
+
+sass:
+  ul.months
+    margin: 2px 0 7px 20px
+    a
+      padding: 3px 8px

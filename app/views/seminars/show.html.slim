@@ -32,32 +32,24 @@ ol.breadcrumb
     small = @seminar.dates.map { |d| ldate d }.join(', ')
 
 div
-  ul.nav.nav-tabs role="tablist"
-    li.active role="presentation"
-      a aria-controls="home" data-toggle="tab" href="#attendees" role="tab"  Teilnehmer
-    li role="presentation"
-      a aria-controls="home" data-toggle="tab" href="#invoices" role="tab"  Rechnungen
-    li role="presentation"
-      a aria-controls="home" data-toggle="tab" href="#general" role="tab"  Allgemein
-    li role="presentation"
-      a aria-controls="settings" data-toggle="tab" href="#categories" role="tab"  Themen
-    li role="presentation"
-      a aria-controls="settings" data-toggle="tab" href="#events" role="tab"  Termine
-    li role="presentation"
-      a aria-controls="profile" data-toggle="tab" href="#benefit" role="tab" = Seminar.human_attribute_name(:benefit)
-    li role="presentation"
-      a aria-controls="messages" data-toggle="tab" href="#content" role="tab" = Seminar.human_attribute_name(:content)
-    li role="presentation"
-      a aria-controls="settings" data-toggle="tab" href="#notes" role="tab"  Bemerkungen
+  ul.nav.nav-tabs
+    li.active: a data-toggle="tab" href="#attendees"   Teilnehmer
+    li:        a data-toggle="tab" href="#invoices"    Rechnungen
+    li:        a data-toggle="tab" href="#general"     Allgemein
+    li:        a data-toggle="tab" href="#categories"  Themen
+    li:        a data-toggle="tab" href="#events"      Termine
+    li:        a data-toggle="tab" href="#benefit"     = Seminar.human_attribute_name(:benefit)
+    li:        a data-toggle="tab" href="#content"     = Seminar.human_attribute_name(:content)
+    li:        a data-toggle="tab" href="#notes"       Bemerkungen
   .tab-content
-    .tab-pane#attendees.active role="tabpanel" = render 'seminars/show/attendees'
-    .tab-pane#invoices         role="tabpanel" = render 'seminars/show/invoices'
-    .tab-pane#general          role="tabpanel" = render 'seminars/show/general'
-    .tab-pane#categories       role="tabpanel" = render 'seminars/show/categories'
-    .tab-pane#events           role="tabpanel" = render 'seminars/show/events'
-    .tab-pane#benefit          role="tabpanel" = @seminar.benefit&.html_safe
-    .tab-pane#content          role="tabpanel" = @seminar.content&.html_safe
-    .tab-pane#notes            role="tabpanel" = @seminar.notes&.html_safe
+    .tab-pane#attendees.active = render 'seminars/show/attendees'
+    .tab-pane#invoices         = render 'seminars/show/invoices'
+    .tab-pane#general          = render 'seminars/show/general'
+    .tab-pane#categories       = render 'seminars/show/categories'
+    .tab-pane#events           = render 'seminars/show/events'
+    .tab-pane#benefit          = @seminar.benefit&.html_safe
+    .tab-pane#content          = @seminar.content&.html_safe
+    .tab-pane#notes            = @seminar.notes&.html_safe
 
 sass:
   ol.breadcrumb

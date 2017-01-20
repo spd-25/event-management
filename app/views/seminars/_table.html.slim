@@ -13,9 +13,7 @@
             td.number
               = seminar.number
               br
-              - dates = seminar.dates.sort
-              small.text-muted
-                = [dates.first, dates.last].uniq.map { |date| ldate date }.join(' - ').html_safe
+              small.text-muted = seminar.dates.map { |date| ldate date }.join('<br>').html_safe
             td
               = seminar.title
               br

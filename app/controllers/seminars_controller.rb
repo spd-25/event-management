@@ -5,11 +5,21 @@ class SeminarsController < ApplicationController
 
   def index
     authorize Seminar
-    category_id = params[:category_id]
-    @category   = category_id ? Category.find(category_id) : Category.cat_parents.first
-    @seminars   = @category ? @category.all_seminars : Seminar
-    @seminars   = @seminars.page(params[:page]).order(:number)
-      .includes(:teachers, :events, :location).all
+
+    @by = params[:by] || 'category'
+
+    case @by
+    when 'category'
+      category_id = params[:category_id]
+      @category   = category_id ? Category.find(category_id) : Category.cat_parents.first
+      @seminars   = (@category ? @category.all_seminars : Seminar).order(:number).page(params[:page])
+    when 'date'
+      @years    = Seminar.group(:year).count.sort.to_h
+      @year     = (params[:year] || Date.current.year).to_i
+      @month    = params[:month]
+      @seminars = Seminar.by_date year: @year, month: @month
+    end
+    @seminars = @seminars.includes(:teachers, :events, :location).all
   end
 
   def show
