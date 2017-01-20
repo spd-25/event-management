@@ -53,6 +53,10 @@
       .col-md-4 = f.input :school, collection:t('bookings.schools'), include_blank: false
       .col-md-4 = f.input :year
 
+  fieldset
+    legend Bemerkungen
+    = f.input :comments, input_html: { rows: 4 }
+
   .action-buttons
     .pull-right
       => link_to t(:cancel), (session[:back_url] || @seminar), class: 'btn btn-default'

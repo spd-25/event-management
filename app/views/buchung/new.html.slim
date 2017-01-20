@@ -91,6 +91,10 @@ h3 Ich melde mich verbindlich für folgende Veranstaltung an:
           .col-md-4 = f.input :year
 
       fieldset
+        legend Bemerkungen
+        = f.input :comments, input_html: { rows: 4 }
+
+      fieldset
         legend AGB
         = f.input :terms_of_service, as: :boolean, required: true, label: t('.terms_of_service')
 

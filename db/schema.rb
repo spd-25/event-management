@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170117191458) do
+ActiveRecord::Schema.define(version: 20170120115720) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 20170117191458) do
     t.string   "year"
     t.jsonb    "company_address",    default: "{}"
     t.jsonb    "invoice_address",    default: "{}"
+    t.text     "comments"
     t.index ["booking_id"], name: "index_attendees_on_booking_id", using: :btree
     t.index ["company_id"], name: "index_attendees_on_company_id", using: :btree
     t.index ["invoice_id"], name: "index_attendees_on_invoice_id", using: :btree
@@ -63,6 +64,7 @@ ActiveRecord::Schema.define(version: 20170117191458) do
     t.jsonb    "invoice_address",    default: "{}"
     t.integer  "status",             default: 0
     t.integer  "company_id"
+    t.text     "comments"
     t.index ["company_id"], name: "index_bookings_on_company_id", using: :btree
     t.index ["seminar_id"], name: "index_bookings_on_seminar_id", using: :btree
   end
