@@ -28,7 +28,8 @@ ol.breadcrumb
       => icon_for @seminar, text: "#{@seminar.number} - #{@seminar.title}"
     br
     small = @seminar.subtitle
-
+    br
+    small = @seminar.dates.map { |d| ldate d }.join(', ')
 
 div
   ul.nav.nav-tabs role="tablist"
