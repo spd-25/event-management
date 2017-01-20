@@ -26,6 +26,7 @@ de:
     start_date:  Beginn
     start_time:  von
     street:      Straße/Nr.
+    time:        Zeit
     title:       Titel
     updated_at:  Bearbeitet
     zip:         PLZ

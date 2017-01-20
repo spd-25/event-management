@@ -7,13 +7,14 @@ class InvoicePdf < ApplicationDocument
   def initialize(invoice)
     @debug         = false
     @margin_top    = 28.mm
-    @margin_bottom = 28.mm
+    @margin_bottom = 0
     @margin_side   = 20.mm
-    super(page_size: 'A4', margin: [@margin_top, @margin_side, @margin_bottom])
+    @printed_footer = 30.mm
+    super(page_size: 'A4', margin: [@margin_top, @margin_side, @margin_bottom + @printed_footer])
     @invoice = invoice
     @seminar = @invoice.seminar
-    @company = OpenStruct.new name: 'Paritätische', phone: '0391/6293-313', email: 'amay@paritaet-lsa.de'
-    @header_text_options = { size: 30, style: :italic, align: :center }
+    @company = OpenStruct.new t('invoices.pdf.company')
+    # @header_text_options = { size: 30, style: :italic, align: :center }
     generate
   end
 
@@ -30,16 +31,21 @@ class InvoicePdf < ApplicationDocument
     write_address
     write_right_box
     move_down 15
-    write_heading
-    move_down 15
+    # write_heading
+    text "#{t('invoices.pdf.title')} #{invoice.number}", size: 16
+    move_down 10
     text invoice.pre_message, size: 11
-    move_down 5
+    # move_down 4
     write_seminar_box
-    move_down 10
+    move_down 7
+    text 'Folgende Teilnehmer/innen sind in dieser Rechnung berücksichtigt:', size: 11
+    # move_down 5
     write_positions
-    move_down 10
+    move_down 15
     text invoice.post_message, size: 11
+    move_down 10
     # write_footer
+    text t('invoices.pdf.footer_message'), inline_format: true, size: 9
   end
 
   # def write_header
@@ -56,8 +62,6 @@ class InvoicePdf < ApplicationDocument
     y = bounds.top - (55.mm - @margin_top)
     font_size 10 do
       bounding_box([5, y], width: 90.mm, height: 30.mm) do
-        # text company.full_address.join(' • '), size: 8, style: :italic
-        # stroke_horizontal_rule
         text invoice.address
         stroke_bounds if @debug
       end
@@ -75,7 +79,6 @@ class InvoicePdf < ApplicationDocument
       bounding_box [x, y], box_options do
         data = [
           [t(:phone), company.phone],
-          # [t(:fax), company.fax],
           [t(:email), company.email],
           [t(:invoice_date), ldate(invoice.date)],
         ]
@@ -84,10 +87,6 @@ class InvoicePdf < ApplicationDocument
         stroke_bounds if @debug
       end
     end
-  end
-
-  def write_heading
-    text "#{Invoice.model_name.human} Nr. #{invoice.number}", size: 20
   end
 
   def write_seminar_box
@@ -120,17 +119,14 @@ class InvoicePdf < ApplicationDocument
   end
 
   def write_positions
-    text 'Folgende Teilnehmer/innen sind in dieser Rechnung berücksichtigt:', size: 11
-    move_down 10
     indent(20, 40) do
-      font_size 11 do
+      font_size 10 do
         table positions_array, positions_table_options do |t|
           t.row(-1).font_style = :bold
           t.cells.style { |c| c.align = :right if c.column == 1 }
         end
       end
     end
-    move_down 20
   end
 
   def positions_array
@@ -145,45 +141,8 @@ class InvoicePdf < ApplicationDocument
       # header:        false,
       width:         bounds.right,
       column_widths: { 1 => 120 },
-      cell_style:    { borders: [:top, :bottom], border_width: 0.2, border_lines: [:solid, :dashed], padding: [3, 5] }
+      cell_style:    { borders: [:top, :bottom], border_width: 0.2, border_lines: [:solid, :dashed], padding: [2, 5] }
     }
-  end
-
-  # def write_positions_sum
-  #   font_size 11 do
-  #     table sum_rows, positions_sum_options do |t|
-  #       t.row(0).font_style = :bold
-  #       t.cells.style { |c| c.align = :right }
-  #     end
-  #   end
-  # end
-
-  def sum_rows
-    [['Gesamtgebühr', display_price(invoice.items.sum)]]
-  end
-
-  # def positions_sum_options
-  #   {
-  #     width: bounds.right,
-  #     column_widths: { 1 => 90 },
-  #     cell_style: { border_width: 0, padding: [2, 5] }
-  #   }
-  # end
-
-  def write_footer
-    repeat(:all) do
-      font font.name, size: 9, style: :italic
-      box_width = bounds.right / 3
-      small_box_options = { width: box_width - 10, height: @margin_bottom }
-      wide_box_options = { width: box_width + 5, height: @margin_bottom }
-      box1_position = 0
-      box2_position = box1_position + small_box_options[:width]
-      box3_position = box2_position + wide_box_options[:width]
-
-      bounding_box([box1_position, 0], small_box_options) { text company.contact_lines }
-      bounding_box([box2_position, 0], wide_box_options)  { text company.legal_info_lines }
-      bounding_box([box3_position, 0], wide_box_options)  { text company.bank_info_lines }
-    end
   end
 
 end
