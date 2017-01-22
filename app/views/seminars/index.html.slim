@@ -15,9 +15,12 @@
 
 ul.nav.nav-tabs
   li class=('active' if @by == 'category') = link_to 'nach Themen', seminars_path(by: 'category')
-  li class=('active' if @by == 'date') = link_to 'nach Monat', seminars_path(by: 'date')
+  li class=('active' if @by == 'date')     = link_to 'nach Monat', seminars_path(by: 'date')
+  li class=('active' if @by == 'calendar') = link_to 'Kalender', seminars_path(by: 'calendar')
 
 - if @by == 'category'
   = render 'seminars/index/by_category'
 - if @by == 'date'
   = render 'seminars/index/by_date'
+- if @by == 'calendar'
+  = render 'seminars/index/by_calendar'

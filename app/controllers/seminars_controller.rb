@@ -13,13 +13,21 @@ class SeminarsController < ApplicationController
       category_id = params[:category_id]
       @category   = category_id ? Category.find(category_id) : Category.cat_parents.first
       @seminars   = (@category ? @category.all_seminars : Seminar).order(:number).page(params[:page])
+      @seminars = @seminars.includes(:teachers, :events, :location).all
     when 'date'
       @years    = Seminar.group(:year).count.sort.to_h
       @year     = (params[:year] || Date.current.year).to_i
       @month    = params[:month]
       @seminars = Seminar.by_date year: @year, month: @month
+      @seminars = @seminars.includes(:teachers, :events, :location).all
+    when 'calendar'
+      @years          = Seminar.group(:year).count.sort.to_h
+      @year           = (params[:year] || Date.current.year).to_i
+      @month          = (params[:month] || Date.current.month).to_i
+      @first_of_month = Date.new @year, @month
+      @events         = Event.order(:date).includes(:seminar).where('date between ? and ?', @first_of_month, @first_of_month.end_of_month)
+      @seminars       = Seminar.where(id: @events.select(:seminar_id))
     end
-    @seminars = @seminars.includes(:teachers, :events, :location).all
   end
 
   def show
