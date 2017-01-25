@@ -18,7 +18,7 @@ class SeminarsController < ApplicationController
       @years    = Seminar.group(:year).count.sort.to_h
       @year     = (params[:year] || Date.current.year).to_i
       @month    = params[:month]
-      @seminars = Seminar.by_date year: @year, month: @month
+      @seminars = Seminar.order(:date).by_date year: @year, month: @month
       @seminars = @seminars.includes(:teachers, :events, :location).all
     when 'calendar'
       @years          = Seminar.group(:year).count.sort.to_h
