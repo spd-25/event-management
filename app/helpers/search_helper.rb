@@ -5,7 +5,7 @@ module SearchHelper
     when Teacher  then [icon_for(result, text: result.name)]
     when Location then [icon_for(result, text: result.name), result.description]
     when Category then [icon_for(result, text: result.name)]
-    when Company  then [icon_for(result, text: result.name), result.city, "#{result.bookings.count} Anmeldungen"]
+    when Company  then [icon_for(result, text: result.name), result.city, "#{result.attendees.booked.count} Anmeldungen"]
     when Attendee then [icon_for(result, text: result.name), result.booking.seminar.title]
     end.select(&:present?).join(', ').html_safe
   end

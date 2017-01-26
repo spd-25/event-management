@@ -12,6 +12,7 @@
       ul.list-group
         - results.each do |result|
           - if result.is_a? Attendee
-            li.list-group-item = link_to display_name_for(result), result.booking.seminar
+            li.list-group-item class=('list-group-item-warning' if result.canceled?)
+              = link_to display_name_for(result), result.booking.seminar
           - else
             li.list-group-item = link_to display_name_for(result), result
