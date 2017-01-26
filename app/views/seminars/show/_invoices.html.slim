@@ -15,7 +15,11 @@ h4 Rechnungen zu schreiben
             td = icon_for Company
             td = lines_for company.full_address.split("\n")
             td = lines_for attendees.map(&:name)
-            td = number_to_currency @seminar.price * attendees.count
+            td
+              - if @seminar.price
+                = number_to_currency @seminar.price * attendees.count
+              - else
+                = 'SEMINAR HAT KEINE GEBÜHR GESPEICHERT'
             td = link_to 'Rechnung schreiben', new_invoice_path(company_id: company.id, seminar_id: @seminar.id), class: 'btn btn-primary'
         - else
           - attendees.each do |attendee|
