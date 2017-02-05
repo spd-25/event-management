@@ -29,7 +29,9 @@ class InvoicePdf < ApplicationDocument
     # move_down 20
 
     write_address
-    write_right_box
+    # write_right_box
+
+    write_header_table
     move_down 15
     # write_heading
     text "#{t('invoices.pdf.title')} #{invoice.number}", size: 16
@@ -45,7 +47,9 @@ class InvoicePdf < ApplicationDocument
     text invoice.post_message, size: 11
     move_down 10
     # write_footer
-    text t('invoices.pdf.footer_message'), inline_format: true, size: 9
+    text t('invoices.pdf.footer_message_1'), inline_format: true, size: 10
+    image Rails.root.join('public/signature.png')
+    text t('invoices.pdf.footer_message_2'), inline_format: true, size: 10
   end
 
   # def write_header
@@ -60,7 +64,7 @@ class InvoicePdf < ApplicationDocument
 
   def write_address
     y = bounds.top - (55.mm - @margin_top)
-    font_size 10 do
+    font_size 11 do
       bounding_box([5, y], width: 90.mm, height: 30.mm) do
         text invoice.address
         stroke_bounds if @debug
@@ -68,25 +72,37 @@ class InvoicePdf < ApplicationDocument
     end
   end
 
-  def write_right_box
-    font_size 10 do
-      y      = bounds.top - (55.mm - @margin_top)
-      height = 30.mm
-      width  = 70.mm
-      box_options = { width: width, height: height }
+  # def write_right_box
+  #   font_size 10 do
+  #     y      = bounds.top - (55.mm - @margin_top)
+  #     height = 30.mm
+  #     width  = 70.mm
+  #     box_options = { width: width, height: height }
+  #
+  #     x = bounds.right - width
+  #     bounding_box [x, y], box_options do
+  #       data = [
+  #         [t(:phone), company.phone],
+  #         [t(:email), company.email],
+  #         [t(:invoice_date), ldate(invoice.date)],
+  #       ]
+  #       table data, { width: bounds.right, cell_style: { border_width: 0, padding: [1, 5] } }
+  #
+  #       stroke_bounds if @debug
+  #     end
+  #   end
+  # end
 
-      x = bounds.right - width
-      bounding_box [x, y], box_options do
-        data = [
-          [t(:phone), company.phone],
-          [t(:email), company.email],
-          [t(:invoice_date), ldate(invoice.date)],
-        ]
-        table data, { width: bounds.right, cell_style: { border_width: 0, padding: [1, 5] } }
-
-        stroke_bounds if @debug
-      end
-    end
+  def write_header_table
+    data = [
+      ['Ihr Zeichen/Ihre Nachricht vom', 'Unser Zeichen', 'Durchwahl', 'Datum'],
+      ['', '', company.phone, ldate(invoice.date)]
+    ]
+    options = {
+      width:      bounds.right,
+      cell_style: { border_width: 0, padding: [1, 5] }
+    }
+    font_size(8) { table data, options }
   end
 
   def write_seminar_box
