@@ -68,13 +68,13 @@ coffee:
     calculateSum = ->
       sum = .0
       $('.invoice_item_price input').each (index, input) =>
-        val = parseFloat($(input).val().replace(',', '.'))
+        val = parseFloat($(input).val().replace('.', '').replace(',', '.'))
         sum += val unless isNaN(val)
       $('.sum').html(sum.toLocaleString('de', style: 'currency', currency: 'EUR'))
 
     $('.invoice_item_price input').change (event) =>
       calculateSum()
       input = $(event.target)
-      val = parseFloat(input.val().replace(',', '.'))
+      val = parseFloat(input.val().replace('.', '').replace(',', '.'))
       input.val(val.toLocaleString('de', minimumFractionDigits: 2 ))
 
