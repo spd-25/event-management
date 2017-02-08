@@ -5,7 +5,7 @@ class InvoicesController < ApplicationController
 
   def index
     authorize Invoice
-    @invoices = Invoice.all
+    @invoices = Invoice.order(number: :desc).page(params[:page]).all
   end
 
   def show

@@ -17,6 +17,8 @@
             = link_to title_for_model(Booking, with_icon: true), bookings_url, tabindex: -1
           li class=('active' if controller_name == 'attendees')
             = link_to title_for_model(Booking, with_icon: true), attendees_url, tabindex: -1
+          li class=('active' if controller_name == 'invoices')
+            = link_to title_for_model(Invoice, with_icon: true), invoices_url, tabindex: -1
           = navbar_dropdown 'Stammdaten', active: controller_name.in?(%w(locations teachers categories users)) do
             li class=('active' if controller_name == 'locations')
               = link_to title_for_model(Location, with_icon: true), locations_url, tabindex: -1

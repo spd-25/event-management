@@ -2,6 +2,8 @@
 .page-header
   h2 = title_for @invoices
 
+= paginate @invoices
+
 .table-responsive
   table.standard-table.table-clickable
     thead
