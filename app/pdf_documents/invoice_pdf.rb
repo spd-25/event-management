@@ -2,6 +2,8 @@ require 'prawn/measurement_extensions'
 
 class InvoicePdf < ApplicationDocument
 
+  include ActionView::Helpers::SanitizeHelper
+
   attr_reader :invoice, :company
 
   def initialize(invoice)
@@ -65,7 +67,7 @@ class InvoicePdf < ApplicationDocument
   def write_address
     y = bounds.top - (55.mm - @margin_top)
     font_size 11 do
-      bounding_box([5, y], width: 90.mm, height: 30.mm) do
+      bounding_box([5, y], width: 90.mm, height: 25.mm) do
         text invoice.address
         stroke_bounds if @debug
       end
@@ -115,11 +117,18 @@ class InvoicePdf < ApplicationDocument
   end
 
   def seminar_data
+    events = if strip_tags(@seminar.date_text || '').present?
+               [strip_tags(@seminar.date_text.gsub('<br>', "\n"))]
+             else
+               [
+                 @seminar.dates.map { |date| ldate date }.join('; '),
+                 @seminar.events.map(&:time).uniq.compact.join('; ')
+               ]
+             end
     [
       [Seminar.human_attribute_name(:title), @seminar.title],
       [Seminar.human_attribute_name(:number), @seminar.number],
-      [Seminar.human_attribute_name(:date), @seminar.dates.map { |date| ldate date }.join('; ')],
-      [Seminar.human_attribute_name(:time), @seminar.events.map(&:time).uniq.compact.join('; ')],
+      [Seminar.human_attribute_name(:events), events.join('; ')],
       [Seminar.human_attribute_name(:location), @seminar.location.name]
     ]
   end
