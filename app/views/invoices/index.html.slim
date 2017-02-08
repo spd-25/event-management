@@ -13,11 +13,13 @@
         th Empfänger
         th Teilnehmer
         th Gesamtbetrag
+        th
     tbody
       - @invoices.each do | invoice |
-        tr data = {url: url_for(invoice)}
+        tr data={url: url_for(invoice)}
           td = invoice.number
           td = ldate invoice.date
           td = lines_for invoice.address.split("\n")
           td = lines_for invoice.items.map(&:attendee)
           td = number_to_currency invoice.total_price
+          td = pdf_link invoice_path(invoice, format: :pdf)
