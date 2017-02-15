@@ -70,6 +70,7 @@ class InvoicesController < ApplicationController
     p = params.require(:invoice).permit(:number, :date, :address,
                                         :pre_message, :post_message,
                                         items: [:attendee, :price])
+    p[:items].delete_if { |item| item['attendee'].blank? }
     p[:items].each { |item| item['price'] = item['price'].gsub('.', '').sub(',', '.').to_f }
     p
   end
