@@ -1,0 +1,36 @@
+- page_title_for @seminar, :number
+- module_parent = @seminar.parent
+
+ol.breadcrumb
+  li = link_to Seminar.model_name.human(count: 2), seminars_url
+  - sub_cat = @seminar.categories.first
+  - if sub_cat
+    - parent = sub_cat.parent? ? sub_cat : sub_cat.category
+    li = link_to parent.name, seminars_url(category_id: parent.id)
+    - unless parent == sub_cat
+      li = link_to sub_cat.name, seminars_url(category_id: sub_cat.id)
+  - if (module_parent)
+    li = link_to module_parent.number, module_parent
+
+.page-header
+  .buttons
+
+    => link_to fa_icon('external-link', text: 'Externe Ansicht'), seminar_visitor_url(@seminar), class: 'btn btn-default'
+    => edit_link edit_seminar_url(@seminar)
+    = copy_link new_seminar_url(copy_from: @seminar.id)
+    = render 'seminars/show/status'
+  h2
+    - if module_parent
+      => link_to icon_for(module_parent, text: "#{module_parent.number} - #{module_parent.title}"), module_parent
+      br
+      => "Modul: #{@seminar.number} - #{@seminar.title}"
+    - else
+      => icon_for @seminar, text: "#{@seminar.number} - #{@seminar.title}"
+    br
+    small = @seminar.subtitle
+    br
+    small = @seminar.dates.map { |d| ldate d }.join(', ')
+
+sass:
+  ol.breadcrumb
+    margin-top: 20px

@@ -15,6 +15,8 @@ class Seminar < ApplicationRecord
                                 allow_destroy: true,
                                 reject_if: lambda { |attr| attr['date'].blank? }
 
+  serialize :statistic, ::AttendeeStatistic
+
   validates :number, :title, presence: true
   validates :number, uniqueness: true
   # validate :validate_events

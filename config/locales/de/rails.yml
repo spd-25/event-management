@@ -217,3 +217,13 @@ de:
       short: "%d.%m.%Y"
       short2: "%d.%m.%Y %H:%M"
     pm: nachmittags
+  seminars:
+    pras:
+      age_16_17: "16-17"
+      age_18_24: "18-24"
+      age_25_34: "25-34"
+      age_35_49: "35-49"
+      age_50_65: "50-65"
+      age_gt_65: "> 65"
+      age_lt_16: "< 16"
+      age_unknown: unbekannt

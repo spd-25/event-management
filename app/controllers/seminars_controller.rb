@@ -1,7 +1,7 @@
 class SeminarsController < ApplicationController
   before_action :authenticate_user!
   after_action :verify_authorized
-  before_action :set_seminar, only: [:show, :edit, :update, :destroy]
+  before_action :set_seminar, only: [:show, :edit, :update, :destroy, :pras]
 
   def index
     authorize Seminar
@@ -73,6 +73,10 @@ class SeminarsController < ApplicationController
     redirect_to seminars_url, notice: t(:destroyed, model: Seminar.model_name.human)
   end
 
+  def pras
+
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -87,7 +91,8 @@ class SeminarsController < ApplicationController
       :number, :year, :title, :subtitle, :benefit, :content, :notes, :price, :price_text,
       :parent_id, :date_text, :max_attendees, :location_id, :archived, :published,
       teacher_ids: [], category_ids: [],
-      events_attributes: [:id, :location_id, :date, :start_time, :end_time, :notes]
+      events_attributes: [:id, :location_id, :date, :start_time, :end_time, :notes],
+      statistic: AttendeeStatistic.attribute_set.map(&:name)
     ]
     params.require(:seminar).permit(attrs)
   end

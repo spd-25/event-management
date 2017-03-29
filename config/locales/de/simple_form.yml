@@ -83,4 +83,21 @@ de:
         mobile: Mobiltelefon
         phone: Telefon
         fax: Fax
+      statistic:
+        number: 'Nummer'
+        title: 'Bezeichnung der Maßnahme'
+        section: 'Fachgebiet'
+        type: 'Art der BV'
+        published: 'Ankündigung'
+        location: 'Ort der Durchführung'
+        start_date: 'Beginn (Datum)'
+        start_time: 'Beginn (Zeit)'
+        end_date: 'Ende (Datum)'
+        end_time: 'Ende (Zeit)'
+        hours: 'Ustd.'
+        partner: 'Partner'
+        certificate: 'Bildungsabschluss'
+        target_group: 'Zielgruppe'
+        not_local: 'nicht aus Sachsen-Anhalt'
+
 

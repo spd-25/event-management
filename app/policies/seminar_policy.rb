@@ -12,6 +12,10 @@ class SeminarPolicy < ApplicationPolicy
     index?
   end
 
+  def pras?
+    user.admin?
+  end
+
   class Scope < Scope
     def resolve
       scope
