@@ -10,8 +10,9 @@
         = attendee_form.input :_destroy, as: :hidden, input_html: { value: attendee.new_record? }
         .row
           a.btn.btn-danger.btn-xs.remove-attendee = fa_icon 'trash'
-          .col-md-6 = attendee_form.input :first_name
-          .col-md-6 = attendee_form.input :last_name
+          .col-md-4 = attendee_form.input :first_name
+          .col-md-4 = attendee_form.input :last_name
+          .col-md-4 = attendee_form.input :profession
 
     .row
       .col-md-1 = link_to fa_icon('plus', text: 'Teilnehmer hinzufügen'), '#',

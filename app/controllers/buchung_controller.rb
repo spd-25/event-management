@@ -44,7 +44,7 @@ class BuchungController < ApplicationController
       :contact_email, :contact_phone, :contact_mobile, :contact_fax, :comments,
       :company_title, :company_street, :company_zip, :company_city,
       :invoice_title, :invoice_street, :invoice_zip, :invoice_city,
-      attendees_attributes: %i(first_name last_name)
+      attendees_attributes: %i(first_name last_name profession)
     ]
     p = params.require(:booking).permit(attrs)
     p['attendees_attributes'].reject! do |_, attr|

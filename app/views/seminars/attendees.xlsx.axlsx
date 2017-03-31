@@ -18,7 +18,7 @@ wb.add_worksheet(name: 'Teilnehmerliste') do |sheet|
 
   @attendees.each_with_index do |attendee, index|
     line = index + 7
-    sheet.add_row [ (index + 1), attendee.name, '', attendee.company&.name, '' ]
+    sheet.add_row [ (index + 1), attendee.name, attendee.profession, attendee.company&.name, '' ]
     sheet.add_border "A#{line}:E#{line}"
   end
 

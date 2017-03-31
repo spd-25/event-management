@@ -47,8 +47,9 @@ h3 Ich melde mich verbindlich für folgende Veranstaltung an:
             .row
               - if attendee_form.index > 0
                 a.btn.btn-danger.btn-xs.remove-attendee = fa_icon 'trash'
-              .col-md-6 = attendee_form.input :first_name
-              .col-md-6 = attendee_form.input :last_name
+              .col-md-4 = attendee_form.input :first_name
+              .col-md-4 = attendee_form.input :last_name
+              .col-md-4 = attendee_form.input :profession
 
         .row
           .col-md-1 = link_to fa_icon('plus', text: 'Teilnehmer hinzufügen'), '#',
