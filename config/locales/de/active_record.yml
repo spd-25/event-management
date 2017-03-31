@@ -15,6 +15,7 @@ de:
     end_time:    bis
     first_name:  Vorname
     gender:      Geschlecht
+    key_words:   Suchbegriffe
     last_name:   Nachname
     mobile:      Mobil
     notes:       Bemerkungen

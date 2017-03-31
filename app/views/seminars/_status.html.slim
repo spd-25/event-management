@@ -1,9 +1,9 @@
-- if @seminar.archived
+- if seminar.archived
   span.label.label-warning archiviert
-- elsif @seminar.published
+- elsif seminar.published
   span.label.label-success freigegeben
 - else
   span.label.label-danger nicht freigegeben
 
-- if @seminar.canceled
+- if seminar.canceled
   span.label.label-info< ausgefallen

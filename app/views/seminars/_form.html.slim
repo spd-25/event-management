@@ -44,6 +44,7 @@
         .row
           .col-md-4 = f.input :price
           .col-md-8 = f.input :price_text, input_html: { class: 'editor' }
+        = f.input :key_words
 
       #categories.tab-pane role="tabpanel"
         = f.association :categories, collection: categories_for_select, as: :check_boxes, label: false
