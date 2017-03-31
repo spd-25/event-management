@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170328185035) do
+ActiveRecord::Schema.define(version: 20170331190554) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -174,6 +174,7 @@ ActiveRecord::Schema.define(version: 20170328185035) do
     t.boolean  "published",     default: false
     t.date     "date"
     t.jsonb    "statistic",     default: "{}"
+    t.boolean  "canceled",      default: false
     t.index ["location_id"], name: "index_seminars_on_location_id", using: :btree
     t.index ["parent_id"], name: "index_seminars_on_parent_id", using: :btree
   end

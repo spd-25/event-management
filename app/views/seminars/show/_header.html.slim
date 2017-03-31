@@ -18,7 +18,8 @@ ol.breadcrumb
     => link_to fa_icon('external-link', text: 'Externe Ansicht'), seminar_visitor_url(@seminar), class: 'btn btn-default'
     => edit_link edit_seminar_url(@seminar)
     = copy_link new_seminar_url(copy_from: @seminar.id)
-    = render 'seminars/show/status'
+    br
+    = render 'seminars/status', seminar: @seminar
   h2
     - if module_parent
       => link_to icon_for(module_parent, text: "#{module_parent.number} - #{module_parent.title}"), module_parent

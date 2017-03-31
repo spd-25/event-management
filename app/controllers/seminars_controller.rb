@@ -93,7 +93,7 @@ class SeminarsController < ApplicationController
   def seminar_params
     attrs = [
       :number, :year, :title, :subtitle, :benefit, :content, :notes, :price, :price_text,
-      :parent_id, :date_text, :max_attendees, :location_id, :archived, :published,
+      :parent_id, :date_text, :max_attendees, :location_id, :archived, :published, :canceled,
       teacher_ids: [], category_ids: [],
       events_attributes: [:id, :location_id, :date, :start_time, :end_time, :notes],
       statistic: AttendeeStatistic.attribute_set.map(&:name)

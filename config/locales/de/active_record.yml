@@ -4,6 +4,7 @@ de:
     address:     Adresse
     attendees:   Teilnehmer
     archived:    archiviert
+    canceled:    ausgefallen
     city:        Ort
     comments:    Bemerkungen
     created_at:  Angelegt

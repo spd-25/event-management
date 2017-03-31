@@ -18,6 +18,7 @@
               = seminar.title
               br
               small.text-muted = seminar.subtitle
+            td = render 'seminars/status', seminar: seminar
             td.icons
               => fa_icon 'users', text: seminar.attendees.booked.count
               => fa_icon 'calendar', text: seminar.events.count
