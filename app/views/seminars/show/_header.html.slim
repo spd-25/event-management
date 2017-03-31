@@ -29,7 +29,9 @@ ol.breadcrumb
     br
     small = @seminar.subtitle
     br
-    small = @seminar.dates.map { |d| ldate d }.join(', ')
+    small
+      = @seminar.dates.map { |d| ldate d }.join(', ')
+      =< @seminar.teachers.map(&:name).join(', ')
 
 sass:
   ol.breadcrumb
