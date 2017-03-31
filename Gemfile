@@ -46,6 +46,11 @@ gem 'prawn'
 # See https://github.com/prawnpdf/prawn-table/pull/50
 gem 'prawn-table', git: 'https://github.com/J-F-Liu/prawn-table'
 
+gem 'rubyzip', '~> 1.1.0'
+gem 'axlsx', '2.1.0.pre'
+gem 'axlsx_rails'
+gem 'axlsx_styler'
+
 group :development do
   gem 'better_errors'
   gem 'capistrano', '~> 3.5'

@@ -1,0 +1,26 @@
+response.headers['Content-Disposition'] = %Q(attachment; filename="Teilnehmerliste-#{@seminar.number}.xlsx")
+
+wb = xlsx_package.workbook
+
+wb.add_worksheet(name: 'Teilnehmerliste') do |sheet|
+  sheet.add_row ['Seminar-Nr.', @seminar.number]
+  sheet.add_row ['am', l(@seminar.date)]
+  sheet.add_row ['Titel', @seminar.title]
+
+  sheet.add_style 'A1:A3', b: true
+
+  sheet.add_row
+  sheet.add_row
+
+  sheet.add_row ['lfd. Nr.', 'Teilnehmer', 'Tätigkeit', 'Einrichtung', 'Bemerkungen']
+  sheet.add_style 'A6:E6', b: true
+  sheet.add_border 'A6:E6'
+
+  @attendees.each_with_index do |attendee, index|
+    line = index + 7
+    sheet.add_row [ (index + 1), attendee.name, '', attendee.company&.name, '' ]
+    sheet.add_border "A#{line}:E#{line}"
+  end
+
+  sheet.column_widths 12, 18, 18, 30, 20
+end

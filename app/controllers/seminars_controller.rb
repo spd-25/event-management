@@ -1,7 +1,7 @@
 class SeminarsController < ApplicationController
   before_action :authenticate_user!
   after_action :verify_authorized
-  before_action :set_seminar, only: [:show, :edit, :update, :destroy, :pras]
+  before_action :set_seminar, only: [:show, :edit, :update, :destroy, :attendees, :pras]
 
   def index
     authorize Seminar
@@ -71,6 +71,10 @@ class SeminarsController < ApplicationController
   def destroy
     @seminar.destroy
     redirect_to seminars_url, notice: t(:destroyed, model: Seminar.model_name.human)
+  end
+
+  def attendees
+    @attendees = @seminar.attendees.booked.order(:created_at)
   end
 
   def pras

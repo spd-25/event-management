@@ -12,6 +12,10 @@ class SeminarPolicy < ApplicationPolicy
     index?
   end
 
+  def attendees?
+    user.admin?
+  end
+
   def pras?
     user.admin?
   end

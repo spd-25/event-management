@@ -21,7 +21,8 @@ Rails.application.routes.draw do
   resources :locations,  except: :edit
   resources :teachers,   except: :edit
   resources :seminars do
-    get :pras, on: :member
+    get :attendees, on: :member
+    get :pras,      on: :member
   end
   resources :categories, except: :edit
   resources :bookings,   only: %i(show new create)
