@@ -59,9 +59,14 @@
         .col-md-4: h5 Bemerkungen
         .col-md-8 = @seminar.notes.html_safe
 
-.row.action-buttons
-  .col-md-4
-    = link_to 'Anmelden', buchung_new_url(seminar_id: @seminar.id), class: 'btn btn-primary btn-block btn-lg'
+- if @seminar.bookable?
+  .row.action-buttons
+    .col-md-4
+      = link_to 'Anmelden', buchung_new_url(seminar_id: @seminar.id), class: 'btn btn-primary btn-block btn-lg'
+- else
+  .row
+    .col-md-6
+      .alert.alert-warning Dieses Seminar kann nicht mehr gebucht werden.
 
 sass:
   .action-buttons

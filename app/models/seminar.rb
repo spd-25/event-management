@@ -26,6 +26,7 @@ class Seminar < ApplicationRecord
   default_scope { where archived: false }
 
   scope :published, -> { where published: true }
+  scope :bookable,  -> { where 'date >= :date', date: Date.current }
   scope :by_date, -> (year: Date.current.year, month: nil) {
     if month
       where(year: year).where('extract(month from date) = ?', month)
@@ -76,6 +77,10 @@ class Seminar < ApplicationRecord
 
   def slug
     I18n.transliterate(name.downcase).gsub(/"/, '').gsub(/[^a-z0-9]+/, '-')
+  end
+
+  def bookable?
+    ( date || Date.current ) >= Date.current
   end
 
   private

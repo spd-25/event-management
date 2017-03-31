@@ -27,7 +27,7 @@
 table.seminars.table
   tbody
     - @seminars.each do |seminar|
-      tr
+      tr class=('time-over' unless seminar.bookable?)
         td.number
           = link_to seminar.number, seminar_visitor_url(seminar)
           br
@@ -52,6 +52,9 @@ sass:
       margin-left: 30px
   table.seminars
     margin: 30px 0 50px
+    tr.time-over
+      color: gray
+      font-style: italic
     td
       &.number
         width: 100px
