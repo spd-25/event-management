@@ -1,6 +1,8 @@
 - page_title_for @companies
 .page-header
-  .buttons = new_link new_company_path
+  .buttons
+    => link_to fa_icon('table', text: 'Exportieren'), companies_url(format: :xlsx), class: 'btn btn-default'
+    = new_link new_company_path
   h2 = title_for @companies
 
 = paginate @companies

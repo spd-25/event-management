@@ -5,7 +5,12 @@ class CompaniesController < ApplicationController
 
   def index
     authorize Company
-    @companies = Company.order(:name).page(params[:page]).all
+    @companies = Company.order(:name)
+
+    respond_to do |format|
+      format.html { @companies = @companies.page(params[:page]).all }
+      format.xlsx { @companies = @companies.all }
+    end
   end
 
   def show
