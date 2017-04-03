@@ -10,7 +10,7 @@ class Company < ApplicationRecord
   multisearchable against: [:name, :name2, :city, :city_part]
 
   def address
-    [street, "#{zip} #{city}", city_part].compact.join "\n"
+    [city_part, street, "#{zip} #{city}"].compact.join "\n"
   end
 
   def full_name
