@@ -19,7 +19,9 @@ Rails.application.routes.draw do
 
   resources :users,      except: :edit
   resources :locations,  except: :edit
-  resources :teachers,   except: :edit
+  resources :teachers,   except: :edit do
+    get :seminars, on: :member
+  end
   resources :seminars do
     get :attendees, on: :member
     get :pras,      on: :member

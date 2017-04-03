@@ -1,0 +1,25 @@
+response.headers['Content-Disposition'] = %Q(attachment; filename="Seminarliste-#{@teacher.name}.xlsx")
+
+wb = xlsx_package.workbook
+
+wb.add_worksheet(name: 'Seminarliste') do |sheet|
+  sheet.add_row ['Referent', @teacher.name]
+  sheet.add_row ['exportiert am', l(Date.current)]
+
+  sheet.add_style 'A1:A2', b: true
+
+  sheet.add_row
+  sheet.add_row
+
+  sheet.add_row %w(Nr. Thema Tag Teilnehmer)
+  sheet.add_style 'A5:D5', b: true
+  sheet.add_border 'A5:D5'
+
+  @seminars.each_with_index do |seminar, index|
+    line = index + 6
+    sheet.add_row [ seminar.number, seminar.title, ldate(seminar.date), seminar.attendees.count ]
+    sheet.add_border "A#{line}:D#{line}"
+  end
+
+  # sheet.column_widths 12, 18, 18, 30, 20
+end

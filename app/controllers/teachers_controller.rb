@@ -1,7 +1,7 @@
 class TeachersController < ApplicationController
   before_action :authenticate_user!
   after_action :verify_authorized
-  before_action :set_teacher, only: [:show, :update, :destroy]
+  before_action :set_teacher, only: [:show, :update, :destroy, :seminars]
 
   def index
     authorize Teacher
@@ -38,6 +38,10 @@ class TeachersController < ApplicationController
   def destroy
     @teacher.destroy
     redirect_to teachers_url, notice: t(:destroyed, model: Teacher.model_name.human)
+  end
+
+  def seminars
+    @seminars = @teacher.seminars.order(:date)
   end
 
   private
