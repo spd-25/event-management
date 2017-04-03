@@ -27,6 +27,8 @@ class SeminarsController < ApplicationController
       @first_of_month = Date.new @year, @month
       @events         = Event.order(:date).includes(:seminar).where('date between ? and ?', @first_of_month, @first_of_month.end_of_month)
       @seminars       = Seminar.where(id: @events.select(:seminar_id))
+    when 'canceled'
+      @seminars       = Seminar.where(canceled: true).page(params[:page])
     end
   end
 
