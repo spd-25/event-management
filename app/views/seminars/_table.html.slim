@@ -18,7 +18,9 @@
               = seminar.title
               br
               small.text-muted = seminar.subtitle
-            td = render 'seminars/status', seminar: seminar
+            td
+              - if seminar.canceled
+                span.label.label-info< ausgefallen
             td.icons
               => fa_icon 'users', text: seminar.attendees.booked.count
               => fa_icon 'calendar', text: seminar.events.count
