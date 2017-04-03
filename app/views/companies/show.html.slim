@@ -5,36 +5,45 @@
 
 = render 'form'
 
-- count = @company.attendees.count
-h4 #{count} #{Attendee.model_name.human count: count}
+.row
+  .col-md-3
+    .panel.panel-default
+      .panel-heading Kategorien
+      ul.list-group
+        - @company.categories.uniq.map { |cat| cat.parent? ? cat : cat.category }.uniq.sort_by(&:number).each do |cat|
+          li.list-group-item = link_to cat.display_name, cat
 
-.table-responsive
-  table.standard-table.table-clickable.table-no-border.seminars
-    thead
-      tr
-        th = Booking.human_attribute_name(:seminar)
-        th = Booking.human_attribute_name(:date)
-        th = Booking.human_attribute_name(:attendees)
-        th = Booking.human_attribute_name(:contact_email)
-        /th
-        /th
-    tbody
-      - @company.attendees.order(created_at: :desc).each do |attendee|
-        - seminar = attendee.seminar
-        /- invoice = attendee.invoice
-        tr data = {url: url_for(attendee)} class=('warning' if attendee.canceled?)
-          td title=seminar.title
-            = link_to seminar.number, seminar
-          td = seminar.dates.map { |d| ldate d }.join(', ')
-          td = attendee.name
-          td = attendee.contact_email
-          /td
-            - if invoice
-              = link_to "Rechnung #{invoice.number}", invoice
-            /- else
-              = link_to 'Rechnung schreiben', new_invoice_path(booking_id: booking.id), class: 'btn btn-primary btn-xs'
-          /td
-            - if booking.canceled?
-              |  storniert
-            - else
-              = link_to 'Stornieren', booking_cancel_url(booking), class: 'btn btn-danger btn-xs'
+  .col-md-9
+    - count = @company.attendees.count
+    h4 #{count} #{Attendee.model_name.human count: count}
+
+    .table-responsive
+      table.standard-table.table-clickable.table-no-border.seminars
+        thead
+          tr
+            th = Booking.human_attribute_name(:seminar)
+            th = Booking.human_attribute_name(:date)
+            th = Booking.human_attribute_name(:attendees)
+            th = Booking.human_attribute_name(:contact_email)
+            /th
+            /th
+        tbody
+          - @company.attendees.order(created_at: :desc).each do |attendee|
+            - seminar = attendee.seminar
+            /- invoice = attendee.invoice
+            tr data = {url: url_for(attendee)} class=('warning' if attendee.canceled?)
+              td title=seminar.title
+                = link_to seminar.number, seminar
+              td = seminar.dates.map { |d| ldate d }.join(', ')
+              td = attendee.name
+              td = attendee.contact_email
+              /td
+                - if invoice
+                  = link_to "Rechnung #{invoice.number}", invoice
+                /- else
+                  = link_to 'Rechnung schreiben', new_invoice_path(booking_id: booking.id), class: 'btn btn-primary btn-xs'
+              /td
+                - if booking.canceled?
+                  |  storniert
+                - else
+                  = link_to 'Stornieren', booking_cancel_url(booking), class: 'btn btn-danger btn-xs'

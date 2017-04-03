@@ -5,6 +5,9 @@ class Company < ApplicationRecord
   has_many :attendees, inverse_of: :company, dependent: :restrict_with_error
   has_many :invoices, inverse_of: :company, dependent: :restrict_with_error
 
+  has_many :seminars, through: :attendees
+  has_many :categories, through: :seminars
+
   validates :name, presence: true
 
   multisearchable against: [:name, :name2, :city, :city_part]
