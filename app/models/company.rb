@@ -1,9 +1,9 @@
 class Company < ApplicationRecord
   include PgSearch
 
-  has_many :bookings, inverse_of: :company
-  has_many :attendees, inverse_of: :company
-  has_many :invoices, inverse_of: :company
+  has_many :bookings, inverse_of: :company, dependent: :restrict_with_error
+  has_many :attendees, inverse_of: :company, dependent: :restrict_with_error
+  has_many :invoices, inverse_of: :company, dependent: :restrict_with_error
 
   validates :name, presence: true
 

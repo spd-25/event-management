@@ -8,6 +8,7 @@ de:
   created: "%{model} gespeichert."
   updated: "%{model} gespeichert."
   destroyed: "%{model} gelöscht."
+  not_destroyed: "%{model} konnte nicht gelöscht werden. %{message}"
   confirm_delete: "%{model} löschen?"
   attendees:
     cancel:

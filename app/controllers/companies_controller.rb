@@ -37,7 +37,13 @@ class CompaniesController < ApplicationController
 
   def destroy
     @company.destroy
-    redirect_to companies_url, notice: t(:destroyed, model: Company.model_name.human)
+    if @company.destroyed?
+      redirect_to companies_url, notice: t(:destroyed, model: Company.model_name.human)
+    else
+      msg = 'Es existieren Buchungen / Teilnehmer.'
+      msg = t(:not_destroyed, model: Company.model_name.human, message: msg)
+      redirect_to @company, alert: msg
+    end
   end
 
   private
