@@ -4,7 +4,7 @@ class TeacherPolicy < ApplicationPolicy
   end
 
   def seminars?
-    user.admin?
+    user.editor?
   end
   
   class Scope < Scope
