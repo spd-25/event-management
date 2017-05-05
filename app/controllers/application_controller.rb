@@ -22,6 +22,6 @@ class ApplicationController < ActionController::Base
   end
 
   def page_not_found
-    render 'page_not_found'
+    render 'page_not_found', status: :not_found
   end
 end
