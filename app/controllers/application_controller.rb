@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
 
   include Pundit
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+  rescue_from ActiveRecord::RecordNotFound , with: :page_not_found
 
   before_action :set_paper_trail_whodunnit
 
@@ -18,5 +19,9 @@ class ApplicationController < ActionController::Base
   # Overwriting the sign_out redirect path method
   def after_sign_out_path_for(resource_or_scope)
     seminare_visitor_path
+  end
+
+  def page_not_found
+    render 'page_not_found'
   end
 end
