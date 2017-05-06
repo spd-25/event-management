@@ -1,67 +1,96 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>The page you were looking for doesn't exist (404)</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <style>
-  body {
-    background-color: #EFEFEF;
-    color: #2E2F30;
-    text-align: center;
-    font-family: arial, sans-serif;
-    margin: 0;
-  }
-
-  div.dialog {
-    width: 95%;
-    max-width: 33em;
-    margin: 4em auto 0;
-  }
-
-  div.dialog > div {
-    border: 1px solid #CCC;
-    border-right-color: #999;
-    border-left-color: #999;
-    border-bottom-color: #BBB;
-    border-top: #B00100 solid 4px;
-    border-top-left-radius: 9px;
-    border-top-right-radius: 9px;
-    background-color: white;
-    padding: 7px 12% 0;
-    box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
-  }
-
-  h1 {
-    font-size: 100%;
-    color: #730E15;
-    line-height: 1.5em;
-  }
-
-  div.dialog > p {
-    margin: 0 0 1em;
-    padding: 1em;
-    background-color: #F7F7F7;
-    border: 1px solid #CCC;
-    border-right-color: #999;
-    border-left-color: #999;
-    border-bottom-color: #999;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
-    border-top-color: #DADADA;
-    color: #666;
-    box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
-  }
-  </style>
-</head>
-
-<body>
-  <!-- This file lives in public/404.html -->
-  <div class="dialog">
-    <div>
-      <h1>The page you were looking for doesn't exist.</h1>
-      <p>You may have mistyped the address or the page may have moved.</p>
+  <head>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Paritätisches Bildungswerk Sachsen-Anhalt</title>
+    <meta name="description"/>
+    <meta content="parität, bildung, bildungswerk, sachsen, anhalt, paritätisches, " name="keywords"/>
+    <link rel="stylesheet" media="all" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+  </head>
+  <body>
+    <div class="container" id="main">
+      <header class="hidden-print">
+        <a href="/"><img alt="zur Startseite" src="/old_site/parit.png"/></a>
+      </header>
+      <div class="hidden-print">
+        <div id="hauptmenu">
+          <div class="linki"><a href="http://bildungswerk-lsa.de/index.php?article_id=22"> WIR ÜBER UNS</a></div>
+          <div class="linki linki2"><a href="http://bildungswerk-lsa.de/index.php?article_id=42">TEAM</a></div>
+          <div class="linki linki2"><a href="/seminare">FORT- &amp; WEITERBILDUNG</a></div>
+          <div class="linki linki2"><a href="http://bildungswerk-lsa.de/index.php?article_id=44">AUSBILDUNG</a></div>
+        </div>
+        <style type="text/css">
+          #hauptmenu { width: 100%; background-color: #f0dfc1; background-image: url(/old_site/menu1.gif); background-repeat: repeat-x; min-height: 25px }
+          #hauptmenu .linki { float: left; margin-left: 26px; font-size: .85em; text-align: left }
+          #hauptmenu .linki a { display: block; width: 170px; background-color: #0069aa; background-image: url(/old_site/menu2.gif); background-repeat: repeat-x; min-height: 18px; color: #fff; text-decoration: none; padding-top: 7px; padding-left: 5px; padding-bottom: 7px }
+          #hauptmenu .linki a:link, #hauptmenu .linki a:visited { color: #fff; text-decoration: none }
+          #hauptmenu .linki a:focus, #hauptmenu .linki a:hover, #hauptmenu .linki a:active { color: #0067aa; text-decoration: none; background-color: #fac052; background-image: url(/old_site/menu3.gif); background-repeat: repeat-x }
+          #hauptmenu .linki.linki2 { margin-left: 12px }
+        </style>
+      </div>
+      <div class="hidden-print">
+        <div class="row">
+          <div class="col-md-6">
+            <div style="display: inline-block">
+              <div class="crop"><img src="/old_site/hintergrund.jpg"/></div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="map-link"><a
+                href="http://maps.google.de/maps?f=d&amp;amp;source=s_d&amp;amp;saddr=&amp;amp;daddr=Wiener+Stra%C3%9Fe+2,+39112+Magdeburg&amp;amp;hl=de&amp;amp;geocode=Cca_koeBjhhbFRAiGwMdrEyxACl_ihuI6fWlRzGipCqJexAt5w&amp;amp;mra=mi&amp;amp;sll=52.10984,11.6195&amp;amp;sspn=0.008856,0.027874&amp;amp;g=wiener+stra%C3%9Fe+2+magdeburg&amp;amp;ie=UTF8&amp;amp;z=16"
+                target="_blank"><img
+                alt="Per Mausklick die Anfahrt zum Bildungswerk berechnen lassen"
+                src="/old_site/anfahrt.jpg"
+                title="Per Mausklick die Anfahrt zum Bildungswerk berechnen lassen"/></a></div>
+          </div>
+          <div class="col-md-3">
+            <div id="address"><p><strong>Paritätisches Bildungswerk</strong></p>
+              <p>Wiener Straße 2</p>
+              <p>39112 Magdeburg</p>
+              <p>Tel.: (0391) 62 93 313</p>
+              <p>Fax: (0391) 62 93 596 313</p>
+              <p>bildungswerk@paritaet-lsa.de</p></div>
+          </div>
+        </div>
+        <style type="text/css">
+          #address { color: #034991; background-color: #fac052; padding: 10px; height: 193px }
+          #address p { margin-bottom: 0 }
+        </style>
+      </div>
+      <div class="content">
+        <div class="row hidden-print">
+          <div class="col-md-6"></div>
+          <div class="col-md-6 search">
+            <form action="https://pbw-md.de/suche" class="form">
+              <div class="form-group">
+                <input class="form-control" name="q" placeholder="Suche" type="text"/>
+              </div>
+            </form>
+          </div>
+        </div>
+        <h1>Das Seminar konnte nicht gefunden werden</h1>
+        <p>Zur&uuml;ck zur <a href="https://pbw-md.de/">Startseite</a></p></div>
+      <div class="hidden-print">
+        <div class="foot"><a href="http://bildungswerk-lsa.de/index.php?article_id=50"> Karriere</a>
+          |<a href="http://bildungswerk-lsa.de/index.php?article_id=8"> Sitemap</a> |
+          <a href="http://bildungswerk-lsa.de/index.php?article_id=13"> Kontakt</a> |<a
+              href="http://bildungswerk-lsa.de/index.php?article_id=7"> Impressum</a> |<a
+              href="http://bildungswerk-lsa.de/index.php?article_id=27"> AGBs</a> |<a
+              href="http://bildungswerk-lsa.de/index.php?article_id=1"> Startseite</a> | <a
+              href="https://pbw-md.de/users/sign_in">Anmelden</a></div>
+        <style type="text/css">
+          .foot { background-color: #eee; clear: both; text-align: right; color: #9e9e9e; padding-right: 12px; padding-bottom: 3px; margin-top: 50px }
+          .foot a { color: #9e9e9e }
+          .foot a:link, .foot a:visited { color: #9e9e9e; text-decoration: none }
+          .foot a:focus, .foot a:hover, .foot a:active { color: #000; text-decoration: underline }
+        </style>
+      </div>
     </div>
-    <p>If you are the application owner check the logs for more information.</p>
-  </div>
-</body>
+  </body>
+  <style type="text/css">body { background: #f8b028 url(/old_site/bg.gif) repeat-x }
+  body #main.container { background-color: #f2f2f2; padding-left: 0; padding-right: 0 }
+  body #main.container .content { padding: 20px }
+  @media print {
+    body { background: #fff }
+  }</style>
 </html>
