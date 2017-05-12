@@ -1,14 +1,16 @@
+= render 'seminars/index/header'
+
 section
   .col-md-1
     ul.nav.nav-pills.nav-stacked.years
       - @years.each do |year, count|
         - year = year.to_i
-        li class=('active' if @year == year) = link_to year, seminars_path(by: 'calendar', year: year)
+        li class=('active' if @year == year) = link_to year, calendar_seminars_path(year: year)
 
     ul.nav.nav-pills.nav-stacked.months
       - I18n.t('date.abbr_month_names').each.with_index do |month, index|
         - if index != 0
-          li class=('active' if @month == index) = link_to month, seminars_path(by: 'calendar', year: @year, month: index)
+          li class=('active' if @month == index) = link_to month, calendar_seminars_path(year: @year, month: index)
   .col-md-11
     table.table.table-condensed.table-bordered
       thead
@@ -22,7 +24,7 @@ section
           th Samstag
           th Sonntag
       tbody
-        - grouped_events = @events.all.group_by { |ev| [ev.date.cweek, ev.date] }
+        - grouped_events = @events.all.group_by {|ev| [ev.date.cweek, ev.date]}
         - days = (@first_of_month..@first_of_month.end_of_month).to_a
         - days.group_by(&:cweek).each do |week, days|
           tr

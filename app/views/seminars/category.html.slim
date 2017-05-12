@@ -1,3 +1,5 @@
+= render 'seminars/index/header'
+
 section
   .col-md-3
     ul.nav.nav-pills.nav-stacked.categories
@@ -5,27 +7,20 @@ section
         - active = @category.in?(category.categories + [category])
         li class=('active' if active)
           - label = "#{category.display_name} (#{category.all_seminars.count})"
-          = link_to label, seminars_url(category_id: category.id), title: label
+          = link_to label, category_seminars_url(category), title: label
           - if active
             ul.nav.nav-pills.nav-stacked
               - category.categories.order(:number).each do |sub_cat|
                 - label = "#{sub_cat.display_name} (#{sub_cat.seminars.count})"
                 li class=('active' if @category == sub_cat)
-                  = link_to label, seminars_url(category_id: sub_cat.id), title: label
+                  = link_to label, category_seminars_url(sub_cat), title: label
 
   .col-md-9
-    /.row
-      .col-md-6
-
-      .col-md-6
-        .pull-right = paginate @seminars
-
     = render 'table', seminars: @seminars, header: false
     .row: .col-md-12: .pull-right = paginate @seminars
 
 sass:
   ul.categories
-    /*white-space: nowrap*/
     overflow: hidden
     ul
       margin: 2px 0 7px 20px

@@ -1,0 +1,17 @@
+- page_title_for @seminars
+.row
+  .col-md-9.col-md-offset-3
+    .page-header
+      h2
+        - count = @seminars.count
+        - title = "#{count} #{Seminar.model_name.human count: count}"
+        - if @seminar.respond_to?(:total_count) && @seminars.total_count != count
+          - title += " (#{@seminars.total_count})"
+        = icon_for Seminar, text: title
+        .buttons = new_link new_seminar_path
+
+ul.nav.nav-tabs
+  li class=('active' if params[:action] == 'category') = link_to 'nach Themen', category_seminars_path
+  li class=('active' if params[:action] == 'date')     = link_to 'nach Monat',      date_seminars_path
+  li class=('active' if params[:action] == 'calendar') = link_to 'Kalender',    calendar_seminars_path
+  li class=('active' if params[:action] == 'canceled') = link_to 'Ausgefallen', canceled_seminars_path

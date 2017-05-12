@@ -23,8 +23,11 @@ Rails.application.routes.draw do
     get :seminars, on: :member
   end
   resources :seminars do
-    get :attendees, on: :member
-    get :pras,      on: :member
+    get :attendees, :pras, on: :member
+    collection do
+      get :date, :calendar, :canceled
+      get 'category(/:id)', action: :category, as: :category
+    end
   end
   resources :categories, except: :edit
   resources :bookings,   only: %i(show new create)
