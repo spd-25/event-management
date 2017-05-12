@@ -10,8 +10,12 @@
         = icon_for Seminar, text: title
         .buttons = new_link new_seminar_path
 
-ul.nav.nav-tabs
+ul.nav.nav-tabs.seminar-views
   li class=('active' if params[:action] == 'category') = link_to 'nach Themen', category_seminars_path
   li class=('active' if params[:action] == 'date')     = link_to 'nach Monat',      date_seminars_path
   li class=('active' if params[:action] == 'calendar') = link_to 'Kalender',    calendar_seminars_path
   li class=('active' if params[:action] == 'canceled') = link_to 'Ausgefallen', canceled_seminars_path
+
+sass:
+  ul.seminar-views
+    margin-bottom: 20px

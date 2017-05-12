@@ -27,13 +27,15 @@ class Seminar < ApplicationRecord
   default_scope { where archived: false }
 
   scope :published, -> { where published: true }
+  scope :canceled,  -> { where canceled:  true }
   scope :bookable,  -> { where 'date >= :date', date: Date.current }
-  scope :by_date, -> (year: Date.current.year, month: nil) {
-    if month
-      where(year: year).where('extract(month from date) = ?', month)
+  scope :by_month, -> (month) {
+    (
+    if month.zero?
+      where(date: nil)
     else
-      where(year: year, date: nil)
-    end
+      where('extract(month from date) = ?', month)
+    end)
   }
 
   has_paper_trail

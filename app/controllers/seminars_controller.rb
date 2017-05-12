@@ -13,32 +13,29 @@ class SeminarsController < ApplicationController
     category_id = params[:id]
     redirect_to(category_seminars_url(Category.cat_parents.first)) && return unless category_id
     @category = Category.find(category_id)
-    @seminars = @category.all_seminars.order(:number).page(params[:page])
-                         .includes(:teachers, :events, :location).all
+    @seminars = @category.all_seminars.where(year: current_catalog.year)
+      .order(:number).includes(:teachers, :events, :location).page(params[:page]).all
   end
 
   def date
     authorize Seminar
-    @years    = Seminar.group(:year).count.sort.to_h
-    @year     = (params[:year] || Date.current.year).to_i
-    @month    = params[:month]
-    @seminars = Seminar.order(:date).by_date year: @year, month: @month
-    @seminars = @seminars.includes(:teachers, :events, :location).all
+    @month    = params[:month].to_i
+    @seminars = current_catalog.seminars.order(:date).by_month(@month)
+      .includes(:teachers, :events, :location).all
   end
 
   def calendar
     authorize Seminar
-    @years          = Seminar.group(:year).count.sort.to_h
-    @year           = (params[:year] || Date.current.year).to_i
-    @month          = (params[:month] || Date.current.month).to_i
-    @first_of_month = Date.new @year, @month
-    @events         = Event.order(:date).includes(:seminar).where('date between ? and ?', @first_of_month, @first_of_month.end_of_month)
-    @seminars       = Seminar.where(id: @events.select(:seminar_id))
+    @month         = (params[:month] || Date.current.month).to_i
+    first_of_month = Date.new current_catalog.year, @month
+    @days_of_month = first_of_month..first_of_month.end_of_month
+    @events        = Event.order(:date).joins(:seminar).includes(:seminar).where(date: @days_of_month)
+    @seminars      = Seminar.where(id: @events.select(:seminar_id))
   end
 
   def canceled
     authorize Seminar
-    @seminars = Seminar.where(canceled: true).page(params[:page])
+    @seminars = current_catalog.seminars.canceled.page(params[:page])
   end
 
   def show

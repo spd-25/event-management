@@ -1,23 +1,11 @@
 = render 'seminars/index/header'
 
-section
+.row
   .col-md-2
-    ul.nav.nav-pills.nav-stacked.years
-      - @years.each do |year, count|
-        - year = year.to_i
-        li class=('active' if @year == year) = link_to year, date_seminars_path(year: year)
-
-    ul.nav.nav-pills.nav-stacked.months
+    ul.nav.nav-pills.nav-stacked
       - I18n.t('date.month_names').each.with_index do |month, index|
-        - if index == 0
-          li class=('active' if @month.nil?) = link_to 'Ohne Termin', date_seminars_path(year: @year)
-        - else
-          li class=('active' if @month == index) = link_to month, date_seminars_path(year: @year, month: index)
+        - label = month || 'Ohne Termin'
+        li class=('active' if @month == index) = link_to label, date_seminars_path(month: index)
   .col-md-10
     = render 'seminars/table', seminars: @seminars, header: false
 
-sass:
-  ul.months
-    margin: 2px 0 7px 20px
-    a
-      padding: 3px 8px
