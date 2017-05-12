@@ -1,12 +1,13 @@
 class Seminar < ApplicationRecord
   include PgSearch
 
+  belongs_to :catalog, foreign_key: :year, primary_key: :year, inverse_of: :seminars
   has_and_belongs_to_many :teachers
   has_and_belongs_to_many :categories
   belongs_to :location, optional: true
   has_many :events
   belongs_to :parent,    class_name: 'Seminar', inverse_of: :sub_modules
-  has_many :sub_modules, class_name: 'Seminar', inverse_of: :parent, foreign_key: 'parent_id'
+  has_many :sub_modules, class_name: 'Seminar', inverse_of: :parent, foreign_key: :parent_id
   has_many :bookings
   has_many :attendees, inverse_of: :seminar
   has_many :invoices, inverse_of: :seminar

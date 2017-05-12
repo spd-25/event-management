@@ -36,7 +36,7 @@ de:
       error: Anmeldung konnte nicht gespeichert werden. Bitte überprüfen Sie die markierten Felder.
     show:
       error: Anmeldung konnte nicht gespeichert werden. Bitte überprüfen Sie die markierten Felder.
-    icon: book
+    icon: file-text-o
     created: Sie haben sich erfolgreich für das Seminar angemeldet. Sie sollten in wenigen Minuten eine Bestätigung per E-Mail erhalten.
     schools:
       - Aschersleben
@@ -65,6 +65,14 @@ de:
     schools:
       - Aschersleben
       - Drübeck
+  catalogs:
+    icon: book
+    single:
+      title: "%{id}"
+    form:
+      error: Bildungskalender konnte nicht gespeichert werden.
+    new:
+      title: Bildungskalender anlegen
   categories:
     single:
       title: "%{id}"

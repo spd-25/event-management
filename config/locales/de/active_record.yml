@@ -33,12 +33,16 @@ de:
     updated_at:  Bearbeitet
     zip:         PLZ
     location:    Veranstaltungsort
+    year:        Jahr
   activerecord:
     models:
       attendee: Teilnehmer
       booking:
         one: Anmeldung
         other: Anmeldungen
+      catalog:
+        one: Bildungskalender
+        other: Bildungskalender
       category:
         one: Thema
         other: Themen

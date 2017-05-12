@@ -33,5 +33,8 @@ Rails.application.routes.draw do
   end
   resources :invoices,   except: :edit
   resources :companies,  except: :edit
+  resources :catalogs do
+    get :make_current, on: :member
+  end
 
 end
