@@ -1,7 +1,7 @@
 module ApplicationHelper
 
-  def lines_for(values)
-    values.select(&:present?).join('<br>').html_safe
+  def lines_for(values, delimiter: '<br>')
+    values.select(&:present?).join(delimiter).html_safe
   end
 
   def gmaps_link(obj)

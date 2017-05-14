@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170512133840) do
+ActiveRecord::Schema.define(version: 20170512184747) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -80,6 +80,7 @@ ActiveRecord::Schema.define(version: 20170512133840) do
     t.string  "name"
     t.integer "category_id"
     t.string  "number"
+    t.integer "year"
     t.index ["category_id"], name: "index_categories_on_category_id", using: :btree
     t.index ["name"], name: "index_categories_on_name", using: :btree
     t.index ["number"], name: "index_categories_on_number", using: :btree

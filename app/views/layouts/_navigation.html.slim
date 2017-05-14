@@ -1,6 +1,6 @@
 - if user_signed_in?
   nav.navbar.navbar-inverse.navbar-fixed-top
-    .container
+    .container-fluid
       .navbar-header
         button.navbar-toggle[type='button' data-toggle='collapse' data-target='.navbar-collapse']
           span.sr-only Toggle navigation
@@ -8,6 +8,7 @@
           span.icon-bar
           span.icon-bar
         = link_to 'Start', root_path, class: 'navbar-brand', tabindex: -1
+        /ul.nav.navbar-nav
         /= link_to title_for_model(Seminar, with_icon: true), seminars_url, class: 'navbar-brand', tabindex: -1
       .collapse.navbar-collapse
         ul.nav.navbar-nav
@@ -38,7 +39,8 @@
         ul.nav.navbar-nav.navbar-right
           = navbar_dropdown current_catalog.title do
             - Catalog.all.each do |catalog|
-              li = link_to catalog.year, [catalog, action: :make_current]
+              li class=('active' if current_catalog == catalog)
+                = link_to catalog.year, [catalog, action: :make_current]
           li
             form.navbar-form.navbar-right role="search" action=search_url
               .form-group

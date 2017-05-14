@@ -5,7 +5,9 @@ class InvoicesController < ApplicationController
 
   def index
     authorize Invoice
-    @invoices = Invoice.order(number: :desc).page(params[:page]).all
+    @month     = (params[:month] || Date.current.month).to_i
+    date_range = current_catalog.date_range @month
+    @invoices  = Invoice.where(date: date_range).order(number: :desc).page(params[:page]).all
   end
 
   def show
@@ -20,11 +22,13 @@ class InvoicesController < ApplicationController
 
   def new
     authorize Invoice
-    options = params[:attendee_id].present? ?
-      { attendee: find_attendee } :
-      { company: find_company, seminar: find_seminar }
+    options =
+      if params[:attendee_id].present?
+        { attendee: find_attendee }
+      else
+        { company: find_company, seminar: find_seminar }
+      end
     @invoice = InvoiceGenerator.new(options).invoice
-    puts
   end
 
   def create

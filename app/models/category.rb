@@ -2,6 +2,9 @@ class Category < ApplicationRecord
 
   include PgSearch
 
+  validates :year, presence: true
+
+  belongs_to :catalog, foreign_key: :year, primary_key: :year, inverse_of: :categories
   belongs_to :category, optional: true, inverse_of: :categories
   has_many :categories, inverse_of: :category
   has_and_belongs_to_many :seminars

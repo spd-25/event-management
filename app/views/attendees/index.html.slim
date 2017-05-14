@@ -3,45 +3,53 @@
   /= new_link new_attendee_path
   h2 = icon_for(Booking, text: "#{@attendees.total_count} #{Booking.model_name.human count: 2}")
 
-= paginate @attendees
+.row
+  .col-md-2
+    ul.nav.nav-pills.nav-stacked
+      - I18n.t('date.month_names').each.with_index do |month, index|
+        - if index > 0
+          li class=('active' if @month == index) = link_to month, attendees_url(month: index)
+  .col-md-10
 
-.table-responsive
-  table.standard-table.table-clickable
-    thead
-      tr
-        th
-        th = Booking.human_attribute_name(:date)
-        th = Booking.human_attribute_name(:seminar)
-        th = Booking.human_attribute_name(:attendees)
-        th = Booking.human_attribute_name(:contact_email)
-        th Firma / Arbeitgeber
-        th
-        /th
-    tbody
-      - @attendees.each do | attendee |
-        /- invoice = attendee.invoice
-        - booking = attendee.booking
-        tr data = {url: url_for(attendee)} class=('warning' if attendee.canceled?)
-          td = fa_icon attendee.booking.attendees.count == 1 ? 'user' : 'users'
-          td = ldate attendee.created_at, format: :short2
-          td = link_to attendee.seminar.number, attendee.seminar
-          td = attendee.name
-          td = booking.contact_email
-          td
-            - if attendee.company
-              = link_to attendee.company&.name, attendee.company
-            - else
-              = [booking.company_title, booking.invoice_title].select(&:present?).first
-          /td
-            - if invoice
-              => pdf_link invoice_path(invoice, format: :pdf), text: "Rechnung #{invoice.number}"
-              => link_to fa_icon('pencil'), invoice
-            - else
-              = link_to 'Rechnung schreiben', new_invoice_path(booking_id: booking.id), class: 'btn btn-primary btn-xs'
-          td
-            - if attendee.canceled?
-              |  storniert
-            - else
-              = link_to 'Stornieren', attendee_cancel_url(attendee), class: 'btn btn-danger btn-xs'
+    = paginate @attendees
 
-= paginate @attendees
+    .table-responsive
+      table.standard-table.table-clickable
+        thead
+          tr
+            th
+            th = Booking.human_attribute_name(:date)
+            th = Booking.human_attribute_name(:seminar)
+            th = Booking.human_attribute_name(:attendees)
+            th = Booking.human_attribute_name(:contact_email)
+            th Firma / Arbeitgeber
+            th
+            /th
+        tbody
+          - @attendees.each do | attendee |
+            /- invoice = attendee.invoice
+            - booking = attendee.booking
+            tr data = {url: url_for(attendee)} class=('warning' if attendee.canceled?)
+              td = fa_icon attendee.booking.attendees.count == 1 ? 'user' : 'users'
+              td = ldate attendee.created_at, format: :short2
+              td = link_to attendee.seminar.number, attendee.seminar
+              td = attendee.name
+              td = booking.contact_email
+              td
+                - if attendee.company
+                  = link_to attendee.company&.name, attendee.company
+                - else
+                  = [booking.company_title, booking.invoice_title].select(&:present?).first
+              /td
+                - if invoice
+                  => pdf_link invoice_path(invoice, format: :pdf), text: "Rechnung #{invoice.number}"
+                  => link_to fa_icon('pencil'), invoice
+                - else
+                  = link_to 'Rechnung schreiben', new_invoice_path(booking_id: booking.id), class: 'btn btn-primary btn-xs'
+              td
+                - if attendee.canceled?
+                  |  storniert
+                - else
+                  = link_to 'Stornieren', attendee_cancel_url(attendee), class: 'btn btn-danger btn-xs'
+
+    = paginate @attendees

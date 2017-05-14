@@ -5,7 +5,7 @@ class CategoriesController < ApplicationController
 
   def index
     authorize Category
-    @categories = Category.cat_parents.order(:number)
+    @categories = current_catalog.categories.cat_parents.order(:number)
   end
 
   def show
@@ -13,7 +13,7 @@ class CategoriesController < ApplicationController
 
   def new
     authorize Category
-    @category = Category.new
+    @category = Category.new year: current_catalog.year
   end
 
   def create
@@ -44,12 +44,14 @@ class CategoriesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_category
-    @category = Category.find params[:id]
+    @category = current_catalog.categories.find params[:id]
     authorize @category
   end
 
   # Only allow a trusted parameter "white list" through.
   def category_params
-    params.require(:category).permit(:name, :number, :category_id)
+    params.require(:category).permit(:name, :number, :category_id).tap do |p|
+      p[:year] = current_catalog.year
+    end
   end
 end

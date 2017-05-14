@@ -3,7 +3,7 @@
 .row
   .col-md-3
     ul.nav.nav-pills.nav-stacked.categories
-      - Category.cat_parents.order(:number).each do |category|
+      - current_catalog.categories.cat_parents.order(:number).each do |category|
         - active = @category.in?(category.categories + [category])
         li class=('active' if active)
           - label = "#{category.display_name} (#{category.all_seminars.where(year: current_catalog.year).count})"

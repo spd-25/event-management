@@ -10,11 +10,10 @@ class SeminarsController < ApplicationController
 
   def category
     authorize Seminar
-    category_id = params[:id]
-    redirect_to(category_seminars_url(Category.cat_parents.first)) && return unless category_id
-    @category = Category.find(category_id)
-    @seminars = @category.all_seminars.where(year: current_catalog.year)
-      .order(:number).includes(:teachers, :events, :location).page(params[:page]).all
+    categories = current_catalog.categories
+    @category = categories.find_by(id: params[:id]) || categories.cat_parents.first
+    @seminars = @category ? @category.all_seminars : current_catalog.seminars
+    @seminars = @seminars.order(:number).includes(:teachers, :events, :location).page(params[:page]).all
   end
 
   def date
