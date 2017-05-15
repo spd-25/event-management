@@ -1,4 +1,5 @@
 = simple_form_for(@category) do |f|
+  = f.input :parent_id, as: :hidden
   - if @category.errors.any?
     .alert.alert-danger.alert-dismissable
       button.close type="button" data-dismiss="alert"
@@ -6,10 +7,12 @@
         span.sr-only Close
       h4 = t('.error')
   section
-    .col-md-6 = f.association :category
-    .col-md-1 = f.input :number
-    .col-md-5 = f.input :name
-
+    .col-md-3 = f.input :number
+    .col-md-9 = f.input :name
+  .row
+    .col-md-3
+      = f.input :position, disabled: true
+      = f.input :year, disabled: true
   section.action-buttons
     .col-md-12
       .pull-right

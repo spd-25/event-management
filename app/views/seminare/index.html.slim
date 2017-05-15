@@ -17,7 +17,7 @@
       /h4 Unterthema
       - if @category
         ul.nav.nav-pills.nav-stacked
-          - parent.categories.order(:number, :name).each do |category|
+          - parent.children.each do |category|
             li class=('active' if @category == category)
               = link_to seminare_visitor_path(category_id: category.to_param) do
                 .cat-name

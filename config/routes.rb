@@ -29,7 +29,9 @@ Rails.application.routes.draw do
       get 'category(/:id)', action: :category, as: :category
     end
   end
-  resources :categories, except: :edit
+  resources :categories, except: :edit do
+    put :move, on: :member
+  end
   resources :bookings,   only: %i(show new create)
   resources :attendees,  only: %i(index show update destroy) do
     get :cancel

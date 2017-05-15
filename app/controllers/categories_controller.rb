@@ -1,11 +1,11 @@
 class CategoriesController < ApplicationController
   before_action :authenticate_user!
   after_action :verify_authorized
-  before_action :set_category, only: [:show, :update, :destroy]
+  before_action :set_category, only: [:show, :update, :destroy, :move]
 
   def index
     authorize Category
-    @categories = current_catalog.categories.cat_parents.order(:number)
+    @categories = current_catalog.categories.roots.includes(children: { children: :children })
   end
 
   def show
@@ -13,7 +13,7 @@ class CategoriesController < ApplicationController
 
   def new
     authorize Category
-    @category = Category.new year: current_catalog.year
+    @category = Category.new_child_for params[:parent_id], current_catalog.year
   end
 
   def create
@@ -36,8 +36,18 @@ class CategoriesController < ApplicationController
   end
 
   def destroy
-    @category.destroy
-    redirect_to categories_url, notice: t(:destroyed, model: Category.model_name.human)
+    msg =
+      if @category.children.any?
+        { alert: 'Kategorie hat noch Unterkategorien.' }
+      else
+        @category.destroy ? { notice: 'Navigation link deleted.' } : { alert: 'not possible' }
+      end
+    redirect_to categories_url, msg
+  end
+
+  def move
+    @category.move params[:dir]
+    redirect_to categories_url
   end
 
   private
@@ -50,7 +60,7 @@ class CategoriesController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def category_params
-    params.require(:category).permit(:name, :number, :category_id).tap do |p|
+    params.require(:category).permit(:name, :number, :category_id, :parent_id).tap do |p|
       p[:year] = current_catalog.year
     end
   end
