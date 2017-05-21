@@ -11,7 +11,6 @@ class ApplicationController < ActionController::Base
   before_action :set_paper_trail_whodunnit
 
   helper_method :current_catalog
-  helper_method :set_current_catalog
 
   private
 

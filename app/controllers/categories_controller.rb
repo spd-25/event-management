@@ -61,8 +61,6 @@ class CategoriesController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def category_params
-    params.require(:category).permit(:name, :number, :category_id, :parent_id).tap do |p|
-      p[:year] = current_catalog.year
-    end
+    params.require(:category).permit(:name, :number, :category_id, :parent_id, :year)
   end
 end
