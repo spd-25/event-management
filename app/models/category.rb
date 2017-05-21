@@ -50,6 +50,11 @@ class Category < ApplicationRecord
     "#{n}-#{s}"
   end
 
+  # returns an array of nav entries reflecting the path from the root to this entry
+  def path
+    (parent&.path || []) + [ self ]
+  end
+
   # returns an array of all children's children including the nav entry itself
   def descendants
     [self] + children.includes(:children).flat_map(&:descendants)
@@ -65,17 +70,8 @@ class Category < ApplicationRecord
     end
   end
 
-  def generate_child(**attrs)
-    position = self.class.next_position_for year, id
-    self.class.new attrs.merge( year: year, parent: self, position: position )
-  end
-
-  def self.new_root_for(year, **attrs)
-    new attrs.merge(year: year, position: next_position_for(year, nil))
-  end
-
-  def self.new_child_for(parent_id, year)
-    parent_id ? find(parent_id).generate_child : new_root_for(year)
+  def calculate_position
+    self.position = self.class.next_position_for year, parent_id
   end
 
   private

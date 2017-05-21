@@ -82,7 +82,7 @@ ActiveRecord::Schema.define(version: 20170515200311) do
     t.string  "number"
     t.integer "year"
     t.integer "parent_id"
-    t.integer "position",    default: 1, null: false
+    t.integer "position",    default: 0, null: false
     t.index ["category_id"], name: "index_categories_on_category_id", using: :btree
     t.index ["name"], name: "index_categories_on_name", using: :btree
     t.index ["number"], name: "index_categories_on_number", using: :btree

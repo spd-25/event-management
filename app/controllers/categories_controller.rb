@@ -13,12 +13,13 @@ class CategoriesController < ApplicationController
 
   def new
     authorize Category
-    @category = Category.new_child_for params[:parent_id], current_catalog.year
+    @category = Category.new year: current_catalog.year, parent_id: params[:parent_id]
+    @category.calculate_position
   end
 
   def create
     authorize Category
-    @category = Category.new category_params
+    @category = Category.new(category_params).tap(&:calculate_position)
 
     if @category.save
       redirect_to categories_url, notice: t(:created, model: Category.model_name.human)

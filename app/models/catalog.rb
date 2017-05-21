@@ -7,12 +7,6 @@ class Catalog < ApplicationRecord
 
   default_scope -> { order :year }
 
-  def self.link_seminars
-    pluck('distinct year').each do |year|
-      create! title: "Bildungskalender #{year}", year: year
-    end
-  end
-
   def date_range(month = nil)
     if month
       date = Date.new year, month

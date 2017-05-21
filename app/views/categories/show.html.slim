@@ -3,15 +3,16 @@
   .buttons = delete_link @category
   h2 = title_for @category
 
-- if @category.parent?
-  section
-    - @category.categories.order(:name).each do |category|
-      .col-md-4 = link_to "#{category.name} (#{category.seminars.count})", category
-- else
-  ul.list-unstyled
-    li = link_to "#{@category.category.name} (#{@category.category.seminars.count})", @category.category
 
-
-= render 'form'
+.row
+  .col-md-9
+    ol.breadcrumb
+      - @category.path.each do |cat|
+        li = link_to cat.name, cat
+    = render 'form'
+  .col-md-3
+    - @category.children.each do |category|
+      = link_to "#{category.number} #{category.name} (#{category.seminars.count})", category
+      br
 
 = render 'seminars/table', seminars: @category.seminars
