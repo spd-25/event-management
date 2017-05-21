@@ -4,6 +4,22 @@ class SeminarPolicy < ApplicationPolicy
     super || user.editor?
   end
 
+  def category?
+    index?
+  end
+
+  def date?
+    index?
+  end
+
+  def calendar?
+    index?
+  end
+
+  def canceled?
+    index?
+  end
+
   def show?
     index?
   end

@@ -5,31 +5,36 @@ class SeminarsController < ApplicationController
 
   def index
     authorize Seminar
+    redirect_to action: :category
+  end
 
-    @by = params[:by] || 'category'
+  def category
+    authorize Seminar
+    categories = current_catalog.categories
+    @category = categories.find_by(id: params[:id]) || categories.cat_parents.first
+    @seminars = @category ? @category.all_seminars : current_catalog.seminars
+    @seminars = @seminars.order(:number).includes(:teachers, :events, :location).page(params[:page]).all
+  end
 
-    case @by
-    when 'category'
-      category_id = params[:category_id]
-      @category   = category_id ? Category.find(category_id) : Category.cat_parents.first
-      @seminars   = (@category ? @category.all_seminars : Seminar).order(:number).page(params[:page])
-      @seminars = @seminars.includes(:teachers, :events, :location).all
-    when 'date'
-      @years    = Seminar.group(:year).count.sort.to_h
-      @year     = (params[:year] || Date.current.year).to_i
-      @month    = params[:month]
-      @seminars = Seminar.order(:date).by_date year: @year, month: @month
-      @seminars = @seminars.includes(:teachers, :events, :location).all
-    when 'calendar'
-      @years          = Seminar.group(:year).count.sort.to_h
-      @year           = (params[:year] || Date.current.year).to_i
-      @month          = (params[:month] || Date.current.month).to_i
-      @first_of_month = Date.new @year, @month
-      @events         = Event.order(:date).includes(:seminar).where('date between ? and ?', @first_of_month, @first_of_month.end_of_month)
-      @seminars       = Seminar.where(id: @events.select(:seminar_id))
-    when 'canceled'
-      @seminars       = Seminar.where(canceled: true).page(params[:page])
-    end
+  def date
+    authorize Seminar
+    @month    = params[:month].to_i
+    @seminars = current_catalog.seminars.order(:date).by_month(@month)
+      .includes(:teachers, :events, :location).all
+  end
+
+  def calendar
+    authorize Seminar
+    @month         = (params[:month] || Date.current.month).to_i
+    first_of_month = Date.new current_catalog.year, @month
+    @days_of_month = first_of_month..first_of_month.end_of_month
+    @events        = Event.order(:date).joins(:seminar).includes(:seminar).where(date: @days_of_month)
+    @seminars      = Seminar.where(id: @events.select(:seminar_id))
+  end
+
+  def canceled
+    authorize Seminar
+    @seminars = current_catalog.seminars.canceled.page(params[:page])
   end
 
   def show

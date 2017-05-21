@@ -23,15 +23,23 @@ Rails.application.routes.draw do
     get :seminars, on: :member
   end
   resources :seminars do
-    get :attendees, on: :member
-    get :pras,      on: :member
+    get :attendees, :pras, on: :member
+    collection do
+      get :date, :calendar, :canceled
+      get 'category(/:id)', action: :category, as: :category
+    end
   end
-  resources :categories, except: :edit
+  resources :categories, except: :edit do
+    put :move, on: :member
+  end
   resources :bookings,   only: %i(show new create)
   resources :attendees,  only: %i(index show update destroy) do
     get :cancel
   end
   resources :invoices,   except: :edit
   resources :companies,  except: :edit
+  resources :catalogs do
+    get :make_current, on: :member
+  end
 
 end

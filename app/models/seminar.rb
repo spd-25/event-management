@@ -1,12 +1,13 @@
 class Seminar < ApplicationRecord
   include PgSearch
 
+  belongs_to :catalog, foreign_key: :year, primary_key: :year, inverse_of: :seminars
   has_and_belongs_to_many :teachers
   has_and_belongs_to_many :categories
   belongs_to :location, optional: true
   has_many :events
   belongs_to :parent,    class_name: 'Seminar', inverse_of: :sub_modules
-  has_many :sub_modules, class_name: 'Seminar', inverse_of: :parent, foreign_key: 'parent_id'
+  has_many :sub_modules, class_name: 'Seminar', inverse_of: :parent, foreign_key: :parent_id
   has_many :bookings
   has_many :attendees, inverse_of: :seminar
   has_many :invoices, inverse_of: :seminar
@@ -26,13 +27,15 @@ class Seminar < ApplicationRecord
   default_scope { where archived: false }
 
   scope :published, -> { where published: true }
+  scope :canceled,  -> { where canceled:  true }
   scope :bookable,  -> { where 'date >= :date', date: Date.current }
-  scope :by_date, -> (year: Date.current.year, month: nil) {
-    if month
-      where(year: year).where('extract(month from date) = ?', month)
+  scope :by_month, -> (month) {
+    (
+    if month.zero?
+      where(date: nil)
     else
-      where(year: year, date: nil)
-    end
+      where('extract(month from date) = ?', month)
+    end)
   }
 
   has_paper_trail

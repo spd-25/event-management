@@ -1,6 +1,6 @@
 - if user_signed_in?
   nav.navbar.navbar-inverse.navbar-fixed-top
-    .container
+    .container-fluid
       .navbar-header
         button.navbar-toggle[type='button' data-toggle='collapse' data-target='.navbar-collapse']
           span.sr-only Toggle navigation
@@ -8,6 +8,7 @@
           span.icon-bar
           span.icon-bar
         = link_to 'Start', root_path, class: 'navbar-brand', tabindex: -1
+        /ul.nav.navbar-nav
         /= link_to title_for_model(Seminar, with_icon: true), seminars_url, class: 'navbar-brand', tabindex: -1
       .collapse.navbar-collapse
         ul.nav.navbar-nav
@@ -20,18 +21,26 @@
           li class=('active' if controller_name == 'invoices')
             = link_to title_for_model(Invoice, with_icon: true), invoices_url, tabindex: -1
           = navbar_dropdown 'Stammdaten', active: controller_name.in?(%w(locations teachers categories users)) do
+            li class=('active' if controller_name == 'catalogs')
+              = link_to title_for_model(Catalog, with_icon: true), catalogs_url, tabindex: -1
+            li class=('active' if controller_name == 'categories')
+              = link_to title_for_model(Category, with_icon: true), categories_url, tabindex: -1
+            li role="separator" class="divider"
             li class=('active' if controller_name == 'locations')
               = link_to title_for_model(Location, with_icon: true), locations_url, tabindex: -1
             li class=('active' if controller_name == 'teachers')
               = link_to title_for_model(Teacher, with_icon: true), teachers_url, tabindex: -1
-            li class=('active' if controller_name == 'categories')
-              = link_to title_for_model(Category, with_icon: true), categories_url, tabindex: -1
             li class=('active' if controller_name == 'companies')
               = link_to title_for_model(Company, with_icon: true), companies_url, tabindex: -1
+            li role="separator" class="divider"
             li class=('active' if controller_name == 'users')
               = link_to title_for_model(User, with_icon: true), users_url, tabindex: -1
 
         ul.nav.navbar-nav.navbar-right
+          = navbar_dropdown current_catalog.title do
+            - Catalog.all.each do |catalog|
+              li class=('active' if current_catalog == catalog)
+                = link_to catalog.year, [catalog, action: :make_current]
           li
             form.navbar-form.navbar-right role="search" action=search_url
               .form-group

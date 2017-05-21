@@ -10,7 +10,18 @@ class ApplicationController < ActionController::Base
 
   before_action :set_paper_trail_whodunnit
 
+  helper_method :current_catalog
+
   private
+
+  def current_catalog
+    @current_catalog ||= Catalog.find_by year: (session[:current_year] || Date.current.year)
+  end
+
+  def current_catalog=(catalog)
+    session[:current_year] = catalog.year
+    @current_catalog = catalog
+  end
 
   def user_not_authorized
     flash[:alert] = 'Du bist nicht berechtigt, diese Seite zu sehen.'

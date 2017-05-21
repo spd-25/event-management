@@ -1,11 +1,11 @@
 class CategoriesController < ApplicationController
   before_action :authenticate_user!
   after_action :verify_authorized
-  before_action :set_category, only: [:show, :update, :destroy]
+  before_action :set_category, only: [:show, :update, :destroy, :move]
 
   def index
     authorize Category
-    @categories = Category.cat_parents.order(:number)
+    @categories = current_catalog.categories.roots.includes(children: { children: :children })
   end
 
   def show
@@ -13,12 +13,13 @@ class CategoriesController < ApplicationController
 
   def new
     authorize Category
-    @category = Category.new
+    @category = Category.new year: current_catalog.year, parent_id: params[:parent_id]
+    @category.calculate_position
   end
 
   def create
     authorize Category
-    @category = Category.new category_params
+    @category = Category.new(category_params).tap(&:calculate_position)
 
     if @category.save
       redirect_to categories_url, notice: t(:created, model: Category.model_name.human)
@@ -36,20 +37,30 @@ class CategoriesController < ApplicationController
   end
 
   def destroy
-    @category.destroy
-    redirect_to categories_url, notice: t(:destroyed, model: Category.model_name.human)
+    msg =
+      if @category.children.any?
+        { alert: 'Kategorie hat noch Unterkategorien.' }
+      else
+        @category.destroy ? { notice: 'Navigation link deleted.' } : { alert: 'not possible' }
+      end
+    redirect_to categories_url, msg
+  end
+
+  def move
+    @category.move params[:dir]
+    redirect_to categories_url
   end
 
   private
 
   # Use callbacks to share common setup or constraints between actions.
   def set_category
-    @category = Category.find params[:id]
+    @category = current_catalog.categories.find params[:id]
     authorize @category
   end
 
   # Only allow a trusted parameter "white list" through.
   def category_params
-    params.require(:category).permit(:name, :number, :category_id)
+    params.require(:category).permit(:name, :number, :category_id, :parent_id, :year)
   end
 end

@@ -1,0 +1,16 @@
+- page_title_for @catalogs, :title
+.page-header
+  .buttons = new_link new_catalog_path
+  h2 = title_for @catalogs, :title
+
+.table-responsive
+  table.standard-table.table-clickable
+    thead
+      tr
+        th = Catalog.human_attribute_name(:title)
+        th = Catalog.human_attribute_name(:year)
+    tbody
+      - @catalogs.each do | catalog |
+        tr data = {url: url_for(catalog)}
+          td = catalog.title
+          td = catalog.year
