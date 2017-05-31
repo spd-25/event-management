@@ -64,8 +64,8 @@ class Category < ApplicationRecord
     case direction.to_sym
     when :up    then swap_position_with predecessor
     when :down  then swap_position_with successor
-    when :left  then set_parent_to parent&.parent
-    when :right then set_parent_to predecessor
+    when :left  then set_parent_to parent&.parent&.id
+    when :right then predecessor && set_parent_to(predecessor.id)
     else raise 'unknown direction'
     end
   end
@@ -103,10 +103,9 @@ class Category < ApplicationRecord
     end
   end
 
-  def set_parent_to(new_parent)
-    return unless new_parent
-    position = self.class.next_position_for year, new_parent.id
-    update!(parent_id: new_parent.id, position: position)
+  def set_parent_to(new_parent_id)
+    position = self.class.next_position_for year, new_parent_id
+    update! parent_id: new_parent_id, position: position
   end
 
   def acyclic_graph
