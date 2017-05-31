@@ -3,7 +3,7 @@ class Category < ApplicationRecord
   include PgSearch
 
   validates :name, :year, presence: true
-  validates :position, uniqueness: { scope: :parent_id }
+  validates :position, uniqueness: { scope: [:year, :parent_id] }
   validate :acyclic_graph
 
   belongs_to :catalog, foreign_key: :year, primary_key: :year, inverse_of: :categories
