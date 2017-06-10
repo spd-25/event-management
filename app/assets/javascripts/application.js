@@ -11,9 +11,9 @@
 // about supported directives.
 //
 //= require jquery
-//= require jquery_ujs
 //= require turbolinks
 //= require bootstrap-sprockets
+//= require jquery_ujs
 //= require bootstrap-wysihtml5
 //= require bootstrap-wysihtml5/locales/de-DE
 
@@ -24,4 +24,6 @@
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.de.js
 //= require form_init
 //= require table
+//= require nav-tabs
 //= require_tree .
+

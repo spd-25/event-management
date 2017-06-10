@@ -55,12 +55,12 @@ class Seminar < ApplicationRecord
 
   def grouped_categories
     parent_categories.each_with_object({}) do |parent, res|
-      res[parent] = categories.to_a.find_all { |cat| cat.category == parent }
+      res[parent] = categories.to_a.find_all { |cat| cat.parent == parent }
     end
   end
 
   def parent_categories
-    (categories.select(&:parent?) + categories.map(&:category)).compact.uniq.sort_by(&:name)
+    (categories.select(&:root?) + categories.map(&:parent)).compact.uniq.sort_by(&:name)
   end
 
   def dates

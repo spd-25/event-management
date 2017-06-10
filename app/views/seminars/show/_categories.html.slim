@@ -1,24 +1,8 @@
 ul.nav.nav-pills.nav-stacked.categories
-  - @seminar.grouped_categories.each do |parent, categories|
-    - active = parent.in?(@seminar.categories)
-    li class=('active' if active)
-      - label = parent.name
-      = link_to seminars_url(category_id: parent.id), title: label do
-        strong = label
-      ul.nav.nav-pills.nav-stacked
-        - categories.each do |cat|
-          - label = cat.name
-          li.active
-            = link_to label, seminars_url(category_id: cat.id), title: label
+  - categories.each do |category|
+    li class=('active' if category.in?(@seminar.categories))
+      = link_to category.name, [:toggle_category, @seminar, category_id: category.id],
+          remote: true, method: :patch, data: { behavior: 'toggle-category' }
+      - if category.children.any?
+        = render 'seminars/show/categories', categories: category.children
 
-sass:
-  ul.categories
-    /*white-space: nowrap*/
-    overflow: hidden
-
-    ul
-      margin-left: 30px
-      margin-top: 5px
-
-      a
-        padding: 3px 8px
