@@ -1,4 +1,5 @@
 = simple_form_for(@seminar) do |f|
+  = f.input :year, as: :hidden
   - if @seminar.errors.any?
     .alert.alert-danger.alert-dismissable
       button.close type="button" data-dismiss="alert"
@@ -9,8 +10,6 @@
     ul.nav.nav-tabs role="tablist"
       li.active role="presentation"
         a aria-controls="home" data-toggle="tab" href="#general" role="tab"  Allgemein
-      li role="presentation"
-        a aria-controls="settings" data-toggle="tab" href="#categories" role="tab"  Themen
       li role="presentation"
         a aria-controls="settings" data-toggle="tab" href="#events" role="tab"  Termine
       li role="presentation"
@@ -34,8 +33,8 @@
           .col-md-2 = f.input :number
           .col-md-10 = f.input :title
         .row
-          - current_year = Date.current.year
-          .col-md-2 = f.input :year, collection: ((current_year - 2)..(current_year + 10)).to_a, include_blank: false
+          /- current_year = Date.current.year
+          .col-md-2 = f.input :year, disabled: true
           .col-md-10 = f.input :subtitle
         .row
           .col-md-4 = f.association :teachers, input_html: { class: 'select2' }, collection: Teacher.order(:last_name)
@@ -46,8 +45,6 @@
           .col-md-8 = f.input :price_text, input_html: { class: 'editor' }
         = f.input :key_words
 
-      #categories.tab-pane role="tabpanel"
-        = f.association :categories, collection: categories_for_select, as: :check_boxes, label: false
       #events.tab-pane role="tabpanel"
         .form-inputs = f.input :date_text, input_html: { class: 'editor' }, label: false
         table.standard-table.events-table
@@ -79,7 +76,7 @@
   section.action-buttons
     .col-md-12
       .pull-right
-        => link_to t(:cancel), 'javascript: window.history.back();', class: 'btn btn-default'
+        => link_to t(:cancel), cancel_url(@seminar), class: 'btn btn-default'
         = f.submit t(:save), class: 'btn btn-primary'
 
 coffee:
@@ -95,9 +92,6 @@ sass:
   table.events-table
     tbody>tr>td
       padding: 3px
-      /*input, select*/
-        /*border: none*/
-        /*box-shadow: none*/
       p
         margin: 8px 0 3px
     th

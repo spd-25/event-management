@@ -36,6 +36,10 @@ class SeminarPolicy < ApplicationPolicy
     user.admin?
   end
 
+  def toggle_category?
+    user.admin?
+  end
+
   class Scope < Scope
     def resolve
       scope

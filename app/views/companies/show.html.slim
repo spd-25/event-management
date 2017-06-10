@@ -10,11 +10,12 @@
     .panel.panel-default
       .panel-heading Kategorien
       ul.list-group
-        - @company.categories.uniq.map { |cat| cat.parent? ? cat : cat.category }.uniq.sort_by(&:number).each do |cat|
+        - @company.categories.where(year: current_year).roots.uniq.sort_by(&:number).each do |cat|
           li.list-group-item = link_to cat.display_name, cat
 
   .col-md-9
-    - count = @company.attendees.count
+    - attendees = @company.attendees.booked.joins(:seminar).where('seminars.year' => current_year)
+    - count = attendees.count
     h4 #{count} #{Attendee.model_name.human count: count}
 
     .table-responsive
@@ -28,7 +29,7 @@
             /th
             /th
         tbody
-          - @company.attendees.order(created_at: :desc).each do |attendee|
+          - attendees.order(created_at: :desc).each do |attendee|
             - seminar = attendee.seminar
             /- invoice = attendee.invoice
             tr data = {url: url_for(attendee)} class=('warning' if attendee.canceled?)

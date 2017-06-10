@@ -3,14 +3,16 @@ require 'rails_helper'
 RSpec.describe Seminar, type: :model do
 
   let(:cat_a) do
-    build(:category, name: 'Cat A', categories: 2.times.map { |i| build(:category, name: "Cat A#{i + 1}") })
+    # build(:category, name: 'Cat A', children: 2.times.map { |i| build(:category, name: "Cat A#{i + 1}") })
+    children = Array.new(2) { |i| build(:category, name: "Cat A#{i + 1}") }
+    build(:category, name: 'Cat A', children: children)
   end
   let(:cat_b) do
-    build(:category, name: 'Cat B', categories: 2.times.map { |i| build(:category, name: "Cat B#{i + 1}") })
+    build(:category, name: 'Cat B', children: 2.times.map { |i| build(:category, name: "Cat B#{i + 1}") })
   end
   let(:cat_c) { build(:category, name: 'Cat C') }
-  let(:cat_a_1) { cat_a.categories[0] }
-  let(:cat_b_1) { cat_b.categories[0] }
+  let(:cat_a_1) { cat_a.children[0] }
+  let(:cat_b_1) { cat_b.children[0] }
 
   let(:seminar) { Seminar.new title: 'Sem 1234', categories: [cat_a, cat_a_1, cat_b_1, cat_c] }
 

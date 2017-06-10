@@ -1,7 +1,7 @@
 class SeminarsController < ApplicationController
   before_action :authenticate_user!
   after_action :verify_authorized
-  before_action :set_seminar, only: [:show, :edit, :update, :destroy, :attendees, :pras]
+  before_action :set_seminar, only: %i(show edit update destroy attendees pras toggle_category)
 
   def index
     authorize Seminar
@@ -11,7 +11,7 @@ class SeminarsController < ApplicationController
   def category
     authorize Seminar
     categories = current_catalog.categories
-    @category = categories.find_by(id: params[:id]) || categories.cat_parents.first
+    @category = categories.find_by(id: params[:id]) || categories.roots.first
     @seminars = @category ? @category.all_seminars : current_catalog.seminars
     @seminars = @seminars.order(:number).includes(:teachers, :events, :location).page(params[:page]).all
   end
@@ -46,7 +46,7 @@ class SeminarsController < ApplicationController
     if params[:copy_from].present? && (sem = Seminar.find(params[:copy_from]))
       attrs = sem.attributes.except('id').merge(categories: sem.categories, teachers: sem.teachers)
     end
-    @seminar = Seminar.new attrs
+    @seminar = Seminar.new attrs.merge(year: current_year)
     10.times { @seminar.events.build }
   end
 
@@ -86,6 +86,16 @@ class SeminarsController < ApplicationController
 
   def pras
 
+  end
+
+  def toggle_category
+    if (category = Category.find params[:category_id])
+      if category.in? @seminar.categories
+        @seminar.categories.delete category
+      else
+        @seminar.categories << category
+      end
+    end
   end
 
   private

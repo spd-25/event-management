@@ -159,4 +159,8 @@ module ApplicationHelper
       record.send(attr)
     end
   end
+
+  def cancel_url(record)
+    record.new_record? ? record.class : record
+  end
 end

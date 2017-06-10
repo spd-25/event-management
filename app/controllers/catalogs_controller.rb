@@ -44,7 +44,7 @@ class CatalogsController < ApplicationController
   end
 
   def make_current
-    self.current_catalog = @catalog
+    self.current_year = @catalog.year
     redirect_to root_url
   end
 

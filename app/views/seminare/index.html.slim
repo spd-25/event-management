@@ -1,28 +1,10 @@
 - content_for :page_title, 'Seminarübersicht'
 - content_for :back_link, link_to('&laquo; zur Seminarübersicht'.html_safe, seminare_visitor_url) if @query.present?
 - if @category
-  - parent = @category.parent? ? @category : @category.category
+  - root = @category.root? ? @category : @category.parent
   .row.categories
-    .col-md-6
-      /h4 Thema
-      ul.nav.nav-pills.nav-stacked
-        - @categories.each do |category|
-          li class=('active' if parent == category)
-            = link_to seminare_visitor_url(category_id: category.to_param) do
-              .cat-name
-                span.cat-number = category.number
-                | #{category.name} (#{category.all_seminars.count})
-
-    .col-md-6
-      /h4 Unterthema
-      - if @category
-        ul.nav.nav-pills.nav-stacked
-          - parent.children.each do |category|
-            li class=('active' if @category == category)
-              = link_to seminare_visitor_path(category_id: category.to_param) do
-                .cat-name
-                  span.cat-number = category.number
-                  | #{category.name} (#{category.all_seminars.count})
+    .col-md-6 = render 'categories', categories: @categories,   current_category: root
+    .col-md-6 = render 'categories', categories: root.children, current_category: @category
 
 table.seminars.table
   tbody

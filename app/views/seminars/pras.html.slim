@@ -2,14 +2,14 @@
 
 div
   ul.nav.nav-tabs
-    li = link_to "Teilnehmer (#{@seminar.attendees.booked.count})", @seminar
-    li = link_to 'Rechnungen', @seminar
-    li = link_to 'Allgemein', @seminar
-    li = link_to 'Themen', @seminar
-    li = link_to 'Termine', @seminar
-    li = link_to Seminar.human_attribute_name(:benefit), @seminar
-    li = link_to Seminar.human_attribute_name(:content), @seminar
-    li = link_to 'Bemerkungen', @seminar
+    li = link_to "Teilnehmer (#{@seminar.attendees.booked.count})", [@seminar, anchor: 'attendees']
+    li = link_to 'Rechnungen', [@seminar, anchor: 'invoices']
+    li = link_to 'Allgemein', [@seminar, anchor: 'general']
+    li = link_to 'Themen', [@seminar, anchor: 'categories']
+    li = link_to 'Termine', [@seminar, anchor: 'events']
+    li = link_to Seminar.human_attribute_name(:benefit), [@seminar, anchor: 'benefit']
+    li = link_to Seminar.human_attribute_name(:content), [@seminar, anchor: 'content']
+    li = link_to 'Bemerkungen', [@seminar, anchor: 'notes']
     li.active = link_to 'PRAS', pras_seminar_url(@seminar)
 
   .tab-content

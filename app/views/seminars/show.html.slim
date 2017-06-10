@@ -15,10 +15,24 @@ div
     .tab-pane#attendees.active = render 'seminars/show/attendees'
     .tab-pane#invoices         = render 'seminars/show/invoices'
     .tab-pane#general          = render 'seminars/show/general'
-    .tab-pane#categories       = render 'seminars/show/categories'
+    .tab-pane#categories       = render 'seminars/show/categories', categories: current_catalog.categories.roots
     .tab-pane#events           = render 'seminars/show/events'
     .tab-pane#benefit          = @seminar.benefit&.html_safe
     .tab-pane#content          = @seminar.content&.html_safe
     .tab-pane#notes            = @seminar.notes&.html_safe
     /.tab-pane#pras             = render 'seminars/show/pras'
 
+
+sass:
+  ul.categories
+    overflow: hidden
+    ul
+      margin-left: 30px
+      margin-top: 5px
+      a
+        padding: 3px 8px
+
+coffee:
+  $(document).ready ->
+    $("a[data-behavior=toggle-category]").on "ajax:success", ->
+      $(this).closest('li').toggleClass('active')

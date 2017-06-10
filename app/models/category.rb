@@ -10,9 +10,9 @@ class Category < ApplicationRecord
   has_and_belongs_to_many :seminars
 
   # old version
-  belongs_to :category, optional: true, inverse_of: :categories
-  has_many :categories, inverse_of: :category
-  scope :cat_parents, -> { where category_id: nil }
+  # belongs_to :category, optional: true, inverse_of: :categories
+  # has_many :categories, inverse_of: :category
+  # scope :cat_parents, -> { where category_id: nil }
 
   # new version
   belongs_to :parent, class_name: 'Category', inverse_of: :children
@@ -23,8 +23,12 @@ class Category < ApplicationRecord
 
   multisearchable against: [:name]
 
-  def parent?
-    category.blank?
+  # def parent?
+  #   category.blank?
+  # end
+
+  def root?
+    parent.blank?
   end
 
   def display_name
@@ -32,12 +36,16 @@ class Category < ApplicationRecord
   end
 
   def all_seminars
-    Seminar.where(id: seminars).or seminars_for_sub_categories
+    Seminar.where id: descendants.flat_map(&:seminar_ids)
   end
 
-  def seminars_for_sub_categories
-    Seminar.where(id: categories.joins(:seminars).select(:seminar_id))
+  def seminars_count
+    @seminars_count ||= all_seminars.count
   end
+
+  # def seminars_for_sub_categories
+  #   Seminar.where(id: categories.joins(:seminars).select(:seminar_id))
+  # end
 
   def to_param
     "#{id}-#{slug}"
@@ -64,8 +72,8 @@ class Category < ApplicationRecord
     case direction.to_sym
     when :up    then swap_position_with predecessor
     when :down  then swap_position_with successor
-    when :left  then set_parent_to parent&.parent
-    when :right then set_parent_to predecessor
+    when :left  then set_parent_to parent&.parent&.id
+    when :right then predecessor && set_parent_to(predecessor.id)
     else raise 'unknown direction'
     end
   end
@@ -103,10 +111,9 @@ class Category < ApplicationRecord
     end
   end
 
-  def set_parent_to(new_parent)
-    return unless new_parent
-    position = self.class.next_position_for year, new_parent.id
-    update!(parent_id: new_parent.id, position: position)
+  def set_parent_to(new_parent_id)
+    position = self.class.next_position_for year, new_parent_id
+    update! parent_id: new_parent_id, position: position
   end
 
   def acyclic_graph

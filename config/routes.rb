@@ -23,7 +23,10 @@ Rails.application.routes.draw do
     get :seminars, on: :member
   end
   resources :seminars do
-    get :attendees, :pras, on: :member
+    member do
+      get :attendees, :pras
+      patch :toggle_category
+    end
     collection do
       get :date, :calendar, :canceled
       get 'category(/:id)', action: :category, as: :category
