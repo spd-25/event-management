@@ -1,5 +1,6 @@
 = simple_form_for(@seminar) do |f|
-  = f.input :year, as: :hidden
+  = f.input :year,         as: :hidden
+  = f.input :copy_from_id, as: :hidden if @seminar.new_record?
   - if @seminar.errors.any?
     .alert.alert-danger.alert-dismissable
       button.close type="button" data-dismiss="alert"

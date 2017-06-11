@@ -40,6 +40,10 @@ class SeminarPolicy < ApplicationPolicy
     user.admin?
   end
 
+  def search?
+    user.admin?
+  end
+
   class Scope < Scope
     def resolve
       scope
