@@ -30,7 +30,3 @@ ol.breadcrumb
     small
       = @seminar.dates.map { |d| ldate d }.join(', ')
       =< @seminar.teachers.map(&:name).join(', ')
-
-sass:
-  ol.breadcrumb
-    margin-top: 20px

@@ -30,10 +30,12 @@ class AttendeeStatistic < JsonObjectSerializer
     self.title    = seminar.title         unless title.present?
     self.location = seminar.location.name unless location.present?
     events = seminar.events.order(:date)
-    self.start_date = I18n.l(events.first.date) unless start_date.present?
-    self.start_time = events.first.start_time   unless start_time.present?
-    self.end_date   = I18n.l(events.last.date)  unless end_date.present?
-    self.end_time   = events.last.end_time      unless end_time.present?
+    if events.any?
+      self.start_date = I18n.l(events.first.date) unless start_date.present?
+      self.start_time = events.first.start_time   unless start_time.present?
+      self.end_date   = I18n.l(events.last.date)  unless end_date.present?
+      self.end_time   = events.last.end_time      unless end_time.present?
+    end
   end
 end
 

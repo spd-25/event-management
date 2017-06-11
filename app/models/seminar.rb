@@ -11,6 +11,8 @@ class Seminar < ApplicationRecord
   has_many :bookings
   has_many :attendees, inverse_of: :seminar
   has_many :invoices, inverse_of: :seminar
+  belongs_to :original, class_name: 'Seminar', foreign_key: 'copy_from_id', inverse_of: :copies
+  has_many :copies,     class_name: 'Seminar', foreign_key: 'copy_from_id', inverse_of: :original
 
   accepts_nested_attributes_for :events,
                                 allow_destroy: true,

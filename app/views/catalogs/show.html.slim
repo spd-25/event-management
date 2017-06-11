@@ -1,11 +1,7 @@
 - page_title_for @catalog, :title
 .page-header
-  .buttons
-    /= list_link catalogs_url
-    = edit_link edit_catalog_url(@catalog)
-    /= delete_link @catalog
   h2
     => title_for @catalog, :title, with_model: false
     small = @catalog.year
 
-
+= render 'form'

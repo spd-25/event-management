@@ -30,6 +30,7 @@ Rails.application.routes.draw do
     collection do
       get :date, :calendar, :canceled
       get 'category(/:id)', action: :category, as: :category
+      get :search
     end
   end
   resources :categories, except: :edit do

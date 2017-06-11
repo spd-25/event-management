@@ -10,6 +10,7 @@ div
     li:        a data-toggle="tab" href="#benefit"     = Seminar.human_attribute_name(:benefit)
     li:        a data-toggle="tab" href="#content"     = Seminar.human_attribute_name(:content)
     li:        a data-toggle="tab" href="#notes"       Bemerkungen
+    li:        a data-toggle="tab" href="#copies"      Kopien
     li = link_to 'PRAS', pras_seminar_url(@seminar)
   .tab-content
     .tab-pane#attendees.active = render 'seminars/show/attendees'
@@ -20,6 +21,7 @@ div
     .tab-pane#benefit          = @seminar.benefit&.html_safe
     .tab-pane#content          = @seminar.content&.html_safe
     .tab-pane#notes            = @seminar.notes&.html_safe
+    .tab-pane#copies           = render 'seminars/show/copies'
     /.tab-pane#pras             = render 'seminars/show/pras'
 
 
@@ -36,3 +38,4 @@ coffee:
   $(document).ready ->
     $("a[data-behavior=toggle-category]").on "ajax:success", ->
       $(this).closest('li').toggleClass('active')
+      alert 'Thema gespeichert.'

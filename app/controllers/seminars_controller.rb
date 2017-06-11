@@ -42,11 +42,7 @@ class SeminarsController < ApplicationController
 
   def new
     authorize Seminar
-    attrs = {}
-    if params[:copy_from].present? && (sem = Seminar.find(params[:copy_from]))
-      attrs = sem.attributes.except('id').merge(categories: sem.categories, teachers: sem.teachers)
-    end
-    @seminar = Seminar.new attrs.merge(year: current_year)
+    @seminar = Seminar.new new_seminar_params
     10.times { @seminar.events.build }
   end
 
@@ -57,6 +53,7 @@ class SeminarsController < ApplicationController
   def create
     authorize Seminar
     @seminar = Seminar.new seminar_params
+    copy_data_for @seminar
 
     if @seminar.save
       redirect_to @seminar, notice: t(:created, model: Seminar.model_name.human)
@@ -98,6 +95,10 @@ class SeminarsController < ApplicationController
     end
   end
 
+  def search
+    authorize Seminar
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -108,13 +109,31 @@ class SeminarsController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def seminar_params
-    attrs = [
-      :number, :year, :title, :subtitle, :benefit, :content, :notes, :price, :price_text, :key_words,
-      :parent_id, :date_text, :max_attendees, :location_id, :archived, :published, :canceled,
-      teacher_ids: [], category_ids: [],
+    attrs = %i(number year title subtitle benefit content notes price price_text key_words
+               parent_id date_text max_attendees location_id archived published canceled
+               copy_from_id)
+    attrs << {
+      teacher_ids: [],
       events_attributes: [:id, :location_id, :date, :start_time, :end_time, :notes],
-      statistic: AttendeeStatistic.attribute_set.map(&:name)
-    ]
+      statistic:         AttendeeStatistic.attribute_set.map(&:name)
+    }
     params.require(:seminar).permit(attrs)
+  end
+
+  def new_seminar_params
+    attrs = {}
+    if params[:copy_from].present? && (sem = Seminar.find(params[:copy_from]))
+      attrs = sem.attributes.except('id', 'published').merge(
+        teachers:     sem.teachers,
+        copy_from_id: sem.id
+      )
+    end
+    attrs[:year] = current_year
+    attrs
+  end
+
+  def copy_data_for(seminar)
+    return unless seminar.original.present? && seminar.year == seminar.original.year
+    seminar.categories = seminar.original.categories
   end
 end
