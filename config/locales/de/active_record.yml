@@ -75,6 +75,9 @@ de:
         places: Plätze
         invoice_address: Rechnungsadresse
         contact_email: E-Mail-Adresse
+      catalog:
+        categories: Themen
+        seminars: Seminare
       category:
         category: Oberthema
         categories: Unterthemen

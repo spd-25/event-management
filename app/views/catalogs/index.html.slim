@@ -7,10 +7,16 @@
   table.standard-table.table-clickable
     thead
       tr
+        th
         th = Catalog.human_attribute_name(:title)
         th = Catalog.human_attribute_name(:year)
+        th = Catalog.human_attribute_name(:seminars)
+        th = Catalog.human_attribute_name(:categories)
     tbody
-      - @catalogs.each do | catalog |
-        tr data = {url: url_for(catalog)}
+      - @catalogs.each do |catalog|
+        tr data = {url: url_for(catalog)} class = (catalog.published ? 'success' : 'warning')
+          td = current_catalog == catalog ? '✓' : '-'
           td = catalog.title
           td = catalog.year
+          td = catalog.seminars.count
+          td = catalog.categories.count
