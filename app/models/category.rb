@@ -32,7 +32,8 @@ class Category < ApplicationRecord
   end
 
   def display_name
-    "#{number} #{name}"
+    # "#{number} #{name}"
+    [number, name].select(&:present?).join(' ')
   end
 
   def all_seminars

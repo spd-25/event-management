@@ -1,0 +1,64 @@
+response.headers['Content-Disposition'] = %Q(attachment; filename="Bildungskalander-Export-#{@catalog.year}.xlsx")
+
+wb = xlsx_package.workbook
+
+wb.add_worksheet(name: "Seminare #{@catalog.year}") do |sheet|
+  sheet.add_row ["Bildungskalender #{@catalog.year}"]
+  sheet.add_row ['exportiert', l(Date.current)]
+
+  sheet.add_style 'A1:A2', b: true
+
+  sheet.add_row
+  sheet.add_row
+
+  sheet.add_row ['Nr.', 'Titel', 'Untertitel']
+  sheet.add_style 'A5:C5', b: true
+  sheet.add_border 'A5:C5'
+
+  @catalog.seminars.order(:number).each do |seminar|
+    sheet.add_row [seminar.number, seminar.title, seminar.subtitle]
+    # sheet.add_border "A#{line}:E#{line}"
+  end
+
+  # sheet.column_widths 12, 18, 18, 30, 20
+end
+
+def add_categories(sheet, categories, level: 0)
+  categories.each do |category|
+    row = Array.new(level) { '' }
+    row << category.display_name << ''
+    sheet.add_row row
+    add_categories sheet, category.children.order(:number, :name), level: level + 1
+  end
+end
+
+wb.add_worksheet(name: "Themen #{@catalog.year}") do |sheet|
+  sheet.add_row ["Themen #{@catalog.year}"]
+  sheet.add_style 'A1', b: true
+
+  sheet.add_row
+
+  add_categories sheet, @catalog.categories.roots.order(:number, :name)
+  col_width = 6
+  sheet.column_widths col_width, col_width, col_width, col_width, col_width, 200
+end
+
+cell_rotated_text_style = wb.styles.add_style(alignment: { textRotation: 90 })
+
+wb.add_worksheet(name: 'Seminare => Themen') do |sheet|
+  categories = @catalog.categories.order(:number, :name).all
+  sheet.add_row ['', ''] + categories.map(&:display_name),
+                style: [nil, nil] + Array.new(categories.size) { cell_rotated_text_style },
+                height: 150
+  # sheet.add_style 'A1', alignment: { textRotation: 90 }
+
+  @catalog.seminars.order(:number).each do |seminar|
+    row = [seminar.number, seminar.title]
+    sheet.add_row row + categories.map { |cat| cat.in?(seminar.categories) ? 'x' : '' }
+  end
+
+  # add_categories sheet, @catalog.categories.roots.order(:number, :name)
+  # col_width = 6
+  col_widths = [12, 30] + Array.new(categories.size) { 3 }
+  sheet.column_widths(*col_widths)
+end
