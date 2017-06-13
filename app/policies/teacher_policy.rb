@@ -1,4 +1,8 @@
 class TeacherPolicy < ApplicationPolicy
+  def create?
+    user.admin? || user.editor?
+  end
+
   def update?
     user.admin? || user.editor?
   end
