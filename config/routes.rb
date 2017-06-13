@@ -24,7 +24,7 @@ Rails.application.routes.draw do
   end
   resources :seminars do
     member do
-      get :attendees, :pras
+      get :attendees, :pras, :versions
       patch :toggle_category
     end
     collection do
