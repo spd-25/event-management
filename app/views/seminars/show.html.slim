@@ -11,7 +11,8 @@ div
     li:        a data-toggle="tab" href="#content"     = Seminar.human_attribute_name(:content)
     li:        a data-toggle="tab" href="#notes"       Bemerkungen
     li:        a data-toggle="tab" href="#copies"      Kopien
-    li = link_to 'PRAS', pras_seminar_url(@seminar)
+    li = link_to 'PRAS',       pras_seminar_url(@seminar)
+    li = link_to 'Änderungen', versions_seminar_url(@seminar)
   .tab-content
     .tab-pane#attendees.active = render 'seminars/show/attendees'
     .tab-pane#invoices         = render 'seminars/show/invoices'

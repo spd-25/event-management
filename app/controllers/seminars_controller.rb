@@ -1,7 +1,8 @@
 class SeminarsController < ApplicationController
   before_action :authenticate_user!
   after_action :verify_authorized
-  before_action :set_seminar, only: %i(show edit update destroy attendees pras toggle_category)
+  before_action :set_seminar,
+                only: %i(show edit update destroy attendees pras versions toggle_category)
 
   def index
     authorize Seminar
@@ -82,7 +83,9 @@ class SeminarsController < ApplicationController
   end
 
   def pras
+  end
 
+  def versions
   end
 
   def toggle_category

@@ -10,8 +10,9 @@ div
     li = link_to Seminar.human_attribute_name(:benefit), [@seminar, anchor: 'benefit']
     li = link_to Seminar.human_attribute_name(:content), [@seminar, anchor: 'content']
     li = link_to 'Bemerkungen', [@seminar, anchor: 'notes']
+    li = link_to 'Kopien', [@seminar, anchor: 'copies']
     li.active = link_to 'PRAS', pras_seminar_url(@seminar)
-
+    li = link_to 'Änderungen', versions_seminar_url(@seminar)
   .tab-content
     - @seminar.statistic.fill_defaults @seminar
 
