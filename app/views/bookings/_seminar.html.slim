@@ -1,8 +1,5 @@
-label Datum
-p = @seminar.dates.map { |date| ldate date }.join('; ').html_safe
-
-label Zeit
-p = @seminar.events.map(&:time).uniq.compact.join('; ').html_safe
+label = Seminar.human_attribute_name :events
+p = events_list(@seminar).join('; ').html_safe
 
 label Ort
 p = @seminar.location&.name

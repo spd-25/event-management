@@ -3,6 +3,8 @@ require 'prawn/measurement_extensions'
 class InvoicePdf < ApplicationDocument
 
   include ActionView::Helpers::SanitizeHelper
+  include ApplicationHelper
+  include SeminarsHelper
 
   attr_reader :invoice, :company
 
@@ -117,18 +119,16 @@ class InvoicePdf < ApplicationDocument
   end
 
   def seminar_data
-    events = if strip_tags(@seminar.date_text || '').present?
-               [strip_tags(@seminar.date_text.gsub('<br>', "\n"))]
-             else
-               [
-                 @seminar.dates.map { |date| ldate date }.join('; '),
-                 @seminar.events.map(&:time).uniq.compact.join('; ')
-               ]
-             end
+    events =
+      if strip_tags(@seminar.date_text || '').present?
+        strip_tags(@seminar.date_text.gsub('<br>', "\n"))
+      else
+        events_list(@seminar).join('; ')
+      end
     [
       [Seminar.human_attribute_name(:title), @seminar.title],
       [Seminar.human_attribute_name(:number), @seminar.number],
-      [Seminar.human_attribute_name(:events), events.join('; ')],
+      [Seminar.human_attribute_name(:events), events],
       [Seminar.human_attribute_name(:location), @seminar.location.name]
     ]
   end

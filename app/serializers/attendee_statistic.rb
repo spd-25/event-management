@@ -1,6 +1,6 @@
 class AttendeeStatistic < JsonObjectSerializer
 
-  AGE_RANGES = %w(unknown lt_16 16_17 18_24 25_34 35_49 50_65 gt_65)
+  AGE_RANGES = %w(unknown lt_16 16_17 18_24 25_34 35_49 50_65 gt_65).freeze
 
   attribute :number,       String
   attribute :title,        String
@@ -29,7 +29,7 @@ class AttendeeStatistic < JsonObjectSerializer
     self.number   = seminar.number        unless number.present?
     self.title    = seminar.title         unless title.present?
     self.location = seminar.location.name unless location.present?
-    events = seminar.events.order(:date)
+    events = seminar.events
     if events.any?
       self.start_date = I18n.l(events.first.date) unless start_date.present?
       self.start_time = events.first.start_time   unless start_time.present?

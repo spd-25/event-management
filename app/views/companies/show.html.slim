@@ -23,7 +23,7 @@
         thead
           tr
             th = Booking.human_attribute_name(:seminar)
-            th = Booking.human_attribute_name(:date)
+            th = Seminar.human_attribute_name(:events)
             th = Booking.human_attribute_name(:attendees)
             th = Booking.human_attribute_name(:contact_email)
             /th
@@ -35,7 +35,7 @@
             tr data = {url: url_for(attendee)} class=('warning' if attendee.canceled?)
               td title=seminar.title
                 = link_to seminar.number, seminar
-              td = seminar.dates.map { |d| ldate d }.join(', ')
+              td = seminar.events_list.map { |date, _| ldate date }.join(', ')
               td = attendee.name
               td = attendee.contact_email
               /td

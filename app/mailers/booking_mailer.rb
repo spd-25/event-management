@@ -1,4 +1,6 @@
 class BookingMailer < ApplicationMailer
+  add_template_helper ApplicationHelper
+  add_template_helper SeminarsHelper
 
   def booking_confirmation_email(booking)
     @booking = booking

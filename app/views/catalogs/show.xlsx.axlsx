@@ -1,4 +1,4 @@
-response.headers['Content-Disposition'] = %Q(attachment; filename="Bildungskalander-Export-#{@catalog.year}.xlsx")
+response.headers['Content-Disposition'] = %(attachment; filename="Bildungskalander-Export-#{@catalog.year}.xlsx")
 
 wb = xlsx_package.workbook
 
@@ -11,16 +11,25 @@ wb.add_worksheet(name: "Seminare #{@catalog.year}") do |sheet|
   sheet.add_row
   sheet.add_row
 
-  sheet.add_row ['Nr.', 'Titel', 'Untertitel']
-  sheet.add_style 'A5:C5', b: true
+  seminar_attributes = %i(number title subtitle benefit content notes date_text)
+  html_sanitize      = %i(benefit content notes date_text)
+  header             = seminar_attributes.map { |attr| Seminar.human_attribute_name attr }
+  last_col           = ('A'.ord + seminar_attributes.size - 1).chr
+
+  sheet.add_row header
+  sheet.add_style "A5:#{last_col}5", b: true
   sheet.add_border 'A5:C5'
 
-  @catalog.seminars.order(:number).each do |seminar|
-    sheet.add_row [seminar.number, seminar.title, seminar.subtitle]
-    # sheet.add_border "A#{line}:E#{line}"
+  @catalog.seminars.includes(:categories).order(:number).each do |seminar|
+    row = seminar_attributes.map do |attr|
+      val            = seminar.send(attr)
+      val            = strip_tags(val || '')&.gsub('<br>', "\n") if attr.in?(html_sanitize)
+      val.to_s
+    end
+    sheet.add_row row
   end
-
-  # sheet.column_widths 12, 18, 18, 30, 20
+  col_width = [20] * (seminar_attributes.size - 1)
+  sheet.column_widths(12, *col_width)
 end
 
 def add_categories(sheet, categories, level: 0)
@@ -38,7 +47,7 @@ wb.add_worksheet(name: "Themen #{@catalog.year}") do |sheet|
 
   sheet.add_row
 
-  add_categories sheet, @catalog.categories.roots.order(:number, :name)
+  add_categories sheet, @catalog.categories.roots.includes(children: {children: :children}).order(:number, :name)
   col_width = 6
   sheet.column_widths col_width, col_width, col_width, col_width, col_width, 200
 end
@@ -52,7 +61,7 @@ wb.add_worksheet(name: 'Seminare => Themen') do |sheet|
                 height: 150
   # sheet.add_style 'A1', alignment: { textRotation: 90 }
 
-  @catalog.seminars.order(:number).each do |seminar|
+  @catalog.seminars.includes(:categories).order(:number).each do |seminar|
     row = [seminar.number, seminar.title]
     sheet.add_row row + categories.map { |cat| cat.in?(seminar.categories) ? 'x' : '' }
   end

@@ -28,5 +28,5 @@ ol.breadcrumb
     small = @seminar.subtitle
     br
     small
-      = @seminar.dates.map { |d| ldate d }.join(', ')
+      = @seminar.events_list.map { |date, _| ldate date }.join(', ')
       =< @seminar.teachers.map(&:name).join(', ')

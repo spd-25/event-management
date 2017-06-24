@@ -84,7 +84,6 @@ coffee:
   $ ->
     addButtonClicked = (event) ->
       event.preventDefault()
-      console.log $('table.events-table tbody tr.hidden').first()
       $('table.events-table tbody tr.hidden').first().removeClass('hidden')
     $('.add-event').off 'click', addButtonClicked
     $('.add-event').on 'click', addButtonClicked

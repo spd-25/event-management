@@ -1,7 +1,10 @@
 - if strip_tags(@seminar.date_text || '').blank?
-  table.standard-table
-    - @seminar.dates.each do |date|
-      tr
-        td = ldate date
+  .row
+    .col-md-4
+      table.standard-table
+        - @seminar.events_list.each do |date, time|
+          tr
+            td = ldate date
+            td = time
 - else
   = @seminar.date_text.html_safe
