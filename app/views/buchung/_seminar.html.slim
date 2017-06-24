@@ -9,7 +9,7 @@
   .col-md-6 = @seminar.subtitle
 .row
   .col-md-2: label Termine
-  .col-md-6 = events_list(@seminar).join('; ').html_safe
+  .col-md-6 = @seminar.formatted_events.html_safe
 .row
   .col-md-2: label Ort
   .col-md-6 = @seminar.location&.name

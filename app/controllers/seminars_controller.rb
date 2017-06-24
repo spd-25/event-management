@@ -106,7 +106,7 @@ class SeminarsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_seminar
-    @seminar = Seminar.unscoped.find params[:id]
+    @seminar = Seminar.unscoped.find(params[:id]).decorate
     authorize @seminar
   end
 

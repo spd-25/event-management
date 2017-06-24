@@ -5,5 +5,5 @@
         tr
           td = link_to seminar.number, seminar
           td = seminar.teachers.map(&:name).join(', ').html_safe
-          td = events_list(seminar).join('<br>').html_safe
+          td = seminar.formatted_events(separator: '<br>').html_safe
           td = seminar.price

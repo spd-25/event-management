@@ -1,10 +1,7 @@
 Eine neue Anmeldung für ein Seminar liegt vor:
 
-<%= Seminar.model_name.human               %>: <%= @seminar.title %>
-<%= Seminar.human_attribute_name :number   %>: <%= @seminar.number %>
-<%= Seminar.human_attribute_name :events   %>: <%= events_list(@seminar).join('; ').html_safe %>
-<%= Seminar.human_attribute_name :location %>: <%= @seminar.location.name %>
-<%= Seminar.human_attribute_name :price_text %>: <%= strip_tags(@seminar.price_text).html_safe %>
+<%= render 'seminar' %>
+
 <%= Attendee.model_name.human(count: @booking.attendees.count) %>: <%= @booking.attendees.map(&:name).join(', ').html_safe %>
 Kontakt: <%= @booking.contact_email %>, <%= @booking.contact_phone %>, <%= @booking.contact_fax %> (Fax), <%= @booking.contact_mobile %> (Mobil)
 

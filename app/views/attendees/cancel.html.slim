@@ -54,7 +54,7 @@
           td= @seminar.number
         tr
           th = Seminar.human_attribute_name :events
-          td = events_list(@seminar).join('; ').html_safe
+          td = @seminar.formatted_events.html_safe
         tr
           th = Teacher.model_name.human count: @seminar.teachers.count
           td = @seminar.teachers.map(&:name).join(', ').html_safe

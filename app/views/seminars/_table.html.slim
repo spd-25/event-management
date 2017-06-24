@@ -8,13 +8,13 @@
   .table-responsive
     table.standard-table.table-clickable.table-no-border.seminars
       tbody
-        - seminars.order(:number).each do |seminar|
+        - seminars.order(:number).decorate.each do |seminar|
           tr data = {url: url_for(seminar)}
             td.number
               = seminar.number
               br
               small.text-muted
-                = seminar.events_list.map { |date, _| ldate date }.join('<br>').html_safe
+                = seminar.dates.join('<br>').html_safe
             td
               = seminar.title
               br

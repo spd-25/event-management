@@ -33,7 +33,7 @@ RSpec.describe Seminar, type: :model do
         { date: '01.02.2016', start_time: '9:00', end_time: '12:00' },
       ]
     end
-    subject { described_class.new(events_attributes: events).events_list }
+    subject { Seminar.new(events_attributes: events).decorate.events_list }
     specify do
       expect(subject.grouped).to eq(
         Date.new(2016, 1, 1)..Date.new(2016, 1, 3)  => '9:00 - 13:00',

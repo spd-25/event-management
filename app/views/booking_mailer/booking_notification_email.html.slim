@@ -1,22 +1,8 @@
 p Eine neue Anmeldung für ein Seminar liegt vor:
 
-table
-  tr
-    td: strong = Seminar.model_name.human
-    td = @seminar.title
-  tr
-    td: strong = Seminar.human_attribute_name :number
-    td= @seminar.number
-  tr
-    td: strong = Seminar.human_attribute_name :events
-    td = events_list(@seminar).join('; ').html_safe
-  tr
-    td: strong = Seminar.human_attribute_name :location
-    td = @seminar.location.name
-  tr
-    td: strong = Seminar.human_attribute_name :price_text
-    td #{@seminar.price_text.html_safe} <br><br>
+= render 'seminar'
 
+table
   tr.attendee
     td: strong = Attendee.model_name.human(count: @booking.attendees.count)
     td = @booking.attendees.map(&:name).join('<br>').html_safe

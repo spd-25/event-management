@@ -4,7 +4,6 @@ class InvoicePdf < ApplicationDocument
 
   include ActionView::Helpers::SanitizeHelper
   include ApplicationHelper
-  include SeminarsHelper
 
   attr_reader :invoice, :company
 
@@ -16,7 +15,7 @@ class InvoicePdf < ApplicationDocument
     @printed_footer = 30.mm
     super(page_size: 'A4', margin: [@margin_top, @margin_side, @margin_bottom + @printed_footer])
     @invoice = invoice
-    @seminar = @invoice.seminar
+    @seminar = @invoice.seminar.decorate
     @company = OpenStruct.new t('invoices.pdf.company')
     # @header_text_options = { size: 30, style: :italic, align: :center }
     generate
@@ -119,16 +118,10 @@ class InvoicePdf < ApplicationDocument
   end
 
   def seminar_data
-    events =
-      if strip_tags(@seminar.date_text || '').present?
-        strip_tags(@seminar.date_text.gsub('<br>', "\n"))
-      else
-        events_list(@seminar).join('; ')
-      end
     [
-      [Seminar.human_attribute_name(:title), @seminar.title],
-      [Seminar.human_attribute_name(:number), @seminar.number],
-      [Seminar.human_attribute_name(:events), events],
+      [Seminar.human_attribute_name(:title),    @seminar.title],
+      [Seminar.human_attribute_name(:number),   @seminar.number],
+      [Seminar.human_attribute_name(:events),   @seminar.date_text_or_events],
       [Seminar.human_attribute_name(:location), @seminar.location.name]
     ]
   end
