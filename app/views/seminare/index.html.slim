@@ -17,7 +17,7 @@ table.seminars.table
         td.title = link_to seminar.title, seminar_visitor_url(seminar)
         td = seminar.location&.name
         td = seminar.teachers.map(&:name).join(', ')
-        td = ldate(seminar.events.order(:date).first&.date)
+        td = ldate(seminar.events.first&.date)
 
 sass:
   form

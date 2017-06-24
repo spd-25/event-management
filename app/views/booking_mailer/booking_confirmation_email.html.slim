@@ -13,11 +13,8 @@ table
     td: strong = Seminar.human_attribute_name :number
     td= @seminar.number
   tr
-    td: strong = Seminar.human_attribute_name :date
-    td = @seminar.dates.map { |date| ldate date }.join('; ').html_safe
-  tr
-    td: strong = Seminar.human_attribute_name :time
-    td = @seminar.events.map(&:time).uniq.compact.join('; ').html_safe
+    td: strong = Seminar.human_attribute_name :events
+    td = events_list(@seminar).join('; ').html_safe
   tr
     td: strong = Seminar.human_attribute_name :location
     td = @seminar.location.name

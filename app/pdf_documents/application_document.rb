@@ -1,14 +1,7 @@
 class ApplicationDocument < Prawn::Document
-  # include ActionView::Helpers
 
   def initialize(options = {}, &block)
     super(options, &block)
-  end
-
-  def ldate(date, options = nil)
-    return '' unless date.present?
-    return "#{ldate date.begin, options} - #{ldate date.end, options}" if date.is_a?(Range)
-    I18n.l date, options
   end
 
   def display_price(amount)

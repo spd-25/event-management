@@ -13,7 +13,8 @@
             td.number
               = seminar.number
               br
-              small.text-muted = seminar.dates.map { |date| ldate date }.join('<br>').html_safe
+              small.text-muted
+                = seminar.events_list.map { |date, _| ldate date }.join('<br>').html_safe
             td
               = seminar.title
               br

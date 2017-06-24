@@ -5,7 +5,7 @@ class Seminar < ApplicationRecord
   has_and_belongs_to_many :teachers
   has_and_belongs_to_many :categories
   belongs_to :location, optional: true
-  has_many :events
+  has_many :events, -> { order :date }
   belongs_to :parent,    class_name: 'Seminar', inverse_of: :sub_modules
   has_many :sub_modules, class_name: 'Seminar', inverse_of: :parent, foreign_key: :parent_id
   has_many :bookings
@@ -16,7 +16,7 @@ class Seminar < ApplicationRecord
 
   accepts_nested_attributes_for :events,
                                 allow_destroy: true,
-                                reject_if: lambda { |attr| attr['date'].blank? }
+                                reject_if: -> (attr) { attr['date'].blank? }
 
   serialize :statistic, ::AttendeeStatistic
 
@@ -31,7 +31,7 @@ class Seminar < ApplicationRecord
   scope :published, -> { where published: true }
   scope :canceled,  -> { where canceled:  true }
   scope :bookable,  -> { where 'date >= :date', date: Date.current }
-  scope :by_month, -> (month) {
+  scope :by_month, lambda { |month|
     (
     if month.zero?
       where(date: nil)
@@ -55,25 +55,8 @@ class Seminar < ApplicationRecord
     title
   end
 
-  def grouped_categories
-    parent_categories.each_with_object({}) do |parent, res|
-      res[parent] = categories.to_a.find_all { |cat| cat.parent == parent }
-    end
-  end
-
-  def parent_categories
-    (categories.select(&:root?) + categories.map(&:parent)).compact.uniq.sort_by(&:name)
-  end
-
-  def dates
-    _dates = events.map(&:date).compact.sort
-    start_date = nil
-    _dates.each_with_object({}) do |date, res|
-      start_date      = date unless date.yesterday.in? _dates
-      res[start_date] = date
-    end.map do |start_date, end_date|
-      start_date == end_date ? start_date : (start_date..end_date)
-    end
+  def events_list
+    @events_list ||= EventsList.new events
   end
 
   def to_param
@@ -81,11 +64,11 @@ class Seminar < ApplicationRecord
   end
 
   def slug
-    I18n.transliterate(name.downcase).gsub(/"/, '').gsub(/[^a-z0-9]+/, '-')
+    I18n.transliterate(name.downcase).delete('"').gsub(/[^a-z0-9]+/, '-')
   end
 
   def bookable?
-    ( date || Date.current ) >= Date.current
+    (date || Date.current) >= Date.current
   end
 
   private

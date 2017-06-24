@@ -15,7 +15,6 @@
       br
       =< @seminar.number
 
-
 .row
   .col-md-8
     - if @seminar.benefit.present?
@@ -26,15 +25,18 @@
       = @seminar.content.html_safe
 
   .col-md-4.additional
-    .row.line
+    - date_text = strip_tags(@seminar.date_text || '').present?
+    .row class=('line' if date_text)
       .col-md-4: label Termin
       .col-md-8
-        - if strip_tags(@seminar.date_text || '').blank?
-          = @seminar.dates.map { |date| ldate date }.join('; ').html_safe
-          br
-          = @seminar.events.map(&:time).uniq.compact.join('; ').html_safe
-        - else
+        - if date_text
           = @seminar.date_text.html_safe
+        - else
+          table.table
+            - @seminar.events_list.each do |date, time|
+              tr
+                td = ldate date
+                td = time
     .row.line
       .col-md-4: h5 Referenten
       .col-md-8

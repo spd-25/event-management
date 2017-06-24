@@ -22,8 +22,20 @@ module ApplicationHelper
 
   def ldate(date, options = nil)
     return '' unless date.present?
-    return "#{ldate date.begin, options} - #{ldate date.end, options}" if date.is_a?(Range)
-    l date, options
+    return ldates date.begin, date.end, options if date.is_a?(Range)
+    I18n.l date, options
+  end
+
+  def ldates(start_date, end_date, options = nil)
+    sep    = start_date == end_date.yesterday ? '/' : '-'
+    format = format_for start_date, end_date
+    [ldate(start_date, format: format), sep, ldate(end_date, options)].join
+  end
+
+  def format_for(start_date, end_date)
+    return '%d.%m.%Y' if start_date.year  != end_date.year
+    return '%d.%m.'   if start_date.month != end_date.month
+    '%d.'
   end
 
   def panel_box(title: nil, css_class: '', toggle: false, &block)
