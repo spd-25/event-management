@@ -36,7 +36,7 @@ class AttendeesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_attendee
     @attendee = Attendee.find(params[:id] || params[:attendee_id])
-    @seminar  = @attendee.seminar
+    @seminar  = @attendee.seminar.decorate
     authorize @attendee
   end
 

@@ -30,12 +30,12 @@
             /th
         tbody
           - attendees.order(created_at: :desc).each do |attendee|
-            - seminar = attendee.seminar
+            - seminar = attendee.seminar.decorate
             /- invoice = attendee.invoice
             tr data = {url: url_for(attendee)} class=('warning' if attendee.canceled?)
               td title=seminar.title
                 = link_to seminar.number, seminar
-              td = seminar.events_list.map { |date, _| ldate date }.join(', ')
+              td = seminar.dates.join(', ')
               td = attendee.name
               td = attendee.contact_email
               /td

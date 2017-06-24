@@ -25,11 +25,10 @@
       = @seminar.content.html_safe
 
   .col-md-4.additional
-    - date_text = strip_tags(@seminar.date_text || '').present?
-    .row class=('line' if date_text)
+    .row class=('line' if @seminar.has_date_text?)
       .col-md-4: label Termin
       .col-md-8
-        - if date_text
+        - if @seminar.has_date_text?
           = @seminar.date_text.html_safe
         - else
           table.table

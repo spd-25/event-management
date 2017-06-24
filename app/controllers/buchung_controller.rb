@@ -2,7 +2,7 @@ class BuchungController < ApplicationController
   layout 'external'
 
   def new
-    @seminar = Seminar.published.find params[:seminar_id]
+    @seminar = Seminar.published.find(params[:seminar_id]).decorate
     @booking = @seminar.bookings.build
     10.times { @booking.attendees.build }
   end
@@ -18,7 +18,7 @@ class BuchungController < ApplicationController
       BookingMailer.booking_confirmation_email(@booking).deliver_later
       redirect_to buchung_show_url(@booking)
     else
-      @seminar = Seminar.find @booking.seminar_id
+      @seminar = Seminar.find(@booking.seminar_id).decorate
       10.times { @booking.attendees.build }
       render :new
     end
@@ -26,7 +26,7 @@ class BuchungController < ApplicationController
 
   def show
     @booking = Booking.find params[:booking_id]
-    @seminar = @booking.seminar
+    @seminar = @booking.seminar.decorate
   end
 
   private

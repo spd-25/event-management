@@ -55,10 +55,6 @@ class Seminar < ApplicationRecord
     title
   end
 
-  def events_list
-    @events_list ||= EventsList.new events
-  end
-
   def to_param
     "#{id}-#{slug}"
   end

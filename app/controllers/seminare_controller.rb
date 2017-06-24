@@ -13,7 +13,7 @@ class SeminareController < ApplicationController
   def show
     seminar_scope = Seminar
     seminar_scope = seminar_scope.published unless current_user&.admin?
-    @seminar      = seminar_scope.find params[:id]
+    @seminar      = seminar_scope.find(params[:id]).decorate
   end
 
   def search

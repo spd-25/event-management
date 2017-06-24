@@ -1,5 +1,5 @@
 label = Seminar.human_attribute_name :events
-p = events_list(@seminar).join('; ').html_safe
+p = @seminar.formatted_events.html_safe
 
 label Ort
 p = @seminar.location&.name

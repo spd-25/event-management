@@ -5,13 +5,13 @@ class BookingsController < ApplicationController
 
   def show
     @booking = Booking.find(params[:id] || params[:booking_id])
-    @seminar = @booking.seminar
+    @seminar = @booking.seminar.decorate
     authorize @booking
   end
 
   def new
     authorize Booking
-    @seminar = Seminar.find params[:seminar_id]
+    @seminar = Seminar.find(params[:seminar_id]).decorate
     @booking = @seminar.bookings.build
     prepare_attendees
   end
@@ -25,7 +25,7 @@ class BookingsController < ApplicationController
     if @booking.save
       redirect_to (session[:back_url] || seminar_url(id: @booking.seminar_id)), notice: t(:created, model: Booking.model_name.human)
     else
-      @seminar = Seminar.find @booking.seminar_id
+      @seminar = Seminar.find(@booking.seminar_id).decorate
       prepare_attendees
       render :new
     end
