@@ -12,6 +12,8 @@ ol.breadcrumb
 .page-header
   .buttons
 
+    - icon, text, action = @seminar.published? ? ['eye-slash', 'Deaktivieren!', :unpublish] : ['eye', 'Veröffentlichen!', :publish]
+    => link_to fa_icon(icon, text: text), [@seminar, action: action], method: :patch, class: 'btn btn-danger'
     => link_to fa_icon('external-link', text: 'Externe Ansicht'), seminar_visitor_url(@seminar), class: 'btn btn-default'
     => edit_link edit_seminar_url(@seminar)
     = copy_link new_seminar_url(copy_from: @seminar.id)

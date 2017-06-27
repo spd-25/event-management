@@ -10,6 +10,9 @@ de:
   destroyed: "%{model} gelöscht."
   not_destroyed: "%{model} konnte nicht gelöscht werden. %{message}"
   confirm_delete: "%{model} löschen?"
+  not_authorized:
+    page:   Du bist nicht berechtigt, diese Seite zu öffnen.
+    action: Du bist nicht berechtigt, diese Aktion auszuführen.
   attendees:
     cancel:
       title: Anmeldungsstornierung
@@ -158,8 +161,10 @@ de:
     new:
       title: Benutzer anlegen
     roles:
-      admin: Admin
-      user: Benutzer
+      admin: Administrator*in
+      editor: Bildungsreferent*in
+      layouter: Layouter*in
+      user: Benutzer*in
   delete: Löschen
   edit: Bearbeiten
   copy: Kopieren

@@ -23,7 +23,6 @@
       #general.tab-pane.active role="tabpanel"
         .row
           .col-md-3 = f.input :archived
-          .col-md-3 = f.input :published
           .col-md-3 = f.input :canceled
         = f.association :parent,
             label_method: ->(s){ "#{s.number} - #{s.title}" },

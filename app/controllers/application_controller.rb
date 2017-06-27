@@ -33,8 +33,8 @@ class ApplicationController < ActionController::Base
   end
 
   def user_not_authorized
-    flash[:alert] = 'Du bist nicht berechtigt, diese Seite zu sehen.'
-    redirect_to (request.referrer || root_path)
+    flash[:alert] = t("not_authorized.#{request.get? ? :page : :action}")
+    redirect_to(request.referrer || root_path)
   end
 
   # Overwriting the sign_out redirect path method
