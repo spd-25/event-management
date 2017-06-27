@@ -35,5 +35,5 @@ div
                 label = Seminar.human_attribute_name field
                 - unless field == 'statistic'
                   .row
-                    .col-md-6 = before&.html_safe
-                    .col-md-6 = after&.html_safe
+                    .col-md-6 = before.is_a?(String) ? before.html_safe : before
+                    .col-md-6 = after.is_a?(String)  ? after.html_safe  : after
