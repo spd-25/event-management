@@ -2,7 +2,8 @@ class SeminarsController < ApplicationController
   before_action :authenticate_user!
   after_action :verify_authorized
   before_action :set_seminar,
-                only: %i(show edit update destroy attendees pras versions toggle_category)
+                only: %i(show edit update destroy attendees pras versions toggle_category
+                         publish unpublish)
 
   def index
     authorize Seminar
@@ -102,6 +103,16 @@ class SeminarsController < ApplicationController
     authorize Seminar
   end
 
+  def publish
+    @seminar.update published: true
+    redirect_to @seminar, notice: 'Seminar freigegeben.'
+  end
+
+  def unpublish
+    @seminar.update published: false
+    redirect_to @seminar, notice: 'Seminar deaktiviert.'
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -113,8 +124,7 @@ class SeminarsController < ApplicationController
   # Only allow a trusted parameter "white list" through.
   def seminar_params
     attrs = %i(number year title subtitle benefit content notes price price_text key_words
-               parent_id date_text max_attendees location_id archived published canceled
-               copy_from_id)
+               parent_id date_text max_attendees location_id archived canceled copy_from_id)
     attrs << {
       teacher_ids: [],
       events_attributes: [:id, :location_id, :date, :start_time, :end_time, :notes],

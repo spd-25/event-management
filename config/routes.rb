@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   get 'seminar/:id', to: 'seminare#show', as: :seminar_visitor
   get 'suche', to: 'seminare#search', as: :seminar_search
 
-  devise_for :users, :skip => [:registrations]
+  devise_for :users, skip: [:registrations]
   as :user do
     get 'users/edit' => 'devise/registrations#edit', as: 'edit_user_registration'
     patch 'users' => 'devise/registrations#update', as: 'user_registration'
@@ -25,7 +25,7 @@ Rails.application.routes.draw do
   resources :seminars do
     member do
       get :attendees, :pras, :versions
-      patch :toggle_category
+      patch :toggle_category, :publish, :unpublish
     end
     collection do
       get :date, :calendar, :canceled

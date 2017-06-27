@@ -9,15 +9,14 @@ module ApplicationHelper
   end
 
   def bool_icon(val, yes_title = 'yes', no_title = 'no')
-    label, icon, title = case val
-    when true then ['success', 'ok-sign', yes_title]
-    when false then ['danger', 'minus-sign', no_title]
-    else ['default', 'minus-sign', '']
-    end
+    label, icon, title =
+      case val
+      when true  then ['success', 'check',    yes_title]
+      when false then ['danger',  'minus',    no_title]
+      else            ['default', 'question', '']
+      end
 
-    content_tag :span, class: 'label label-' + label, title: title do
-      content_tag :span, nil, class: 'glyphicon glyphicon-' + icon
-    end
+    content_tag(:span, class: 'label label-' + label, title: title) { fa_icon icon }
   end
 
   def ldate(date, options = nil)
@@ -174,5 +173,14 @@ module ApplicationHelper
 
   def cancel_url(record)
     record.new_record? ? record.class : record
+  end
+
+  def version_value(value)
+    return bool_icon(value)       if value.in? [true, false]
+    return ldate(value)           if value.kind_of? Time
+    return number_to_human(value) if value.is_a? Float
+    return ''                     if value.blank?
+    return value.html_safe        if value.is_a?(String)
+    value.to_s
   end
 end
