@@ -16,24 +16,25 @@ div
 
   .tab-content
 
-    - hidden_fields = %w(updated_at)
-    table.table.table-striped.table-hover
+    - hidden_fields = %w(created_at updated_at statistic)
+
+    table.standard-table
       thead
         tr
-          th Wann
-          th Wer
-          th Was
-
+          th width="10%"
+          th width="45%" Vorher
+          th width="45%" Nachher
       tbody
-        - @seminar.versions.each do |version|
+        - @seminar.versions.reorder(created_at: :desc).each do |version|
           tr
-            td = ldate version.created_at
-            td = User.find(version.whodunnit).username
-            td
-              - YAML.load(version.object_changes).each do |field, (before, after)|
-                - next if field.in?(hidden_fields) || [before, after].all?(&:blank?)
-                label = Seminar.human_attribute_name field
-                - unless field == 'statistic'
-                  .row
-                    .col-md-6 = before.is_a?(String) ? before.html_safe : before
-                    .col-md-6 = after.is_a?(String)  ? after.html_safe  : after
+            th colspan=3
+              h4
+                = User.find(version.whodunnit).username
+                | ,
+                =< ldate version.created_at
+          - YAML.load(version.object_changes).each do |field, (before, after)|
+            - next if field.in?(hidden_fields) || [before, after].all?(&:blank?)
+            tr
+              th = Seminar.human_attribute_name field
+              td = version_value before
+              td = version_value after
