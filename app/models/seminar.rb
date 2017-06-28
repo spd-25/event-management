@@ -9,7 +9,8 @@ class Seminar < ApplicationRecord
   belongs_to :parent,    class_name: 'Seminar', inverse_of: :sub_modules
   has_many :sub_modules, class_name: 'Seminar', inverse_of: :parent, foreign_key: :parent_id
   has_many :bookings
-  has_many :attendees, inverse_of: :seminar
+  has_many :attendees, -> { booked }, inverse_of: :seminar
+  has_many :all_attendees, class_name: 'Attendee'
   has_many :invoices, inverse_of: :seminar
   belongs_to :original, class_name: 'Seminar', foreign_key: 'copy_from_id', inverse_of: :copies
   has_many :copies,     class_name: 'Seminar', foreign_key: 'copy_from_id', inverse_of: :original

@@ -80,7 +80,7 @@ class SeminarsController < ApplicationController
   end
 
   def attendees
-    @attendees = @seminar.attendees.booked.order(:created_at)
+    @attendees = @seminar.attendees.order(:created_at)
   end
 
   def pras

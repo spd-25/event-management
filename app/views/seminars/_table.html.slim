@@ -23,7 +23,7 @@
               - if seminar.canceled
                 span.label.label-info< ausgefallen
             td.icons
-              => fa_icon 'users', text: seminar.attendees.booked.count
+              => fa_icon 'users', text: seminar.attendees.count
               => fa_icon 'calendar', text: seminar.events.count
               /- if seminar.bookings.any?
                 = progress_bar_for_bookings(seminar)

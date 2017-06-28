@@ -2,7 +2,7 @@
 
 div
   ul.nav.nav-tabs
-    li = link_to "Teilnehmer (#{@seminar.attendees.booked.count})", [@seminar, anchor: 'attendees']
+    li = link_to "Teilnehmer (#{@seminar.attendees.count})", [@seminar, anchor: 'attendees']
     li = link_to 'Rechnungen', [@seminar, anchor: 'invoices']
     li = link_to 'Allgemein', [@seminar, anchor: 'general']
     li = link_to 'Themen', [@seminar, anchor: 'categories']

@@ -9,7 +9,7 @@ h4 Rechnungen zu schreiben
         th Gesamtbetrag
         th
     tbody
-      - @seminar.attendees.booked.where(invoice_id: nil).all.group_by(&:company).each do |company, attendees|
+      - @seminar.attendees.where(invoice_id: nil).all.group_by(&:company).each do |company, attendees|
         - if company
           tr
             td = icon_for Company

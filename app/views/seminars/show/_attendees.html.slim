@@ -1,5 +1,5 @@
 h4
-  - count = @seminar.attendees.booked.count
+  - count = @seminar.attendees.count
   => count
   => Attendee.model_name.human(count: count)
   => link_to fa_icon('table', text: 'Exportieren'), attendees_seminar_url(@seminar, format: :xlsx), class: 'btn btn-default btn-xs'
@@ -8,7 +8,7 @@ h4
 
 .table-responsive
   table.standard-table.table-clickable
-    - @seminar.attendees.booked.order(:created_at).each do |attendee|
+    - @seminar.attendees.order(:created_at).each do |attendee|
       - booking = attendee.booking
       tr data={url: url_for(attendee)}
         td = attendee.name
@@ -27,12 +27,12 @@ h4
             = link_to fa_icon('pencil', text: 'Rechnung'), new_invoice_path(booking_id: booking.id), class: 'btn btn-primary btn-xs'
         td = link_to 'Stornieren', attendee_cancel_url(attendee), class: 'btn btn-danger btn-xs'
 
-- if @seminar.attendees.canceled.any?
-  h4 #{@seminar.attendees.canceled.count} Stornierte Anmeldungen
+- if @seminar.all_attendees.canceled.any?
+  h4 #{@seminar.all_attendees.canceled.count} Stornierte Anmeldungen
 
   .table-responsive
     table.standard-table.table-clickable.muted
-      - @seminar.attendees.canceled.each do |attendee|
+      - @seminar.all_attendees.canceled.each do |attendee|
         tr data={url: url_for(attendee)}
           td = attendee.name
           td = ldate attendee.created_at, format: :short2
