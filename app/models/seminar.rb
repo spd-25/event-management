@@ -52,6 +52,10 @@ class Seminar < ApplicationRecord
                     location: %i(name description address)
                   }
 
+  def cache_key
+    [super, bookable?].join '/'
+  end
+
   def name
     title
   end

@@ -1,7 +1,9 @@
 ul.nav.nav-pills.nav-stacked
   - categories.each do |category|
-    li class=('active' if current_category == category)
-      = link_to seminare_visitor_url(category_id: category.to_param) do
-        .cat-name
-          span.cat-number = category.number
-          | #{category.name} (#{category.all_seminars.count})
+    - active = current_category == category
+    - cache [category, active] do
+      li class=('active' if active)
+        = link_to seminare_visitor_url(category_id: category.to_param) do
+          .cat-name
+            span.cat-number = category.number
+            | #{category.name} (#{category.all_seminars.count})
