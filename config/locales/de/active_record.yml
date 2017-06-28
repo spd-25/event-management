@@ -102,6 +102,7 @@ de:
       seminar:
         bookings: Anmeldungen
         date_text: Termine (Text)
+        invoices: Rechnungen
         number: Nummer
         max_attendees: Max. Anzahl Teilnehmer
         subtitle: Untertitel
