@@ -1,7 +1,7 @@
 class SeminarPolicy < ApplicationPolicy
 
   def index?
-    user.role.in? %w(admin editor layouter)
+    admin? || editor? || layouter?
   end
 
   def category?
@@ -21,35 +21,35 @@ class SeminarPolicy < ApplicationPolicy
   end
 
   def show?
-    user.role.in? %w(admin editor layouter)
+    admin? || editor? || layouter?
   end
 
   def update?
-    user.role.in? %w(admin editor)
+    admin? || editor?
   end
 
   def attendees?
-    user.role.in? %w(admin editor)
+    admin? || editor?
   end
 
   def pras?
-    user.admin?
+    admin?
   end
 
   def versions?
-    user.role.in? %w(admin editor)
+    admin? || editor?
   end
 
   def toggle_category?
-    user.role.in? %w(admin editor)
+    admin? || editor?
   end
 
   def search?
-    user.admin?
+    admin?
   end
 
   def publish?
-    user.admin?
+    admin?
   end
 
   def unpublish?

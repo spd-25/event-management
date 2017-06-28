@@ -1,5 +1,6 @@
 class ApplicationPolicy
   attr_reader :user, :record
+  delegate :admin?, :editor?, :layouter?, to: :user
 
   def initialize(user, record)
     @user = user
@@ -7,12 +8,12 @@ class ApplicationPolicy
   end
 
   def index?
-    user.admin? || user.editor?
+    admin? || editor?
   end
 
   def show?
     # scope.where(:id => record.id).exists?
-    user.admin? || user.editor?
+    admin? || editor?
   end
 
   def create?
@@ -24,7 +25,7 @@ class ApplicationPolicy
   end
 
   def update?
-    user.admin?
+    admin?
   end
 
   def edit?
@@ -32,7 +33,7 @@ class ApplicationPolicy
   end
 
   def destroy?
-    user.admin?
+    admin?
   end
 
   def scope

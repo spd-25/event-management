@@ -1,14 +1,14 @@
 class TeacherPolicy < ApplicationPolicy
   def create?
-    user.admin? || user.editor?
+    admin? || editor?
   end
 
   def update?
-    user.admin? || user.editor?
+    admin? || editor?
   end
 
   def seminars?
-    user.admin? || user.editor?
+    admin? || editor?
   end
   
   class Scope < Scope
