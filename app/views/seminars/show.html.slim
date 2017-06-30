@@ -3,9 +3,9 @@
 div
   ul.nav.nav-tabs
     - if policy(Attendee).index?
-      li = link_to "Teilnehmer (#{@seminar.attendees.count})", '#attendees',  data: { toggle: 'tab' }
+      li = link_to "Teilnehmer (#{@seminar.attendees.count})", '#attendees', data: { toggle: 'tab' }
     - if policy(Invoice).index?
-      li = link_to Seminar.human_attribute_name(:invoices),    '#invoices',   data: { toggle: 'tab' }
+      li = link_to Seminar.human_attribute_name(:invoices),    '#invoices',  data: { toggle: 'tab' }
     li = link_to 'Allgemein',                                '#general',    data: { toggle: 'tab' }
     li = link_to Seminar.human_attribute_name(:categories),  '#categories', data: { toggle: 'tab' }
     li = link_to Seminar.human_attribute_name(:events),      '#events',     data: { toggle: 'tab' }
@@ -16,16 +16,16 @@ div
     li = link_to 'PRAS',       pras_seminar_url(@seminar)     if policy(Seminar).pras?
     li = link_to 'Änderungen', versions_seminar_url(@seminar) if policy(Seminar).versions?
   .tab-content
-    .tab-pane#attendees.active = render 'seminars/show/attendees' if policy(Attendee).index?
-    .tab-pane#invoices         = render 'seminars/show/invoices'  if policy(Invoice).index?
-    .tab-pane#general          = render 'seminars/show/general'
-    .tab-pane#categories       = render 'seminars/show/categories', categories: current_catalog.categories.roots
-    .tab-pane#events           = render 'seminars/show/events'
-    .tab-pane#benefit          = @seminar.benefit&.html_safe
-    .tab-pane#content          = @seminar.content&.html_safe
-    .tab-pane#notes            = @seminar.notes&.html_safe
-    .tab-pane#copies           = render 'seminars/show/copies'
-    /.tab-pane#pras             = render 'seminars/show/pras'
+    .tab-pane#attendees  = render 'seminars/show/attendees' if policy(Attendee).index?
+    .tab-pane#invoices   = render 'seminars/show/invoices'  if policy(Invoice).index?
+    .tab-pane#general    = render 'seminars/show/general'
+    .tab-pane#categories = render 'seminars/show/categories', categories: current_catalog.categories.roots
+    .tab-pane#events     = render 'seminars/show/events'
+    .tab-pane#benefit    = @seminar.benefit&.html_safe
+    .tab-pane#content    = @seminar.content&.html_safe
+    .tab-pane#notes      = @seminar.notes&.html_safe
+    .tab-pane#copies     = render 'seminars/show/copies'
+    /.tab-pane#pras       = render 'seminars/show/pras'
 
 
 sass:

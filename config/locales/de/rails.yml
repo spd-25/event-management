@@ -216,6 +216,7 @@ de:
       long: "%A, %d. %B %Y, %H:%M Uhr"
       short: "%d.%m.%Y"
       short2: "%d.%m.%Y %H:%M"
+      short3: "%A, %d. %B %Y"
     pm: nachmittags
   seminars:
     pras:

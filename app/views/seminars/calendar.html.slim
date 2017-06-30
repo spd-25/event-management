@@ -10,16 +10,16 @@
     table.table.table-condensed.table-bordered
       thead
         tr
-          th W
-          th Montag
-          th Dienstag
-          th Mittwoch
-          th Donnerstag
-          th Freitag
-          th Samstag
-          th Sonntag
+          th width="4%" W
+          th width="12%" Montag
+          th width="12%" Dienstag
+          th width="12%" Mittwoch
+          th width="12%" Donnerstag
+          th width="12%" Freitag
+          th width="12%" Samstag
+          th width="12%" Sonntag
       tbody
-        - grouped_events = @events.all.group_by {|ev| [ev.date.cweek, ev.date]}
+        - grouped_events = @events.all.group_by { |ev| [ev.date.cweek, ev.date] }
         - days = @days_of_month.to_a
         - days.group_by(&:cweek).each do |week, days|
           tr
@@ -30,5 +30,7 @@
                   .text-muted = day.day
                   - if (events = grouped_events[[week, day]])
                     - events.each do |ev|
-                      = link_to ev.seminar.number, ev.seminar, title: ev.seminar.title
+                      = link_to ev.seminar, title: ev.seminar.title do
+                        => ev.seminar.number
+                        small = ev.seminar.teachers.map(&:name).join(', ')
                       br

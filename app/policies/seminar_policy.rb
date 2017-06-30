@@ -1,23 +1,27 @@
 class SeminarPolicy < ApplicationPolicy
 
+  def seminar
+    record
+  end
+
   def index?
     admin? || editor? || layouter?
   end
 
   def category?
-    index?
+    admin? || editor? || layouter?
   end
 
   def date?
-    index?
+    admin? || editor? || layouter?
   end
 
   def calendar?
-    index?
+    admin? || editor? || layouter?
   end
 
   def canceled?
-    index?
+    admin? || editor?
   end
 
   def show?
@@ -25,7 +29,7 @@ class SeminarPolicy < ApplicationPolicy
   end
 
   def update?
-    admin? || editor?
+    admin? || editor? || (layouter? && !seminar.published? && !seminar.catalog.published?)
   end
 
   def attendees?
@@ -54,6 +58,22 @@ class SeminarPolicy < ApplicationPolicy
 
   def unpublish?
     publish?
+  end
+
+  def permitted_attributes
+    attrs = %i(title subtitle benefit content notes date_text location_id)
+    if admin? || editor?
+      attrs += %i(
+        number price price_text key_words parent_id max_attendees archived canceled copy_from_id
+      )
+
+      attrs << {
+        teacher_ids: [],
+        events_attributes: [:id, :location_id, :date, :start_time, :end_time, :notes],
+        statistic:         AttendeeStatistic.attribute_set.map(&:name)
+      }
+    end
+    attrs
   end
 
   class Scope < Scope
