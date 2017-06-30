@@ -9,44 +9,40 @@ class Category < ApplicationRecord
   belongs_to :catalog, foreign_key: :year, primary_key: :year, inverse_of: :categories
   has_and_belongs_to_many :seminars
 
-  # old version
-  # belongs_to :category, optional: true, inverse_of: :categories
-  # has_many :categories, inverse_of: :category
-  # scope :cat_parents, -> { where category_id: nil }
-
-  # new version
   belongs_to :parent, class_name: 'Category', inverse_of: :children
   has_many :children, -> { order :position }, class_name: 'Category', foreign_key: 'parent_id', inverse_of: :parent
   scope :roots, -> { where(parent_id: nil).order(:position) }
+
+  after_save :invalidate_descendants_cache
 
   has_paper_trail ignore: [:position]
 
   multisearchable against: [:name]
 
-  # def parent?
-  #   category.blank?
-  # end
+  def self.tree
+    tree_for roots
+  end
+
+  def sub_tree
+    self.class.tree_for children
+  end
+
+  def self.tree_for(categories)
+    return nil unless categories.any?
+    categories.each_with_object({}) { |cat, res| res[cat.name] = cat.sub_tree }
+  end
 
   def root?
     parent.blank?
   end
 
   def display_name
-    # "#{number} #{name}"
     [number, name].select(&:present?).join(' ')
   end
 
   def all_seminars
-    Seminar.where id: descendants.flat_map(&:seminar_ids)
+    Seminar.joins(:categories).where('categories.id' => descendant_ids)
   end
-
-  def seminars_count
-    @seminars_count ||= all_seminars.count
-  end
-
-  # def seminars_for_sub_categories
-  #   Seminar.where(id: categories.joins(:seminars).select(:seminar_id))
-  # end
 
   def to_param
     "#{id}-#{slug}"
@@ -84,6 +80,18 @@ class Category < ApplicationRecord
   end
 
   private
+
+  def descendants_cache_key
+    "#{cache_key}/descendant_ids"
+  end
+
+  def descendant_ids
+    Rails.cache.fetch(descendants_cache_key) { puts 'cache calc'; descendants.flat_map(&:id) }
+  end
+
+  def invalidate_descendants_cache
+    self.class.find_each { |cat| Rails.cache.clear cat.descendants_cache_key }
+  end
 
   def self.next_position_for(year, parent_id)
     (where(year: year, parent_id: parent_id).maximum(:position) || 0) + 1
