@@ -22,7 +22,7 @@ class SeminarsController < ApplicationController
     authorize Seminar
     @month    = params[:month].to_i
     @seminars = current_catalog.seminars.order(:date).by_month(@month)
-      .includes(:teachers, :events, :location).all
+      .includes(:teachers, :events, :location).page(params[:page]).all
   end
 
   def calendar
@@ -31,7 +31,7 @@ class SeminarsController < ApplicationController
     first_of_month = Date.new current_catalog.year, @month
     @days_of_month = first_of_month..first_of_month.end_of_month
     @events        = Event.order(:date).joins(:seminar).includes(:seminar).where(date: @days_of_month)
-    @seminars      = Seminar.where(id: @events.select(:seminar_id))
+    @seminars      = Seminar.where(id: @events.select(:seminar_id)).page(params[:page])
   end
 
   def canceled
