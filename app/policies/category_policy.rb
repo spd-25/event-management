@@ -1,5 +1,9 @@
 class CategoryPolicy < ApplicationPolicy
 
+  def index?
+    admin? || editor? || layouter?
+  end
+
   def move?
     update?
   end

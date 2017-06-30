@@ -123,14 +123,7 @@ class SeminarsController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def seminar_params
-    attrs = %i(number year title subtitle benefit content notes price price_text key_words
-               parent_id date_text max_attendees location_id archived canceled copy_from_id)
-    attrs << {
-      teacher_ids: [],
-      events_attributes: [:id, :location_id, :date, :start_time, :end_time, :notes],
-      statistic:         AttendeeStatistic.attribute_set.map(&:name)
-    }
-    params.require(:seminar).permit(attrs)
+    params.require(:seminar).permit policy(@seminar).permitted_attributes
   end
 
   def new_seminar_params
