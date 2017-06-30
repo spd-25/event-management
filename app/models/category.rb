@@ -79,14 +79,14 @@ class Category < ApplicationRecord
     self.position = self.class.next_position_for year, parent_id
   end
 
-  private
-
   def descendants_cache_key
     "#{cache_key}/descendant_ids"
   end
 
+  private
+
   def descendant_ids
-    Rails.cache.fetch(descendants_cache_key) { puts 'cache calc'; descendants.flat_map(&:id) }
+    Rails.cache.fetch(descendants_cache_key) { descendants.flat_map(&:id) }
   end
 
   def invalidate_descendants_cache

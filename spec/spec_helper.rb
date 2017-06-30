@@ -24,7 +24,9 @@ SimpleCov.start
 RSpec.configure do |config|
 
   config.before(:all) do
-    Catalog.find_or_create_by! title: 'Catalog', year: Date.current.year
+    year = Date.current.year
+    Catalog.find_or_create_by! title: 'Catalog', year: year
+    Category.find_or_create_by! name: 'Category', year: year, number: ''
   end
 
 
