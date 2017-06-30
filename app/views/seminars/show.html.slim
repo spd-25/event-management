@@ -2,20 +2,22 @@
 
 div
   ul.nav.nav-tabs
-    li.active: a data-toggle="tab" href="#attendees"   Teilnehmer (#{@seminar.attendees.booked.count})
-    li:        a data-toggle="tab" href="#invoices"    Rechnungen
-    li:        a data-toggle="tab" href="#general"     Allgemein
-    li:        a data-toggle="tab" href="#categories"  Themen
-    li:        a data-toggle="tab" href="#events"      Termine
-    li:        a data-toggle="tab" href="#benefit"     = Seminar.human_attribute_name(:benefit)
-    li:        a data-toggle="tab" href="#content"     = Seminar.human_attribute_name(:content)
-    li:        a data-toggle="tab" href="#notes"       Bemerkungen
-    li:        a data-toggle="tab" href="#copies"      Kopien
-    li = link_to 'PRAS',       pras_seminar_url(@seminar)
-    li = link_to 'Änderungen', versions_seminar_url(@seminar)
+    - if policy(Attendee).index?
+      li = link_to "Teilnehmer (#{@seminar.attendees.count})", '#attendees',  data: { toggle: 'tab' }
+    - if policy(Invoice).index?
+      li = link_to Seminar.human_attribute_name(:invoices),    '#invoices',   data: { toggle: 'tab' }
+    li = link_to 'Allgemein',                                '#general',    data: { toggle: 'tab' }
+    li = link_to Seminar.human_attribute_name(:categories),  '#categories', data: { toggle: 'tab' }
+    li = link_to Seminar.human_attribute_name(:events),      '#events',     data: { toggle: 'tab' }
+    li = link_to Seminar.human_attribute_name(:benefit),     '#benefit',    data: { toggle: 'tab' }
+    li = link_to Seminar.human_attribute_name(:content),     '#content',    data: { toggle: 'tab' }
+    li = link_to Seminar.human_attribute_name(:notes),       '#notes',      data: { toggle: 'tab' }
+    li = link_to 'Kopien',                                   '#copies',     data: { toggle: 'tab' }
+    li = link_to 'PRAS',       pras_seminar_url(@seminar)     if policy(Seminar).pras?
+    li = link_to 'Änderungen', versions_seminar_url(@seminar) if policy(Seminar).versions?
   .tab-content
-    .tab-pane#attendees.active = render 'seminars/show/attendees'
-    .tab-pane#invoices         = render 'seminars/show/invoices'
+    .tab-pane#attendees.active = render 'seminars/show/attendees' if policy(Attendee).index?
+    .tab-pane#invoices         = render 'seminars/show/invoices'  if policy(Invoice).index?
     .tab-pane#general          = render 'seminars/show/general'
     .tab-pane#categories       = render 'seminars/show/categories', categories: current_catalog.categories.roots
     .tab-pane#events           = render 'seminars/show/events'

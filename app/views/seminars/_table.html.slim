@@ -9,27 +9,28 @@
     table.standard-table.table-clickable.table-no-border.seminars
       tbody
         - seminars.order(:number).decorate.each do |seminar|
-          tr data = {url: url_for(seminar)}
-            td.number
-              = seminar.number
-              br
-              small.text-muted
-                = seminar.dates.join('<br>').html_safe
-            td
-              = seminar.title
-              br
-              small.text-muted = seminar.subtitle
-            td
-              - if seminar.canceled
-                span.label.label-info< ausgefallen
-            td.icons
-              => fa_icon 'users', text: seminar.attendees.booked.count
-              => fa_icon 'calendar', text: seminar.events.count
-              /- if seminar.bookings.any?
-                = progress_bar_for_bookings(seminar)
-              ul.list-inline
-                - seminar.teachers.each do |teacher|
-                  li = link_to icon_for(teacher, text: teacher.name), teacher
+          - cache seminar do
+            tr data = {url: url_for(seminar)}
+              td.number
+                = seminar.number
+                br
+                small.text-muted
+                  = seminar.dates.join('<br>').html_safe
+              td
+                = seminar.title
+                br
+                small.text-muted = seminar.subtitle
+              td
+                - if seminar.canceled
+                  span.label.label-info< ausgefallen
+              td.icons
+                => fa_icon 'users', text: seminar.attendees.count
+                => fa_icon 'calendar', text: seminar.events.count
+                /- if seminar.bookings.any?
+                  = progress_bar_for_bookings(seminar)
+                ul.list-inline
+                  - seminar.teachers.each do |teacher|
+                    li = link_to icon_for(teacher, text: teacher.name), teacher
 - else
   p Keine Seminare
 

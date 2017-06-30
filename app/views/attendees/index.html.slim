@@ -30,7 +30,7 @@
             /- invoice = attendee.invoice
             - booking = attendee.booking
             tr data = {url: url_for(attendee)} class=('warning' if attendee.canceled?)
-              td = fa_icon attendee.booking.attendees.count == 1 ? 'user' : 'users'
+              td = fa_icon booking.attendees.count == 1 ? 'user' : 'users'
               td = ldate attendee.created_at, format: :short2
               td = link_to attendee.seminar.number, attendee.seminar
               td = attendee.name

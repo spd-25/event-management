@@ -8,7 +8,11 @@ class AttendeesController < ApplicationController
     authorize Attendee
     @month = (params[:month] || Date.current.month).to_i
     date_range = current_catalog.date_range @month
-    @attendees = Attendee.booked.where(created_at: date_range).includes(:seminar)
+    @attendees =
+      Attendee
+      .booked
+      .where(created_at: date_range)
+      .includes(:seminar, :company, :booking)
       .order(created_at: :desc).page(params[:page]).all
   end
 
