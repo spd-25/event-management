@@ -123,7 +123,7 @@ class SeminarsController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def seminar_params
-    params.require(:seminar).permit policy(@seminar).permitted_attributes
+    params.require(:seminar).permit policy(Seminar).permitted_attributes
   end
 
   def new_seminar_params
