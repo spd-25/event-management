@@ -55,6 +55,7 @@ class SeminarsController < ApplicationController
   def create
     authorize Seminar
     @seminar = Seminar.new seminar_params
+    @seminar.year = current_year
     copy_data_for @seminar
 
     if @seminar.save
