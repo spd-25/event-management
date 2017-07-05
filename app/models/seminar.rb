@@ -40,6 +40,13 @@ class Seminar < ApplicationRecord
       where('extract(month from date) = ?', month)
     end)
   }
+  updated_at         = "date_trunc('second', updated_at)"
+  layout_finished_at = "date_trunc('second', layout_finished_at)"
+  scope :finished,        -> { where.not(layout_finished_at: nil) }
+  scope :layout_finished, -> { finished.where("#{updated_at} <= #{layout_finished_at}") }
+  scope :layout_changed,  -> { finished.where("#{updated_at}  > #{layout_finished_at}")  }
+  scope :layout_open,     -> { where layout_finished_at: nil }
+
 
   has_paper_trail
 
@@ -70,6 +77,18 @@ class Seminar < ApplicationRecord
 
   def bookable?
     (date || Date.current) >= Date.current
+  end
+
+  def finish_layout!
+    update layout_finished_at: (DateTime.current.change(usec: 0) + 1.second)
+  end
+
+  def layout_finished?
+    layout_finished_at.present?
+  end
+
+  def can_finish?
+    !layout_finished? || updated_at.change(sec: 0) > layout_finished_at.change(sec: 0)
   end
 
   private

@@ -24,6 +24,10 @@ class SeminarPolicy < ApplicationPolicy
     admin? || editor?
   end
 
+  def layout?
+    admin? || editor? || layouter?
+  end
+
   def show?
     admin? || editor? || layouter?
   end
@@ -41,7 +45,7 @@ class SeminarPolicy < ApplicationPolicy
   end
 
   def versions?
-    admin? || editor?
+    admin? || editor? || layouter?
   end
 
   def toggle_category?
@@ -58,6 +62,10 @@ class SeminarPolicy < ApplicationPolicy
 
   def unpublish?
     publish?
+  end
+
+  def finish_layout?
+    admin? || layouter?
   end
 
   def permitted_attributes

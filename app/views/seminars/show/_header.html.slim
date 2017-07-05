@@ -12,6 +12,8 @@ ol.breadcrumb
 .page-header
   .buttons
 
+    - if @seminar.can_finish?
+      => link_to fa_icon('check', text: 'Layout fertig!'), [@seminar, action: :finish_layout], method: :patch, class: 'btn btn-info'
     - icon, text, action = @seminar.published? ? ['eye-slash', 'Deaktivieren!', :unpublish] : ['eye', 'Veröffentlichen!', :publish]
     => link_to fa_icon(icon, text: text), [@seminar, action: action], method: :patch, class: 'btn btn-danger'
     => link_to fa_icon('external-link', text: 'Externe Ansicht'), seminar_visitor_url(@seminar), class: 'btn btn-default'
