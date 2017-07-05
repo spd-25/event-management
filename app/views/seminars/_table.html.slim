@@ -8,7 +8,7 @@
   .table-responsive
     table.standard-table.table-clickable.table-no-border.seminars
       tbody
-        - seminars.order(:number).decorate.each do |seminar|
+        - seminars.order(:date).includes(:teachers, :events).decorate.each do |seminar|
           - cache seminar do
             tr data = {url: url_for(seminar)}
               td.number
