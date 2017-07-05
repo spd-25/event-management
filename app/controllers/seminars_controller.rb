@@ -15,14 +15,13 @@ class SeminarsController < ApplicationController
     categories = current_catalog.categories
     @category = categories.find_by(id: params[:id]) || categories.roots.first
     @seminars = @category ? @category.all_seminars : current_catalog.seminars
-    @seminars = @seminars.order(:number).includes(:teachers, :events, :location).page(params[:page]).all
+    @seminars = @seminars.page(params[:page])
   end
 
   def date
     authorize Seminar
     @month    = params[:month].to_i
-    @seminars = current_catalog.seminars.order(:date).by_month(@month)
-      .includes(:teachers, :events, :location).page(params[:page]).all
+    @seminars = current_catalog.seminars.by_month(@month).page(params[:page])
   end
 
   def calendar
@@ -30,7 +29,8 @@ class SeminarsController < ApplicationController
     @month         = (params[:month] || Date.current.month).to_i
     first_of_month = Date.new current_catalog.year, @month
     @days_of_month = first_of_month..first_of_month.end_of_month
-    @events        = Event.order(:date).joins(:seminar).includes(:seminar).where(date: @days_of_month)
+    @events        = Event.order(:date).joins(:seminar).includes(:seminar)
+      .where(date: @days_of_month)
     @seminars      = Seminar.where(id: @events.select(:seminar_id)).page(params[:page])
   end
 

@@ -26,7 +26,8 @@ module ApplicationHelper
   end
 
   def ldates(start_date, end_date, options = nil)
-    sep    = start_date == end_date.yesterday ? '/' : '-'
+    # sep    = start_date == end_date.yesterday ? '/' : '-'
+    sep    = '-'
     format = format_for start_date, end_date
     [ldate(start_date, format: format), sep, ldate(end_date, options)].join
   end
