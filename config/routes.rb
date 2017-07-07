@@ -25,10 +25,11 @@ Rails.application.routes.draw do
   resources :seminars do
     member do
       get :attendees, :pras, :versions
-      patch :toggle_category, :publish, :unpublish, :finish_layout
+      patch :toggle_category, :publish, :unpublish, :finish_editing, :finish_layout
     end
     collection do
-      get :date, :calendar, :canceled, :layout
+      get :date, :calendar, :canceled
+      get 'editing_status(/:scope)', action: :editing_status, as: :editing_status
       get 'category(/:id)', action: :category, as: :category
       get :search
     end

@@ -5,7 +5,7 @@ class CatalogPolicy < ApplicationPolicy
   end
 
   def index?
-    admin? || editor? || layouter?
+    editor? || layouter?
   end
 
   def show?

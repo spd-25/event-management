@@ -25,4 +25,15 @@ class SeminarDecorator < ApplicationDecorator
     has_date_text? ? stripped_date_text : formatted_events
   end
 
+  def editing_finished?
+    editing_finished_at.present?
+  end
+
+  def layout_finished?
+    layout_finished_at.present?
+  end
+
+  def can_finish_layout?
+    !layout_finished? && editing_finished?
+  end
 end

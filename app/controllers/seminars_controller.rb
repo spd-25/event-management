@@ -3,7 +3,7 @@ class SeminarsController < ApplicationController
   after_action :verify_authorized
   before_action :set_seminar,
                 only: %i(show edit update destroy attendees pras versions toggle_category
-                         publish unpublish finish_layout)
+                         publish unpublish finish_editing finish_layout)
 
   def index
     authorize Seminar
@@ -41,16 +41,12 @@ class SeminarsController < ApplicationController
     @seminars = current_catalog.seminars.canceled.page(params[:page])
   end
 
-  def layout
+  def editing_status
     authorize Seminar
-    @scope = params[:scope] || 'open'
-    seminars = current_catalog.seminars.page(params[:page])
-    @seminars =
-      case @scope
-      when 'finished' then seminars.layout_finished
-      when 'changed'  then seminars.layout_changed
-      when 'open'     then seminars.layout_open
-      end
+    @scopes   = %i(all editing_not_finished layout_open completed layout_changed)
+    @scope    = params[:scope].to_s.to_sym
+    @scope    = @scopes.first unless @scope.in? @scopes
+    @seminars = current_catalog.seminars.page(params[:page]).send @scope
   end
 
   def show
@@ -128,9 +124,14 @@ class SeminarsController < ApplicationController
     redirect_to @seminar, notice: 'Seminar deaktiviert.'
   end
 
+  def finish_editing
+    @seminar.finish_editing!
+    redirect_to @seminar, notice: 'Bearbeitung abgeschlossen'
+  end
+
   def finish_layout
     @seminar.finish_layout!
-    redirect_to @seminar, notice: 'Seminar als gesetzt markiert'
+    redirect_to @seminar, notice: 'Layout abgeschlossen'
   end
 
   private

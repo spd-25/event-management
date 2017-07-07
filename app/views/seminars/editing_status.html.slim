@@ -1,0 +1,12 @@
+= render 'seminars/index/header'
+
+.row
+  .col-md-3
+    ul.nav.nav-pills.nav-stacked
+      - @scopes.each do |scope|
+        li class=('active' if @scope == scope)
+          = link_to t(".#{scope}", count: current_catalog.seminars.send(scope).count) ,
+              editing_status_seminars_path(scope: scope)
+  .col-md-9
+    = render 'table', seminars: @seminars, header: false, with_editing_labels: true
+    .pull-right = paginate @seminars

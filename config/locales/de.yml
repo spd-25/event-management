@@ -116,6 +116,13 @@ de:
       error: Seminar konnte nicht gespeichert werden.
     new:
       title: Seminar anlegen
+    editing_status:
+      all:                  Alle (%{count})
+      editing_not_finished: in Bearbeitung (%{count})
+      layout_open:          Bereit für Layout (%{count})
+      layout_finished:      Layout fertig (%{count})
+      completed:            Bearbeitung und Layout fertig (%{count})
+      layout_changed:       nachträglich bearbeitet (%{count})
   invoices:
     single:
       title: "Rechnung %{id}"

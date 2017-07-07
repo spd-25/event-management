@@ -5,39 +5,39 @@ class SeminarPolicy < ApplicationPolicy
   end
 
   def index?
-    admin? || editor? || layouter?
+    editor? || layouter?
   end
 
   def category?
-    admin? || editor? || layouter?
+    editor? || layouter?
   end
 
   def date?
-    admin? || editor? || layouter?
+    editor? || layouter?
   end
 
   def calendar?
-    admin? || editor? || layouter?
+    editor? || layouter?
   end
 
   def canceled?
-    admin? || editor?
+    editor?
   end
 
-  def layout?
-    admin? || editor? || layouter?
+  def editing_status?
+    editor? || layouter?
   end
 
   def show?
-    admin? || editor? || layouter?
+    editor? || layouter?
   end
 
   def update?
-    admin? || editor? || (layouter? && !seminar.published? && !seminar.catalog.published?)
+    editor? || (layouter? && !seminar.published? && !seminar.catalog.published?)
   end
 
   def attendees?
-    admin? || editor?
+    editor?
   end
 
   def pras?
@@ -45,11 +45,11 @@ class SeminarPolicy < ApplicationPolicy
   end
 
   def versions?
-    admin? || editor? || layouter?
+    editor? || layouter?
   end
 
   def toggle_category?
-    admin? || editor?
+    editor?
   end
 
   def search?
@@ -64,13 +64,17 @@ class SeminarPolicy < ApplicationPolicy
     publish?
   end
 
+  def finish_editing?
+    editor?
+  end
+
   def finish_layout?
-    admin? || layouter?
+    layouter?
   end
 
   def permitted_attributes
     attrs = %i(title subtitle benefit content notes date_text location_id)
-    if admin? || editor?
+    if editor?
       attrs += %i(
         number price price_text key_words parent_id max_attendees archived canceled copy_from_id
       )

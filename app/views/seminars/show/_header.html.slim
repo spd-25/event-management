@@ -12,7 +12,9 @@ ol.breadcrumb
 .page-header
   .buttons
 
-    - if @seminar.can_finish?
+    - if policy(@seminar).finish_editing?
+      => link_to fa_icon('check', text: 'Bearbeitung fertig!'), [@seminar, action: :finish_editing], method: :patch, class: 'btn btn-info'
+    - if @seminar.can_finish_layout?
       => link_to fa_icon('check', text: 'Layout fertig!'), [@seminar, action: :finish_layout], method: :patch, class: 'btn btn-info'
     - icon, text, action = @seminar.published? ? ['eye-slash', 'Deaktivieren!', :unpublish] : ['eye', 'Veröffentlichen!', :publish]
     => link_to fa_icon(icon, text: text), [@seminar, action: action], method: :patch, class: 'btn btn-danger'

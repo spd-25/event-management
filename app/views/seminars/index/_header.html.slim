@@ -20,7 +20,8 @@ ul.nav.nav-tabs.seminar-views
   li class=('active' if params[:action] == 'calendar') = link_to 'Kalender',    calendar_seminars_path
   li class=('active' if params[:action] == 'canceled') = link_to 'Ausgefallen', canceled_seminars_path
   - unless current_catalog.published
-    li class=('active' if params[:action] == 'layout') = link_to 'Layout', layout_seminars_path
+    li class=('active' if params[:action] == 'editing_status')
+      = link_to 'Bearbeitungsstatus', editing_status_seminars_path
 
 sass:
   ul.seminar-views

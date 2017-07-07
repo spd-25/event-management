@@ -1,7 +1,7 @@
 class CategoryPolicy < ApplicationPolicy
 
   def index?
-    admin? || editor? || layouter?
+    editor? || layouter?
   end
 
   def move?

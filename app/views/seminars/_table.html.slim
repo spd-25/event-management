@@ -1,5 +1,6 @@
 - if seminars.any?
   - scope = local_assigns[:scope]
+  - editing_labels = local_assigns[:with_editing_labels]
   - unless local_assigns[:header] == false
     h4
       - count = seminars.count
@@ -20,6 +21,7 @@
                 = seminar.title
                 br
                 small.text-muted = seminar.subtitle
+              td = render 'seminars/status', seminar: seminar
               td
                 - if seminar.canceled
                   span.label.label-info< ausgefallen
