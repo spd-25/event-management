@@ -12,10 +12,21 @@ ol.breadcrumb
 .page-header
   .buttons
 
+    - if policy(@seminar).finish_editing?
+      => link_to fa_icon('check', text: 'Bearbeitung fertig!'), [@seminar, action: :finish_editing], method: :patch, class: 'btn btn-info'
+    - if @seminar.can_finish_layout?
+      => link_to fa_icon('check', text: 'Layout fertig!'), [@seminar, action: :finish_layout], method: :patch, class: 'btn btn-info'
     - icon, text, action = @seminar.published? ? ['eye-slash', 'Deaktivieren!', :unpublish] : ['eye', 'Veröffentlichen!', :publish]
     => link_to fa_icon(icon, text: text), [@seminar, action: action], method: :patch, class: 'btn btn-danger'
     => link_to fa_icon('external-link', text: 'Externe Ansicht'), seminar_visitor_url(@seminar), class: 'btn btn-default'
-    => edit_link edit_seminar_url(@seminar)
+
+    - if @seminar.layout_finished?
+      - title_msg = t('.warning_seminar_layout_finished')
+      - confirm_msg = t('.confirm_message_finished_edit')
+      => link_to fa_icon('pencil', text: t(:edit)), edit_seminar_url(@seminar),
+          class: 'btn btn-warning', title: title_msg, data: { confirm: confirm_msg }
+    - else
+      => edit_link edit_seminar_url(@seminar)
     = copy_link new_seminar_url(copy_from: @seminar.id)
     br
     = render 'seminars/status', seminar: @seminar

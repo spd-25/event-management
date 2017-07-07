@@ -3,19 +3,21 @@ class SeminarsController < ApplicationController
   after_action :verify_authorized
   before_action :set_seminar,
                 only: %i(show edit update destroy attendees pras versions toggle_category
-                         publish unpublish)
+                         publish unpublish finish_editing finish_layout)
 
   def index
     authorize Seminar
-    redirect_to action: :category
+    redirect_to action: (current_user.layouter? ? :layout : :category)
   end
 
   def category
     authorize Seminar
-    categories = current_catalog.categories
-    @category = categories.find_by(id: params[:id]) || categories.roots.first
-    @seminars = @category ? @category.all_seminars : current_catalog.seminars
-    @seminars = @seminars.page(params[:page])
+    categories              = current_catalog.categories
+    @category               = categories.find_by(id: params[:id])
+    seminars                = current_catalog.seminars
+    @uncategorized_seminars = seminars.where.not(id: seminars.joins(:categories).select(:id))
+    @seminars               = @category ? @category.all_seminars : @uncategorized_seminars
+    @seminars               = @seminars.page(params[:page])
   end
 
   def date
@@ -37,6 +39,14 @@ class SeminarsController < ApplicationController
   def canceled
     authorize Seminar
     @seminars = current_catalog.seminars.canceled.page(params[:page])
+  end
+
+  def editing_status
+    authorize Seminar
+    @scopes   = %i(all editing_not_finished layout_open completed editing_changed)
+    @scope    = params[:scope].to_s.to_sym
+    @scope    = @scopes.first unless @scope.in? @scopes
+    @seminars = current_catalog.seminars.page(params[:page]).send @scope
   end
 
   def show
@@ -67,6 +77,7 @@ class SeminarsController < ApplicationController
   end
 
   def update
+    @seminar.editing_finished_at = DateTime.current if @seminar.editing_finished?
     if @seminar.update seminar_params
       redirect_to @seminar, notice: t(:updated, model: Seminar.model_name.human)
     else
@@ -112,6 +123,16 @@ class SeminarsController < ApplicationController
   def unpublish
     @seminar.update published: false
     redirect_to @seminar, notice: 'Seminar deaktiviert.'
+  end
+
+  def finish_editing
+    @seminar.finish_editing!
+    redirect_to @seminar, notice: 'Bearbeitung abgeschlossen'
+  end
+
+  def finish_layout
+    @seminar.finish_layout!
+    redirect_to @seminar, notice: 'Layout abgeschlossen'
   end
 
   private

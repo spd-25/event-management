@@ -33,24 +33,29 @@ class Seminar < ApplicationRecord
   scope :canceled,  -> { where canceled:  true }
   scope :bookable,  -> { where 'date >= :date', date: Date.current }
   scope :by_month, lambda { |month|
-    (
-    if month.zero?
-      where(date: nil)
-    else
-      where('extract(month from date) = ?', month)
-    end)
+    month.zero? ? where(date: nil) : where('extract(month from date) = ?', month)
   }
+  scope :editing_finished,     -> { where.not editing_finished_at: nil }
+  scope :editing_not_finished, -> { where     editing_finished_at: nil }
+  scope :layout_finished,      -> { where.not layout_finished_at:  nil }
+  scope :layout_not_finished,  -> { where     layout_finished_at:  nil }
+
+  scope :layout_open,          -> { editing_finished.layout_not_finished }
+  scope :all_finished,         -> { editing_finished.layout_finished }
+  scope :completed,            -> { all_finished.where('editing_finished_at < layout_finished_at') }
+  scope :editing_changed,      -> { all_finished.where('editing_finished_at > layout_finished_at') }
+
 
   has_paper_trail
 
-  multisearchable against: %i(number title subtitle benefit content notes due_date price_text key_words)
-  pg_search_scope :external_search,
-                  against: %i(number title subtitle benefit content notes due_date price_text key_words),
-                  associated_against: {
-                    teachers: %i(first_name last_name profession),
-                    categories: %i(name),
-                    location: %i(name description address)
-                  }
+  search_fields = %i(number title subtitle benefit content notes due_date price_text key_words)
+  associated_fields = {
+    teachers:   %i(first_name last_name profession),
+    categories: %i(name),
+    location:   %i(name description address)
+  }
+  multisearchable against: search_fields
+  pg_search_scope :external_search, against: search_fields, associated_against: associated_fields
 
   def cache_key
     [super, bookable?].join '/'
@@ -70,6 +75,26 @@ class Seminar < ApplicationRecord
 
   def bookable?
     (date || Date.current) >= Date.current
+  end
+
+  def finish_editing!
+    update editing_finished_at: DateTime.current
+  end
+
+  def finish_layout!
+    update layout_finished_at: DateTime.current
+  end
+
+  def editing_finished?
+    editing_finished_at.present?
+  end
+
+  def layout_finished?
+    layout_finished_at.present?
+  end
+
+  def editing_changed?
+    editing_finished? && layout_finished? && editing_finished_at > layout_finished_at
   end
 
   private
