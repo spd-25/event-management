@@ -30,7 +30,7 @@ div
           tr
             th colspan=4
               h4
-                => User.find(version.whodunnit).username
+                => User.find_by(id: version.whodunnit)&.username
                 small title=ldate(version.created_at) = ldate(version.created_at, format: :short3)
           - YAML.load(version.object_changes).each do |field, (before, after)|
             - next if field.in?(hidden_fields) || [before, after].all?(&:blank?)

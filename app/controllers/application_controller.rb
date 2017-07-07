@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   include Pundit
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
-  rescue_from ActiveRecord::RecordNotFound , with: :page_not_found
+  rescue_from ActiveRecord::RecordNotFound, with: :page_not_found
   rescue_from ActionController::RoutingError, with: :page_not_found
 
   before_action :set_paper_trail_whodunnit
