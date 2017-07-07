@@ -43,7 +43,7 @@ class SeminarsController < ApplicationController
 
   def editing_status
     authorize Seminar
-    @scopes   = %i(all editing_not_finished layout_open completed layout_changed)
+    @scopes   = %i(all editing_not_finished layout_open completed editing_changed)
     @scope    = params[:scope].to_s.to_sym
     @scope    = @scopes.first unless @scope.in? @scopes
     @seminars = current_catalog.seminars.page(params[:page]).send @scope
@@ -77,6 +77,7 @@ class SeminarsController < ApplicationController
   end
 
   def update
+    @seminar.editing_finished_at = DateTime.current if @seminar.editing_finished?
     if @seminar.update seminar_params
       redirect_to @seminar, notice: t(:updated, model: Seminar.model_name.human)
     else

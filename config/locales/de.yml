@@ -122,7 +122,7 @@ de:
       layout_open:          Bereit für Layout (%{count})
       layout_finished:      Layout fertig (%{count})
       completed:            Bearbeitung und Layout fertig (%{count})
-      layout_changed:       nachträglich bearbeitet (%{count})
+      editing_changed:      nachträglich bearbeitet (%{count})
   invoices:
     single:
       title: "Rechnung %{id}"

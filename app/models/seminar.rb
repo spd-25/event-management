@@ -43,7 +43,7 @@ class Seminar < ApplicationRecord
   scope :layout_open,          -> { editing_finished.layout_not_finished }
   scope :all_finished,         -> { editing_finished.layout_finished }
   scope :completed,            -> { all_finished.where('editing_finished_at < layout_finished_at') }
-  scope :layout_changed,       -> { all_finished.where('editing_finished_at > layout_finished_at') }
+  scope :editing_changed,      -> { all_finished.where('editing_finished_at > layout_finished_at') }
 
 
   has_paper_trail
@@ -83,6 +83,18 @@ class Seminar < ApplicationRecord
 
   def finish_layout!
     update layout_finished_at: DateTime.current
+  end
+
+  def editing_finished?
+    editing_finished_at.present?
+  end
+
+  def layout_finished?
+    layout_finished_at.present?
+  end
+
+  def editing_changed?
+    editing_finished? && layout_finished? && editing_finished_at > layout_finished_at
   end
 
   private

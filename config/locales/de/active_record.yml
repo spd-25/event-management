@@ -103,6 +103,7 @@ de:
         bookings: Anmeldungen
         date_text: Termine (Text)
         invoices: Rechnungen
+        editing_finished_at: Bearbeitung fertiggestellt
         layout_finished_at: Layout fertiggestellt
         number: Nummer
         max_attendees: Max. Anzahl Teilnehmer

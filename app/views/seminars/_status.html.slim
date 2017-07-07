@@ -2,6 +2,9 @@
   span.label.label-success>(title=ldate(seminar.editing_finished_at)) Bearbeitung abgeschlossen
 - if seminar.layout_finished?
   span.label.label-success>(title=ldate(seminar.layout_finished_at)) Layout fertig
+- if seminar.editing_changed?
+  span.label.label-warning> nachträglich bearbeitet
+
 - if seminar.archived
   span.label.label-warning archiviert
 - elsif seminar.published

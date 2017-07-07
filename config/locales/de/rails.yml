@@ -228,3 +228,7 @@ de:
       age_gt_65: "> 65"
       age_lt_16: "< 16"
       age_unknown: unbekannt
+    show:
+      header:
+        warning_seminar_layout_finished: "Für dieses Seminar wurde der Status schon auf 'Layout fertig gesetzt.'"
+        confirm_message_finished_edit: "Soll das Seminar wirklich bearbeitet werden, obwohl es schon als 'Layout fertig' markiert wurde?"
