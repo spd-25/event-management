@@ -77,21 +77,15 @@ class Seminar < ApplicationRecord
     (date || Date.current) >= Date.current
   end
 
-  def finish_editing!
-    update editing_finished_at: DateTime.current
-  end
-
-  def finish_layout!
-    update layout_finished_at: DateTime.current
-  end
-
   def editing_finished?
     editing_finished_at.present?
   end
+  alias editing_finished editing_finished?
 
   def layout_finished?
     layout_finished_at.present?
   end
+  alias layout_finished layout_finished?
 
   def editing_changed?
     editing_finished? && layout_finished? && editing_finished_at > layout_finished_at

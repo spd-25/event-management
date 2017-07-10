@@ -7,7 +7,7 @@ class SeminarsController < ApplicationController
 
   def index
     authorize Seminar
-    redirect_to action: (current_user.layouter? ? :layout : :category)
+    redirect_to action: :category
   end
 
   def category
@@ -43,7 +43,7 @@ class SeminarsController < ApplicationController
 
   def editing_status
     authorize Seminar
-    @scopes   = %i(all editing_not_finished layout_open completed editing_changed)
+    @scopes   = %i(all editing_not_finished layout_open editing_changed completed)
     @scope    = params[:scope].to_s.to_sym
     @scope    = @scopes.first unless @scope.in? @scopes
     @seminars = current_catalog.seminars.page(params[:page]).send @scope
@@ -126,13 +126,15 @@ class SeminarsController < ApplicationController
   end
 
   def finish_editing
-    @seminar.finish_editing!
-    redirect_to @seminar, notice: 'Bearbeitung abgeschlossen'
+    new_finished_date = @seminar.editing_finished? ? nil : DateTime.current
+    @seminar.update editing_finished_at: new_finished_date
+    redirect_to @seminar, notice: 'Erfolgreich geändert'
   end
 
   def finish_layout
-    @seminar.finish_layout!
-    redirect_to @seminar, notice: 'Layout abgeschlossen'
+    new_finished_date = @seminar.layout_finished? ? nil : DateTime.current
+    @seminar.update layout_finished_at: new_finished_date
+    redirect_to @seminar, notice: 'Erfolgreich geändert'
   end
 
   private
