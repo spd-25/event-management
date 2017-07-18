@@ -5,9 +5,11 @@ class SearchController < ApplicationController
   def index
     authorize :search
     @query = params[:q]
-    @result = PgSearch.multisearch(@query).to_a.map(&:searchable)
+    @result = PgSearch.multisearch(@query).includes(:searchable).to_a.map(&:searchable)
+    @result = @result.select { |s| s.respond_to?(:year) ? s.year == current_year : true }
     if @result.count == 1
-      redirect_to @result.first.is_a?(Attendee) ? @result.first.booking.seminar : @result.first
+      one_hit = @result.first
+      redirect_to one_hit.is_a?(Attendee) ? one_hit.booking.seminar : one_hit
     end
   end
 end
