@@ -9,7 +9,7 @@ wb.add_worksheet(name: "Seminarliste #{current_year}") do |sheet|
   header = %w(Seminar-Nr. Seminar-Titel Seminar-Datum Referent Seminarort Teilnehmergebühren Teilnehmeranzahl)
   sheet.add_row header, style: bold
 
-  @seminars.includes(:location, :teachers).each do |seminar|
+  @seminars.order(:date, :number).includes(:location, :teachers).each do |seminar|
     sheet.add_row [
       seminar.number,
       seminar.title,
