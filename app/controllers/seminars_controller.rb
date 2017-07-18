@@ -7,7 +7,10 @@ class SeminarsController < ApplicationController
 
   def index
     authorize Seminar
-    redirect_to action: :category
+    respond_to do |format|
+      format.html { redirect_to action: :category }
+      format.xlsx { @seminars = current_catalog.seminars }
+    end
   end
 
   def category
