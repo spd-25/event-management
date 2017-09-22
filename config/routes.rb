@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   get 'nachricht/:booking_id', to: 'buchung#show', as: :buchung_show
 
   root to: 'visitors#index'
-  get 'seminare(/:category_id)', to: 'seminare#index', as: :seminare_visitor
+  get 'seminare(/:year(/:category_id))', to: 'seminare#index', as: :seminare_visitor
   get 'seminar/:id', to: 'seminare#show', as: :seminar_visitor
   get 'suche', to: 'seminare#search', as: :seminar_search
 

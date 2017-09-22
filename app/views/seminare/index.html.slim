@@ -1,50 +1,48 @@
 - content_for :page_title, 'Seminarübersicht'
 - content_for :back_link, link_to('&laquo; zur Seminarübersicht'.html_safe, seminare_visitor_url) if @query.present?
-- if @category
-  - root = @category.root? ? @category : @category.parent
-  .row.categories
-    .col-md-6 = render 'categories', categories: @categories,   current_category: root
-    .col-md-6 = render 'categories', categories: root.children, current_category: @category
 
-table.seminars.table
-  tbody
-    - @seminars.each do |seminar|
-      - cache seminar do
-        tr class=('time-over' unless seminar.bookable?)
-          td.number
-            = link_to seminar.number, seminar_visitor_url(seminar)
-            br
-            small.text-muted = seminar.year
-          td.title = link_to seminar.title, seminar_visitor_url(seminar)
-          td = seminar.location&.name
-          td = seminar.teachers.map(&:name).join(', ')
-          td = ldate(seminar.events.first&.date)
+
+ul.nav.nav-tabs.years
+  - @published_years.each do |year|
+    li class=('active' if year == @year.to_i) = link_to year, seminare_visitor_path(year: year)
+.row
+  .col-md-4
+    = render 'seminare/categories', categories: @catalog.categories.roots, current_path: @category&.path.to_a
+  .col-md-8
+    .table-responsive
+      table.seminars.table.table-hover
+        tbody
+          - @seminars.each do |seminar|
+            - cache seminar do
+              tr class=('time-over' unless seminar.bookable?)
+                td.number
+                  = link_to seminar.number, seminar_visitor_url(seminar)
+                  br
+                  small.text-muted = seminar.year
+                td.title
+                  = link_to seminar.title, seminar_visitor_url(seminar)
+                  br
+                  small.text-muted = seminar.location&.name
+                td = seminar.teachers.map(&:name).join(', ')
+                td = ldate(seminar.events.first&.date)
 
 sass:
-  form
-    input
-      input
-        border-radius: 14px
-        font-size: large
-
-  .categories
-    .cat-number
-      position: absolute
-      left: 7px
-    .cat-name
-      margin-left: 30px
-  table.seminars
-    margin: 30px 0 50px
-    tr.time-over
-      color: gray
-      font-style: italic
-    td
-      &.number
-        width: 100px
-      &.title
-        width: 280px
-
-  .categories
+  ul.nav-tabs.years
+    margin-bottom: 20px
+  ul.categories
+    overflow: hidden
+    a
+      padding-right: 8px
+    li
+      border-top: 1px solid lightgray
+      &.active
+        border-top: none
+        > a
+          background-color: #449dea
     ul
+      margin: 2px 0 7px 20px
       a
         padding: 3px 8px
+        font-size: small
+  table.seminars
+    background-color: white
