@@ -25,7 +25,7 @@ RSpec.configure do |config|
 
   config.before(:all) do
     year = Date.current.year
-    Catalog.find_or_create_by! title: 'Catalog', year: year
+    Catalog.find_or_create_by! title: 'Catalog', year: year, published: true
     Category.find_or_create_by! name: 'Category', year: year, number: ''
   end
 

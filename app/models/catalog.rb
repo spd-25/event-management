@@ -6,6 +6,7 @@ class Catalog < ApplicationRecord
   has_many :seminars,   foreign_key: :year, primary_key: :year, inverse_of: :catalog
 
   default_scope -> { order :year }
+  scope :published, -> { where published: true }
 
   def date_range(month = nil)
     if month

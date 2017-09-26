@@ -3,11 +3,13 @@ class SeminareController < ApplicationController
   layout 'external'
 
   def index
-    @categories = current_catalog.categories.roots.includes(children: { children: :children })
-    category_id = params[:category_id]
-    @category   = category_id ? current_catalog.categories.find(category_id) : @categories.first
-    @seminars   = @category ? @category.seminars : current_catalog.seminars
-    @seminars   = @seminars.published.order('events.date').includes(:teachers, :events, :location).all
+    @year            = params[:year].to_i
+    @published_years = Catalog.published.pluck(:year).select { |year| year >= Date.current.year }
+    redirect_to(seminare_visitor_path(year: @published_years.first)) and return unless @year.in?(@published_years)
+    @catalog  = Catalog.find_by(year: @year)
+    @category = @catalog.categories.find_by(id: params[:category_id]) || @catalog.categories.roots.first
+    @seminars = (@category ? @category.all_seminars : Seminar).published
+    # @seminars = @seminars.page(params[:page])
   end
 
   def show
@@ -18,7 +20,7 @@ class SeminareController < ApplicationController
 
   def search
     @query = params[:q]
-    @seminars = Seminar.published.external_search @query
-    render :index
+    @published_years = Catalog.published.pluck(:year).select { |year| year >= Date.current.year }
+    @seminars = Seminar.published.where(year: @published_years).external_search @query
   end
 end
