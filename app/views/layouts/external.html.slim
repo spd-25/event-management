@@ -28,7 +28,7 @@ html
         .row.hidden-print
           .col-md-6 = content_for :back_link if content_for? :back_link
           .col-md-6.search
-            form.form action=seminar_search_url
+            form.search.form action=seminar_search_url
               .form-group
                 input.form-control type="text" name="q" placeholder="Suche" value=params[:q]
         == render 'layouts/messages'
@@ -47,6 +47,11 @@ html
 
         .content
           padding: 20px
+
+          form.search.form
+            input.form-control
+              border-radius: 15px
+              font-size: large
     @media print
       body
         background: white

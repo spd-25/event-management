@@ -1,7 +1,7 @@
 - content_for :page_title, @seminar.title
 - content_for :page_description, "#{strip_tags(@seminar.content)} #{strip_tags(@seminar.benefit)} #{strip_tags(@seminar.notes)}"
 - index_url = seminare_visitor_path year: @seminar.year, category_id: @seminar.categories.first&.id
-- content_for :back_link, link_to('&laquo; zur Seminarübersicht'.html_safe, index_url)
+- content_for :back_link, link_to('&laquo; zur Seminarübersicht'.html_safe, index_url, class: 'btn btn-default')
 
 .row
   .col-md-8
