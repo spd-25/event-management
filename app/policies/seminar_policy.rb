@@ -73,7 +73,7 @@ class SeminarPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    attrs = %i(title subtitle benefit content notes date_text location_id)
+    attrs = %i(title subtitle benefit content notes date_text location_id editor_id)
     if editor?
       attrs += %i(
         number price price_text key_words parent_id max_attendees archived canceled copy_from_id

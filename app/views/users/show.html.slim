@@ -4,3 +4,6 @@
   h2 = title_for @user
 
 = render 'form'
+
+- if @user.editor?
+  = render 'seminars/table', seminars: @user.edited_seminars

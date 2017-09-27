@@ -48,6 +48,9 @@ ol.breadcrumb
     small
       = @seminar.dates.join(', ')
       =< @seminar.teachers.map(&:name).join(', ')
+    - if (editor = @seminar.editor)
+      br
+      small = link_to editor.name, editor
 
 coffee:
   $ ->

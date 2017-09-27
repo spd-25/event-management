@@ -2,6 +2,7 @@ class Seminar < ApplicationRecord
   include PgSearch
 
   belongs_to :catalog, foreign_key: :year, primary_key: :year, inverse_of: :seminars
+  belongs_to :editor, class_name: 'User'
   has_and_belongs_to_many :teachers
   has_and_belongs_to_many :categories
   belongs_to :location, optional: true
@@ -24,6 +25,7 @@ class Seminar < ApplicationRecord
   validates :number, :title, presence: true
   validates :number, uniqueness: true
   # validate :validate_events
+  validate :editor_is_editor
 
   after_save :set_date
 
@@ -93,6 +95,10 @@ class Seminar < ApplicationRecord
   end
 
   private
+
+  def editor_is_editor
+    errors.add(:editor, :must_be_an_editor) if editor.present? && !editor.editor?
+  end
 
   def validate_events
     errors.add(:events, :too_few) if events.empty?
