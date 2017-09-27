@@ -4,24 +4,5 @@ ul.nav.nav-tabs.years
   - @published_years.each do |year|
     li class=('active' if year == @year.to_i) = link_to year, seminare_visitor_path(year: year)
 .row
-  .col-md-3 = render 'seminare/categories', categories: @catalog.categories.roots, current_path: @category&.path.to_a
-  .col-md-9 = render 'table'
-
-sass:
-  ul.nav-tabs.years
-    margin-bottom: 20px
-  ul.categories
-    overflow: hidden
-    a
-      padding-right: 8px
-    li
-      border-top: 1px solid lightgray
-      &.active
-        border-top: none
-        > a
-          background-color: #449dea
-    ul
-      margin: 2px 0 7px 20px
-      a
-        padding: 3px 8px
-        font-size: small
+  .col-md-4 = render 'categories', categories: @catalog.categories.roots, current_path: @category&.path.to_a
+  .col-md-8 = render 'seminars_list', seminars: @seminars

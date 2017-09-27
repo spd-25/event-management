@@ -52,6 +52,37 @@ html
             input.form-control
               border-radius: 16px
               font-size: large
+          ul.nav-tabs.years
+            margin-bottom: 20px
+          ul.categories
+            overflow: hidden
+            a
+              padding-right: 8px
+            li
+              border-top: 1px solid lightgray
+              &.active
+                border-top: none
+                > a
+                  background-color: #449dea
+            ul
+              margin: 2px 0 7px 20px
+              a
+                padding: 3px 8px
+                font-size: small
+          table.seminars
+            background-color: white
+            &.overdue
+              color: gray
+              font-style: italic
+              a
+                color: gray
+            td
+              &.number
+                width: 100px
+              &.teachers
+                min-width: 200px
+              &.date
+                width: 100px
     @media print
       body
         background: white

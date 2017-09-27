@@ -32,6 +32,7 @@ class Seminar < ApplicationRecord
   scope :published, -> { where published: true }
   scope :canceled,  -> { where canceled:  true }
   scope :bookable,  -> { where 'date >= :date', date: Date.current }
+  scope :overdue,   -> { where 'date < :date',  date: Date.current }
   scope :by_month, lambda { |month|
     month.zero? ? where(date: nil) : where('extract(month from date) = ?', month)
   }
