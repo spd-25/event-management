@@ -1,20 +1,13 @@
 .table-responsive
   table.seminars.table.table-hover
     tbody
-      - @seminars.includes(:teachers, :events).each do |seminar|
+      - @seminars.order(:date).includes(:teachers).each do |seminar|
         - cache seminar do
           tr class=('time-over' unless seminar.bookable?)
-            td.number
-              = link_to seminar.number, seminar_visitor_url(seminar)
-              br
-              small.text-muted = seminar.year
-            td.title
-              = link_to seminar.title, seminar_visitor_url(seminar)
-              br
-              small.text-muted = seminar.location&.name
-            td = seminar.teachers.map(&:name).join(', ')
-            /td = ldate(seminar.events.first&.date)
-            td = ldate(seminar.date)
+            td.number   = link_to seminar.number, seminar_visitor_url(seminar)
+            td.title    = link_to seminar.title,  seminar_visitor_url(seminar)
+            td.teachers = seminar.teachers.map(&:name).join('<br>').html_safe
+            td.date     = ldate(seminar.date)
 sass:
   table.seminars
     background-color: white
@@ -24,5 +17,7 @@ sass:
     td
       &.number
         width: 100px
-      &.title
-        width: 280px
+      &.teachers
+        min-width: 200px
+      &.date
+        width: 100px
