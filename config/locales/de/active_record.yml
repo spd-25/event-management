@@ -118,6 +118,7 @@ de:
         events: Termine
         price_text: Gebühr
         statistic: PRAS
+        editor: Bildungsreferent*in
       teacher:
         seminars: Seminare
       user:
@@ -138,3 +139,9 @@ de:
         confirmed_at: Bestätigt am
         confirmation_sent_at: Bestätigung gesendet am
         unconfirmed_email: Unbestätigte Email
+    errors:
+      models:
+        seminar:
+          attributes:
+            editor:
+              must_be_an_editor: muss ein(e) Bildungsreferent*in sein
