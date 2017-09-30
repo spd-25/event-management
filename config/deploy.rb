@@ -3,7 +3,7 @@ set :repo_url, 'git@github.com:fs-sozialwesen/event-management'
 
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
 
-set :chruby_ruby, 'ruby-2.3.4'
+set :chruby_ruby, 'ruby-2.4.2'
 
 # set :deploy_to, '/var/www/events'
 set :scm, :git
