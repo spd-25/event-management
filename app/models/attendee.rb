@@ -7,6 +7,7 @@ class Attendee < ApplicationRecord
   belongs_to :booking, inverse_of: :attendees
   belongs_to :invoice, inverse_of: :attendees
   belongs_to :company, inverse_of: :attendees
+  belongs_to :canceled_by, class_name: 'User'
 
   acts_as_addressable
   acts_as_contactable

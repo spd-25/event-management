@@ -38,8 +38,9 @@ Rails.application.routes.draw do
     put :move, on: :member
   end
   resources :bookings,   only: %i(show new create)
-  resources :attendees,  only: %i(index show update destroy) do
+  resources :attendees,  only: %i(index show update) do
     get :cancel
+    post :cancel, action: :destroy
   end
   resources :invoices,   except: :edit
   resources :companies,  except: :edit
