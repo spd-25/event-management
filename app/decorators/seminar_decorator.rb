@@ -28,4 +28,10 @@ class SeminarDecorator < ApplicationDecorator
   def can_finish_layout?
     !layout_finished? && editing_finished?
   end
+
+  def booking_address
+    return h.buchung_new_url(seminar_id: id) unless external_booking_address.present?
+    return external_booking_address unless external_booking_address.include?('@')
+    "mailto:#{external_booking_address}"
+  end
 end

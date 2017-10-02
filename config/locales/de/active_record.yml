@@ -119,6 +119,7 @@ de:
         price_text: Gebühr
         statistic: PRAS
         editor: Bildungsreferent*in
+        external_booking_address: Externe Buchung über
       teacher:
         seminars: Seminare
       user:

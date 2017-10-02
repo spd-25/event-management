@@ -47,6 +47,7 @@
         .row
           .col-md-4 = f.input :price
           .col-md-8 = f.input :price_text, input_html: { class: 'editor' }
+        .row: .col-md-4 = f.input :external_booking_address
         = f.input :key_words
 
       #events.tab-pane role="tabpanel"
