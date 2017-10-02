@@ -31,8 +31,15 @@ class AttendeesController < ApplicationController
   end
 
   def destroy
-    @attendee.canceled!
-    redirect_to (session[:back_url] || @attendee.seminar), notice: t('attendees.cancel.notice')
+    cancellation_reason = params.require(:attendee).permit(:cancellation_reason)[:cancellation_reason]
+    if cancellation_reason.present?
+      @attendee.canceled!
+      @attendee.update cancellation_reason: cancellation_reason, canceled_by: current_user
+      redirect_to (session[:back_url] || @attendee.seminar), notice: t('attendees.cancel.notice')
+    else
+      @attendee.errors.add :cancellation_reason, :must_be_filled
+      render :cancel
+    end
   end
 
   private
@@ -46,12 +53,12 @@ class AttendeesController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def attendee_params
-    attrs = %i(first_name last_name
+    attrs = %i[first_name last_name
      member member_institution graduate school year terms_of_service
      contact_person contact_email contact_phone contact_mobile contact_fax comments
      company_title company_street company_zip company_city company_id
      invoice_title invoice_street invoice_zip invoice_city
-   )
+   ]
     params.require(:attendee).permit(attrs)
   end
 

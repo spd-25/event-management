@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171002110141) do
+ActiveRecord::Schema.define(version: 20171002124821) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,8 @@ ActiveRecord::Schema.define(version: 20171002110141) do
     t.jsonb "company_address", default: "{}"
     t.jsonb "invoice_address", default: "{}"
     t.text "comments"
+    t.text "cancellation_reason"
+    t.integer "canceled_by_id"
     t.index ["booking_id"], name: "index_attendees_on_booking_id"
     t.index ["company_id"], name: "index_attendees_on_company_id"
     t.index ["invoice_id"], name: "index_attendees_on_invoice_id"

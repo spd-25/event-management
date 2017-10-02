@@ -69,6 +69,8 @@ de:
         booking: Anmeldung
         seminar: Seminar
         invoice_address: Rechnungsadresse
+        cancellation_reason: Stornierungsgrund
+        canceled_by: storniert durch
       booking:
         company: Anmeldung
         company_name: Firma
@@ -142,6 +144,10 @@ de:
         unconfirmed_email: Unbestätigte Email
     errors:
       models:
+        attendee:
+          attributes:
+            cancellation_reason:
+              must_be_filled: muss angegeben werden
         seminar:
           attributes:
             editor:

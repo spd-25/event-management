@@ -3,7 +3,7 @@
   h2 = t('.title')
 
 .row
-  .col-md-4
+  .col-md-5
     = panel_box_with_table title: Booking.model_name.human do
       table.table.table-condensed
         tr
@@ -42,7 +42,7 @@
                 p #{t('attendees.form.graduate')}: #{@attendee.school} #{@attendee.year}
 
 
-  .col-md-4
+  .col-md-5
 
     = panel_box_with_table title: Seminar.model_name.human do
       table.table.table-condensed
@@ -65,10 +65,11 @@
           th = Seminar.human_attribute_name :price_text
           td #{@seminar.price_text.html_safe} <br><br>
 
-.row.action-buttons
-  .col-md-8
-    .pull-right
-      => link_to t(:cancel), (session[:back_url] || @attendee.seminar), class: 'btn btn-default'
-      => link_to t('.button_label'),  @attendee,  method: :delete, data: { confirm: t('.confirm') }, class: 'btn btn-danger'
-      /- if @attendee.booking.attendees.count > 1
-        = link_to t('.button_all_label'),  @attendee,  method: :delete, data: { confirm: t('.confirm_all') }, class: 'btn btn-danger'
+.row
+  .col-md-10
+    = simple_form_for @attendee, url: attendee_cancel_url(@attendee), method: :post do |f|
+      = f.input :cancellation_reason, as: :text, input_html: { rows: 5 }
+      .action-buttons
+        .pull-right
+          => link_to t(:cancel), (session[:back_url] || @seminar), class: 'btn btn-default'
+          = f.submit t(:save), class: 'btn btn-primary'
