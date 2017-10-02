@@ -73,15 +73,13 @@ class SeminarPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    attrs = %i(title subtitle benefit content notes date_text location_id editor_id)
+    attrs = %i[title subtitle benefit content notes date_text location_id editor_id external_booking_address]
     if editor?
-      attrs += %i(
-        number price price_text key_words parent_id max_attendees archived canceled copy_from_id
-      )
+      attrs += %i[number price price_text key_words parent_id max_attendees archived canceled copy_from_id]
 
       attrs << {
         teacher_ids: [],
-        events_attributes: [:id, :location_id, :date, :start_time, :end_time, :notes],
+        events_attributes: %i[id location_id date start_time end_time notes],
         statistic:         AttendeeStatistic.attribute_set.map(&:name)
       }
     end

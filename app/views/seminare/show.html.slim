@@ -64,7 +64,7 @@
 - if @seminar.bookable?
   .row.action-buttons
     .col-md-4
-      = link_to 'Anmelden', buchung_new_url(seminar_id: @seminar.id), class: 'btn btn-primary btn-block btn-lg'
+      = link_to 'Anmelden', @seminar.booking_address, class: 'btn btn-primary btn-block btn-lg'
 - else
   .row
     .col-md-6

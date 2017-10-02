@@ -23,6 +23,7 @@ window.Initializer =
       toolbar:
         fa: true
         html: true
+        link: false
       locale: "de-DE"
 
   initSelect2: ->
