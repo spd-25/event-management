@@ -1,0 +1,21 @@
+.page-header
+  .buttons
+    = list_link User
+  h2 Rollen und Rechte
+
+.table-responsive
+  table.table.table-bordered.table-hover
+    thead
+      tr
+        th
+        - @roles.each do |role|
+          th = t("users.roles.#{role}")
+    tbody
+      - @access_rights.each do |model_name, actions|
+        tr
+          th colspan=(@roles.size + 1) #{model_name}
+        - actions.each do |title, role_rights|
+          tr
+            td - #{title}
+            - role_rights.each do |_role, right|
+              td = bool_icon right

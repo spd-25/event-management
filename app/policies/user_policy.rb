@@ -4,8 +4,16 @@ class UserPolicy < ApplicationPolicy
     update?
   end
 
+  def seminars?
+    editor?
+  end
+
   def update?
     admin? || user == record
+  end
+
+  def access_rights?
+    editor?
   end
 
   class Scope < Scope

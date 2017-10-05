@@ -184,4 +184,5 @@ module ApplicationHelper
     return value.html_safe        if value.is_a?(String)
     value.to_s
   end
+
 end

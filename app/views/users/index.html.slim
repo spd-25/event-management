@@ -1,6 +1,8 @@
 - page_title_for @users
 .page-header
-  .buttons = new_link new_user_path
+  .buttons
+    = link_to 'Zugriffsrechte', access_rights_users_url, class: 'btn btn-default'
+    = new_link new_user_path
   h2 = title_for @users
 
 .table-responsive
@@ -17,3 +19,4 @@
           td = user.email
           td = t("users.roles.#{user.role}")
           td = ldate user.last_sign_in_at
+
