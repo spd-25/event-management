@@ -8,6 +8,10 @@ class UserPolicy < ApplicationPolicy
     admin? || user == record
   end
 
+  def access_rights?
+    admin? || editor?
+  end
+
   class Scope < Scope
     def resolve
       scope
