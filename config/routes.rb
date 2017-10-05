@@ -17,7 +17,10 @@ Rails.application.routes.draw do
 
   get 'search', to: 'search#index', as: :search
 
-  resources(:users,     except: :edit) { get :access_rights, on: :collection }
+  resources(:users,     except: :edit) do
+    get :access_rights, on: :collection
+    get :seminars,      on: :member
+  end
   resources :locations, except: :edit
   resources(:teachers,  except: :edit) { get :seminars, on: :member }
   resources :seminars do

@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
   after_action :verify_authorized
-  before_action :set_user, only: [:show, :update, :destroy]
+  before_action :set_user, only: %i[show update destroy seminars]
 
   def index
     authorize User
@@ -14,6 +14,11 @@ class UsersController < ApplicationController
   end
 
   def show
+  end
+
+  def seminars
+    redirect_to(users_path) and return unless @user.editor?
+    @seminars = @user.edited_seminars.order(:date)
   end
 
   def create
