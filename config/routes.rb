@@ -47,4 +47,5 @@ Rails.application.routes.draw do
   resources :companies, except: :edit
   resources(:catalogs) { get :make_current, on: :member }
 
+  resources :feedbacks, only: %i[new create]
 end

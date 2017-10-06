@@ -1,0 +1,36 @@
+= link_to 'Feedback', new_feedback_url, class: 'feedback btn btn-info', remote: true
+
+#feedback-modal.modal.fade role="dialog" tabindex="-1"
+  .modal-dialog role="document"
+    .modal-content
+      .modal-header
+        button.close aria-label="Close" data-dismiss="modal" type="button"
+          span aria-hidden="true"  &times;
+        h4.modal-title Feedback-Formular
+      .modal-body
+      .modal-footer
+        button.btn.btn-default data-dismiss="modal" type="button"  Abbrechen
+        button.btn.btn-primary.save type="button" Senden
+
+sass:
+  a.feedback
+    position: fixed
+    bottom: 75px
+    right: -25px
+    transform: rotate(-90deg)
+  #feedback-modal
+    .modal-body
+      .action-buttons
+        display: none
+
+coffee:
+  $ ->
+    feedbackModal = $('#feedback-modal')
+    $("a.feedback[data-remote]").on "ajax:success", (e, data) ->
+      feedbackModal.find('.modal-body').html(data)
+      feedbackModal.modal('show')
+    feedbackModal.find('.modal-footer button.save').click ->
+      form = feedbackModal.find(".modal-body form[data-remote]")
+      form.on "ajax:success", (e, data) -> feedbackModal.modal('hide')
+      form.on "ajax:error",   (e, xhr)  -> feedbackModal.find('.modal-body').html xhr.responseText
+      form.submit()

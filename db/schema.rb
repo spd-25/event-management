@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171002124821) do
+ActiveRecord::Schema.define(version: 20171006141337) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -125,6 +125,16 @@ ActiveRecord::Schema.define(version: 20171002124821) do
     t.datetime "updated_at", null: false
     t.index ["location_id"], name: "index_events_on_location_id"
     t.index ["seminar_id"], name: "index_events_on_seminar_id"
+  end
+
+  create_table "feedbacks", force: :cascade do |t|
+    t.string "subject"
+    t.text "message"
+    t.string "path"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_feedbacks_on_user_id"
   end
 
   create_table "invoices", id: :serial, force: :cascade do |t|
@@ -278,6 +288,7 @@ ActiveRecord::Schema.define(version: 20171002124821) do
   add_foreign_key "categories_seminars", "seminars", on_delete: :cascade
   add_foreign_key "events", "locations"
   add_foreign_key "events", "seminars", on_delete: :cascade
+  add_foreign_key "feedbacks", "users"
   add_foreign_key "invoices", "seminars"
   add_foreign_key "seminars", "locations"
   add_foreign_key "seminars", "seminars", column: "parent_id"

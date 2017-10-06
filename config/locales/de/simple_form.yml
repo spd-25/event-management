@@ -60,6 +60,9 @@ de:
         mobile: Mobiltelefon
         phone: Telefon
         fax: Fax
+      feedback:
+        subject: Betreff
+        message: Nachricht
     hints:
       seminar:
         date_text: 'Wenn dieses Feld gefüllt ist, wird der Inhalt anstatt der Termine angezeigt (z.B. "Termin noch offen").'
