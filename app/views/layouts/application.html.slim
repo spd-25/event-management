@@ -12,3 +12,5 @@ html
     main[role="main"]
       == render 'layouts/messages'
       == yield
+      - if current_user && controller_name != 'feedbacks'
+        == render 'layouts/feedback'

@@ -4,6 +4,10 @@ defaults: &defaults
   bar: 123
   devise_secret_key: 76507c82b86156a1e5a45adb418fb6af832a449ecdf7651b5b991b102d98d4bdf920d88f501a0eab9a857c946eddedbc624952b5877000c08eb84ca037b2c9c9
   rollbar_token: '<%= ENV['ROLLBAR_TOKEN'] %>'
+
+
+  trello_board_email: 'some=trello-board@email.de'
+
 development:
   <<: *defaults
 
