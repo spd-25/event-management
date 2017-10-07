@@ -9,7 +9,7 @@
   .table-responsive
     table.standard-table.table-clickable.table-no-border.seminars
       tbody
-        - seminars.order(:date).includes(:teachers, :events).decorate.each do |seminar|
+        - seminars.order(:date).includes(:catalog, :teachers, :events).decorate.each do |seminar|
           - attendees_count = seminar.attendees.count
           - events_count = seminar.events.count
           - cache [seminar, attendees_count, events_count] do
@@ -24,9 +24,6 @@
                 br
                 small.text-muted = seminar.subtitle
               td = render 'seminars/status', seminar: seminar
-              td
-                - if seminar.canceled
-                  span.label.label-info< ausgefallen
               td.icons
                 => fa_icon 'users', text: attendees_count
                 => fa_icon 'calendar', text: events_count

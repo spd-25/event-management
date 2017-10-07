@@ -9,7 +9,7 @@ html
   body
     header
       == render 'layouts/navigation'
-    main.container-fluid[role="main"]
+    main.container[role="main"]
       == render 'layouts/messages'
       == yield
       - if current_user && controller_name != 'feedbacks'

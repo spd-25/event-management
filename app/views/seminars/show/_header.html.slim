@@ -25,7 +25,7 @@ ol.breadcrumb
       => edit_link edit_seminar_url(@seminar)
     = copy_link new_seminar_url(copy_from: @seminar.id)
     br
-    = render 'seminars/status', seminar: @seminar, without_editing_status: true
+    = render 'seminars/status', seminar: @seminar
     br
     = simple_form_for @seminar, url: [@seminar, action: :finish_editing], method: :patch do |f|
       = f.input :editing_finished, as: :boolean, label: 'Bearbeitung abgeschlossen',

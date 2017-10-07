@@ -1,34 +1,30 @@
-h4 Rechnungen zu schreiben
-.table-responsive
-  table.standard-table
-    thead
-      tr
-        th
-        th Empfänger
-        th Teilnehmer
-        th Gesamtbetrag
-        th
-    tbody
-      - @seminar.attendees.where(invoice_id: nil).all.group_by(&:company).each do |company, attendees|
-        - if company
+- invoices_to_write = InvoiceGenerator.new_invoices_for(@seminar)
+- if invoices_to_write.any?
+  h4 Rechnungen zu schreiben
+  .table-responsive
+    table.standard-table
+      thead
+        tr
+          th
+          th Empfänger
+          th Teilnehmer
+          th Gesamtbetrag
+          th
+      tbody
+        - invoices_to_write.each do |invoice|
+          - company   = invoice.company
+          - attendees = invoice.attendees
           tr
-            td = icon_for Company
-            td = lines_for company.full_address.split("\n")
-            td = lines_for attendees.map(&:name)
+            td = icon_for(company ? Company : Attendee)
+            td = lines_for invoice.address.split("\n")
+            td = lines_for attendees.map(&:name), delimiter: ',<br>'
             td
               - if @seminar.price
-                = number_to_currency @seminar.price * attendees.count
+                = number_to_currency invoice.total_price
               - else
                 = 'SEMINAR HAT KEINE GEBÜHR GESPEICHERT'
-            td = link_to 'Rechnung schreiben', new_invoice_path(company_id: company.id, seminar_id: @seminar.id), class: 'btn btn-primary'
-        - else
-          - attendees.each do |attendee|
-            tr
-              td = icon_for Attendee
-              td = lines_for attendee.invoice_address.full_address.split("\n")
-              td = attendee.name
-              td = number_to_currency @seminar.price
-              td = link_to 'Rechnung schreiben', new_invoice_path(attendee_id: attendee.id), class: 'btn btn-primary'
+            - url_options = company ? { company_id: company.id, seminar_id: @seminar.id } : { attendee_id: attendees.first.id }
+            td = link_to 'Rechnung schreiben', new_invoice_path(url_options), class: 'btn btn-primary'
 
 
 h4 Geschriebene Rechnungen

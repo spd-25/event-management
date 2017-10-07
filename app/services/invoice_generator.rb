@@ -1,34 +1,37 @@
 class InvoiceGenerator
-  attr_reader :attendee, :company, :seminar
 
-  def initialize(attendee: nil, company: nil, seminar: nil)
-    raise ArgumentError, 'Attendee or company and seminar must be given' unless attendee.present? || [company, seminar].all?(&:present?)
-    @attendee = attendee
-    @company = company
-    @seminar = @attendee.present? ? @attendee.seminar : seminar
+  def self.new_invoices_for(seminar)
+    company_invoices_for(seminar) + attendee_invoices_for(seminar)
   end
 
-  def invoice
-    Invoice.new number: Invoice.next_number, date: Date.current, address: address, items: items,
-                seminar: seminar, attendees: attendees, company: company,
-                pre_message: message(:pre), post_message: message(:post)
+  def self.call(attendee: nil, company: nil, seminar: nil)
+    return generate_for_single(attendee)  if attendee.present?
+    return generate_for(company, seminar) if [company, seminar].all?(&:present?)
+    raise ArgumentError, 'Attendee or company and seminar must be given'
   end
 
   private
 
-  def attendees
-    attendee ? [attendee] : seminar.attendees.where(company: company)
+  def self.generate_for_single(attendee)
+    new_invoice address: attendee.invoice_address.full_address, seminar: attendee.seminar, attendees: [attendee]
   end
 
-  def items
-    attendees.map { |attendee| { attendee: attendee.name, price: seminar.price || 0 } }
+  def self.generate_for(company, seminar)
+    attendees = seminar.attendees.where(company: company)
+    new_invoice address: company.full_address, seminar: seminar, attendees: attendees, company: company
   end
 
-  def address
-    (attendee&.invoice_address || company).full_address
+  def self.new_invoice(address:, seminar:, attendees:, company: nil)
+    items = attendees.map { |attendee| { attendee: attendee.name, price: seminar.price || 0 } }
+    Invoice.next(address: address, seminar: seminar, attendees: attendees, company: company, items: items)
   end
 
-  def message(pos)
-    I18n.t("invoices.default_#{pos}_message")
+  def self.attendee_invoices_for(seminar)
+    seminar.attendees.where(invoice_id: nil, company_id: nil).map { |attendee| generate_for_single attendee }
+  end
+
+  def self.company_invoices_for(seminar)
+    companies = Company.where(id: seminar.attendees.where(invoice_id: nil).select(:company_id))
+    companies.map { |company| generate_for company, seminar }
   end
 end
