@@ -32,12 +32,17 @@ img
 // apply styles to HTML elements
 // to make views framework-neutral
 main
-  @extend .container-fluid
-  //background-color: #eee;
   padding-bottom: 80px
-  //width: 100%;
-  //margin-top: 51px // accommodate the navbar
-  margin: 70px 70px 0
+  margin-top: 70px
+
+@media (min-width: $screen-sm-min)
+  main
+    margin-top: 140px
+
+@media (min-width: $screen-md-min)
+  main
+    margin: 70px 70px 0
+
 section
   @extend .row
   margin-top: 20px
