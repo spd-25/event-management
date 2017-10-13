@@ -1,17 +1,19 @@
 = render 'seminars/show/sub_modules'
 .row
-  .col-md-4
-    label Jahr
-    =< @seminar.year
-  .col-md-4 = render 'seminars/show/teachers'
-  - location = @seminar.location
-  .col-md-4 = link_to icon_for(location, text: location.name, size: 2), location if location
-.row
-  .col-md-4
-    label Preis
-    p = number_to_currency @seminar.price
-    p = @seminar.price_text&.html_safe
-.row
-  .col-md-4
-    label Suchbegriffe
-    p = @seminar.key_words
+  .col-md-6
+    p = @seminar.year
+    p
+      label Preis
+      br
+      = number_to_currency(@seminar.price)
+      br
+      =@seminar.price_text&.html_safe
+    - if @seminar.key_words.present?
+      p
+        label Suchbegriffe
+        = @seminar.key_words
+  .col-md-6
+    = render 'seminars/show/teachers'
+    - location = @seminar.location
+    = link_to icon_for(location, text: location.name, size: 2), location if location
+

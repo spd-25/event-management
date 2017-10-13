@@ -33,7 +33,7 @@ class InvoicesController < ApplicationController
     # @booking = Booking.find params[:booking_id]1
 
     if @invoice.save
-      redirect_to @invoice.seminar, notice: t(:created, model: Invoice.model_name.human)
+      redirect_to seminar_path(@invoice.seminar, anchor: 'invoices'), notice: t(:created, model: Invoice.model_name.human)
     else
       render :new
     end

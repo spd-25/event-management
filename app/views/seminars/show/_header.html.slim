@@ -10,31 +10,32 @@ ol.breadcrumb
     li = link_to module_parent.number, module_parent
 
 .page-header
-  .buttons
+  .buttons.seminar
 
     - icon, text, action, css_class = @seminar.published? ? ['eye-slash', 'Deaktivieren!', :unpublish, 'success'] : ['eye', 'Veröffentlichen!', :publish, 'default']
     => link_to fa_icon(icon, text: text), [@seminar, action: action], method: :patch, class: "btn btn-#{css_class}"
     => link_to fa_icon('external-link', text: 'Externe Ansicht'), seminar_visitor_url(@seminar), class: 'btn btn-default'
 
-    - if @seminar.layout_finished?
-      - title_msg = t('.warning_seminar_layout_finished')
-      - confirm_msg = t('.confirm_message_finished_edit')
-      => link_to fa_icon('pencil', text: t(:edit)), edit_seminar_url(@seminar),
-          class: 'btn btn-warning', title: title_msg, data: { confirm: confirm_msg }
-    - else
-      => edit_link edit_seminar_url(@seminar)
+    /- if @seminar.layout_finished?
+    /  - title_msg = t('.warning_seminar_layout_finished')
+    /  - confirm_msg = t('.confirm_message_finished_edit')
+    /  => link_to fa_icon('pencil', text: t(:edit)), edit_seminar_url(@seminar),
+    /      class: 'btn btn-warning', title: title_msg, data: { confirm: confirm_msg }
+    /- else
+    /  => edit_link edit_seminar_url(@seminar)
     = copy_link new_seminar_url(copy_from: @seminar.id)
     br
     = render 'seminars/status', seminar: @seminar
-    br
-    = simple_form_for @seminar, url: [@seminar, action: :finish_editing], method: :patch do |f|
-      = f.input :editing_finished, as: :boolean, label: 'Bearbeitung abgeschlossen',
-          wrapper_html: { title: ldate(@seminar.editing_finished_at) },
-          input_html: { data: { behavior: 'submit-on-change' }, disabled: !policy(@seminar).finish_editing? }
-    = simple_form_for @seminar, url: [@seminar, action: :finish_layout], method: :patch do |f|
-      = f.input :layout_finished, as: :boolean, label: 'Layout abgeschlossen',
-          wrapper_html: { title: ldate(@seminar.layout_finished_at) },
-          input_html: { data: { behavior: 'submit-on-change' }, disabled: !policy(@seminar).finish_layout? }
+    - unless @seminar.catalog.published?
+      br
+      = simple_form_for @seminar, url: [@seminar, action: :finish_editing], method: :patch do |f|
+        = f.input :editing_finished, as: :boolean, label: 'Bearbeitung abgeschlossen',
+            wrapper_html: { title: ldate(@seminar.editing_finished_at) },
+            input_html: { data: { behavior: 'submit-on-change' }, disabled: !policy(@seminar).finish_editing? }
+      = simple_form_for @seminar, url: [@seminar, action: :finish_layout], method: :patch do |f|
+        = f.input :layout_finished, as: :boolean, label: 'Layout abgeschlossen',
+            wrapper_html: { title: ldate(@seminar.layout_finished_at) },
+            input_html: { data: { behavior: 'submit-on-change' }, disabled: !policy(@seminar).finish_layout? }
   h2
     - if module_parent
       => link_to icon_for(module_parent, text: "#{module_parent.number} - #{module_parent.title}"), module_parent

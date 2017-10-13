@@ -1,0 +1,14 @@
+- title      = local_assigns.fetch :title, nil
+- edit_link  = local_assigns.fetch :edit_link, nil
+- show_link  = local_assigns.fetch :show_link, nil
+
+.panel.panel-default data={ show_link: show_link }
+  - if title
+    .panel-heading
+      - if edit_link
+        ul.list-inline.pull-right
+          li = link_to edit_link, class: 'edit btn btn-default btn-xs', remote: true, title: t('edit') do
+            = fa_icon :pencil
+      h4.panel-title = title
+  .panel-body
+    = yield

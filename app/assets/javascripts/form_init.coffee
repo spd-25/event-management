@@ -1,8 +1,8 @@
 window.Initializer =
   autoFocus: -> $('[autofocus]').focus()
 
-  initDate: ->
-    $('input.date').each (i, input) ->
+  initDate: (sel = '') ->
+    $("#{sel} input.date").each (i, input) ->
       $input = $(input)
       date = $input.val()
       if date isnt ''
@@ -35,8 +35,10 @@ window.Initializer =
         theme: "bootstrap"
         placeholder: placeholder
 
-$(document).on 'turbolinks:load', ->
-  Initializer.initWysihtml5()
-  Initializer.initDate()
-  Initializer.autoFocus()
-  Initializer.initSelect2()
+  initAll: ->
+    Initializer.initWysihtml5()
+    Initializer.initDate()
+    Initializer.autoFocus()
+    Initializer.initSelect2()
+
+$(document).on 'turbolinks:load', ->  Initializer.initAll()

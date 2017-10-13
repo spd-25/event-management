@@ -2,8 +2,8 @@ class SeminarsController < ApplicationController
   before_action :authenticate_user!
   after_action :verify_authorized
   before_action :set_seminar,
-                only: %i(show edit update destroy attendees pras versions toggle_category
-                         publish unpublish finish_editing finish_layout)
+                only: %i[show edit update destroy attendees pras versions toggle_category
+                         publish unpublish finish_editing finish_layout]
 
   def index
     authorize Seminar
@@ -53,6 +53,12 @@ class SeminarsController < ApplicationController
   end
 
   def show
+    if request.xhr?
+      options = { layout: false }
+      options[:partial] = "seminars/show/#{params[:part]}" if params[:part].in?(%w[general events])
+      options[:html]    = @seminar.send(params[:part])     if params[:part].in?(%w[benefit content notes])
+      render options
+    end
   end
 
   def new
@@ -63,6 +69,7 @@ class SeminarsController < ApplicationController
 
   def edit
     10.times { @seminar.events.build }
+    render layout: !request.xhr?
   end
 
   def create
@@ -82,10 +89,18 @@ class SeminarsController < ApplicationController
   def update
     @seminar.editing_finished_at = DateTime.current if @seminar.editing_finished?
     if @seminar.update seminar_params
-      redirect_to @seminar, notice: t(:updated, model: Seminar.model_name.human)
+      if request.xhr?
+        part              = params[:part]
+        options           = { layout: false }
+        options[:partial] = "seminars/show/#{part}" if part.in?(%w[general events])
+        options[:html]    = @seminar.send(part)&.html_safe if part.in?(%w[benefit content notes])
+        render options
+      else
+        redirect_to @seminar, notice: t(:updated, model: Seminar.model_name.human)
+      end
     else
       10.times { @seminar.events.build }
-      render :edit
+      render :edit, layout: !request.xhr?, status: :unprocessable_entity
     end
   end
 

@@ -25,7 +25,7 @@
                 small.text-muted = seminar.subtitle
               td = render 'seminars/status', seminar: seminar
               td.icons
-                => fa_icon 'users', text: attendees_count
+                => link_to fa_icon('users', text: attendees_count), [seminar, anchor: 'attendees']
                 => fa_icon 'calendar', text: events_count
                 /- if seminar.bookings.any?
                   = progress_bar_for_bookings(seminar)

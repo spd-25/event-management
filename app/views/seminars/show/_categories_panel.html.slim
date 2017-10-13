@@ -1,0 +1,17 @@
+= panel_box title: Seminar.human_attribute_name(:categories) do
+  = render 'seminars/show/categories', categories: current_catalog.categories.roots
+
+sass:
+  ul.categories
+    overflow: hidden
+    ul
+      margin-left: 30px
+      margin-top: 5px
+      a
+        padding: 3px 8px
+
+coffee:
+  $(document).ready ->
+    $("a[data-behavior=toggle-category]").on "ajax:success", ->
+      $(this).closest('li').toggleClass('active')
+      alert 'Thema gespeichert.'

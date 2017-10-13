@@ -23,7 +23,7 @@ class BookingsController < ApplicationController
     copy_fields_to_attendees
 
     if @booking.save
-      redirect_to (session[:back_url] || seminar_url(id: @booking.seminar_id)), notice: t(:created, model: Booking.model_name.human)
+      redirect_to (session[:back_url] || seminar_url(id: @booking.seminar_id, anchor: 'attendees')), notice: t(:created, model: Booking.model_name.human)
     else
       @seminar = Seminar.find(@booking.seminar_id).decorate
       prepare_attendees

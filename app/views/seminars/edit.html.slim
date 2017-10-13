@@ -1,6 +1,17 @@
-/- page_title_for @seminar, :number
-/.page-header
-/  h2 = title_for @seminar, :number
-= render 'seminars/show/header'
+- if request.xhr?
+  = simple_form_for(@seminar, remote: true) do |f|
+    - part = params[:part]
+    input type='hidden' name='part' value=part
+    - if part.in? %w(benefit content notes)
+      = render 'seminars/form/text', f: f, field: part
+    - elsif part.in? %w(general events)
+      = render "seminars/form/#{part}", f: f
+    section.action-buttons
+      .col-md-12
+        .pull-right
+          => link_to t(:cancel), '#cancel', class: 'btn btn-default'
+          = f.submit t(:save), class: 'btn btn-primary'
+- else
+  = render 'seminars/show/header'
 
-= render 'form'
+  = render 'form'
