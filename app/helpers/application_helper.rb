@@ -82,8 +82,10 @@ module ApplicationHelper
     link_to fa_icon('plus', text: label), url, options
   end
 
-  def edit_link(url)
-    link_to fa_icon('pencil', text: t(:edit)), url, class: 'btn btn-primary edit'
+  def edit_link(url, **options)
+    options[:class] ||= ''
+    options[:class] += 'btn btn-primary edit'
+    link_to fa_icon('pencil', text: t(:edit)), url, options
   end
 
   def copy_link(url)

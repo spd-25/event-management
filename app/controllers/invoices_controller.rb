@@ -41,7 +41,7 @@ class InvoicesController < ApplicationController
 
   def update
     if @invoice.update invoice_params
-      redirect_to @invoice.seminar, notice: t(:updated, model: Invoice.model_name.human)
+      redirect_to seminar_path(@invoice.seminar, anchor: 'invoices'), notice: t(:updated, model: Invoice.model_name.human)
     else
       render :show
     end

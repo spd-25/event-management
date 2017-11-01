@@ -1,7 +1,6 @@
 class BookingsController < ApplicationController
   before_action :authenticate_user!
   after_action :verify_authorized
-  before_action :set_referer, only: [:new, :show]
 
   def show
     @booking = Booking.find(params[:id] || params[:booking_id])
@@ -14,6 +13,7 @@ class BookingsController < ApplicationController
     @seminar = Seminar.find(params[:seminar_id]).decorate
     @booking = @seminar.bookings.build
     prepare_attendees
+    session[:attendee_back_url] = seminar_url(@seminar, anchor: 'attendees')
   end
 
   def create
@@ -23,7 +23,7 @@ class BookingsController < ApplicationController
     copy_fields_to_attendees
 
     if @booking.save
-      redirect_to (session[:back_url] || seminar_url(id: @booking.seminar_id, anchor: 'attendees')), notice: t(:created, model: Booking.model_name.human)
+      redirect_to session[:attendee_back_url], notice: t(:created, model: Booking.model_name.human)
     else
       @seminar = Seminar.find(@booking.seminar_id).decorate
       prepare_attendees
@@ -56,9 +56,5 @@ class BookingsController < ApplicationController
       ]
     ]
     params.require(:booking).permit(attrs)
-  end
-
-  def set_referer
-    session[:back_url] = request.referer
   end
 end

@@ -53,12 +53,7 @@ class SeminarsController < ApplicationController
   end
 
   def show
-    if request.xhr?
-      options = { layout: false }
-      options[:partial] = "seminars/show/#{params[:part]}" if params[:part].in?(%w[general events])
-      options[:html]    = @seminar.send(params[:part])     if params[:part].in?(%w[benefit content notes])
-      render options
-    end
+    session[:attendee_back_url] = seminar_path(@seminar, anchor: 'attendees')
   end
 
   def new
@@ -89,15 +84,7 @@ class SeminarsController < ApplicationController
   def update
     @seminar.editing_finished_at = DateTime.current if @seminar.editing_finished?
     if @seminar.update seminar_params
-      if request.xhr?
-        part              = params[:part]
-        options           = { layout: false }
-        options[:partial] = "seminars/show/#{part}" if part.in?(%w[general events])
-        options[:html]    = @seminar.send(part)&.html_safe if part.in?(%w[benefit content notes])
-        render options
-      else
-        redirect_to @seminar, notice: t(:updated, model: Seminar.model_name.human)
-      end
+      redirect_to @seminar, notice: t(:updated, model: Seminar.model_name.human)
     else
       10.times { @seminar.events.build }
       render :edit, layout: !request.xhr?, status: :unprocessable_entity

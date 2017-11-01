@@ -6,6 +6,7 @@ html
     == stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
     == javascript_include_tag 'application', 'data-turbolinks-track' => true
     == csrf_meta_tags
+    == content_for :style
   body
     header
       == render 'layouts/navigation'
@@ -15,20 +16,5 @@ html
       - if current_user && controller_name != 'feedbacks'
         == render 'layouts/feedback'
 
-    #modal.modal.fade role="dialog" tabindex="-1"
-      .modal-dialog.modal-lg role="document"
-        .modal-content
-          .modal-header
-            button.close aria-label="Close" data-dismiss="modal" type="button"
-              span aria-hidden="true"  &times;
-            h4.modal-title
-          .modal-body
-          .modal-footer
-            button.btn.btn-default data-dismiss="modal" type="button" = t(:cancel)
-            button.btn.btn-primary.save type="button" = t(:save)
-
-    sass:
-      #modal
-        .modal-body
-          .action-buttons
-            display: none
+    == content_for :footer
+    == content_for :script

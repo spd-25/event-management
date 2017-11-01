@@ -16,13 +16,13 @@ ol.breadcrumb
     => link_to fa_icon(icon, text: text), [@seminar, action: action], method: :patch, class: "btn btn-#{css_class}"
     => link_to fa_icon('external-link', text: 'Externe Ansicht'), seminar_visitor_url(@seminar), class: 'btn btn-default'
 
-    /- if @seminar.layout_finished?
-    /  - title_msg = t('.warning_seminar_layout_finished')
-    /  - confirm_msg = t('.confirm_message_finished_edit')
-    /  => link_to fa_icon('pencil', text: t(:edit)), edit_seminar_url(@seminar),
-    /      class: 'btn btn-warning', title: title_msg, data: { confirm: confirm_msg }
-    /- else
-    /  => edit_link edit_seminar_url(@seminar)
+    - if @seminar.layout_finished?
+      - title_msg = t('.warning_seminar_layout_finished')
+      - confirm_msg = t('.confirm_message_finished_edit')
+      => link_to fa_icon('pencil', text: t(:edit)), edit_seminar_url(@seminar),
+          class: 'btn btn-warning', title: title_msg, data: { confirm: confirm_msg }
+    - else
+      => edit_link edit_seminar_url(@seminar)
     = copy_link new_seminar_url(copy_from: @seminar.id)
     br
     = render 'seminars/status', seminar: @seminar
