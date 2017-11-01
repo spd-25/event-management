@@ -6,11 +6,15 @@ html
     == stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
     == javascript_include_tag 'application', 'data-turbolinks-track' => true
     == csrf_meta_tags
+    == content_for :style
   body
     header
       == render 'layouts/navigation'
-    main.container-fluid[role="main"]
+    main.container[role="main"]
       == render 'layouts/messages'
       == yield
       - if current_user && controller_name != 'feedbacks'
         == render 'layouts/feedback'
+
+    == content_for :footer
+    == content_for :script

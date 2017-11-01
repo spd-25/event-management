@@ -1,0 +1,41 @@
+.form-inputs = f.input :date_text, input_html: { class: 'editor' }, label: false
+table.standard-table.events-table
+  thead
+    tr
+      th.date = Event.human_attribute_name :date
+      th.time = Event.human_attribute_name :start_time
+      th.time = Event.human_attribute_name :end_time
+      th.location = Event.human_attribute_name :location
+      th = Event.human_attribute_name :notes
+  tbody
+    = f.simple_fields_for :events do |event_form|
+      - event = event_form.object
+      tr class=('hidden' if event.new_record?)
+        td = event_form.input :date, label: false, as: :string, input_html: { class: 'date' }
+        td = event_form.input :start_time, label: false
+        td = event_form.input :end_time, label: false
+        td = event_form.association :location, collection: Location.order(:name), input_html: { class: 'select2' }, label: false
+        td = event_form.input :notes, label: false
+= link_to fa_icon('plus'), '#', class: 'add-event btn btn-default', tabindex: -1
+
+coffee:
+  $ ->
+    addButtonClicked = (event) ->
+      event.preventDefault()
+      $('table.events-table tbody tr.hidden').first().removeClass('hidden')
+    $('.add-event').off 'click', addButtonClicked
+    $('.add-event').on 'click', addButtonClicked
+
+sass:
+  table.events-table
+    tbody > tr > td
+      padding: 3px
+      p
+        margin: 8px 0 3px
+    th
+      &.date
+        width: 15%
+      &.time
+        width: 10%
+      &.location
+        width: 30%

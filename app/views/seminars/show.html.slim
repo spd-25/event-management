@@ -2,43 +2,31 @@
 
 div
   ul.nav.nav-tabs
+    li.active
+      = link_to 'Inhalt', '#general', data: { toggle: 'tab' }
     - if policy(Attendee).index?
       li = link_to "Teilnehmer (#{@seminar.attendees.count})", '#attendees', data: { toggle: 'tab' }
     - if policy(Invoice).index?
       li = link_to Seminar.human_attribute_name(:invoices),    '#invoices',  data: { toggle: 'tab' }
-    li = link_to 'Allgemein',                                '#general',    data: { toggle: 'tab' }
-    li = link_to Seminar.human_attribute_name(:categories),  '#categories', data: { toggle: 'tab' }
-    li = link_to Seminar.human_attribute_name(:events),      '#events',     data: { toggle: 'tab' }
-    li = link_to Seminar.human_attribute_name(:benefit),     '#benefit',    data: { toggle: 'tab' }
-    li = link_to Seminar.human_attribute_name(:content),     '#content',    data: { toggle: 'tab' }
-    li = link_to Seminar.human_attribute_name(:notes),       '#notes',      data: { toggle: 'tab' }
-    li = link_to 'Kopien',                                   '#copies',     data: { toggle: 'tab' }
+    li = link_to 'Kopien',                                     '#copies',    data: { toggle: 'tab' }
     li = link_to 'PRAS',       pras_seminar_url(@seminar)     if policy(Seminar).pras?
     li = link_to 'Änderungen', versions_seminar_url(@seminar) if policy(Seminar).versions?
+
   .tab-content
     .tab-pane#attendees  = render 'seminars/show/attendees' if policy(Attendee).index?
     .tab-pane#invoices   = render 'seminars/show/invoices'  if policy(Invoice).index?
-    .tab-pane#general    = render 'seminars/show/general'
-    .tab-pane#categories = render 'seminars/show/categories', categories: current_catalog.categories.roots
-    .tab-pane#events     = render 'seminars/show/events'
-    .tab-pane#benefit    = @seminar.benefit&.html_safe
-    .tab-pane#content    = @seminar.content&.html_safe
-    .tab-pane#notes      = @seminar.notes&.html_safe
     .tab-pane#copies     = render 'seminars/show/copies'
-    /.tab-pane#pras       = render 'seminars/show/pras'
-
-
-sass:
-  ul.categories
-    overflow: hidden
-    ul
-      margin-left: 30px
-      margin-top: 5px
-      a
-        padding: 3px 8px
-
-coffee:
-  $(document).ready ->
-    $("a[data-behavior=toggle-category]").on "ajax:success", ->
-      $(this).closest('li').toggleClass('active')
-      alert 'Thema gespeichert.'
+    .tab-pane.active#general
+      .row
+        .col-md-8
+          h4 = Seminar.human_attribute_name :benefit
+          = @seminar.benefit&.html_safe
+          h4 = Seminar.human_attribute_name :content
+          = @seminar.content&.html_safe
+          h4 = Seminar.human_attribute_name :notes
+          = @seminar.notes&.html_safe
+        .col-md-4
+          = render 'seminars/show/general'
+          h4 = Seminar.human_attribute_name(:events)
+          = render 'seminars/show/events'
+          = render 'seminars/show/categories_panel'

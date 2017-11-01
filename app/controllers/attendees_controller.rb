@@ -2,7 +2,6 @@ class AttendeesController < ApplicationController
   before_action :authenticate_user!
   after_action :verify_authorized
   before_action :set_attendee, only: [:show, :update, :destroy, :cancel]
-  before_action :set_referer, only: [:show, :cancel]
 
   def index
     authorize Attendee
@@ -14,6 +13,7 @@ class AttendeesController < ApplicationController
       .where(created_at: date_range)
       .includes(:seminar, :company, :booking)
       .order(created_at: :desc).page(params[:page]).all
+    session[:attendee_back_url] = attendees_url(month: @month)
   end
 
   def show
@@ -24,7 +24,7 @@ class AttendeesController < ApplicationController
 
   def update
     if @attendee.update attendee_params
-      redirect_to (session[:back_url] || @attendee.seminar), notice: t(:updated, model: Attendee.model_name.human)
+      redirect_to session[:attendee_back_url], notice: t(:updated, model: Attendee.model_name.human)
     else
       render :show
     end
@@ -60,10 +60,6 @@ class AttendeesController < ApplicationController
      invoice_title invoice_street invoice_zip invoice_city
    ]
     params.require(:attendee).permit(attrs)
-  end
-
-  def set_referer
-    session[:back_url] = request.referer
   end
 end
 

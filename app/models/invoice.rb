@@ -25,4 +25,17 @@ class Invoice < ApplicationRecord
     invoice ? invoice.number.next : "#{Date.current.year}00001"
   end
 
+  def self.next(attrs)
+    new default_attributes.merge(attrs)
+  end
+
+  def self.default_attributes
+    {
+      number:       next_number,
+      date:         Date.current,
+      pre_message:  I18n.t('invoices.default_pre_message'),
+      post_message: I18n.t('invoices.default_post_message')
+    }
+  end
+
 end

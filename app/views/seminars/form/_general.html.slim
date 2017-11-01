@@ -1,0 +1,21 @@
+.row
+  .col-md-3 = f.input :archived
+  .col-md-3 = f.input :canceled
+.row
+  .col-md-6 = f.association :editor, label_method: :name, collection: User.editor, input_html: { class: 'select2' }
+  .col-md-6 = f.input :number
+= f.association :parent,
+            label_method: ->(s){ "#{s.number} - #{s.title}" },
+            collection: Seminar.where(parent_id: nil).order(:number),
+            input_html: { class: 'select2' },
+            label: 'Dieses Seminar ist ein Modul von'
+= f.input :title
+= f.input :subtitle
+.row
+  .col-md-6 = f.association :teachers, input_html: { class: 'select2' }, collection: Teacher.order(:last_name)
+  .col-md-6 = f.association :location, collection: Location.order(:name), input_html: { class: 'select2' }
+
+= f.input :price
+= f.input :price_text, input_html: { class: 'editor' }
+= f.input :external_booking_address
+= f.input :key_words

@@ -22,27 +22,18 @@ class InvoicesController < ApplicationController
 
   def new
     authorize Invoice
-    options =
-      if params[:attendee_id].present?
-        { attendee: find_attendee }
-      else
-        { company: find_company, seminar: find_seminar }
-      end
-    @invoice = InvoiceGenerator.new(options).invoice
+    @invoice = InvoiceGenerator.call(generator_params)
   end
 
   def create
     authorize Invoice
-    options = params[:attendee_id].present? ?
-          { attendee: find_attendee } :
-          { company: find_company, seminar: find_seminar }
-    @invoice = InvoiceGenerator.new(options).invoice
+    @invoice = InvoiceGenerator.call(generator_params)
     @invoice.assign_attributes invoice_params
 
     # @booking = Booking.find params[:booking_id]1
 
     if @invoice.save
-      redirect_to @invoice.seminar, notice: t(:created, model: Invoice.model_name.human)
+      redirect_to seminar_path(@invoice.seminar, anchor: 'invoices'), notice: t(:created, model: Invoice.model_name.human)
     else
       render :new
     end
@@ -50,7 +41,7 @@ class InvoicesController < ApplicationController
 
   def update
     if @invoice.update invoice_params
-      redirect_to @invoice.seminar, notice: t(:updated, model: Invoice.model_name.human)
+      redirect_to seminar_path(@invoice.seminar, anchor: 'invoices'), notice: t(:updated, model: Invoice.model_name.human)
     else
       render :show
     end
@@ -71,23 +62,15 @@ class InvoicesController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def invoice_params
-    p = params.require(:invoice).permit(:number, :date, :address,
-                                        :pre_message, :post_message,
-                                        items: [:attendee, :price])
+    permitted_params = %i[number date address pre_message post_message] + [items: %i[attendee price]]
+    p = params.require(:invoice).permit(permitted_params)
     p[:items].delete_if { |item| item['attendee'].blank? }
-    p[:items].each { |item| item['price'] = item['price'].gsub('.', '').sub(',', '.').to_f }
+    p[:items].each { |item| item['price'] = item['price'].delete('.').sub(',', '.').to_f }
     p
   end
 
-  def find_attendee
-    Attendee.find params[:attendee_id]
-  end
-
-  def find_company
-    Company.find params[:company_id]
-  end
-
-  def find_seminar
-    Seminar.find params[:seminar_id]
+  def generator_params
+    return { attendee: Attendee.find(params[:attendee_id]) } if params[:attendee_id].present?
+    { company: Company.find(params[:company_id]), seminar: Seminar.find(params[:seminar_id]) }
   end
 end
