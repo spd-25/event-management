@@ -2,17 +2,14 @@
 
 div
   ul.nav.nav-tabs
-    li = link_to "Teilnehmer (#{@seminar.attendees.count})", [@seminar, anchor: 'attendees']
-    li = link_to 'Rechnungen', [@seminar, anchor: 'invoices']
-    li = link_to 'Allgemein', [@seminar, anchor: 'general']
-    li = link_to 'Themen', [@seminar, anchor: 'categories']
-    li = link_to 'Termine', [@seminar, anchor: 'events']
-    li = link_to Seminar.human_attribute_name(:benefit), [@seminar, anchor: 'benefit']
-    li = link_to Seminar.human_attribute_name(:content), [@seminar, anchor: 'content']
-    li = link_to 'Bemerkungen', [@seminar, anchor: 'notes']
+    li = link_to 'Inhalt', [@seminar, anchor: 'general']
+    - if policy(Attendee).index?
+      li = link_to "Teilnehmer (#{@seminar.attendees.count})", [@seminar, anchor: 'attendees']
+    - if policy(Invoice).index?
+      li = link_to 'Rechnungen', [@seminar, anchor: 'invoices']
     li = link_to 'Kopien', [@seminar, anchor: 'copies']
     li.active = link_to 'PRAS', pras_seminar_url(@seminar)
-    li = link_to 'Änderungen', versions_seminar_url(@seminar)
+    li = link_to 'Änderungen', versions_seminar_url(@seminar) if policy(Seminar).versions?
   .tab-content
     - @seminar.statistic.fill_defaults @seminar
 

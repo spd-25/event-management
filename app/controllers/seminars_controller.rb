@@ -2,8 +2,8 @@ class SeminarsController < ApplicationController
   before_action :authenticate_user!
   after_action :verify_authorized
   before_action :set_seminar,
-                only: %i(show edit update destroy attendees pras versions toggle_category
-                         publish unpublish finish_editing finish_layout)
+                only: %i[show edit update destroy attendees pras versions toggle_category
+                         publish unpublish finish_editing finish_layout]
 
   def index
     authorize Seminar
@@ -53,6 +53,7 @@ class SeminarsController < ApplicationController
   end
 
   def show
+    session[:attendee_back_url] = seminar_path(@seminar, anchor: 'attendees')
   end
 
   def new
@@ -63,6 +64,7 @@ class SeminarsController < ApplicationController
 
   def edit
     10.times { @seminar.events.build }
+    render layout: !request.xhr?
   end
 
   def create
@@ -85,7 +87,7 @@ class SeminarsController < ApplicationController
       redirect_to @seminar, notice: t(:updated, model: Seminar.model_name.human)
     else
       10.times { @seminar.events.build }
-      render :edit
+      render :edit, layout: !request.xhr?, status: :unprocessable_entity
     end
   end
 

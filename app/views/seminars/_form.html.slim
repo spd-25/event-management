@@ -10,73 +10,21 @@
   div
     ul.nav.nav-tabs role="tablist"
       li.active role="presentation"
-        a aria-controls="home" data-toggle="tab" href="#general" role="tab"  Allgemein
+        a aria-controls="home"     data-toggle="tab" href="#general" role="tab"  Allgemein
       li role="presentation"
-        a aria-controls="settings" data-toggle="tab" href="#events" role="tab"  Termine
+        a aria-controls="settings" data-toggle="tab" href="#events"  role="tab"  Termine
       li role="presentation"
-        a aria-controls="profile" data-toggle="tab" href="#benefit" role="tab"  Nutzen
+        a aria-controls="profile"  data-toggle="tab" href="#benefit" role="tab"  Nutzen
       li role="presentation"
         a aria-controls="messages" data-toggle="tab" href="#content" role="tab"  Inhalt
       li role="presentation"
-        a aria-controls="settings" data-toggle="tab" href="#notes" role="tab"  Bemerkungen
+        a aria-controls="settings" data-toggle="tab" href="#notes"   role="tab"  Bemerkungen
     .tab-content
-      #general.tab-pane.active role="tabpanel"
-        .row
-          .col-md-3 = f.input :archived
-          .col-md-3 = f.input :canceled
-        .row
-          .col-md-6
-            = f.association :editor, label_method: :name, collection: User.editor, input_html: { class: 'select2' }
-          .col-md-6
-            = f.association :parent,
-                label_method: ->(s){ "#{s.number} - #{s.title}" },
-                collection: Seminar.where(parent_id: nil).order(:number),
-                input_html: { class: 'select2' },
-                label: 'Dieses Seminar ist ein Modul von'
-        .row
-          .col-md-2 = f.input :number
-          .col-md-10 = f.input :title
-        .row
-          /- current_year = Date.current.year
-          .col-md-2 = f.input :year, disabled: true
-          .col-md-10 = f.input :subtitle
-        .row
-          .col-md-4 = f.association :teachers, input_html: { class: 'select2' }, collection: Teacher.order(:last_name)
-          .col-md-4 = f.association :location, collection: Location.order(:name), input_html: { class: 'select2' }
-          .col-md-4 = f.input :max_attendees
-        .row
-          .col-md-4 = f.input :price
-          .col-md-8 = f.input :price_text, input_html: { class: 'editor' }
-        .row: .col-md-4 = f.input :external_booking_address
-        = f.input :key_words
-
-      #events.tab-pane role="tabpanel"
-        .form-inputs = f.input :date_text, input_html: { class: 'editor' }, label: false
-        table.standard-table.events-table
-          thead
-            tr
-              th.date = Event.human_attribute_name :date
-              th.time = Event.human_attribute_name :start_time
-              th.time = Event.human_attribute_name :end_time
-              th.location = Event.human_attribute_name :location
-              th = Event.human_attribute_name :notes
-          tbody
-            = f.simple_fields_for :events do |event_form|
-              - event = event_form.object
-              tr class=('hidden' if event.new_record?)
-                td = event_form.input :date, label: false, as: :string, input_html: { class: 'date' }
-                td = event_form.input :start_time, label: false
-                td = event_form.input :end_time, label: false
-                td = event_form.association :location, collection: Location.order(:name), input_html: { class: 'select2' }, label: false
-                td = event_form.input :notes, label: false
-        = link_to fa_icon('plus'), '#', class: 'add-event btn btn-default', tabindex: -1
-      #benefit.tab-pane role="tabpanel"
-        .form-inputs = f.input :benefit, input_html: { class: 'editor' }, label: false
-      #content.tab-pane role="tabpanel"
-        .form-inputs = f.input :content, input_html: { class: 'editor' }, label: false
-      #notes.tab-pane role="tabpanel"
-        .form-inputs = f.input :notes, input_html: { class: 'editor' }, label: false
-
+      #general.tab-pane.active role="tabpanel" = render 'seminars/form/general', f: f
+      #events.tab-pane         role="tabpanel" = render 'seminars/form/events',  f: f
+      #benefit.tab-pane        role="tabpanel" = render 'seminars/form/text',    f: f, field: :benefit
+      #content.tab-pane        role="tabpanel" = render 'seminars/form/text',    f: f, field: :content
+      #notes.tab-pane          role="tabpanel" = render 'seminars/form/text',    f: f, field: :notes
 
   section.action-buttons
     .col-md-12
@@ -84,28 +32,7 @@
         => link_to t(:cancel), cancel_url(@seminar), class: 'btn btn-default'
         = f.submit t(:save), class: 'btn btn-primary'
 
-coffee:
-  $ ->
-    addButtonClicked = (event) ->
-      event.preventDefault()
-      $('table.events-table tbody tr.hidden').first().removeClass('hidden')
-    $('.add-event').off 'click', addButtonClicked
-    $('.add-event').on 'click', addButtonClicked
-
 sass:
-  table.events-table
-    tbody>tr>td
-      padding: 3px
-      p
-        margin: 8px 0 3px
-    th
-      &.date
-        width: 15%
-      &.time
-        width: 10%
-      &.location
-        width: 30%
-
   #content, #benefit, #notes
     iframe.wysihtml5-sandbox
       height: 500px !important

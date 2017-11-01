@@ -1,10 +1,8 @@
-.row
-  .col-md-4
-    - if @seminar.has_date_text?
-      = @seminar.date_text.html_safe
-    - else
-      table.standard-table
-        - @seminar.events_list.each do |date, time|
-          tr
-            td = ldate date
-            td = time
+- if @seminar.has_date_text?
+  = @seminar.date_text.html_safe
+
+table.standard-table
+  - @seminar.events_list.each do |date, time|
+    tr
+      td = ldate date
+      td = time

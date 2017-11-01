@@ -1,0 +1,8 @@
+- title = local_assigns.fetch :title, nil
+
+.panel.panel-default
+  - if title
+    .panel-heading
+      h4.panel-title = title
+  .panel-body
+    = yield

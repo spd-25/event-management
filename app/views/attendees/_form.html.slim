@@ -59,12 +59,13 @@
 
   .action-buttons
     .pull-right
-      => link_to t(:cancel), (session[:back_url] || @seminar), class: 'btn btn-default'
+      => link_to t(:cancel), (session[:attendee_back_url] || @seminar), class: 'btn btn-default'
       = f.submit t(:save), class: 'btn btn-primary'
 
   coffee:
     $ ->
       fill_invoice_address = (company_id) ->
+        return if company_id is ''
         $.getJSON "/companies/#{company_id}.json", (company) ->
           title = company.name
           title = "#{title}\n#{company.name2}" if company.name2 isnt null

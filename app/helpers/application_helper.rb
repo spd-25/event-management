@@ -38,39 +38,27 @@ module ApplicationHelper
     '%d.'
   end
 
-  def panel_box(title: nil, css_class: '', toggle: false, &block)
+  def panel_box(title: nil, css_class: '', &block)
     content = capture(&block)
     content_tag(:div, class: "panel panel-default #{css_class}") do
-      body_options = { class: 'panel-body' }
-      if toggle
-        toggle = rand(36**8).to_s(36)
-        body_options[:class] << ' collapse'
-        body_options[:id] = "collapse-#{toggle}"
-      end
-      head = panel_heading title: title, toggle: toggle
-      body = content_tag(:div, content, body_options)
+      head = panel_heading title: title
+      body = content_tag(:div, content, class: 'panel-body')
       [head, body].join.html_safe
     end
   end
 
-  def panel_box_with_table(title: nil, css_class: '', toggle: false, &block)
+  def panel_box_with_table(title: nil, css_class: '', &block)
     content = capture(&block)
     content_tag(:div, class: "panel panel-default #{css_class}") do
-      head = panel_heading title:   title
+      head = panel_heading title: title
       [head, content].join.html_safe
     end
   end
 
-  def panel_heading(title: nil, toggle: false)
+  def panel_heading(title: nil, buttons: nil)
     return unless title
-    classes = ['panel-heading']
-    classes << 'with-icon' if toggle
-    content_tag(:div, class: classes) do
-      if toggle
-        title = fa_icon('angle-right fw', class: 'right') + fa_icon('angle-down fw', class: 'down') + title
-        title = content_tag :a, title, class: 'collapsed', data: { toggle: "collapse" }, href: "#collapse-#{toggle}"
-      end
-      content_tag(:span, title, class: 'panel-title')
+    content_tag(:div, class: 'panel-heading') do
+      content_tag(:h4, title, class: 'panel-title')
     end
   end
 
@@ -94,8 +82,10 @@ module ApplicationHelper
     link_to fa_icon('plus', text: label), url, options
   end
 
-  def edit_link(url)
-    link_to fa_icon('pencil', text: t(:edit)), url, class: 'btn btn-primary'
+  def edit_link(url, **options)
+    options[:class] ||= ''
+    options[:class] += 'btn btn-primary edit'
+    link_to fa_icon('pencil', text: t(:edit)), url, options
   end
 
   def copy_link(url)
