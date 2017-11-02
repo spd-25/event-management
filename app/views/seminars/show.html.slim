@@ -2,10 +2,9 @@
 
 div
   ul.nav.nav-tabs
-    li.active
-      = link_to 'Inhalt', '#general', data: { toggle: 'tab' }
+    li = link_to 'Inhalt', '#general', data: { toggle: 'tab' }
     - if policy(Attendee).index?
-      li = link_to "Teilnehmer (#{@seminar.attendees.count})", '#attendees', data: { toggle: 'tab' }
+      li.active = link_to "Teilnehmer (#{@seminar.attendees.count})", '#attendees', data: { toggle: 'tab' }
     - if policy(Invoice).index?
       li = link_to Seminar.human_attribute_name(:invoices),    '#invoices',  data: { toggle: 'tab' }
     li = link_to 'Kopien',                                     '#copies',    data: { toggle: 'tab' }
@@ -13,10 +12,10 @@ div
     li = link_to 'Änderungen', versions_seminar_url(@seminar) if policy(Seminar).versions?
 
   .tab-content
-    .tab-pane#attendees  = render 'seminars/show/attendees' if policy(Attendee).index?
-    .tab-pane#invoices   = render 'seminars/show/invoices'  if policy(Invoice).index?
-    .tab-pane#copies     = render 'seminars/show/copies'
-    .tab-pane.active#general
+    .tab-pane.active#attendees  = render 'seminars/show/attendees' if policy(Attendee).index?
+    .tab-pane#invoices          = render 'seminars/show/invoices'  if policy(Invoice).index?
+    .tab-pane#copies            = render 'seminars/show/copies'
+    .tab-pane#general
       .row
         .col-md-8
           h4 = Seminar.human_attribute_name :benefit
