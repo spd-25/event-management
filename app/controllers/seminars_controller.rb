@@ -64,7 +64,6 @@ class SeminarsController < ApplicationController
 
   def edit
     10.times { @seminar.events.build }
-    render layout: !request.xhr?
   end
 
   def create
@@ -87,7 +86,7 @@ class SeminarsController < ApplicationController
       redirect_to @seminar, notice: t(:updated, model: Seminar.model_name.human)
     else
       10.times { @seminar.events.build }
-      render :edit, layout: !request.xhr?, status: :unprocessable_entity
+      render :edit
     end
   end
 
