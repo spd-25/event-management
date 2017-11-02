@@ -73,7 +73,7 @@ class SeminarsController < ApplicationController
     copy_data_for @seminar
 
     if @seminar.save
-      redirect_to @seminar, notice: t(:created, model: Seminar.model_name.human)
+      redirect_to seminar_path(@seminar, anchor: 'general'), notice: t(:created, model: Seminar.model_name.human)
     else
       10.times { @seminar.events.build }
       render :new
@@ -83,7 +83,7 @@ class SeminarsController < ApplicationController
   def update
     @seminar.editing_finished_at = DateTime.current if @seminar.editing_finished?
     if @seminar.update seminar_params
-      redirect_to @seminar, notice: t(:updated, model: Seminar.model_name.human)
+      redirect_to seminar_path(@seminar, anchor: 'general'), notice: t(:updated, model: Seminar.model_name.human)
     else
       10.times { @seminar.events.build }
       render :edit
