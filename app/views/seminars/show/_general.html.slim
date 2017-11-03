@@ -1,19 +1,30 @@
-= render 'seminars/show/sub_modules'
+.row
+  .col-md-8
+    h3 = Seminar.human_attribute_name :benefit
+    = @seminar.benefit&.html_safe
+    h3 = Seminar.human_attribute_name :content
+    = @seminar.content&.html_safe
+    h3 = Seminar.human_attribute_name :notes
+    = @seminar.notes&.html_safe
+  .col-md-4
+    = render 'seminars/show/sub_modules'
 
-/= render 'seminars/show/teachers'
-- location = @seminar.location
-= link_to icon_for(location, text: location.name, size: 2), location if location
-p
-  label Jahr
-  =< @seminar.year
-p
-  label Preis
-  br
-  = number_to_currency(@seminar.price)
-  br
-  =@seminar.price_text&.html_safe
-- if @seminar.key_words.present?
-  p
-    label Suchbegriffe
-    =< @seminar.key_words
+    /= render 'seminars/show/teachers'
+    - location = @seminar.location
+    = link_to icon_for(location, text: location.name, size: 2), location if location
+    p
+      label Jahr
+      =< @seminar.year
+    p
+      label Preis
+      br
+      = number_to_currency(@seminar.price)
+      br
+      = @seminar.price_text&.html_safe
+    - if @seminar.key_words.present?
+      p
+        label Suchbegriffe
+        =< @seminar.key_words
 
+    = render 'seminars/show/events'
+    = render 'seminars/show/categories_panel'
