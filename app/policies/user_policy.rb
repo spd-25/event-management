@@ -1,24 +1,6 @@
 class UserPolicy < ApplicationPolicy
-
-  def show?
-    update?
-  end
-
-  def seminars?
-    editor?
-  end
-
-  def update?
-    admin? || user == record
-  end
-
-  def access_rights?
-    editor?
-  end
-
-  class Scope < Scope
-    def resolve
-      scope
-    end
-  end
+  who_can(:show?)          { update? }
+  who_can(:seminars?)      { editor? }
+  who_can(:update?)        { admin? || user == record }
+  who_can(:access_rights?) { editor? }
 end
