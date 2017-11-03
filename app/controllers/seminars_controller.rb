@@ -97,6 +97,7 @@ class SeminarsController < ApplicationController
 
   def attendees
     @attendees = @seminar.attendees.order(:created_at)
+    render 'attendees_emails' if params[:emails].present?
   end
 
   def pras
