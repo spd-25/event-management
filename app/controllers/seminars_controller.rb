@@ -73,7 +73,7 @@ class SeminarsController < ApplicationController
     copy_data_for @seminar
 
     if @seminar.save
-      redirect_to seminar_path(@seminar, anchor: 'general'), notice: t(:created, model: Seminar.model_name.human)
+      redirect_to after_save_url, notice: t(:created, model: Seminar.model_name.human)
     else
       10.times { @seminar.events.build }
       render :new
@@ -83,7 +83,7 @@ class SeminarsController < ApplicationController
   def update
     @seminar.editing_finished_at = DateTime.current if @seminar.editing_finished?
     if @seminar.update seminar_params
-      redirect_to seminar_path(@seminar, anchor: 'general'), notice: t(:updated, model: Seminar.model_name.human)
+      redirect_to after_save_url, notice: t(:updated, model: Seminar.model_name.human)
     else
       10.times { @seminar.events.build }
       render :edit
@@ -122,27 +122,31 @@ class SeminarsController < ApplicationController
 
   def publish
     @seminar.update published: true
-    redirect_to @seminar, notice: 'Seminar freigegeben.'
+    redirect_to after_save_url, notice: 'Seminar freigegeben.'
   end
 
   def unpublish
     @seminar.update published: false
-    redirect_to @seminar, notice: 'Seminar deaktiviert.'
+    redirect_to after_save_url, notice: 'Seminar deaktiviert.'
   end
 
   def finish_editing
     new_finished_date = @seminar.editing_finished? ? nil : DateTime.current
     @seminar.update editing_finished_at: new_finished_date
-    redirect_to @seminar, notice: 'Erfolgreich geändert'
+    redirect_to after_save_url, notice: 'Erfolgreich geändert'
   end
 
   def finish_layout
     new_finished_date = @seminar.layout_finished? ? nil : DateTime.current
     @seminar.update layout_finished_at: new_finished_date
-    redirect_to @seminar, notice: 'Erfolgreich geändert'
+    redirect_to after_save_url, notice: 'Erfolgreich geändert'
   end
 
   private
+
+  def after_save_url
+    seminar_path(@seminar, anchor: 'general')
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_seminar

@@ -84,12 +84,14 @@ module ApplicationHelper
 
   def edit_link(url, **options)
     options[:class] ||= ''
-    options[:class] += 'btn btn-primary edit'
+    options[:class] += ' btn btn-primary edit'
     link_to fa_icon('pencil', text: t(:edit)), url, options
   end
 
-  def copy_link(url)
-    link_to fa_icon('clone', text: t(:copy)), url, class: 'btn btn-default'
+  def copy_link(url, **options)
+    options[:class] ||= ''
+    options[:class] += ' btn btn-default'
+    link_to fa_icon('clone', text: t(:copy)), url, options
   end
 
   def pdf_link(url, text: 'PDF')
