@@ -8,6 +8,7 @@ class SeminarPolicy < ApplicationPolicy
   who_can(:canceled?)        { editor? }
   who_can(:editing_status?)  { editor? || layouter? }
   who_can(:show?)            { editor? || layouter? }
+  who_can(:create?)          { editor? }
   who_can(:update?)          { editor? || (layouter? && !seminar.published? && !seminar.catalog.published?) }
   who_can(:attendees?)       { editor? }
   who_can(:pras?)            { admin? }
