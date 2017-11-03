@@ -1,7 +1,7 @@
 class AttendeesController < ApplicationController
   before_action :authenticate_user!
   after_action :verify_authorized
-  before_action :set_attendee, only: [:show, :update, :destroy, :cancel]
+  before_action :set_attendee, only: %i[show update destroy cancel]
 
   def index
     authorize Attendee

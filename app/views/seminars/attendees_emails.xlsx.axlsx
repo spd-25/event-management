@@ -1,0 +1,27 @@
+response.headers['Content-Disposition'] = %Q(attachment; filename="Teilnehmer-Emails-#{@seminar.number}.xlsx")
+
+wb = xlsx_package.workbook
+
+wb.add_worksheet(name: 'Teilnehmer E-Mail-Adressen') do |sheet|
+  sheet.add_row ['Seminar-Nr.', @seminar.number]
+  sheet.add_row ['am', l(@seminar.date)]
+  sheet.add_row ['Titel', @seminar.title]
+
+  sheet.add_style 'A1:A3', b: true
+
+  sheet.add_row
+  sheet.add_row
+
+  sheet.add_row %w(E-Mail-Adresse Teilnehmer*innen )
+  sheet.add_style 'A6:B6', b: true
+
+  grouped_attendees = @attendees.all.group_by { |a| a.contact.email }
+  grouped_attendees.keys.sort.each do |email|
+    sheet.add_row [
+      (email.presence || 'keine'),
+      grouped_attendees[email].map(&:name).join(', ')
+    ]
+  end
+
+  sheet.column_widths 40, 100
+end
