@@ -1,18 +1,7 @@
 class CatalogPolicy < ApplicationPolicy
+  alias catalog record
 
-  def catalog
-    record
-  end
-
-  def index?
-    editor? || layouter?
-  end
-
-  def show?
-    admin? or editor? or (layouter? and not catalog.published?)
-  end
-
-  def make_current?
-    true
-  end
+  who_can(:index?)         { editor? || layouter? }
+  who_can(:show?)          { admin? or editor? or (layouter? and not catalog.published?) }
+  who_can(:make_current?)  { true }
 end

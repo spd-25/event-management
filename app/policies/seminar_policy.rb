@@ -1,76 +1,23 @@
 class SeminarPolicy < ApplicationPolicy
+  alias seminar record
 
-  def seminar
-    record
-  end
-
-  def index?
-    editor? || layouter?
-  end
-
-  def category?
-    editor? || layouter?
-  end
-
-  def date?
-    editor? || layouter?
-  end
-
-  def calendar?
-    editor? || layouter?
-  end
-
-  def canceled?
-    editor?
-  end
-
-  def editing_status?
-    editor? || layouter?
-  end
-
-  def show?
-    editor? || layouter?
-  end
-
-  def update?
-    editor? || (layouter? && !seminar.published? && !seminar.catalog.published?)
-  end
-
-  def attendees?
-    editor?
-  end
-
-  def pras?
-    admin?
-  end
-
-  def versions?
-    editor? || layouter?
-  end
-
-  def toggle_category?
-    editor?
-  end
-
-  def search?
-    admin?
-  end
-
-  def publish?
-    admin?
-  end
-
-  def unpublish?
-    publish?
-  end
-
-  def finish_editing?
-    editor?
-  end
-
-  def finish_layout?
-    layouter?
-  end
+  who_can(:index?)           { editor? || layouter? }
+  who_can(:category?)        { editor? || layouter? }
+  who_can(:date?)            { editor? || layouter? }
+  who_can(:calendar?)        { editor? || layouter? }
+  who_can(:canceled?)        { editor? }
+  who_can(:editing_status?)  { editor? || layouter? }
+  who_can(:show?)            { editor? || layouter? }
+  who_can(:update?)          { editor? || (layouter? && !seminar.published? && !seminar.catalog.published?) }
+  who_can(:attendees?)       { editor? }
+  who_can(:pras?)            { admin? }
+  who_can(:versions?)        { editor? || layouter? }
+  who_can(:toggle_category?) { editor? }
+  who_can(:search?)          { admin? }
+  who_can(:publish?)         { admin? }
+  who_can(:unpublish?)       { publish? }
+  who_can(:finish_editing?)  { editor? }
+  who_can(:finish_layout?)   { layouter? }
 
   def permitted_attributes
     attrs = %i[title subtitle benefit content notes date_text location_id editor_id external_booking_address]
@@ -84,11 +31,5 @@ class SeminarPolicy < ApplicationPolicy
       }
     end
     attrs
-  end
-
-  class Scope < Scope
-    def resolve
-      scope
-    end
   end
 end

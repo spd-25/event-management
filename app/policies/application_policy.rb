@@ -2,39 +2,22 @@ class ApplicationPolicy
   attr_reader :user, :record
   delegate :admin?, to: :user
 
+  def self.who_can(action, &block)
+    define_method action, &block
+  end
+
   def initialize(user, record)
     @user = user
     @record = record
   end
 
-  def index?
-    editor?
-  end
-
-  def show?
-    # scope.where(:id => record.id).exists?
-    editor?
-  end
-
-  def create?
-    admin?
-  end
-
-  def new?
-    create?
-  end
-
-  def update?
-    admin?
-  end
-
-  def edit?
-    update?
-  end
-
-  def destroy?
-    admin?
-  end
+  who_can(:index?)    { editor? }
+  who_can(:show?)     { editor? }
+  who_can(:create?)   { admin?  }
+  who_can(:new?)      { create? }
+  who_can(:update?)   { admin?  }
+  who_can(:edit?)     { update? }
+  who_can(:destroy?)  { admin?  }
 
   def editor?
     admin? || user.editor?
