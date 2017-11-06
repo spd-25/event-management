@@ -11,4 +11,12 @@ class BookingMailer < ApplicationMailer
     @seminar = booking.seminar.decorate
     mail(to: Setting.new_booking_email, subject: 'Neue Seminaranmeldung')
   end
+
+  def attendee_canceled_email(attendee)
+    @attendee = attendee
+    @seminar  = attendee.seminar
+    @user     = attendee.canceled_by
+    subject   = "Anmeldung storniert für #{@seminar.number}"
+    mail(to: Setting.new_booking_email, subject: subject)
+  end
 end
