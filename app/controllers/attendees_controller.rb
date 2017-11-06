@@ -35,6 +35,7 @@ class AttendeesController < ApplicationController
     if cancellation_reason.present?
       @attendee.canceled!
       @attendee.update cancellation_reason: cancellation_reason, canceled_by: current_user
+      BookingMailer.attendee_canceled_email(@attendee).deliver_later
       redirect_to (session[:back_url] || @attendee.seminar), notice: t('attendees.cancel.notice')
     else
       @attendee.errors.add :cancellation_reason, :must_be_filled

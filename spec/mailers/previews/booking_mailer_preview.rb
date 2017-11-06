@@ -8,4 +8,7 @@ class BookingMailerPreview < ActionMailer::Preview
     BookingMailer.booking_notification_email Seminar.find(299).bookings.last
   end
 
+  def attendee_canceled_email
+    BookingMailer.attendee_canceled_email Attendee.canceled.last
+  end
 end
