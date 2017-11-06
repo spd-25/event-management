@@ -1,3 +1,3 @@
 class AttendeePolicy < ApplicationPolicy
-  who_can(:cancel?) { destroy? }
+  who_can(:cancel?) { editor? }
 end
