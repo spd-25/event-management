@@ -15,7 +15,7 @@ class SeminarPolicy < ApplicationPolicy
   who_can(:versions?)        { editor? || layouter? }
   who_can(:toggle_category?) { editor? }
   who_can(:search?)          { editor? }
-  who_can(:publish?)         { admin? }
+  who_can(:publish?)         { editor? }
   who_can(:unpublish?)       { publish? }
   who_can(:finish_editing?)  { editor? }
   who_can(:finish_layout?)   { layouter? }
