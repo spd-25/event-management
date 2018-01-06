@@ -1,0 +1,38 @@
+.testimonial {
+  margin-bottom: 50px;
+
+
+  h2 {
+    margin-bottom: 30px;
+    color: $primary;
+  }
+
+  .testimonial-bubble {
+    border-left: 2px solid $primary;
+    background-color: #f4f4f4;
+    padding: 20px;
+
+        p {
+          min-height: 180px;
+          max-height: 180px;
+          @media (max-width: 991px)  {
+            max-height: none;
+            min-height: auto;
+          }
+        }
+
+        span.author {
+          float: right;
+          font-style: italic;
+          color: $primary;
+        }
+
+        @media (max-width: 990px)
+        {
+          margin-top: 20px;
+          height: auto;
+        }
+
+  }
+
+}

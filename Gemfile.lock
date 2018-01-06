@@ -191,7 +191,6 @@ GEM
       guard (~> 2.1)
       guard-compat (~> 1.1)
       rspec (>= 2.99.0, < 4.0)
-    high_voltage (3.0.0)
     htmlentities (4.3.4)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
@@ -491,7 +490,6 @@ DEPENDENCIES
   guard-bundler
   guard-rails
   guard-rspec
-  high_voltage
   jbuilder (~> 2.5)
   jquery-rails
   kaminari

@@ -1,0 +1,70 @@
+/**
+ * Utility
+ */
+img,
+video,
+audio,
+embed,
+object {
+    max-width: 100%;
+}
+
+.responsive {
+    max-width: 100%;
+    height: auto;
+}
+
+.hidden,
+[hidden] {
+    display: none;
+}
+
+.display {
+    display: block;
+}
+
+.flex {
+  display: flex;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+.nobr {
+    white-space: nowrap;
+}
+
+.primary-color {
+  color: $primary;
+}
+
+.help {
+  cursor: help;
+}
+
+.vertical-center {
+  min-height: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.mobile-only {
+  @media (min-width: 769px) {
+    display: none;
+  }
+}
+
+.desktop-only {
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
+.rotate{
+-webkit-transform: rotate(180deg);  /* Chrome, Safari, Opera */
+  -moz-transform: rotate(180deg);  /* Firefox */
+  -ms-transform: rotate(180deg);  /* IE 9 */
+    transform: rotate(180deg);  /* Standard syntax */
+}

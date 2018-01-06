@@ -1,0 +1,72 @@
+@import '../config/vars';
+/**
+ * Windows Phone 8 and Device-Width FIX - CSS PART
+ * Source: http://timkadlec.com/2013/01/windows-phone-8-and-device-width/
+ */
+@-webkit-viewport   { width: device-width; }
+@-moz-viewport      { width: device-width; }
+@-ms-viewport       { width: device-width; }
+@-o-viewport        { width: device-width; }
+@viewport           { width: device-width; }
+
+
+html {
+    box-sizing: border-box;
+    line-height: normal;
+    width: 100%;
+    height: 100%;
+    font-size: 16px !important;
+    font-smoothing: antialiased;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+body {
+    position: relative;
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    color: #333;
+    font-size: 16px;
+    font-family: $font-sans;
+}
+
+a {
+    text-decoration: none;
+    -webkit-touch-callout: none;
+    -webkit-text-size-adjust: none;
+}
+
+.browsehappy,
+.no-js-hint {
+    position: relative;
+    padding: 1em;
+    margin: 0;
+    z-index: 9999;
+    color: #a94442;
+    background-color: #f2dede;
+    border: 1px solid #ebccd1;
+    font-size: 1rem;
+    text-align: center;
+
+    a {
+        color: inherit;
+        font-weight: bold;
+        border-bottom: 1px solid;
+    }
+}
+
+.no-js-hint {
+    display: none;
+}
+
+.no-js .no-js-hint {
+    display: block;
+}

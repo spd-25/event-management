@@ -20,11 +20,11 @@ gem 'draper'
 
 
 
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'bootstrap-sass'
 gem 'devise'
 gem 'devise-i18n'
-gem 'high_voltage'
+# gem 'high_voltage'
 gem 'pg'
 gem 'pg_search'
 gem 'rails-settings-cached'
@@ -51,7 +51,7 @@ gem 'axlsx_styler'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'byebug', platforms: %i[mri mingw x64_mingw]
   # Adds support for Capybara system testing and selenium driver
   gem 'pry-rails'
   gem 'pry-rescue'

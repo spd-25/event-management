@@ -4,7 +4,12 @@ Rails.application.routes.draw do
   post 'buchung',               to: 'buchung#create', as: :buchung_create
   get  'nachricht/:booking_id', to: 'buchung#show',   as: :buchung_show
 
-  root to: 'visitors#index'
+  resources :pages, only: :show, path: 'p' do
+    get :home, on: :collection
+  end
+
+  root to: 'pages#home'
+
   get 'seminare(/:year(/:category_id))', to: 'seminare#index',  as: :seminare_visitor
   get 'seminar/:id',                     to: 'seminare#show',   as: :seminar_visitor
   get 'suche',                           to: 'seminare#search', as: :seminar_search

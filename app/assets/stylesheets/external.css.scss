@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*
  * This is a manifest file that'll be compiled into application.css, which will include all the files
  * listed below.
@@ -10,18 +11,14 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require bootstrap-wysihtml5
+ *= require 1st_load_framework_external
+ *= require external/main
  *= require font-awesome
- *= require select2
- *= require select2-bootstrap
- *= require bootstrap-datepicker
- * require_tree .
- *= require 1st_load_framework
- *= require bs_alert
- *= require overflow
- *= require page-header
- *= require popover
- *= require table
- *= require tabs
- *= require_self
+ *  require select2
+ *  require select2-bootstrap
+ *  require bootstrap-datepicker
+ *  require_tree .
+ *  require_self
  */
+
+
