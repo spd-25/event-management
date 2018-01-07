@@ -1,0 +1,14 @@
+- page_title_for @pages
+.page-header
+  .buttons = new_link new_page_path
+  h2 = title_for @pages
+
+.table-responsive
+  table.standard-table.table-clickable
+    thead
+      tr
+        th = Page.human_attribute_name(:title)
+    tbody
+      - @pages.each do |page|
+        tr data = {url: edit_page_url(page)}
+          td = page.title

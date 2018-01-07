@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   post 'buchung',               to: 'buchung#create', as: :buchung_create
   get  'nachricht/:booking_id', to: 'buchung#show',   as: :buchung_show
 
-  resources :pages, only: :show, path: 'p' do
+  resources :pages, path: 'p' do
     get :home, on: :collection
   end
 

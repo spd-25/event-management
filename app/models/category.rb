@@ -49,7 +49,7 @@ class Category < ApplicationRecord
   end
 
   def slug
-    s = I18n.transliterate(name.downcase).gsub(/"/, '').gsub(/[^a-z0-9]+/, '-')
+    s = I18n.transliterate(name.downcase).delete('"').gsub(/[^a-z0-9]+/, '-')
     n = number.gsub(' ', '')
     # n = "#{category.number}.#{n}" if category.present?
     "#{n}-#{s}"
