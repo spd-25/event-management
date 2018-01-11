@@ -10,7 +10,7 @@ table
     td = (@seminar.has_date_text? ? @seminar.date_text : @seminar.formatted_events).html_safe
   tr
     td: strong = Seminar.human_attribute_name :location
-    td = @seminar.location.name
+    td = @seminar.location&.name
   tr
     td: strong = Seminar.human_attribute_name :price_text
-    td #{@seminar.price_text.html_safe} <br><br>
+    td #{@seminar&.price_text.html_safe} <br><br>
