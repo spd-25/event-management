@@ -44,10 +44,13 @@ gem 'prawn'
 # See https://github.com/prawnpdf/prawn-table/pull/50
 gem 'prawn-table', git: 'https://github.com/J-F-Liu/prawn-table'
 
-gem 'rubyzip', '~> 1.1.0'
-gem 'axlsx', '2.1.0.pre'
+# gem 'rubyzip', '~> 1.1.0'
+# gem 'axlsx', '2.1.0.pre'
+# no new gem out yet using the new rubyzip version
+gem 'axlsx', github: 'randym/axlsx'
 gem 'axlsx_rails'
 gem 'axlsx_styler'
+gem 'paperclip', '~> 5.0.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

@@ -1,4 +1,14 @@
 GIT
+  remote: git://github.com/randym/axlsx.git
+  revision: e897bc3748ba7fee60b6f6ad19415ed96b1ea7f7
+  specs:
+    axlsx (2.1.0.pre)
+      htmlentities (~> 4.3.4)
+      mimemagic (~> 0.3)
+      nokogiri (>= 1.6.6)
+      rubyzip (>= 1.2.1)
+
+GIT
   remote: https://github.com/J-F-Liu/prawn-table
   revision: 6e32ab811a162ca556644eaf942d757d8519f0be
   specs:
@@ -61,10 +71,6 @@ GEM
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
       thread_safe (~> 0.3, >= 0.3.1)
-    axlsx (2.1.0.pre)
-      htmlentities (~> 4.3.1)
-      nokogiri (>= 1.4.1)
-      rubyzip (~> 1.1.7)
     axlsx_rails (0.5.1)
       actionpack (>= 3.1)
       axlsx (>= 2.0.1)
@@ -119,6 +125,9 @@ GEM
       xpath (~> 2.0)
     childprocess (0.8.0)
       ffi (~> 1.0, >= 1.0.11)
+    climate_control (0.2.0)
+    cocaine (0.5.8)
+      climate_control (>= 0.0.3, < 1.0)
     codeclimate-test-reporter (1.0.8)
       simplecov (<= 0.13)
     coderay (1.1.2)
@@ -247,6 +256,7 @@ GEM
     mime-types (3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
+    mimemagic (0.3.2)
     mini_mime (0.1.4)
     mini_portile2 (2.3.0)
     minitest (5.10.3)
@@ -268,6 +278,12 @@ GEM
     paper_trail (7.1.3)
       activerecord (>= 4.0, < 5.2)
       request_store (~> 1.1)
+    paperclip (5.0.0)
+      activemodel (>= 4.2.0)
+      activesupport (>= 4.2.0)
+      cocaine (~> 0.5.5)
+      mime-types
+      mimemagic (~> 0.3.0)
     parallel (1.12.0)
     parser (2.4.0.0)
       ast (~> 2.2)
@@ -281,7 +297,7 @@ GEM
     prawn (2.2.2)
       pdf-core (~> 0.7.0)
       ttfunk (~> 1.5)
-    pry (0.11.1)
+    pry (0.11.3)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
     pry-doc (0.11.1)
@@ -371,7 +387,7 @@ GEM
       unicode-display_width (~> 1.0, >= 1.0.1)
     ruby-progressbar (1.9.0)
     ruby_dep (1.5.0)
-    rubyzip (1.1.7)
+    rubyzip (1.2.1)
     sass (3.5.1)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
@@ -385,7 +401,7 @@ GEM
       tilt (>= 1.1, < 3)
     select2-rails (4.0.3)
       thor (~> 0.14)
-    selenium-webdriver (3.6.0)
+    selenium-webdriver (3.8.0)
       childprocess (~> 0.5)
       rubyzip (~> 1.0)
     shellany (0.0.1)
@@ -457,13 +473,13 @@ GEM
     websocket-extensions (0.1.2)
     xpath (2.1.0)
       nokogiri (~> 1.3)
-    yard (0.9.9)
+    yard (0.9.12)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  axlsx (= 2.1.0.pre)
+  axlsx!
   axlsx_rails
   axlsx_styler
   better_errors
@@ -500,6 +516,7 @@ DEPENDENCIES
   mechanize
   meta_request
   paper_trail
+  paperclip (~> 5.0.0)
   pg
   pg_search
   prawn
@@ -518,7 +535,6 @@ DEPENDENCIES
   rollbar
   rspec-rails
   rubocop
-  rubyzip (~> 1.1.0)
   sass-rails (~> 5.0)
   select2-rails
   selenium-webdriver
@@ -538,4 +554,4 @@ RUBY VERSION
    ruby 2.4.2p198
 
 BUNDLED WITH
-   1.15.4
+   1.16.1

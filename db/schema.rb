@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171006141337) do
+ActiveRecord::Schema.define(version: 20180112110029) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -77,6 +77,10 @@ ActiveRecord::Schema.define(version: 20171006141337) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "published", default: false
+    t.string "print_version_file_name"
+    t.string "print_version_content_type"
+    t.integer "print_version_file_size"
+    t.datetime "print_version_updated_at"
   end
 
   create_table "categories", id: :serial, force: :cascade do |t|
@@ -158,6 +162,16 @@ ActiveRecord::Schema.define(version: 20171006141337) do
     t.string "name"
     t.text "description"
     t.jsonb "address", default: "{}"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "pages", force: :cascade do |t|
+    t.string "title", null: false
+    t.string "slug", null: false
+    t.text "teaser"
+    t.text "content"
+    t.boolean "published", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
