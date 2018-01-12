@@ -2,8 +2,8 @@ h4
   - count = @seminar.attendees.count
   => count
   => Attendee.model_name.human(count: count)
-  => link_to fa_icon('table', text: 'Exportieren'), attendees_seminar_url(@seminar, format: :xlsx), class: 'btn btn-default btn-xs'
-  => link_to fa_icon('envelope', text: 'E-Mail-Liste'), attendees_seminar_url(@seminar, format: :xlsx, emails: true), class: 'btn btn-default btn-xs'
+  => link_to fa_icon('table', text: 'Exportieren'), attendees_admin_seminar_url(@seminar, format: :xlsx), class: 'btn btn-default btn-xs'
+  => link_to fa_icon('envelope', text: 'E-Mail-Liste'), attendees_admin_seminar_url(@seminar, format: :xlsx, emails: true), class: 'btn btn-default btn-xs'
   = link_to fa_icon('plus', text: 'Neue Anmeldung'),
       new_booking_url(seminar_id: @seminar.id), class: 'btn btn-default btn-xs'
 

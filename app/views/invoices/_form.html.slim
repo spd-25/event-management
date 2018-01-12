@@ -46,7 +46,7 @@
     .col-md-3
       = panel_box title: 'Seminar' do
         ul.list-unstyled
-          li = link_to @invoice.seminar.number, @invoice.seminar
+          li = link_to @invoice.seminar.number, [:admin, @invoice.seminar]
           li = @invoice.seminar.title
           li = @invoice.seminar.teachers.map(&:name).join(', ').html_safe
           li = @invoice.seminar.price_text&.html_safe

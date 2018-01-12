@@ -34,7 +34,7 @@
             /- invoice = attendee.invoice
             tr data = {url: url_for(attendee)} class=('warning' if attendee.canceled?)
               td title=seminar.title
-                = link_to seminar.number, seminar
+                = link_to seminar.number, [:admin, seminar]
               td = seminar.dates.join(', ')
               td = attendee.name
               td = attendee.contact_email

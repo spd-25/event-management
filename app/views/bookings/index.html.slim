@@ -21,7 +21,7 @@
         - invoice = booking.invoice
         tr data = {url: url_for(booking)} class=('warning' if booking.canceled?)
           td = ldate booking.created_at, format: :short2
-          td = link_to booking.seminar.number, booking.seminar
+          td = link_to booking.seminar.number, [:admin, booking.seminar]
           td = booking.attendees.map(&:name).join('<br>').html_safe
           td = booking.contact_email
           td

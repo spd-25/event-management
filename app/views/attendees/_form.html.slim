@@ -59,7 +59,7 @@
 
   .action-buttons
     .pull-right
-      => link_to t(:cancel), (session[:attendee_back_url] || @seminar), class: 'btn btn-default'
+      => link_to t(:cancel), (session[:attendee_back_url] || [:admin, @seminar]), class: 'btn btn-default'
       = f.submit t(:save), class: 'btn btn-primary'
 
   coffee:

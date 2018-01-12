@@ -1,11 +1,11 @@
-= render 'seminars/index/header'
+= render 'admin/seminars/index/header'
 
 .row
   .col-md-2
     ul.nav.nav-pills.nav-stacked
       - I18n.t('date.month_names').each.with_index do |month, index|
         - label = month || 'Ohne Termin'
-        li class=('active' if @month == index) = link_to label, date_seminars_path(month: index)
+        li class=('active' if @month == index) = link_to label, date_admin_seminars_path(month: index)
   .col-md-10
-    = render 'seminars/table', seminars: @seminars, header: false
+    = render 'admin/seminars/table', seminars: @seminars, header: false
     .row: .col-md-12: .pull-right = paginate @seminars

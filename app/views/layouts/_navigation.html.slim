@@ -9,11 +9,11 @@
           span.icon-bar
         = link_to 'Start', root_path, class: 'navbar-brand', tabindex: -1
         /ul.nav.navbar-nav
-        /= link_to title_for_model(Seminar, with_icon: true), seminars_url, class: 'navbar-brand', tabindex: -1
+        /= link_to title_for_model(Seminar, with_icon: true), admin_seminars_url, class: 'navbar-brand', tabindex: -1
       .collapse.navbar-collapse
         ul.nav.navbar-nav
           li class=('active' if controller_name == 'seminars')
-            = link_to title_for_model(Seminar, with_icon: true), seminars_url, tabindex: -1
+            = link_to title_for_model(Seminar, with_icon: true), admin_seminars_url, tabindex: -1
           /li class=('active' if controller_name == 'bookings')
             = link_to title_for_model(Booking, with_icon: true), bookings_url, tabindex: -1
           - if policy(Page).index?
@@ -57,7 +57,7 @@
                   - else
                     em #{catalog.year} *
           li
-            form.navbar-form.navbar-right role="search" action=search_url
+            form.navbar-form.navbar-right role="search" action=admin_search_url
               .form-group
                 input.form-control type="text" placeholder="Suche" name="q" value=@query autofocus=(params[:controller] == 'search') tabindex="-1"
           = navbar_dropdown current_user.username do

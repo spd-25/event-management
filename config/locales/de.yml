@@ -108,21 +108,7 @@ de:
       error: Referent konnte nicht gespeichert werden.
     new:
       title: Referent anlegen
-  seminars:
-    icon: university
-    single:
-      title: "%{id}"
-    form:
-      error: Seminar konnte nicht gespeichert werden.
-    new:
-      title: Seminar anlegen
-    editing_status:
-      all:                  Alle (%{count})
-      editing_not_finished: in Bearbeitung (%{count})
-      layout_open:          Bereit für Layout (%{count})
-      layout_finished:      Layout fertig (%{count})
-      completed:            Bearbeitung und Layout fertig (%{count})
-      editing_changed:      nachträglich bearbeitet (%{count})
+
   invoices:
     single:
       title: "Rechnung %{id}"
@@ -157,9 +143,6 @@ de:
         <font size="8">Für den/die Teilnehmer/in ist nach erfolgter schriftlicher Anmeldung ein Rücktritt vom Vertrag bis 15 Kalendertage vor Veranstaltungs-/Kursbeginn ohne Angabe von Gründen möglich. Bei einer späteren Absage als 15 Kalendertage vor Veranstaltungs-/Kursbeginn ist die Teilnahmegebühr in voller Höhe zu zahlen. Eine Ersatzperson kann jederzeit benannt werden. Bei Nichtteilnahme einer angemeldeten Person an einer Veranstaltung/einem Kurs ohne vorherige Absage, ist die Teilnahmegebühr in voller Höhe zu zahlen.</font>
         Die vollständigen Geschäftsbedingungen finden Sie im Internet unter www.bildungswerk-lsa.de.
         <b>Bitte beachten Sie, dass auf dem Hof leider keine Parkmöglichkeiten zur Verfügung stehen!</b>
-  search:
-    index:
-      title: Suchergebnisse
   users:
     cannot_delete_yourself: Du kannst dich nicht selber löschen
     icon: 'users'
@@ -179,3 +162,22 @@ de:
   new: Neu
   save: Speichern
   save_and_next: Speichern und Neu
+  admin:
+    search:
+      index:
+        title: Suchergebnisse
+    seminars:
+      icon: university
+      single:
+        title: "%{id}"
+      form:
+        error: Seminar konnte nicht gespeichert werden.
+      new:
+        title: Seminar anlegen
+      editing_status:
+        all:                  Alle (%{count})
+        editing_not_finished: in Bearbeitung (%{count})
+        layout_open:          Bereit für Layout (%{count})
+        layout_finished:      Layout fertig (%{count})
+        completed:            Bearbeitung und Layout fertig (%{count})
+        editing_changed:      nachträglich bearbeitet (%{count})

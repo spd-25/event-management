@@ -1,4 +1,4 @@
-= simple_form_for(@seminar) do |f|
+= simple_form_for([:admin, @seminar]) do |f|
   = f.input :year,         as: :hidden
   = f.input :copy_from_id, as: :hidden if @seminar.new_record?
   - if @seminar.errors.any?
@@ -20,16 +20,16 @@
       li role="presentation"
         a aria-controls="settings" data-toggle="tab" href="#notes"   role="tab"  Bemerkungen
     .tab-content
-      #general.tab-pane.active role="tabpanel" = render 'seminars/form/general', f: f
-      #events.tab-pane         role="tabpanel" = render 'seminars/form/events',  f: f
-      #benefit.tab-pane        role="tabpanel" = render 'seminars/form/text',    f: f, field: :benefit
-      #content.tab-pane        role="tabpanel" = render 'seminars/form/text',    f: f, field: :content
-      #notes.tab-pane          role="tabpanel" = render 'seminars/form/text',    f: f, field: :notes
+      #general.tab-pane.active role="tabpanel" = render 'admin/seminars/form/general', f: f
+      #events.tab-pane         role="tabpanel" = render 'admin/seminars/form/events',  f: f
+      #benefit.tab-pane        role="tabpanel" = render 'admin/seminars/form/text',    f: f, field: :benefit
+      #content.tab-pane        role="tabpanel" = render 'admin/seminars/form/text',    f: f, field: :content
+      #notes.tab-pane          role="tabpanel" = render 'admin/seminars/form/text',    f: f, field: :notes
 
   section.action-buttons
     .col-md-12
       .pull-right
-        => link_to t(:cancel), cancel_url(@seminar), class: 'btn btn-default'
+        => link_to t(:cancel), [:admin, cancel_url(@seminar)], class: 'btn btn-default'
         = f.submit t(:save), class: 'btn btn-primary'
 
 sass:

@@ -3,7 +3,7 @@
   h2 = title_for @booking
 
 h3
-  => link_to @seminar.number, @seminar
+  => link_to @seminar.number, [:admin, @seminar]
   | -
   =< @seminar.title
   br

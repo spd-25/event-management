@@ -9,5 +9,5 @@
 
 - if @user.editor?
   h4 Bildungsreferent*in für folgende Semiane
-  => link_to fa_icon('table', text: 'Exportieren'), seminars_user_url(@user, format: :xlsx), class: 'btn btn-default btn-xs'
-  = render 'seminars/table', seminars: @user.edited_seminars
+  => link_to fa_icon('table', text: 'Exportieren'), seminars_admin_user_url(@user, format: :xlsx), class: 'btn btn-default btn-xs'
+  = render 'admin/seminars/table', seminars: @user.edited_seminars

@@ -1,11 +1,11 @@
-= render 'seminars/index/header'
+= render 'admin/seminars/index/header'
 
 .row
   .col-md-2
     ul.nav.nav-pills.nav-stacked
       - I18n.t('date.month_names').each.with_index do |month, index|
         - if index != 0
-          li class=('active' if @month == index) = link_to month, calendar_seminars_path(month: index)
+          li class=('active' if @month == index) = link_to month, calendar_admin_seminars_path(month: index)
   .col-md-10
     table.table.table-condensed.table-bordered
       thead
@@ -30,7 +30,7 @@
                   .text-muted = day.day
                   - if (events = grouped_events[[week, day]])
                     - events.each do |ev|
-                      = link_to ev.seminar, title: ev.seminar.title do
+                      = link_to [:admin, ev.seminar], title: ev.seminar.title do
                         => ev.seminar.number
                         small = ev.seminar.teachers.map(&:name).join(', ')
                       br

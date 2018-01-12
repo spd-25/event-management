@@ -1,12 +1,12 @@
-= render 'seminars/index/header'
+= render 'admin/seminars/index/header'
 
 - current_path = (@category && @category.path).to_a
 .row
   .col-md-3
     ul.nav.nav-pills.nav-stacked.categories
       li class=('active' unless @category )
-        = link_to "ohne (#{@uncategorized_seminars.count})", category_seminars_url(nil)
-    = render 'seminars/index/categories', categories: current_catalog.categories.roots,
+        = link_to "ohne (#{@uncategorized_seminars.count})", category_admin_seminars_url(nil)
+    = render 'admin/seminars/index/categories', categories: current_catalog.categories.roots,
       current_path: current_path
 
   .col-md-9

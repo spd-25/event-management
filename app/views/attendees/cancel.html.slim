@@ -71,5 +71,5 @@
       = f.input :cancellation_reason, as: :text, input_html: { rows: 5 }
       .action-buttons
         .pull-right
-          => link_to t(:cancel), (session[:back_url] || @seminar), class: 'btn btn-default'
+          => link_to t(:cancel), (session[:back_url] || [:admin, @seminar]), class: 'btn btn-default'
           = f.submit t(:save), class: 'btn btn-primary'

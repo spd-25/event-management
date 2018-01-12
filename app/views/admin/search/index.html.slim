@@ -13,6 +13,6 @@
         - results.each do |result|
           - if result.is_a? Attendee
             li.list-group-item class=('list-group-item-warning' if result.canceled?)
-              = link_to display_name_for(result), result.booking.seminar
+              = link_to display_name_for(result), [:admin, result.booking.seminar]
           - else
-            li.list-group-item = link_to display_name_for(result), result
+            li.list-group-item = link_to display_name_for(result), [:admin, result]
