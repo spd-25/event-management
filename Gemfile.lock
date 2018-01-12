@@ -1,4 +1,14 @@
 GIT
+  remote: git://github.com/randym/axlsx.git
+  revision: e897bc3748ba7fee60b6f6ad19415ed96b1ea7f7
+  specs:
+    axlsx (2.1.0.pre)
+      htmlentities (~> 4.3.4)
+      mimemagic (~> 0.3)
+      nokogiri (>= 1.6.6)
+      rubyzip (>= 1.2.1)
+
+GIT
   remote: https://github.com/J-F-Liu/prawn-table
   revision: 6e32ab811a162ca556644eaf942d757d8519f0be
   specs:
@@ -61,10 +71,6 @@ GEM
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
       thread_safe (~> 0.3, >= 0.3.1)
-    axlsx (2.1.0.pre)
-      htmlentities (~> 4.3.1)
-      nokogiri (>= 1.4.1)
-      rubyzip (~> 1.1.7)
     axlsx_rails (0.5.1)
       actionpack (>= 3.1)
       axlsx (>= 2.0.1)
@@ -381,7 +387,7 @@ GEM
       unicode-display_width (~> 1.0, >= 1.0.1)
     ruby-progressbar (1.9.0)
     ruby_dep (1.5.0)
-    rubyzip (1.1.7)
+    rubyzip (1.2.1)
     sass (3.5.1)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
@@ -473,7 +479,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  axlsx (= 2.1.0.pre)
+  axlsx!
   axlsx_rails
   axlsx_styler
   better_errors
@@ -529,7 +535,6 @@ DEPENDENCIES
   rollbar
   rspec-rails
   rubocop
-  rubyzip (~> 1.1.0)
   sass-rails (~> 5.0)
   select2-rails
   selenium-webdriver
