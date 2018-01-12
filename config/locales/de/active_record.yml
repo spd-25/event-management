@@ -80,6 +80,7 @@ de:
       catalog:
         categories: Themen
         seminars: Seminare
+        print_version: Druckversion (PDF)
       category:
         category: Oberthema
         categories: Unterthemen

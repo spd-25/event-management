@@ -35,7 +35,7 @@ class CatalogsController < ApplicationController
     if @catalog.update catalog_params
       redirect_to catalogs_path, notice: t(:updated, model: Catalog.model_name.human)
     else
-      render :edit
+      render :show
     end
   end
 
@@ -59,6 +59,6 @@ class CatalogsController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def catalog_params
-    params.require(:catalog).permit(:title, :year, :published)
+    params.require(:catalog).permit(:title, :year, :published, :print_version)
   end
 end

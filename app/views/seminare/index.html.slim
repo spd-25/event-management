@@ -1,5 +1,8 @@
 - content_for :page_title, 'Seminarübersicht'
 
+- if @catalog.print_version.present?
+  .pull-right = pdf_link @catalog.print_version.url, text: 'Bildungskalender als PDF herunterladen'
+
 ul.nav.nav-tabs.years
   - @published_years.each do |year|
     li class=('active' if year == @year.to_i) = link_to year, seminare_visitor_path(year: year)
