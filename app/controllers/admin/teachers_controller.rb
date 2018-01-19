@@ -1,61 +1,62 @@
-class TeachersController < ApplicationController
-  before_action :authenticate_user!
-  after_action :verify_authorized
-  before_action :set_teacher, only: [:show, :update, :destroy, :seminars]
+module Admin
 
-  def index
-    authorize Teacher
-    @teachers = Teacher.order(:last_name).all
-  end
+  class TeachersController < BaseController
+    before_action :set_teacher, only: %i[show update destroy seminars]
 
-  def new
-    authorize Teacher
-    @teacher = Teacher.new
-  end
-
-  def show
-  end
-
-  def create
-    authorize Teacher
-    @teacher = Teacher.new teacher_params
-
-    if @teacher.save
-      redirect_to teachers_url, notice: t(:created, model: Teacher.model_name.human)
-    else
-      render :new
+    def index
+      authorize Teacher
+      @teachers = Teacher.order(:last_name).all
     end
-  end
 
-  def update
-    if @teacher.update teacher_params
-      redirect_to teachers_url, notice: t(:updated, model: Teacher.model_name.human)
-    else
-      render :show
+    def new
+      authorize Teacher
+      @teacher = Teacher.new
     end
-  end
 
-  def destroy
-    @teacher.destroy
-    redirect_to teachers_url, notice: t(:destroyed, model: Teacher.model_name.human)
-  end
+    def show
+    end
 
-  def seminars
-    @seminars = @teacher.seminars.order(:date)
-  end
+    def create
+      authorize Teacher
+      @teacher = Teacher.new teacher_params
 
-  private
+      if @teacher.save
+        redirect_to admin_teachers_url, notice: t(:created, model: Teacher.model_name.human)
+      else
+        render :new
+      end
+    end
 
-  # Use callbacks to share common setup or constraints between actions.
-  def set_teacher
-    @teacher = Teacher.find params[:id]
-    authorize @teacher
-  end
+    def update
+      if @teacher.update teacher_params
+        redirect_to admin_teachers_url, notice: t(:updated, model: Teacher.model_name.human)
+      else
+        render :show
+      end
+    end
 
-  # Only allow a trusted parameter "white list" through.
-  def teacher_params
-    params.require(:teacher).permit(:first_name, :last_name, :profession, :title,
-                                    address: %i(street zip city),
-                                    contact: %i(email phone mobile fax))
+    def destroy
+      @teacher.destroy
+      redirect_to admin_teachers_url, notice: t(:destroyed, model: Teacher.model_name.human)
+    end
+
+    def seminars
+      @seminars = @teacher.seminars.order(:date)
+    end
+
+    private
+
+    # Use callbacks to share common setup or constraints between actions.
+    def set_teacher
+      @teacher = Teacher.find params[:id]
+      authorize @teacher
+    end
+
+    # Only allow a trusted parameter "white list" through.
+    def teacher_params
+      params.require(:teacher).permit(
+        :first_name, :last_name, :profession, :title, address: %i[street zip city], contact: %i[email phone mobile fax]
+      )
+    end
   end
 end

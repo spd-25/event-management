@@ -1,6 +1,6 @@
 - page_title_for @teachers
 .page-header
-  .buttons = new_link new_teacher_path
+  .buttons = new_link new_admin_teacher_path
   h2 = title_for @teachers
 
 .table-responsive
@@ -11,7 +11,7 @@
           th = Teacher.human_attribute_name(attr)
     tbody
       - @teachers.each do |teacher|
-        tr data = { url: url_for(teacher) }
+        tr data = { url: admin_teacher_url(teacher) }
           td = teacher.title
           td = teacher.first_name
           td = teacher.last_name
