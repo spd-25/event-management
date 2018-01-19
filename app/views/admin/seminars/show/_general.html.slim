@@ -41,7 +41,7 @@
 
     /= render 'admin/seminars/show/teachers'
     - location = @seminar.location
-    = link_to icon_for(location, text: location.name, size: 2), location if location
+    = link_to icon_for(location, text: location.name, size: 2), admin_location_url(location) if location
     p
       label Jahr
       =< @seminar.year

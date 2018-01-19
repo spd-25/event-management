@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
+    root to: 'seminars#index'
 
     get 'search', to: 'search#index', as: :search
 
@@ -28,7 +29,7 @@ Rails.application.routes.draw do
     #   get :access_rights, on: :collection
     #   get :seminars,      on: :member
     # end
-    # resources :locations, except: :edit
+    resources :locations, except: :edit
     # resources(:teachers,  except: :edit) { get :seminars, on: :member }
 
     resources :seminars do
@@ -63,7 +64,7 @@ Rails.application.routes.draw do
     get :access_rights, on: :collection
     get :seminars,      on: :member
   end
-  resources :locations, except: :edit
+  # resources :locations, except: :edit
   resources(:teachers,  except: :edit) { get :seminars, on: :member }
 
   # resources :seminars do

@@ -35,7 +35,7 @@
             li role="separator" class="divider"
             - if policy(Location).index?
               li class=('active' if controller_name == 'locations')
-                = link_to title_for_model(Location, with_icon: true), locations_url, tabindex: -1
+                = link_to title_for_model(Location, with_icon: true), admin_locations_url, tabindex: -1
             - if policy(Teacher).index?
               li class=('active' if controller_name == 'teachers')
                 = link_to title_for_model(Teacher, with_icon: true), teachers_url, tabindex: -1
