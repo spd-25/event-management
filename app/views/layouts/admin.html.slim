@@ -1,0 +1,20 @@
+doctype html
+html
+  head
+    meta[name="viewport" content="width=device-width, initial-scale=1.0"]
+    title = content_for?(:title) ? yield(:title) : 'Event Management'
+    == stylesheet_link_tag 'admin', media: 'all', 'data-turbolinks-track' => true
+    == javascript_include_tag 'admin', 'data-turbolinks-track' => true
+    == csrf_meta_tags
+    == content_for :style
+  body
+    header
+      == render 'layouts/admin/navigation'
+    main.container[role="main"]
+      == render 'layouts/admin/messages'
+      == yield
+      - if current_user && controller_name != 'feedbacks'
+        == render 'layouts/admin/feedback'
+
+    == content_for :footer
+    == content_for :script

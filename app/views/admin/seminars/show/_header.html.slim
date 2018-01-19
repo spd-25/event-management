@@ -26,7 +26,7 @@ ol.breadcrumb
         =< @seminar.teachers.map(&:name).join(', ')
       - if (editor = @seminar.editor)
         br
-        small = link_to editor.name, editor
+        small = link_to editor.name, admin_user_url(editor)
 
   .col-md-2
     - icon, text, action, css_class = @seminar.published? ? ['eye-slash', 'Deaktivieren!', :unpublish, 'success'] : ['eye', 'Veröffentlichen!', :publish, 'default']

@@ -23,8 +23,8 @@
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.de.js
 
 
-//  require admin/form_init.coffee
-//  require admin/table.coffee
-//  require admin/nav-tabs.coffee
+//= require admin/form_init.coffee
+//= require admin/table.coffee
+//= require admin/nav-tabs.coffee
 //  require_tree .
 

@@ -7,7 +7,7 @@
           span.icon-bar
           span.icon-bar
           span.icon-bar
-        = link_to 'Start', root_path, class: 'navbar-brand', tabindex: -1
+        = link_to 'Start', admin_root_path, class: 'navbar-brand', tabindex: -1
         /ul.nav.navbar-nav
         /= link_to title_for_model(Seminar, with_icon: true), admin_seminars_url, class: 'navbar-brand', tabindex: -1
       .collapse.navbar-collapse
@@ -25,7 +25,7 @@
           - if policy(Invoice).index?
             li class=('active' if controller_name == 'invoices')
               = link_to title_for_model(Invoice, with_icon: true), admin_invoices_url, tabindex: -1
-          = navbar_dropdown 'Stammdaten', active: controller_name.in?(%w(locations teachers categories users)) do
+          = navbar_dropdown 'Stammdaten', active: controller_name.in?(%w(catalogs categories locations teachers companies users)) do
             - if policy(Catalog).index?
               li class=('active' if controller_name == 'catalogs')
                 = link_to title_for_model(Catalog, with_icon: true), admin_catalogs_url, tabindex: -1
