@@ -31,7 +31,7 @@
                   = progress_bar_for_bookings(seminar)
                 ul.list-inline
                   - seminar.teachers.each do |teacher|
-                    li = link_to icon_for(teacher, text: teacher.name), teacher
+                    li = link_to icon_for(teacher, text: teacher.name), admin_teacher_url(teacher)
 - else
   p Keine Seminare
 

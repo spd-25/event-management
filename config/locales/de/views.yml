@@ -51,6 +51,11 @@ de:
         layout_finished:      Layout fertig (%{count})
         completed:            Bearbeitung und Layout fertig (%{count})
         editing_changed:      nachträglich bearbeitet (%{count})
+    teachers:
+      form:
+        error: Referent konnte nicht gespeichert werden.
+      new:
+        title: Referent anlegen
   buchung:
     new:
       title: Neue Anmeldung
@@ -75,11 +80,6 @@ de:
       error: Firma konnte nicht gespeichert werden.
     new:
       title: Neue Firma
-  teachers:
-    form:
-      error: Referent konnte nicht gespeichert werden.
-    new:
-      title: Referent anlegen
   users:
     form:
       error: Benutzer konnte nicht gespeichert werden.

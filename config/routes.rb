@@ -30,7 +30,7 @@ Rails.application.routes.draw do
     #   get :seminars,      on: :member
     # end
     resources :locations, except: :edit
-    # resources(:teachers,  except: :edit) { get :seminars, on: :member }
+    resources(:teachers,  except: :edit) { get :seminars, on: :member }
 
     resources :seminars do
       member do
@@ -65,7 +65,7 @@ Rails.application.routes.draw do
     get :seminars,      on: :member
   end
   # resources :locations, except: :edit
-  resources(:teachers,  except: :edit) { get :seminars, on: :member }
+  # resources(:teachers,  except: :edit) { get :seminars, on: :member }
 
   # resources :seminars do
   #   member do
