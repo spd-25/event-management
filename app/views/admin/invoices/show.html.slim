@@ -1,5 +1,5 @@
 - page_title_for @invoice
 .page-header
-  h2 = title_for @invoice
+  h2 = t('.title', number: @invoice.number)
 
 = render 'form'

@@ -24,7 +24,7 @@
               = link_to title_for_model(Booking, with_icon: true), admin_attendees_url, tabindex: -1
           - if policy(Invoice).index?
             li class=('active' if controller_name == 'invoices')
-              = link_to title_for_model(Invoice, with_icon: true), invoices_url, tabindex: -1
+              = link_to title_for_model(Invoice, with_icon: true), admin_invoices_url, tabindex: -1
           = navbar_dropdown 'Stammdaten', active: controller_name.in?(%w(locations teachers categories users)) do
             - if policy(Catalog).index?
               li class=('active' if controller_name == 'catalogs')

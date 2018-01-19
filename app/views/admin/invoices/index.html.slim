@@ -7,7 +7,7 @@
     ul.nav.nav-pills.nav-stacked
       - I18n.t('date.month_names').each.with_index do |month, index|
         - if index > 0
-          li class=('active' if @month == index) = link_to month, invoices_url(month: index)
+          li class=('active' if @month == index) = link_to month, admin_invoices_url(month: index)
   .col-md-10
 
 
@@ -25,10 +25,10 @@
             th
         tbody
           - @invoices.each do | invoice |
-            tr data={url: url_for(invoice)}
+            tr data={url: admin_invoice_url(invoice)}
               td = invoice.number
               td = ldate invoice.date
               td = lines_for invoice.address.split("\n"), delimiter: ', '
               td = lines_for invoice.items.map(&:attendee)
               td = number_to_currency invoice.total_price
-              td = pdf_link invoice_path(invoice, format: :pdf)
+              td = pdf_link admin_invoice_path(invoice, format: :pdf)

@@ -24,8 +24,7 @@
               - else
                 = 'SEMINAR HAT KEINE GEBÜHR GESPEICHERT'
             - url_options = company ? { company_id: company.id, seminar_id: @seminar.id } : { attendee_id: attendees.first.id }
-            td = link_to 'Rechnung schreiben', new_invoice_path(url_options), class: 'btn btn-primary'
-
+            td = link_to 'Rechnung schreiben', new_admin_invoice_path(url_options), class: 'btn btn-primary'
 
 h4 Geschriebene Rechnungen
 .table-responsive
@@ -40,10 +39,10 @@ h4 Geschriebene Rechnungen
         th
     tbody
       - @seminar.invoices.each do |invoice|
-        tr data = {url: url_for(invoice)}
+        tr data = {url: admin_invoice_url(invoice)}
           td = invoice.number
           td = ldate invoice.date
           td = lines_for invoice.address.split("\n")
           td = lines_for invoice.items.map(&:attendee)
           td = number_to_currency invoice.total_price
-          td = pdf_link invoice_path(invoice, format: :pdf)
+          td = pdf_link admin_invoice_path(invoice, format: :pdf)

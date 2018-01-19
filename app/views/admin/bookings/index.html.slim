@@ -31,10 +31,10 @@
               = [booking.company_title, booking.invoice_title].select(&:present?).first
           td
             - if invoice
-              => pdf_link invoice_path(invoice, format: :pdf), text: "Rechnung #{invoice.number}"
-              => link_to fa_icon('pencil'), invoice
+              => pdf_link admin_invoice_path(invoice, format: :pdf), text: "Rechnung #{invoice.number}"
+              => link_to fa_icon('pencil'), admin_invoice_path(invoice)
             - else
-              = link_to 'Rechnung schreiben', new_invoice_path(booking_id: booking.id), class: 'btn btn-primary btn-xs'
+              = link_to 'Rechnung schreiben', new_admin_invoice_path(booking_id: booking.id), class: 'btn btn-primary btn-xs'
           td
             - if booking.canceled?
               |  storniert
