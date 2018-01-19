@@ -35,7 +35,7 @@
               td = booking.contact_email
               td
                 - if attendee.company
-                  = link_to attendee.company&.name, attendee.company
+                  = link_to attendee.company&.name, admin_company_url(attendee.company)
                 - else
                   = [booking.company_title, booking.invoice_title].select(&:present?).first
               td

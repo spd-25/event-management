@@ -31,6 +31,11 @@ de:
         error: Thema konnte nicht gespeichert werden.
       new:
         title: Neues Thema
+    companies:
+      form:
+        error: Firma konnte nicht gespeichert werden.
+      new:
+        title: Neue Firma
     invoices:
       new:
         title: Rechnung schreiben
@@ -75,11 +80,6 @@ de:
       error: Bildungskalender konnte nicht gespeichert werden.
     new:
       title: Bildungskalender anlegen
-  companies:
-    form:
-      error: Firma konnte nicht gespeichert werden.
-    new:
-      title: Neue Firma
   users:
     form:
       error: Benutzer konnte nicht gespeichert werden.

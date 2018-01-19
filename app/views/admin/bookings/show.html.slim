@@ -33,7 +33,7 @@ h3
 
         .col-md-6
           - if (company = @booking.company)
-            p = link_to company.full_address.gsub("\n", '<br>').html_safe, company
+            p = link_to company.full_address.gsub("\n", '<br>').html_safe, admin_company_url(company)
 
     fieldset
       legend Kontakt

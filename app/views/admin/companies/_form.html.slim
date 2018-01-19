@@ -1,4 +1,4 @@
-= simple_form_for(@company) do |f|
+= simple_form_for([:admin, @company]) do |f|
   - if @company.errors.any?
     .alert.alert-danger.alert-dismissable
       button.close type="button" data-dismiss="alert"

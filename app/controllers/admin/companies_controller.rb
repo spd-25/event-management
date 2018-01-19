@@ -1,67 +1,63 @@
-class CompaniesController < ApplicationController
-  before_action :authenticate_user!
-  after_action :verify_authorized
-  before_action :set_company, only: [:show, :update, :destroy]
+module Admin
+  class CompaniesController < BaseController
+    before_action :set_company, only: %i[show update destroy]
 
-  def index
-    authorize Company
-    @companies = Company.order(:name)
+    def index
+      authorize Company
+      @companies = Company.order(:name)
 
-    respond_to do |format|
-      format.html { @companies = @companies.page(params[:page]).all }
-      format.xlsx { @companies = @companies.all }
+      respond_to do |format|
+        format.html { @companies = @companies.page(params[:page]).all }
+        format.xlsx { @companies = @companies.all }
+      end
     end
-  end
 
-  def show
-  end
+    def show; end
 
-  def new
-    authorize Company
-    @company = Company.new
-  end
-
-  def create
-    authorize Company
-    @company = Company.new company_params
-
-    if @company.save
-      redirect_to companies_url, notice: t(:created, model: Company.model_name.human)
-    else
-      render :new
+    def new
+      authorize Company
+      @company = Company.new
     end
-  end
 
-  def update
-    if @company.update company_params
-      redirect_to companies_url, notice: t(:updated, model: Company.model_name.human)
-    else
-      render :show
+    def create
+      authorize Company
+      @company = Company.new company_params
+
+      if @company.save
+        redirect_to admin_companies_url, notice: t(:created, model: Company.model_name.human)
+      else
+        render :new
+      end
     end
-  end
 
-  def destroy
-    @company.destroy
-    if @company.destroyed?
-      redirect_to companies_url, notice: t(:destroyed, model: Company.model_name.human)
-    else
-      msg = 'Es existieren Buchungen / Teilnehmer.'
-      msg = t(:not_destroyed, model: Company.model_name.human, message: msg)
-      redirect_to @company, alert: msg
+    def update
+      if @company.update company_params
+        redirect_to admin_companies_url, notice: t(:updated, model: Company.model_name.human)
+      else
+        render :show
+      end
     end
-  end
 
-  private
+    def destroy
+      @company.destroy
+      if @company.destroyed?
+        redirect_to admin_companies_url, notice: t(:destroyed, model: Company.model_name.human)
+      else
+        msg = 'Es existieren Buchungen / Teilnehmer.'
+        msg = t(:not_destroyed, model: Company.model_name.human, message: msg)
+        redirect_to admin_company_url(@company), alert: msg
+      end
+    end
 
-  # Use callbacks to share common setup or constraints between actions.
-  def set_company
-    @company = Company.find params[:id]
-    authorize @company
-  end
+    private
 
-  # Only allow a trusted parameter "white list" through.
-  def company_params
-    params.require(:company)
-        .permit(:name, :name2, :street, :zip, :city, :city_part, :phone, :mobile, :fax, :email)
+    def set_company
+      @company = Company.find params[:id]
+      authorize @company
+    end
+
+    def company_params
+      params.require(:company).permit(:name, :name2, :street, :zip, :city, :city_part, :phone, :mobile, :fax, :email)
+    end
   end
 end

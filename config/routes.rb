@@ -53,7 +53,7 @@ Rails.application.routes.draw do
       post :cancel, action: :destroy
     end
     resources :invoices,  except: :edit
-    # resources :companies, except: :edit
+    resources :companies, except: :edit
     # resources(:catalogs) { get :make_current, on: :member }
     #
     # resources :feedbacks, only: %i[new create]
@@ -88,7 +88,7 @@ Rails.application.routes.draw do
   #   post :cancel, action: :destroy
   # end
   # resources :invoices,  except: :edit
-  resources :companies, except: :edit
+  # resources :companies, except: :edit
   resources(:catalogs) { get :make_current, on: :member }
 
   resources :feedbacks, only: %i[new create]

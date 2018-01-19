@@ -1,6 +1,6 @@
 - page_title_for @company
 .page-header
-  .buttons = delete_link @company
+  .buttons = delete_link @company, scope: :admin
   h2 = title_for @company
 
 = render 'form'
@@ -11,7 +11,7 @@
       .panel-heading Kategorien
       ul.list-group
         - @company.categories.where(year: current_year).roots.uniq.sort_by(&:number).each do |cat|
-          li.list-group-item = link_to cat.display_name, cat
+          li.list-group-item = link_to cat.display_name, admin_category_url(cat)
 
   .col-md-9
     - attendees = @company.attendees.booked.joins(:seminar).where('seminars.year' => current_year)
@@ -32,7 +32,7 @@
           - attendees.order(created_at: :desc).each do |attendee|
             - seminar = attendee.seminar.decorate
             /- invoice = attendee.invoice
-            tr data = {url: url_for(attendee)} class=('warning' if attendee.canceled?)
+            tr data = {url: admin_attendee_url(attendee)} class=('warning' if attendee.canceled?)
               td title=seminar.title
                 = link_to seminar.number, admin_seminar_url(seminar)
               td = seminar.dates.join(', ')

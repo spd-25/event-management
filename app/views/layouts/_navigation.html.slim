@@ -41,7 +41,7 @@
                 = link_to title_for_model(Teacher, with_icon: true), admin_teachers_url, tabindex: -1
             - if policy(Company).index?
               li class=('active' if controller_name == 'companies')
-                = link_to title_for_model(Company, with_icon: true), companies_url, tabindex: -1
+                = link_to title_for_model(Company, with_icon: true), admin_companies_url, tabindex: -1
             - if policy(User).index?
               li role="separator" class="divider"
               li class=('active' if controller_name == 'users')
