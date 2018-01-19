@@ -120,16 +120,6 @@ module ApplicationHelper
     title
   end
 
-  # def title_for_record(record, attr = nil)
-  #   if record.new_record?
-  #     t("#{record.class.model_name.name.tableize}.new.title")
-  #   else
-  #     attr ||= :id
-  #     id = attr.is_a?(Symbol) ? record.send(attr) : attr
-  #     t("#{record.class.model_name.name.tableize}.single.title", id: id)
-  #   end
-  # end
-
   def title_for_model(model, count: 2, with_icon: false)
     title = model.model_name.human count: count
     title = icon_for model, text: title if with_icon
@@ -156,7 +146,7 @@ module ApplicationHelper
   end
 
   def member_title_for(record, attr = nil, with_model: true)
-    return t("#{record.class.model_name.name.tableize}.new.title") if record.new_record?
+    return t("admin.#{record.class.model_name.name.tableize}.new.title") if record.new_record?
     attr ||= :name
     if with_model
       [record.send(attr), content_tag(:small, record.class.model_name.human)].join(' ').html_safe
