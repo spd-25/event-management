@@ -1,4 +1,4 @@
-= simple_form_for(@catalog) do |f|
+= simple_form_for([:admin, @catalog]) do |f|
   = f.error_notification
 
   section
@@ -11,5 +11,5 @@
   section.action-buttons
     .col-md-12
       .pull-right
-        => link_to t(:cancel), catalogs_path, class: 'btn btn-default'
+        => link_to t(:cancel), admin_catalogs_path, class: 'btn btn-default'
         = f.submit t(:save), class: 'btn btn-primary'

@@ -28,7 +28,7 @@
           = navbar_dropdown 'Stammdaten', active: controller_name.in?(%w(locations teachers categories users)) do
             - if policy(Catalog).index?
               li class=('active' if controller_name == 'catalogs')
-                = link_to title_for_model(Catalog, with_icon: true), catalogs_url, tabindex: -1
+                = link_to title_for_model(Catalog, with_icon: true), admin_catalogs_url, tabindex: -1
             - if policy(Category).index?
               li class=('active' if controller_name == 'categories')
                 = link_to title_for_model(Category, with_icon: true), admin_categories_url, tabindex: -1
@@ -51,7 +51,7 @@
           = navbar_dropdown current_catalog.title do
             - Catalog.all.each do |catalog|
               li class=('active' if current_catalog == catalog)
-                = link_to [catalog, action: :make_current] do
+                = link_to make_current_admin_catalog_url(catalog) do
                   - if catalog.published?
                     = catalog.year
                   - else

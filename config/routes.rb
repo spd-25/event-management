@@ -54,7 +54,7 @@ Rails.application.routes.draw do
     end
     resources :invoices,  except: :edit
     resources :companies, except: :edit
-    # resources(:catalogs) { get :make_current, on: :member }
+    resources(:catalogs) { get :make_current, on: :member }
     #
     # resources :feedbacks, only: %i[new create]
   end
@@ -89,7 +89,7 @@ Rails.application.routes.draw do
   # end
   # resources :invoices,  except: :edit
   # resources :companies, except: :edit
-  resources(:catalogs) { get :make_current, on: :member }
+  # resources(:catalogs) { get :make_current, on: :member }
 
   resources :feedbacks, only: %i[new create]
 end

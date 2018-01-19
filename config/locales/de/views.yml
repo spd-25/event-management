@@ -26,6 +26,11 @@ de:
         graduate: Absolvent*in der Fachschule
         terms_of_service: 'Hiermit erkenne ich die Allgemeinen Geschäftsbedingungen des PARITÄTISCHEN Bildungswerkes LSA an.'
         school: Schule
+    catalogs:
+      form:
+        error: Bildungskalender konnte nicht gespeichert werden.
+      new:
+        title: Bildungskalender anlegen
     categories:
       form:
         error: Thema konnte nicht gespeichert werden.
@@ -75,11 +80,6 @@ de:
       graduate: Absolvent*in der Fachschule
       terms_of_service: 'Hiermit erkenne ich die Allgemeinen Geschäftsbedingungen des PARITÄTISCHEN Bildungswerkes LSA an.'
       school: Schule
-  catalogs:
-    form:
-      error: Bildungskalender konnte nicht gespeichert werden.
-    new:
-      title: Bildungskalender anlegen
   users:
     form:
       error: Benutzer konnte nicht gespeichert werden.
