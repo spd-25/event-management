@@ -26,6 +26,11 @@ de:
         graduate: Absolvent*in der Fachschule
         terms_of_service: 'Hiermit erkenne ich die Allgemeinen Geschäftsbedingungen des PARITÄTISCHEN Bildungswerkes LSA an.'
         school: Schule
+    categories:
+      form:
+        error: Thema konnte nicht gespeichert werden.
+      new:
+        title: Neues Thema
     invoices:
       new:
         title: Rechnung schreiben
@@ -70,11 +75,6 @@ de:
       error: Bildungskalender konnte nicht gespeichert werden.
     new:
       title: Bildungskalender anlegen
-  categories:
-    form:
-      error: Thema konnte nicht gespeichert werden.
-    new:
-      title: Neues Thema
   companies:
     form:
       error: Firma konnte nicht gespeichert werden.

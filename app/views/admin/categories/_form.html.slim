@@ -1,4 +1,4 @@
-= simple_form_for(@category) do |f|
+= simple_form_for([:admin, @category]) do |f|
   = f.input :parent_id, as: :hidden
   = f.input :year, as: :hidden
   - if @category.errors.any?

@@ -31,7 +31,7 @@
                 = link_to title_for_model(Catalog, with_icon: true), catalogs_url, tabindex: -1
             - if policy(Category).index?
               li class=('active' if controller_name == 'categories')
-                = link_to title_for_model(Category, with_icon: true), categories_url, tabindex: -1
+                = link_to title_for_model(Category, with_icon: true), admin_categories_url, tabindex: -1
             li role="separator" class="divider"
             - if policy(Location).index?
               li class=('active' if controller_name == 'locations')

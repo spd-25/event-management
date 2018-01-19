@@ -44,9 +44,9 @@ Rails.application.routes.draw do
         get :search
       end
     end
-    # resources :categories, except: :edit do
-    #   put :move, on: :member
-    # end
+    resources :categories, except: :edit do
+      put :move, on: :member
+    end
     resources :bookings,   only: %i[show new create]
     resources :attendees,  only: %i[index show update] do
       get :cancel
@@ -79,9 +79,9 @@ Rails.application.routes.draw do
   #     get :search
   #   end
   # end
-  resources :categories, except: :edit do
-    put :move, on: :member
-  end
+  # resources :categories, except: :edit do
+  #   put :move, on: :member
+  # end
   # resources :bookings,   only: %i[show new create]
   # resources :attendees,  only: %i[index show update] do
   #   get :cancel

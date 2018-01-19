@@ -1,66 +1,67 @@
-class CategoriesController < ApplicationController
-  before_action :authenticate_user!
-  after_action :verify_authorized
-  before_action :set_category, only: [:show, :update, :destroy, :move]
+module Admin
 
-  def index
-    authorize Category
-    @categories = current_catalog.categories.roots.includes(children: { children: :children })
-  end
+  class CategoriesController < BaseController
+    before_action :set_category, only: %i[show update destroy move]
 
-  def show
-  end
-
-  def new
-    authorize Category
-    @category = Category.new year: current_catalog.year, parent_id: params[:parent_id]
-    @category.calculate_position
-  end
-
-  def create
-    authorize Category
-    @category = Category.new(category_params).tap(&:calculate_position)
-
-    if @category.save
-      redirect_to categories_url, notice: t(:created, model: Category.model_name.human)
-    else
-      render :new
+    def index
+      authorize Category
+      @categories = current_catalog.categories.roots.includes(children: { children: :children })
     end
-  end
 
-  def update
-    if @category.update category_params
-      redirect_to categories_url, notice: t(:updated, model: Category.model_name.human)
-    else
-      render :edit
+    def show
     end
-  end
 
-  def destroy
-    msg =
-      if @category.children.any?
-        { alert: 'Kategorie hat noch Unterkategorien.' }
+    def new
+      authorize Category
+      @category = Category.new year: current_catalog.year, parent_id: params[:parent_id]
+      @category.calculate_position
+    end
+
+    def create
+      authorize Category
+      @category = Category.new(category_params).tap(&:calculate_position)
+
+      if @category.save
+        redirect_to admin_categories_url, notice: t(:created, model: Category.model_name.human)
       else
-        @category.destroy ? { notice: 'Navigation link deleted.' } : { alert: 'not possible' }
+        render :new
       end
-    redirect_to categories_url, msg
-  end
+    end
 
-  def move
-    @category.move params[:dir]
-    redirect_to categories_url
-  end
+    def update
+      if @category.update category_params
+        redirect_to admin_categories_url, notice: t(:updated, model: Category.model_name.human)
+      else
+        render :edit
+      end
+    end
 
-  private
+    def destroy
+      msg =
+        if @category.children.any?
+          { alert: 'Kategorie hat noch Unterkategorien.' }
+        else
+          @category.destroy ? { notice: 'Navigation link deleted.' } : { alert: 'not possible' }
+        end
+      redirect_to admin_categories_url, msg
+    end
 
-  # Use callbacks to share common setup or constraints between actions.
-  def set_category
-    @category = current_catalog.categories.find params[:id]
-    authorize @category
-  end
+    def move
+      @category.move params[:dir]
+      redirect_to admin_categories_url
+    end
 
-  # Only allow a trusted parameter "white list" through.
-  def category_params
-    params.require(:category).permit(:name, :number, :category_id, :parent_id, :year)
+    private
+
+    # Use callbacks to share common setup or constraints between actions.
+    def set_category
+      @category = current_catalog.categories.find params[:id]
+      authorize @category
+    end
+
+    # Only allow a trusted parameter "white list" through.
+    def category_params
+      params.require(:category).permit(:name, :number, :category_id, :parent_id, :year)
+    end
   end
 end
