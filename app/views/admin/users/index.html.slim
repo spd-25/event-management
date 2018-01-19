@@ -1,8 +1,8 @@
 - page_title_for @users
 .page-header
   .buttons
-    = link_to 'Zugriffsrechte', access_rights_users_url, class: 'btn btn-default'
-    = new_link new_user_path
+    = link_to 'Zugriffsrechte', access_rights_admin_users_url, class: 'btn btn-default'
+    = new_link new_admin_user_path
   h2 = title_for @users
 
 .table-responsive
@@ -13,7 +13,7 @@
           th = User.human_attribute_name(attr)
     tbody
       - @users.each do |user|
-        tr data = { url: url_for(user) }
+        tr data = { url: admin_user_url(user) }
           td = user.name
           td = user.username
           td = user.email

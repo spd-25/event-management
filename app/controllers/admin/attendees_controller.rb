@@ -1,8 +1,6 @@
 module Admin
 
   class AttendeesController < BaseController
-    before_action :authenticate_user!
-    after_action :verify_authorized
     before_action :set_attendee, only: %i[show update destroy cancel]
 
     def index

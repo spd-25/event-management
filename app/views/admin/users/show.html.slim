@@ -1,6 +1,6 @@
 - page_title_for @user
 .page-header
-  .buttons = delete_link @user
+  .buttons = delete_link @user, scope: :admin
   h2
     = title_for @user, with_model: false
     small =< t("users.roles.#{@user.role}")
