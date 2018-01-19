@@ -30,7 +30,7 @@
                   .text-muted = day.day
                   - if (events = grouped_events[[week, day]])
                     - events.each do |ev|
-                      = link_to [:admin, ev.seminar], title: ev.seminar.title do
+                      = link_to admin_seminar_url( ev.seminar), title: ev.seminar.title do
                         => ev.seminar.number
                         small = ev.seminar.teachers.map(&:name).join(', ')
                       br

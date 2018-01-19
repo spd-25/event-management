@@ -46,11 +46,11 @@ Rails.application.routes.draw do
     # resources :categories, except: :edit do
     #   put :move, on: :member
     # end
-    # resources :bookings,   only: %i[show new create]
-    # resources :attendees,  only: %i[index show update] do
-    #   get :cancel
-    #   post :cancel, action: :destroy
-    # end
+    resources :bookings,   only: %i[show new create]
+    resources :attendees,  only: %i[index show update] do
+      get :cancel
+      post :cancel, action: :destroy
+    end
     # resources :invoices,  except: :edit
     # resources :companies, except: :edit
     # resources(:catalogs) { get :make_current, on: :member }
@@ -81,11 +81,11 @@ Rails.application.routes.draw do
   resources :categories, except: :edit do
     put :move, on: :member
   end
-  resources :bookings,   only: %i[show new create]
-  resources :attendees,  only: %i[index show update] do
-    get :cancel
-    post :cancel, action: :destroy
-  end
+  # resources :bookings,   only: %i[show new create]
+  # resources :attendees,  only: %i[index show update] do
+  #   get :cancel
+  #   post :cancel, action: :destroy
+  # end
   resources :invoices,  except: :edit
   resources :companies, except: :edit
   resources(:catalogs) { get :make_current, on: :member }

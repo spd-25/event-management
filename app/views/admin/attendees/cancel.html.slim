@@ -67,9 +67,9 @@
 
 .row
   .col-md-10
-    = simple_form_for @attendee, url: attendee_cancel_url(@attendee), method: :post do |f|
+    = simple_form_for @attendee, url: admin_attendee_cancel_url(@attendee), method: :post do |f|
       = f.input :cancellation_reason, as: :text, input_html: { rows: 5 }
       .action-buttons
         .pull-right
-          => link_to t(:cancel), (session[:back_url] || [:admin, @seminar]), class: 'btn btn-default'
+          => link_to t(:cancel), (session[:back_url] || admin_seminar_url(@seminar)), class: 'btn btn-default'
           = f.submit t(:save), class: 'btn btn-primary'

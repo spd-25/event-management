@@ -8,7 +8,7 @@
     ul.nav.nav-pills.nav-stacked
       - I18n.t('date.month_names').each.with_index do |month, index|
         - if index > 0
-          li class=('active' if @month == index) = link_to month, attendees_url(month: index)
+          li class=('active' if @month == index) = link_to month, admin_attendees_url(month: index)
   .col-md-10
 
     = paginate @attendees
@@ -27,10 +27,10 @@
         tbody
           - @attendees.each do | attendee |
             - booking = attendee.booking
-            tr data = {url: url_for(attendee)} class=('warning' if attendee.canceled?)
+            tr data = {url: admin_attendee_url(attendee)} class=('warning' if attendee.canceled?)
               td = fa_icon booking.attendees.count == 1 ? 'user' : 'users'
               td = ldate attendee.created_at, format: :short2
-              td = link_to attendee.seminar.number, [:admin, attendee.seminar]
+              td = link_to attendee.seminar.number, admin_seminar_url(attendee.seminar)
               td = attendee.name
               td = booking.contact_email
               td
@@ -42,6 +42,6 @@
                 - if attendee.canceled?
                   |  storniert
                 - else
-                  = link_to 'Stornieren', attendee_cancel_url(attendee), class: 'btn btn-danger btn-xs'
+                  = link_to 'Stornieren', admin_attendee_cancel_url(attendee), class: 'btn btn-danger btn-xs'
 
     = paginate @attendees

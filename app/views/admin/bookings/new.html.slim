@@ -8,7 +8,7 @@
     h4 = t('.error')
 
 h3
-  => link_to @seminar.number, [:admin, @seminar]
+  => link_to @seminar.number, admin_seminar_url(@seminar)
   | -
   =< @seminar.title
   br

@@ -5,13 +5,13 @@ h4
   => link_to fa_icon('table', text: 'Exportieren'), attendees_admin_seminar_url(@seminar, format: :xlsx), class: 'btn btn-default btn-xs'
   => link_to fa_icon('envelope', text: 'E-Mail-Liste'), attendees_admin_seminar_url(@seminar, format: :xlsx, emails: true), class: 'btn btn-default btn-xs'
   = link_to fa_icon('plus', text: 'Neue Anmeldung'),
-      new_booking_url(seminar_id: @seminar.id), class: 'btn btn-default btn-xs'
+      new_admin_booking_url(seminar_id: @seminar.id), class: 'btn btn-default btn-xs'
 
 .table-responsive
   table.standard-table.table-clickable
     - @seminar.attendees.order(:created_at).each do |attendee|
       - booking = attendee.booking
-      tr data={url: url_for(attendee)}
+      tr data={url: admin_attendee_url(attendee)}
         td = attendee.name
         td = ldate attendee.created_at, format: :short2
         td
@@ -26,7 +26,7 @@ h4
             => link_to fa_icon('pencil'), invoice
           - else
             = link_to fa_icon('pencil', text: 'Rechnung'), new_invoice_path(booking_id: booking.id), class: 'btn btn-primary btn-xs'
-        td = link_to 'Stornieren', attendee_cancel_url(attendee), class: 'btn btn-danger btn-xs'
+        td = link_to 'Stornieren', admin_attendee_cancel_url(attendee), class: 'btn btn-danger btn-xs'
 
 - if @seminar.all_attendees.canceled.any?
   h4 #{@seminar.all_attendees.canceled.count} Stornierte Anmeldungen
@@ -34,7 +34,7 @@ h4
   .table-responsive
     table.standard-table.table-clickable.muted
       - @seminar.all_attendees.canceled.each do |attendee|
-        tr data={url: url_for(attendee)}
+        tr data={url: admin_attendee_url(attendee)}
           td = attendee.name
           td = ldate attendee.created_at, format: :short2
           td

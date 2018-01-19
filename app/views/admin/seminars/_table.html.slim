@@ -13,7 +13,7 @@
           - attendees_count = seminar.attendees.count
           - events_count = seminar.events.count
           - cache [seminar, attendees_count, events_count] do
-            tr data = {url: url_for([:admin, seminar])}
+            tr data = {url: admin_seminar_url(seminar)}
               td.number
                 = seminar.number
                 br
@@ -25,7 +25,7 @@
                 small.text-muted = seminar.subtitle
               td = render 'admin/seminars/status', seminar: seminar
               td.icons
-                => link_to fa_icon('users', text: attendees_count), [:admin, seminar, anchor: 'attendees']
+                => link_to fa_icon('users', text: attendees_count), admin_seminar_url(seminar, anchor: 'attendees')
                 => fa_icon 'calendar', text: events_count
                 /- if seminar.bookings.any?
                   = progress_bar_for_bookings(seminar)

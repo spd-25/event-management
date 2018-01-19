@@ -7,7 +7,7 @@ module Admin
       @result = @result.select { |s| s.is_a?(Attendee) || (s.respond_to?(:year) ? s.year == current_year : true) }
       return unless @result.count == 1
       one_hit = @result.first
-      redirect_to [:admin, one_hit.is_a?(Attendee) ? one_hit.booking.seminar : one_hit]
+      redirect_to one_hit.is_a?(Attendee) ? admin_seminar_url(one_hit.booking.seminar) : one_hit
     end
   end
 end

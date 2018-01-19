@@ -5,6 +5,6 @@
 
 = render 'form'
 
-=> link_to fa_icon('table', text: 'Exportieren'), seminars_admin_teacher_url(@teacher, format: :xlsx), class: 'btn btn-default btn-xs'
+=> link_to fa_icon('table', text: 'Exportieren'), seminars_teacher_url(@teacher, format: :xlsx), class: 'btn btn-default btn-xs'
 
 = render 'admin/seminars/table', seminars: @teacher.seminars

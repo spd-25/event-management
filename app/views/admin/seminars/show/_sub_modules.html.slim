@@ -3,7 +3,7 @@
     table.standard-table
       - @seminar.sub_modules.order(:number).each do |seminar|
         tr
-          td = link_to seminar.number, [:admin, seminar]
+          td = link_to seminar.number, admin_seminar_url(seminar)
           td = seminar.teachers.map(&:name).join(', ').html_safe
           td = seminar.formatted_events(separator: '<br>').html_safe
           td = seminar.price

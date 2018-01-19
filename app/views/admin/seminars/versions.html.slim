@@ -2,12 +2,12 @@
 
 div
   ul.nav.nav-tabs
-    li = link_to 'Inhalt', [:admin, @seminar, anchor: 'general']
+    li = link_to 'Inhalt', admin_seminar_url(@seminar, anchor: 'general')
     - if policy(Attendee).index?
-      li = link_to "Teilnehmer (#{@seminar.attendees.count})", [:admin, @seminar, anchor: 'attendees']
+      li = link_to "Teilnehmer (#{@seminar.attendees.count})", admin_seminar_url(@seminar, anchor: 'attendees')
     - if policy(Invoice).index?
-      li = link_to 'Rechnungen', [:admin, @seminar, anchor: 'invoices']
-    li = link_to 'Kopien', [:admin, @seminar, anchor: 'copies']
+      li = link_to 'Rechnungen', admin_seminar_url(@seminar, anchor: 'invoices')
+    li = link_to 'Kopien', admin_seminar_url(@seminar, anchor: 'copies')
     li = link_to 'PRAS', pras_admin_seminar_url(@seminar) if policy(Seminar).pras?
     li.active = link_to 'Änderungen', versions_admin_seminar_url(@seminar)
   .tab-content

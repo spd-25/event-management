@@ -5,7 +5,7 @@
       .table-responsive
         table.standard-table.table-clickable
           - seminar = @seminar.original
-          tr data={ url: url_for([:admin, seminar]) }
+          tr data={ url: admin_seminar_url(seminar) }
             td = seminar.number
             td = seminar.title
             td = seminar.year
@@ -14,7 +14,7 @@
     .table-responsive
       table.standard-table.table-clickable
         - @seminar.copies.each do |seminar|
-          tr data={url: url_for([:admin, seminar])}
+          tr data={url: admin_seminar_url(seminar)}
             td = seminar.number
             td = seminar.title
             td = seminar.year

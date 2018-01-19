@@ -3,7 +3,7 @@
   h2 = title_for @booking
 
 h3
-  => link_to @seminar.number, [:admin, @seminar]
+  => link_to @seminar.number, admin_seminar_url(@seminar)
   | -
   =< @seminar.title
   br
@@ -16,7 +16,7 @@ h3
       legend = Attendee.model_name.human(count: @booking.attendees.count)
 
       - @booking.attendees.each do |attendee|
-        p = link_to attendee.name, attendee
+        p = link_to attendee.name, admin_attendee_url(attendee)
 
       /.row
         .col-md-1 = link_to fa_icon('plus', text: 'Teilnehmer hinzufügen'), new_attendee_path(booking_id: @booking.id),

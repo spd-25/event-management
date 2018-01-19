@@ -10,7 +10,7 @@
     h4 = t('.error')
 
 h3
-  => link_to @seminar.number, [:admin, @seminar]
+  => link_to @seminar.number, admin_seminar_url(@seminar)
   | -
   =< @seminar.title
   br
@@ -24,8 +24,8 @@ h3
       h4 Weitere angemeldete Teilnehmer
       ul
         - @attendee.booking.attendees.where.not(id: @attendee.id).all.each do |attendee|
-          li = link_to attendee.name, attendee
-    p = link_to 'Orginalanmeldung', @attendee.booking
+          li = link_to attendee.name, admin_attendee_url(attendee)
+    p = link_to 'Orginalanmeldung', admin_booking_url(@attendee.booking)
 
     = render 'seminar'
 
