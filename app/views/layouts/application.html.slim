@@ -1,20 +1,39 @@
 doctype html
-html
+html.no-js lang="de"
   head
-    meta[name="viewport" content="width=device-width, initial-scale=1.0"]
-    title = content_for?(:title) ? yield(:title) : 'Event Management'
-    == stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
-    == javascript_include_tag 'application', 'data-turbolinks-track' => true
-    == csrf_meta_tags
-    == content_for :style
-  body
-    header
-      == render 'layouts/navigation'
-    main.container[role="main"]
-      == render 'layouts/messages'
-      == yield
-      - if current_user && controller_name != 'feedbacks'
-        == render 'layouts/feedback'
+    meta charset="utf-8" /
+    meta content="IE=edge" http-equiv="X-UA-Compatible" /
+    meta content="width=device-width, initial-scale=1" name="viewport" /
+    title
+      | Paritätisches Bildungswerk Sachsen-Anhalt
+      - if content_for? :page_title
+        | - #{content_for :page_title}
+    meta content=content_for(:page_description) name="description"
 
-    == content_for :footer
-    == content_for :script
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    == csrf_meta_tags
+
+    /[if IE 9]
+      script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"
+      script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"
+  body
+    == render 'layouts/external/navigation'
+    main == yield
+    == render 'layouts/external/footer'
+
+    coffee:
+      $ ->
+        $('.dropdown').hover((-> $(this).addClass('open') ), (-> $(this).removeClass('open')))
+
+      $(document).ready ->
+        # Add minus icon for collapse element which is open by default
+        $(".collapse.in").each ->
+          $(this).siblings(".panel-heading").find(".glyphicon").addClass("rotate")
+
+        # Toggle plus minus icon on show hide of collapse element
+        $(".collapse").on('show.bs.collapse', ->
+          $(this).parent().find(".glyphicon").addClass("rotate")
+        ).on('hide.bs.collapse', ->
+          $(this).parent().find(".glyphicon").removeClass("rotate")
+        )

@@ -11,7 +11,7 @@ nav
     #navbar-collapse.collapse.navbar-collapse
       ul.nav.navbar-nav.navbar-right
         li.dropdown
-          a.dropdown-toggle href="#"            data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+          a.dropdown-toggle href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
             | Bildungswerk
           ul.dropdown-menu.dropdown-menu.menu-items
             li = link_to 'Unser Profil', '#'
@@ -24,13 +24,8 @@ nav
             li
               ul.menu-items.mm-left
                 li.title Fort- und Weiterbildung
-                li = link_to 'Management und Verwaltung', '#'
-                li = link_to 'Persönliche Kompetenzen', '#'
-                li = link_to 'Kinder- und Jugendhilfe', '#'
-                li = link_to 'Umgang mit Umgang mit Menschen im Alter und/oder mit Behinderung', '#'
-                li = link_to 'Schuldnerberatung', '#'
-                li = link_to 'Weiterbildung für Betreuer*innen', '#'
-                li = link_to 'Praktikerforen', '#'
+                - Category.where(year: 2018).roots.order(:number).each do |cat|
+                  li = link_to cat.display_name, seminare_visitor_url(category_id: cat.id, year: 2018)
               ul.menu-items.mm-right
                 li.title Informationen
                 li = link_to 'Serviceangebote', '#'
@@ -68,7 +63,7 @@ nav
                 li = link_to 'Team', '#'
                 li = link_to 'Standorte', '#'
         li.dropdown
-          a.dropdown-toggle href="#"            data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+          a.dropdown-toggle href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
             | Kontakt
           ul.dropdown-menu.dropdown-menu.menu-items
             li = link_to 'Kontakt', page_url('kontakt')

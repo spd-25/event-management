@@ -3,72 +3,69 @@
 - index_url = seminare_visitor_path year: @seminar.year, category_id: @seminar.categories.first&.id
 - content_for :back_link, link_to('&laquo; zur Seminarübersicht'.html_safe, index_url, class: 'btn btn-default')
 
-.row
-  .col-md-8
-    h2
-      = @seminar.title
-      - if @seminar.subtitle.present?
-        br
-        small = @seminar.subtitle
-  .col-md-4
-    h3
-      | Seminar-Nr.:
+.container
+  = render 'search_form'
+  h2
+    = @seminar.title
+    - if @seminar.subtitle.present?
       br
-      =< @seminar.number
+      small = @seminar.subtitle
 
-.row
-  .col-md-8
-    - if @seminar.benefit.present?
-      h4 Ihr Nutzen
-      = @seminar.benefit.html_safe
-    - if @seminar.content.present?
-      h4 Seminarinhalt
-      = @seminar.content.html_safe
-
-  .col-md-4.additional
-    .row class=('line' if @seminar.has_date_text?)
-      .col-md-4: label Termin
-      .col-md-8
-        - if @seminar.has_date_text?
-          = @seminar.date_text.html_safe
-        - else
-          table.table
-            - @seminar.events_list.each do |date, time|
-              tr
-                td = ldate date
-                td = time
-    .row.line
-      .col-md-4: h5 Referenten
-      .col-md-8
-        - @seminar.teachers.each do |teacher|
-          p
-            => teacher.name
-            small.profession = teacher.profession
-    - if @seminar.location.present?
-      .row.line
-        .col-md-4: h5 Ort
-        .col-md-8 = @seminar.location.name
-    - if @seminar.price_text.present?
-      .row.line
-        .col-md-4: h5 Gebühr
-        .col-md-8 = @seminar.price_text.html_safe
-    - if @seminar.due_date.present?
-      .row.line
-        .col-md-4: h5 Anmeldeschluss
-        .col-md-8 = @seminar.due_date.html_safe
-    - if @seminar.notes.present?
-      .row.line
-        .col-md-4: h5 Bemerkungen
-        .col-md-8 = @seminar.notes.html_safe
-
-- if @seminar.bookable?
-  .row.action-buttons
-    .col-md-4
-      = link_to 'Anmelden', @seminar.booking_address, class: 'btn btn-primary btn-block btn-lg'
-- else
   .row
-    .col-md-6
-      .alert.alert-warning Dieses Seminar kann nicht mehr gebucht werden.
+    .col-md-8
+      - if @seminar.benefit.present?
+        h3 Ihr Nutzen
+        = @seminar.benefit.html_safe
+      - if @seminar.content.present?
+        h3 Seminarinhalt
+        = @seminar.content.html_safe
+
+    .col-md-4.additional
+      .row.line
+        .col-md-4 Termin
+        .col-md-8
+          - if @seminar.has_date_text?
+            = @seminar.date_text.html_safe
+          - else
+            .row
+              - @seminar.events_list.each do |date, time|
+                .col-md-6 = ldate date
+                .col-md-6 = time
+      .row.line
+        .col-md-4 Seminar-Nr.
+        .col-md-8 = @seminar.number
+      .row.line
+        .col-md-4 Referenten
+        .col-md-8
+          - @seminar.teachers.each do |teacher|
+            p
+              => teacher.name
+              small.profession = teacher.profession
+      - if @seminar.location.present?
+        .row.line
+          .col-md-4 Ort
+          .col-md-8 = @seminar.location.name
+      - if @seminar.price_text.present?
+        .row.line
+          .col-md-4 Gebühr
+          .col-md-8 = @seminar.price_text.html_safe
+      - if @seminar.due_date.present?
+        .row.line
+          .col-md-4 Anmeldeschluss
+          .col-md-8 = @seminar.due_date.html_safe
+      - if @seminar.notes.present?
+        .row.line
+          .col-md-4 Bemerkungen
+          .col-md-8 = @seminar.notes.html_safe
+
+  - if @seminar.bookable?
+    .row.action-buttons
+      .col-md-4
+        = link_to 'Anmelden', @seminar.booking_address, class: 'btn btn-primary btn-block btn-lg'
+  - else
+    .row
+      .col-md-6
+        .alert.alert-warning Dieses Seminar kann nicht mehr gebucht werden.
 
 sass:
   .action-buttons

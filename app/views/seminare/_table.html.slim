@@ -1,10 +1,15 @@
-.table-responsive
-  table.seminars.table.table-hover class=css_class
-    tbody
-      - seminars.order(:date).includes(:teachers).each do |seminar|
-        - cache seminar do
-          tr
-            td.number   = link_to seminar.number, seminar_visitor_url(seminar)
-            td.title    = link_to seminar.title,  seminar_visitor_url(seminar)
-            td.teachers = seminar.teachers.map(&:name).join('<br>').html_safe
-            td.date     = ldate(seminar.date)
+- grouped_seminars = seminars.order(:date).includes(:teachers).all.group_by { |s| [s.date.month, s.year] }
+- grouped_seminars.each do |(month, year), seminars|
+  h3 #{ t('date.month_names')[month] } #{ year }
+  .seminars-table.list-group
+    - seminars.each do |seminar|
+      - cache seminar do
+        = link_to seminar_visitor_url(seminar), class: 'list-group-item' do
+          .seminar-date   = ldate(seminar.date)
+          .seminar-number = seminar.number
+          .seminar-title  = seminar.title
+          .seminar-teachers
+            - seminar.teachers.order(:last_name, :first_name).each do |teacher|
+              .seminar-teacher = teacher.name
+
+

@@ -32,7 +32,7 @@ span.author
 
 /* LISTS
 main
-  ul
+  ul.custom
     margin-top: 20px
     margin-bottom: 20px
     display: block
@@ -40,34 +40,34 @@ main
     padding: 0
     padding-left: .5em
 
-  ul ul li::before
-    content: "\f0da"
-    font-family: FontAwesome
-    color: $link-color
-    font-size: 1.2em
-    padding-right: 0.5rem
+    & ul li::before
+      content: "\f0da"
+      font-family: FontAwesome
+      color: $link-color
+      font-size: 1.2em
+      padding-right: 0.5rem
 
-  li
-    padding-left: 1em
-    text-indent: -1.1em
-    line-height: 1.4
-    list-style: none
+    li
+      padding-left: 1em
+      //text-indent: -1.1em
+      line-height: 1.4
+      list-style: none
 
-  li::before
-    content: "\f0da"
-    font-family: FontAwesome
-    color: $primary
-    font-size: 1.2em
-    padding-right: 0.5rem
+      &::before
+        //content: "\f0da"
+        font-family: FontAwesome
+        color: $primary
+        font-size: 1.2em
+        padding-right: 0.5rem
 
-  ol
+  ol.custom
     padding-left: 23px
 
-  ol li
-    list-style: inherit
+    & li
+      list-style: inherit
 
-  ol li::before
-    content: none
+      &::before
+        content: none
 
 /* TABLE
 

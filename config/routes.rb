@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   post 'buchung',               to: 'buchung#create', as: :buchung_create
   get  'nachricht/:booking_id', to: 'buchung#show',   as: :buchung_show
 
-  resources(:pages, path: 'p') { get :home, on: :collection }
+  resources(:pages, path: 'p', only: :show) { get :home, on: :collection }
 
   root to: 'pages#home'
 
