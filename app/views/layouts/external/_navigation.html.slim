@@ -36,7 +36,7 @@ nav
               ul.menu-items.mm-left
                 li.title Fort- und Weiterbildung
                 - Category.where(year: 2018).roots.order(:number).each do |cat|
-                  li = link_to cat.display_name, seminare_visitor_url(category_id: cat.id, year: 2018)
+                  li = link_to cat.display_name, seminare_visitor_url(category_id: cat.to_param, year: 2018)
               ul.menu-items.mm-right
                 li.title Informationen
                 li = link_to 'Serviceangebote', '#'
