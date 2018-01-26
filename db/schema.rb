@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180112110029) do
+ActiveRecord::Schema.define(version: 20180126081018) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -166,16 +166,6 @@ ActiveRecord::Schema.define(version: 20180112110029) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "pages", force: :cascade do |t|
-    t.string "title", null: false
-    t.string "slug", null: false
-    t.text "teaser"
-    t.text "content"
-    t.boolean "published", default: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "pg_search_documents", id: :serial, force: :cascade do |t|
     t.text "content"
     t.string "searchable_type"
@@ -248,6 +238,18 @@ ActiveRecord::Schema.define(version: 20180112110029) do
     t.jsonb "contact", default: "{}"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "uploads", force: :cascade do |t|
+    t.string "upload_file_file_name"
+    t.string "upload_file_content_type"
+    t.integer "upload_file_file_size"
+    t.datetime "upload_file_updated_at"
+    t.string "name"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_uploads_on_user_id"
   end
 
   create_table "users", id: :serial, force: :cascade do |t|

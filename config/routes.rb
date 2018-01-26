@@ -48,4 +48,5 @@ Rails.application.routes.draw do
   resources(:catalogs) { get :make_current, on: :member }
 
   resources :feedbacks, only: %i[new create]
+  resources :uploads
 end
