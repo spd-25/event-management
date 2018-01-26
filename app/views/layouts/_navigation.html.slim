@@ -39,10 +39,13 @@
             - if policy(Company).index?
               li class=('active' if controller_name == 'companies')
                 = link_to title_for_model(Company, with_icon: true), companies_url, tabindex: -1
+            li role="separator" class="divider"
             - if policy(User).index?
-              li role="separator" class="divider"
               li class=('active' if controller_name == 'users')
                 = link_to title_for_model(User, with_icon: true), users_url, tabindex: -1
+            - if policy(Upload).index?
+              li class=('active' if controller_name == 'uploads')
+                = link_to title_for_model(Upload, with_icon: true), uploads_url, tabindex: -1
 
         ul.nav.navbar-nav.navbar-right
           = navbar_dropdown current_catalog.title do

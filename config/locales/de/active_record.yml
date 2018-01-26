@@ -64,6 +64,9 @@ de:
       teacher:
         one: Referent
         other: Referenten
+      upload:
+        one: Upload
+        other: Uploads
     attributes:
       attendee:
         booking: Anmeldung
@@ -125,6 +128,9 @@ de:
         external_booking_address: Externe Buchung über
       teacher:
         seminars: Seminare
+      upload:
+        upload_file: Datei
+        user: von
       user:
         login: "Handle"
         email: E-Mail

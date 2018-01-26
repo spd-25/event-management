@@ -1,0 +1,14 @@
+= simple_form_for(@upload) do |f|
+  = f.error_notification
+
+  section
+    .col-md-6
+      .form-inputs
+        = f.input :upload_file
+        = f.input :name
+
+  section.action-buttons
+    .col-md-12
+      .pull-right
+        => link_to t(:cancel), 'javascript: window.history.back();', class: 'btn btn-default'
+        = f.submit t(:save), class: 'btn btn-primary'
