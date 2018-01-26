@@ -148,44 +148,13 @@
   .row
     .col-md-12
       h2 AKTUELLE SEMINARE
-    .col-md-6
-      ul
-        li.flex
-          a.seminar-link href="#"
-            span.seminar-name Der Umgang mit Fehlern
-            span.seminar-date 27.10.2017
-        li.flex
-          a.seminar-link href="#"
-            span.seminar-name Aktuelle Fragen des Datenschutzes in sozialen Einrichtungen
-            span.seminar-date 27.10.2017
-        li.flex
-          a.seminar-link href="#"
-            span.seminar-name Umgang mit Demotivation und kontraproduktivem Verhalten von Mitarbeitern
-            span.seminar-date 27.10.2017
-        li.flex
-          a.seminar-link href="#"
-            span.seminar-name Pflegebuchführung/Kosten- und Leistungsrechnung
-            span.seminar-date 27.10.2017
-    /! - Col Links -
-    .col-md-6
-      ul
-        li.flex
-          a.seminar-link href="#"
-            span.seminar-name Der Umgang mit Fehlern
-            span.seminar-date 27.10.2017
-        li.flex
-          a.seminar-link href="#"
-            span.seminar-name Mitarbeiter als Verkäufer sozialer Dienstleistungen
-            span.seminar-date 27.10.2017
-        li.flex
-          a.seminar-link href="#"
-            span.seminar-name Mitarbeiter als Verkäufer sozialer Dienstleistungen
-            span.seminar-date 27.10.2017
-        li.flex
-          a.seminar-link href="#"
-            span.seminar-name Der gesetzliche Mindestlohn - Auswirkungen auf soziale Einrichtungen
-            span.seminar-date 27.10.2017
-    /! - Col Rechts -
+    - @current_seminars.in_groups_of(4).each do |seminars|
+      .col-md-6
+        ul
+          - seminars.each do |seminar|
+            li.flex = link_to seminar_visitor_url(seminar), class: 'seminar-link' do
+              span.seminar-name = seminar.title
+              span.seminar-date = ldate seminar.date
     .col-md-12
       .cta = link_to 'Weitere Seminare', seminare_visitor_url, class: 'cta-btn'
       .clearfix

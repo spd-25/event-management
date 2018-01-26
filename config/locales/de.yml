@@ -40,6 +40,8 @@ de:
     icon: briefcase
   locations:
     icon: map-marker
+  pages:
+    icon: file-text
   teachers:
     icon: graduation-cap
   seminars:

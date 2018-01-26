@@ -1,6 +1,7 @@
 class PagePolicy < ApplicationPolicy
 
-  who_can(:home?) { true }
-  who_can(:show?) { record.published? || user&.admin? }
+  who_can(:create?)  { editor? }
+  who_can(:update?)  { editor? }
+  who_can(:destroy?) { editor? }
 
 end

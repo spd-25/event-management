@@ -58,6 +58,9 @@ de:
       location:
         one: Veranstaltungsort
         other: Veranstaltungsorte
+      page:
+        one: Seite
+        other: Seiten
       seminar:
         one: Seminar
         other: Seminare
@@ -101,6 +104,12 @@ de:
         unit_price: Einzelpreis
       location:
         seminars: Seminare
+      page:
+        content: Inhalt
+        teaser: Einleitung
+        title: Titel
+        published: veröffentlicht
+        slug: URL-ID
       seminar:
         bookings: Anmeldungen
         date_text: Termine (Text)

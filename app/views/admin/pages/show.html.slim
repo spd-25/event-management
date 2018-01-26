@@ -1,0 +1,6 @@
+- page_title_for @page, :title
+.page-header
+  .buttons = delete_link @page, scope: :admin
+  h2 = title_for @page, :title
+
+= render 'form'

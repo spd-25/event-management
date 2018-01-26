@@ -9,14 +9,25 @@ nav
       a.navbar-brand href=root_url = image_tag 'pbw-logo.png', alt: 'Paritätisches Bildungswerk Sachsen Anhalt'
 
     #navbar-collapse.collapse.navbar-collapse
+      / ul.nav.navbar-nav.navbar-right
+        li = link_to 'WIR ÜBER UNS', "http://bildungswerk-lsa.de/index.php?article_id=22"
+        li = link_to 'TEAM', "http://bildungswerk-lsa.de/index.php?article_id=42"
+        li = link_to 'FORT- & WEITERBILDUNG', seminare_visitor_path
+        li = link_to 'AUSBILDUNG', 'http://bildungswerk-lsa.de/index.php?article_id=44'
       ul.nav.navbar-nav.navbar-right
         li.dropdown
           a.dropdown-toggle href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
             | Bildungswerk
           ul.dropdown-menu.dropdown-menu.menu-items
-            li = link_to 'Unser Profil', '#'
-            li = link_to 'Team', '#'
+            li = link_to 'Unser Profil', page_url('profil')
+            li = link_to 'Team', page_url('team')
             li = link_to 'Standorte', '#'
+        / li.dropdown
+          a.dropdown-toggle href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+            | Fort- und Weiterbildung
+          ul.dropdown-menu.dropdown-menu.menu-items
+            - Category.where(year: 2018).roots.order(:number).each do |cat|
+              li = link_to cat.display_name, seminare_visitor_url(category_id: cat.id, year: 2018)
         li.dropdown
           a.dropdown-toggle.yellow-hov href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
             | Fort- und Weiterbildung
