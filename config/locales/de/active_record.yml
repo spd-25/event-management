@@ -128,6 +128,8 @@ de:
         external_booking_address: Externe Buchung über
       teacher:
         seminars: Seminare
+        skill_sets: Fachbereiche
+        remarks: Bemerkungen
       upload:
         upload_file: Datei
         user: von

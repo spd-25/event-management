@@ -7,15 +7,16 @@
   table.standard-table.table-clickable
     thead
       tr
-        - %i(title, first_name last_name city email mobile seminars).each do |attr|
+        - %i(first_name last_name city skill_sets email mobile seminars).each do |attr|
           th = Teacher.human_attribute_name(attr)
     tbody
       - @teachers.each do |teacher|
         tr data = { url: url_for(teacher) }
-          td = teacher.title
+          / td = teacher.title
           td = teacher.first_name
           td = teacher.last_name
           td = teacher.address_city
+          td = teacher.skill_sets
           td = teacher.contact_email
           td = teacher.contact_mobile
           td = teacher.seminars.count

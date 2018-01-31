@@ -1,7 +1,7 @@
 class TeachersController < ApplicationController
   before_action :authenticate_user!
   after_action :verify_authorized
-  before_action :set_teacher, only: [:show, :update, :destroy, :seminars]
+  before_action :set_teacher, only: %i[show update destroy seminars]
 
   def index
     authorize Teacher
@@ -54,8 +54,10 @@ class TeachersController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def teacher_params
-    params.require(:teacher).permit(:first_name, :last_name, :profession, :title,
-                                    address: %i(street zip city),
-                                    contact: %i(email phone mobile fax))
+    params.require(:teacher).permit(
+      :first_name, :last_name, :profession, :title, :skill_sets, :remarks,
+      address: %i[street zip city],
+      contact: %i[email phone mobile fax]
+    )
   end
 end
