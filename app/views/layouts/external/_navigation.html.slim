@@ -19,9 +19,9 @@ nav
           a.dropdown-toggle href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
             | Bildungswerk
           ul.dropdown-menu.dropdown-menu.menu-items
-            li = link_to 'Unser Profil', page_url('profil')
-            li = link_to 'Team', page_url('team')
-            li = link_to 'Standorte', '#'
+            li = link_to 'Unser Profil', profil_bildungswerk_url
+            li = link_to 'Team', team_bildungswerk_url
+            li = link_to 'Standorte', standorte_bildungswerk_url
         / li.dropdown
           a.dropdown-toggle href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
             | Fort- und Weiterbildung
@@ -60,22 +60,32 @@ nav
                 li = link_to 'Team', '#'
                 li = link_to 'Standorte', '#'
         li.dropdown
-          a.dropdown-toggle.yellow-hov href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+          a.dropdown-toggle href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
             | Quereinstieg
-          ul.dropdown-menu.quereinstieg.megamenu
+          ul.dropdown-menu.menu-items
+            li = link_to 'Projekt', '#'
+            li = link_to 'Aktuelles', '#'
+            li = link_to 'Team', '#'
+            li = link_to 'Standorte', '#'
+            li = link_to 'Projektpartner', '#'
+
+          / a.dropdown-toggle.yellow-hov href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+          /   | Quereinstieg
+          / ul.dropdown-menu.quereinstieg.megamenu
             li
-              ul.menu-items.mm-left
+              / ul.menu-items.mm-left
                 li.title Quereinstieg
                 li = link_to 'Ausbildung zum/zur Staatlich anerkannten Erzieher/in', '#'
-              ul.menu-items.mm-right
+              ul.menu-items.mm-left
                 li.title Informationen
                 li = link_to 'Projekt', '#'
                 li = link_to 'Aktuelles', '#'
                 li = link_to 'Team', '#'
                 li = link_to 'Standorte', '#'
+                li = link_to 'Prokektpartner', '#'
         li.dropdown
           a.dropdown-toggle href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
             | Kontakt
-          ul.dropdown-menu.dropdown-menu.menu-items
+          ul.dropdown-menu.menu-items
             li = link_to 'Kontakt', page_url('kontakt')
             li = link_to 'Standorte', '#'
