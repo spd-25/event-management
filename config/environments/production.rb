@@ -80,15 +80,15 @@ Rails.application.configure do
   #   password: Rails.application.secrets.email_provider_password
   # }
 
-  config.action_mailer.smtp_settings = {
-    address:              Setting.email_address,
-    port:                 Setting.email_port,
-    domain:               Setting.email_domain,
-    authentication:       Setting.email_authentication,
-    enable_starttls_auto: Setting.email_enable_starttls_auto.present?,
-    user_name:            Setting.email_user_name,
-    password:             Setting.email_password
-  }
+  # config.action_mailer.smtp_settings = {
+  #   address:              Setting.email_address,
+  #   port:                 Setting.email_port,
+  #   domain:               Setting.email_domain,
+  #   authentication:       Setting.email_authentication,
+  #   enable_starttls_auto: Setting.email_enable_starttls_auto.present?,
+  #   user_name:            Setting.email_user_name,
+  #   password:             Setting.email_password
+  # }
 
   # ActionMailer Config
   config.action_mailer.default_url_options = { :host => Rails.application.secrets.domain_name }

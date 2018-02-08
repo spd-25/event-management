@@ -49,4 +49,7 @@ Rails.application.routes.draw do
 
   resources :feedbacks, only: %i[new create]
   resources :uploads
+
+  require 'sidekiq/web'
+  mount Sidekiq::Web => '/sidekiq'
 end

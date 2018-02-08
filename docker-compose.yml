@@ -1,0 +1,66 @@
+version: '3.4'
+
+services:
+  postgres:
+    image: postgres:9.6-alpine
+    environment:
+      POSTGRES_USER: postgres_em
+      POSTGRES_DB:   event_management
+      POSTGRES_PASSWORD_FILE: /run/secrets/em_postgres_password
+    ports:   [ '5435:5432' ]
+    volumes: [ 'postgres:/var/lib/postgresql/data' ]
+    secrets: [ em_postgres_password ]
+
+  redis:
+    image:   redis:3.2-alpine
+    command: [ sh, -c, docker-entrypoint.sh --requirepass "$$(cat /run/secrets/em_redis_password)" ]
+    ports:   [ '6390:6379' ]
+    volumes: [ 'redis:/data' ]
+    secrets: [ em_redis_password ]
+
+  website:
+    image: pari-em
+    depends_on:
+      - postgres
+      - redis
+    ports: [ '3001:3000' ]
+    environment:
+      POSTGRES_URL:       postgresql://postgres_em@postgres:5435/event_management?encoding=utf8&pool=5&timeout=5000
+      REDIS_CACHE_URL:    redis://:@redis:6390/0/cache
+      REDIS_SESSIONS_URL: redis://:@redis:6390/0/sessions
+      REDIS_JOBS_URL:     redis://:@redis:6390/0/jobs
+      BIND_ON:            '0.0.0.0:3000'
+      RAILS_MAX_THREADS:  3
+      WEB_CONCURRENCY:    5
+      RACK_REQUEST_TIMEOUT: 30
+      RAILS_ENV: production
+      LOG_LEVEL: warn # Rails log level. Accepted values: debug, info, warn, error, fatal, or unknown
+    secrets:
+      - em_rails_secret_token
+      - em_postgres_password
+      - em_redis_password
+
+  sidekiq:
+    image: pari-em
+    depends_on:
+      - redis
+      - postgres
+    command: sidekiq -C config/sidekiq.yml.erb
+    environment:
+      POSTGRES_URL: postgresql://postgres_em@postgres:5435/event_management?encoding=utf8&pool=5&timeout=5000
+      REDIS_JOBS_URL: redis://:@redis:6390/0/jobs
+    secrets:
+      - em_postgres_password
+      - em_redis_password
+
+secrets:
+  em_rails_secret_token:
+    external: true
+  em_postgres_password:
+    external: true
+  em_redis_password:
+    external: true
+
+volumes:
+  redis:
+  postgres:

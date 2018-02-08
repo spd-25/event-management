@@ -1,6 +1,11 @@
 source 'https://rubygems.org'
 
-ruby '2.4.2'
+git_source(:github) do |repo_name|
+  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?('/')
+  "https://github.com/#{repo_name}.git"
+end
+
+ruby '~> 2.4'
 
 gem 'rails', '~> 5.1.4'
 
@@ -20,7 +25,7 @@ gem 'draper'
 
 
 
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'tzinfo-data' #, platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'bootstrap-sass'
 gem 'devise'
 gem 'devise-i18n'
@@ -51,6 +56,7 @@ gem 'axlsx', github: 'randym/axlsx'
 gem 'axlsx_rails'
 gem 'axlsx_styler'
 gem 'paperclip', '~> 5.0.0'
+gem 'sidekiq', '~> 5.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
