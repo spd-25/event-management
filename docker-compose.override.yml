@@ -1,6 +1,9 @@
 version: '3.4'
 
 services:
+  postgres-em:
+    volumes:
+      - './tmp:/tmp'
   website:
     build: .
     volumes:
