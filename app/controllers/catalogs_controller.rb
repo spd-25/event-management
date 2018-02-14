@@ -1,7 +1,7 @@
 class CatalogsController < ApplicationController
   before_action :authenticate_user!
   after_action :verify_authorized
-  before_action :set_catalog, only: [:show, :update, :destroy, :make_current]
+  before_action :set_catalog, only: %i[show update make_current]
 
   def index
     authorize Catalog
@@ -37,11 +37,6 @@ class CatalogsController < ApplicationController
     else
       render :show
     end
-  end
-
-  def destroy
-    @catalog.destroy
-    redirect_to catalogs_url, notice: t(:destroyed, model: Catalog.model_name.human)
   end
 
   def make_current
