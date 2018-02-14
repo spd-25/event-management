@@ -51,7 +51,7 @@ class UsersController < ApplicationController
 
   def access_rights
     authorize User
-    @roles         = User.roles.keys
+    @roles         = User.roles.keys - ['user']
     @access_rights = generate_access_rights(@roles)
   end
 
@@ -80,34 +80,32 @@ class UsersController < ApplicationController
   def generate_access_rights(roles)
     users = roles.map { |role| User.new role: role }
 
+    standard_actions = { index: 'auflisten', show: 'ansehen', edit: 'bearbeiten' }
     policies = {
       Seminar  => { index: 'auflisten', category: 'nach Themen', date: 'nach Monat', canceled: 'ausgefallen',
                     editing_status: 'Bearbeitungsmodus', show: 'ansehen',
-                    edit: { title: 'bearbeiten', object: Seminar.new(catalog: Catalog.new) },
+                    edit: ['bearbeiten', Seminar.new(catalog: Catalog.new)],
                     publish: 'veröffentlichen', pras: 'PRAS', versions: 'Änderungen',
                     finish_editing: 'Bearbeitung abschließen', finish_layout: 'Layout abschließen'},
-      Attendee => { index: 'auflisten', show: 'ansehen', edit: 'bearbeiten', cancel: 'stornieren' },
-      Invoice  => { index: 'auflisten', show: 'ansehen', edit: 'bearbeiten' },
-      User     => { index: 'auflisten', show: 'ansehen', edit: 'bearbeiten' }
+      Attendee => standard_actions.merge(cancel: 'stornieren'),
+      Invoice  => standard_actions,
+      Catalog  => standard_actions.merge(show: ['ansehen', Catalog.new]),
+      Category => standard_actions,
+      Location => standard_actions,
+      Teacher  => standard_actions,
+      Company  => standard_actions,
+      User     => standard_actions,
+      Upload   => standard_actions,
     }
 
     _access_rights = {}
     policies.each do |model, actions|
       model_name = model.model_name.human count: 2
       _access_rights[model_name] ||= {}
-      actions.each do |action, title|
+      actions.each do |action, options|
         action_rights = {}
-        if title.is_a? String
-          users.each do |user|
-            action_rights[user.role] = access_right(user, model, action)
-          end
-        else
-          options = title
-          title = options[:title]
-          users.each do |user|
-            action_rights[user.role] = access_right(user, options[:object], action)
-          end
-        end
+        title, object = options.is_a?(String) ? [options, model] : options
+        users.each { |user| action_rights[user.role] = access_right(user, object, action) }
         _access_rights[model_name][title] = action_rights
       end
     end
