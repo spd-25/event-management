@@ -65,6 +65,6 @@ Rails.application.routes.draw do
 
     resources :pages, except: :edit
     resources :feedbacks, only: %i[new create]
+    resources :uploads
   end
-  resources :uploads
 end

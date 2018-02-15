@@ -46,6 +46,8 @@ nav.navbar.navbar-inverse.navbar-fixed-top
             li role="separator" class="divider"
             li class=('active' if controller_name == 'users')
               = link_to title_for_model(User, with_icon: true), admin_users_url, tabindex: -1
+            li class=('active' if controller_name == 'uploads')
+              = link_to title_for_model(Upload, with_icon: true), admin_uploads_url, tabindex: -1
 
       ul.nav.navbar-nav.navbar-right
         = navbar_dropdown current_catalog.title do
