@@ -61,10 +61,10 @@ Rails.application.routes.draw do
     end
     resources :invoices,  except: :edit
     resources :companies, except: :edit
-    resources(:catalogs) { get :make_current, on: :member }
+    resources(:catalogs,  except: %i[edit destroy]) { get :make_current, on: :member }
 
     resources :pages, except: :edit
     resources :feedbacks, only: %i[new create]
   end
-
+  resources :uploads
 end

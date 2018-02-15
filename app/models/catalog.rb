@@ -8,6 +8,9 @@ class Catalog < ApplicationRecord
   default_scope -> { order :year }
   scope :published, -> { where published: true }
 
+  has_attached_file :print_version
+  validates_attachment_content_type :print_version, content_type: ['application/pdf']
+
   def date_range(month = nil)
     if month
       date = Date.new year, month

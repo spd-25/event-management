@@ -12,7 +12,6 @@
         = f.input :title
         = f.input :first_name
         = f.input :last_name
-        = f.input :profession, as: :text, input_html: { rows: 5 }
 
     .col-md-4
       = f.simple_fields_for :address, f.object.address do |a|
@@ -26,6 +25,12 @@
         = c.input :phone,  as: :tel, required: false
         = c.input :fax,    as: :tel, required: false
         = c.input :mobile, as: :tel, required: false
+
+  section
+    .col-md-4 = f.input :profession, as: :text, input_html: { rows: 5 }
+    .col-md-4 = f.input :skill_sets, as: :text, input_html: { rows: 5 }
+    .col-md-4 = f.input :remarks,    as: :text, input_html: { rows: 5 }
+
 
   section.action-buttons
     .col-md-12

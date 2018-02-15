@@ -2,7 +2,7 @@
 - path = @category&.path.to_a
 - root = path.first
 
-.container
+/ .container
   = render 'search_form'
 
   / ul.nav.nav-tabs.years
@@ -32,3 +32,12 @@
     .row
       .col-md-4 = render 'categories', categories: root.children , current_path: path
       .col-md-8 = render 'seminars_list', seminars: @seminars
+- if @catalog.print_version.present?
+  .pull-right = pdf_link @catalog.print_version.url, text: 'Bildungskalender als PDF herunterladen'
+
+ul.nav.nav-tabs.years
+  - @published_years.each do |year|
+    li class=('active' if year == @year.to_i) = link_to year, seminare_visitor_path(year: year)
+.row
+  .col-md-4 = render 'categories', categories: @catalog.categories.roots, current_path: @category&.path.to_a
+  .col-md-8 = render 'seminars_list', seminars: @seminars

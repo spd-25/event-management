@@ -1,0 +1,20 @@
+- page_title_for @uploads
+.page-header
+  .buttons = new_link new_upload_path
+  h2 = title_for @uploads
+
+.table-responsive
+  table.standard-table.table-clickable
+    thead
+      tr
+        th = Upload.human_attribute_name(:upload_file)
+        th = Upload.human_attribute_name(:user)
+        th = Upload.human_attribute_name(:created_at)
+        th = Upload.human_attribute_name(:updated_at)
+    tbody
+      - @uploads.each do | upload |
+        tr data = {url: url_for(upload)}
+          td = link_to((upload.name.presence || 'Herunterladen'), upload.upload_file.url, target: '_blank') if upload.upload_file.present?
+          td = upload.user.username
+          td = ldate upload.created_at
+          td = ldate upload.updated_at unless upload.created_at == upload.updated_at

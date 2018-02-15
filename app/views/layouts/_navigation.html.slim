@@ -1,0 +1,65 @@
+- if user_signed_in?
+  nav.navbar.navbar-inverse.navbar-fixed-top
+    .container-fluid
+      .navbar-header
+        button.navbar-toggle[type='button' data-toggle='collapse' data-target='.navbar-collapse']
+          span.sr-only Toggle navigation
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        = link_to 'Start', root_path, class: 'navbar-brand', tabindex: -1
+        /ul.nav.navbar-nav
+        /= link_to title_for_model(Seminar, with_icon: true), seminars_url, class: 'navbar-brand', tabindex: -1
+      .collapse.navbar-collapse
+        ul.nav.navbar-nav
+          li class=('active' if controller_name == 'seminars')
+            = link_to title_for_model(Seminar, with_icon: true), seminars_url, tabindex: -1
+          /li class=('active' if controller_name == 'bookings')
+            = link_to title_for_model(Booking, with_icon: true), bookings_url, tabindex: -1
+          - if policy(Attendee).index?
+            li class=('active' if controller_name == 'attendees')
+              = link_to title_for_model(Booking, with_icon: true), attendees_url, tabindex: -1
+          - if policy(Invoice).index?
+            li class=('active' if controller_name == 'invoices')
+              = link_to title_for_model(Invoice, with_icon: true), invoices_url, tabindex: -1
+          = navbar_dropdown 'Stammdaten', active: controller_name.in?(%w(locations teachers categories users)) do
+            - if policy(Catalog).index?
+              li class=('active' if controller_name == 'catalogs')
+                = link_to title_for_model(Catalog, with_icon: true), catalogs_url, tabindex: -1
+            - if policy(Category).index?
+              li class=('active' if controller_name == 'categories')
+                = link_to title_for_model(Category, with_icon: true), categories_url, tabindex: -1
+            li role="separator" class="divider"
+            - if policy(Location).index?
+              li class=('active' if controller_name == 'locations')
+                = link_to title_for_model(Location, with_icon: true), locations_url, tabindex: -1
+            - if policy(Teacher).index?
+              li class=('active' if controller_name == 'teachers')
+                = link_to title_for_model(Teacher, with_icon: true), teachers_url, tabindex: -1
+            - if policy(Company).index?
+              li class=('active' if controller_name == 'companies')
+                = link_to title_for_model(Company, with_icon: true), companies_url, tabindex: -1
+            li role="separator" class="divider"
+            - if policy(User).index?
+              li class=('active' if controller_name == 'users')
+                = link_to title_for_model(User, with_icon: true), users_url, tabindex: -1
+            - if policy(Upload).index?
+              li class=('active' if controller_name == 'uploads')
+                = link_to title_for_model(Upload, with_icon: true), uploads_url, tabindex: -1
+
+        ul.nav.navbar-nav.navbar-right
+          = navbar_dropdown current_catalog.title do
+            - Catalog.all.each do |catalog|
+              li class=('active' if current_catalog == catalog)
+                = link_to [catalog, action: :make_current] do
+                  - if catalog.published?
+                    = catalog.year
+                  - else
+                    em #{catalog.year} *
+          li
+            form.navbar-form.navbar-right role="search" action=search_url
+              .form-group
+                input.form-control type="text" placeholder="Suche" name="q" value=@query autofocus=(params[:controller] == 'search') tabindex="-1"
+          = navbar_dropdown current_user.username do
+            li = link_to 'Passwort ändern', edit_user_registration_url
+            li = link_to 'Abmelden', destroy_user_session_path, method: 'delete', title: current_user.username

@@ -67,6 +67,9 @@ de:
       teacher:
         one: Referent
         other: Referenten
+      upload:
+        one: Upload
+        other: Uploads
     attributes:
       attendee:
         booking: Anmeldung
@@ -83,6 +86,7 @@ de:
       catalog:
         categories: Themen
         seminars: Seminare
+        print_version: Druckversion (PDF)
       category:
         category: Oberthema
         categories: Unterthemen
@@ -133,6 +137,11 @@ de:
         external_booking_address: Externe Buchung über
       teacher:
         seminars: Seminare
+        skill_sets: Fachbereiche
+        remarks: Bemerkungen
+      upload:
+        upload_file: Datei
+        user: von
       user:
         login: "Handle"
         email: E-Mail

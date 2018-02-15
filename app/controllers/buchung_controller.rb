@@ -7,6 +7,7 @@ class BuchungController < ApplicationController
   end
 
   def create
+    # return redirect_to root_url unless request_origin_valid?
     @booking = Booking.new booking_params
     @booking.ip_address = request.remote_ip
     @booking.external = true
@@ -29,10 +30,17 @@ class BuchungController < ApplicationController
   end
 
   private
+  
+  def request_origin_valid?
+    ip_info = JSON.parse Net::HTTP.get('freegeoip.net', "/json/#{request.remote_ip}")
+    ip_info['country_code'] == 'DE'
+  end
 
   def copy_fields_to_attendees
-    attributes = %w[seminar_id contact company_address invoice_address member member_institution school year
-                    graduate comments]
+    attributes = %w[
+      seminar_id contact company_address invoice_address member member_institution school year
+      graduate comments
+    ]
     attributes = @booking.attributes.slice(*attributes)
     @booking.attendees.each { |attendee| attendee.assign_attributes attributes }
   end

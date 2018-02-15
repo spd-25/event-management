@@ -1,0 +1,8 @@
+- page_title_for @upload
+.page-header
+  .buttons = delete_link @upload
+  h2 = title_for @upload
+
+= link_to('Herunterladen', @upload.upload_file.url, target: '_blank') if @upload.upload_file.present?
+
+= render 'form'

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180106181336) do
+ActiveRecord::Schema.define(version: 20180131180646) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -77,6 +77,10 @@ ActiveRecord::Schema.define(version: 20180106181336) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "published", default: false
+    t.string "print_version_file_name"
+    t.string "print_version_content_type"
+    t.integer "print_version_file_size"
+    t.datetime "print_version_updated_at"
   end
 
   create_table "categories", id: :serial, force: :cascade do |t|
@@ -244,6 +248,20 @@ ActiveRecord::Schema.define(version: 20180106181336) do
     t.jsonb "contact", default: "{}"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "skill_sets"
+    t.text "remarks"
+  end
+
+  create_table "uploads", force: :cascade do |t|
+    t.string "upload_file_file_name"
+    t.string "upload_file_content_type"
+    t.integer "upload_file_file_size"
+    t.datetime "upload_file_updated_at"
+    t.string "name"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_uploads_on_user_id"
   end
 
   create_table "users", id: :serial, force: :cascade do |t|

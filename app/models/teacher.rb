@@ -11,7 +11,7 @@ class Teacher < ApplicationRecord
 
   has_paper_trail
 
-  multisearchable against: [:title, :first_name, :last_name, :profession]
+  multisearchable against: %i[title first_name last_name profession skill_sets remarks]
 
   def name
     [title, first_name, last_name].select(&:present?).join(' ')

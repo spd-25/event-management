@@ -1,5 +1,5 @@
 <%= Seminar.model_name.human               %>: <%= @seminar.title %>
 <%= Seminar.human_attribute_name :number   %>: <%= @seminar.number %>
 <%= Seminar.human_attribute_name :events   %>: <%= @seminar.date_text_or_events.html_safe %>
-<%= Seminar.human_attribute_name :location %>: <%= @seminar.location.name %>
+<%= Seminar.human_attribute_name :location %>: <%= @seminar.location&.name %>
 <%= Seminar.human_attribute_name :price_text %>: <%= strip_tags(@seminar.price_text).html_safe %>
