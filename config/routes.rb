@@ -4,21 +4,12 @@ Rails.application.routes.draw do
   post 'buchung',               to: 'buchung#create', as: :buchung_create
   get  'nachricht/:booking_id', to: 'buchung#show',   as: :buchung_show
 
-  resources(:pages, path: 'p', only: :show) do
-    get :home, on: :collection
-  end
-
-  resource :bildungswerk, only: [] do
-    get :profil, :team, :standorte
-  end
-
   root to: 'pages#home'
 
   get 'seminare/start/:year',            to: 'seminare#home',   as: :seminare_home
   get 'seminare(/:year(/:category_id))', to: 'seminare#index',  as: :seminare_visitor
   get 'seminar/:id',                     to: 'seminare#show',   as: :seminar_visitor
   get 'suche',                           to: 'seminare#search', as: :seminar_search
-
 
   devise_for :users, skip: [:registrations]
   as :user do
@@ -67,4 +58,6 @@ Rails.application.routes.draw do
     resources :feedbacks, only: %i[new create]
     resources :uploads
   end
+
+  get ':path1(/:path2)' => 'pages#show', as: :pages
 end

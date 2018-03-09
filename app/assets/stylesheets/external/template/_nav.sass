@@ -1,7 +1,9 @@
-nav
+nav.navbar
   border-bottom: 1px solid #f4f4f4
   color: #333
   font-weight: bold
+  background-color: white !important
+  padding-top: 10px
 
   a
     color: #333
@@ -12,20 +14,25 @@ nav
   .navbar-toggle .icon-bar
     width: 30px
     height: 4px
-    margin-top: 16px
-
-  .navbar-brand
+    //margin-top: 16px
+  a.navbar-brand
+    background: image-url("pbw-logo.png") no-repeat
+    width: 300px
+    position: relative
+    bottom: 5px
+    margin-left: 10px !important
+  //.navbar-brand
     height: fit-content
     padding-bottom: 6px
 
-  .navbar-nav
-    margin-top: 30px
+  //.navbar-nav
+    //margin-top: 30px
 
   .dropdown-menu
     border-top: 2px solid $primary
-    padding-left: 20px
+    //padding-left: 20px
 
-    li
+    //li
       font-weight: normal
       padding-left: 1em
       text-indent: -1.1em
@@ -42,14 +49,16 @@ nav
           background-color: #fff
 
   ul.menu-items
-    li::before
+    a::before
       font-family: FontAwesome
       content: "\f0da"
       color: $primary
       font-size: 1.2em
       padding-right: .5rem
+    //a
+      display: block
 
-    li.title
+    //li.title
       margin-bottom: 10px
       font-weight: bold
 
@@ -73,7 +82,7 @@ nav
       padding-right: 0px
 
   /* MEGA MENU
-  .megamenu
+  //.megamenu
     width: 560px
     padding-bottom: 10px
     border-top: 2px solid $yellow
@@ -132,15 +141,17 @@ nav
       @media (max-width: 768px)
         padding-left: 20px
 
-  /* YELLOW MM
-  .menu-yellow
-    margin-left: -20px
-    padding: 6px 8px 8px
-    background-color: $yellow
-    color: #fff
+  li.dropdown.yellow-menu
+    & > a:focus, & > a:hover,
+    & a:active, &.open > a, &.active > a
+      background-color: $yellow
+      border-color: $yellow
+      color: #fff
 
-    @media (max-width: 1200px)
-      display: none
+    ul.dropdown-menu
+      border-top: 2px solid $yellow
+      li.active
+        color: #005da8
 
   .nav > li > a.yellow-hov:focus, .nav > li > a.yellow-hov:hover,
   .nav > li > a.yellow-hov:active, .nav .open > a.yellow-hov

@@ -1,5 +1,7 @@
 class Page < ApplicationRecord
 
+  scope :published, -> { where published: true }
+
   validates :title, :slug, presence: true, uniqueness: true
 
   before_validation :set_slug

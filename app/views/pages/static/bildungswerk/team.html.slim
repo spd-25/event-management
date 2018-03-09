@@ -1,0 +1,29 @@
+- require 'csv'
+- csv_file = Rails.root.join('app/views/pages/static/bildungswerk/team.csv')
+- team = ::CSV.table( csv_file).map(&:to_h)
+
+.container.bereich-block
+  h1 Das Team in der Geschäftsstelle Magdeburg
+
+  = image_tag 'static/bildungswerk_teamfoto.jpg'
+
+  hr
+
+  .employees
+    - team.in_groups_of(2, false).each do |employees|
+      .employee.row
+        - employees.each do |employee|
+          .col-md-2
+            .employee-image = image_tag employee[:image]
+          .col-md-3
+            .employee-name = employee[:name]
+            .employee-role = employee[:role]
+            .employee-phone = employee[:phone]
+            .employee-email  = employee[:email]
+
+
+sass:
+  .employees
+    .employee
+      padding-bottom: 10px
+

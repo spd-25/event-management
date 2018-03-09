@@ -5,7 +5,7 @@ module Admin
 
     def index
       authorize Page
-      @pages = Page.all
+      @pages = Page.order(:slug).all
     end
 
     def new
@@ -50,7 +50,7 @@ module Admin
 
     # Only allow a trusted parameter "white list" through.
     def page_params
-      params.require(:page).permit(:title, :published, :content, :teaser)
+      params.require(:page).permit(:title, :slug, :published, :content, :teaser)
     end
   end
 end
