@@ -28,7 +28,7 @@ nav.navbar.navbar-default.navbar-fixed-top
             - Catalog.published.pluck(:year).select { |year| year >= Date.current.year }.sort.each do |year|
               li class=('active' if request.path == "/seminare/#{year}")
                 = link_to "Seminare #{year}", seminare_visitor_url(year: year)
-            - links = { 'Serviceangebote' => 'service', 'Finanzierungsmöglichkeiten' => 'finanzierung', 'Team' => 'team'}
+            - links = { 'Service' => 'service', 'Finanzierungsmöglichkeiten' => 'finanzierung', 'Team' => 'team', 'AGBs' => 'agbs'}
             - links.each do |label, path|
               - path = "/fort-und-weiterbildung/#{path}"
               li class=('active' if request.path == path) = link_to label, path
@@ -39,7 +39,7 @@ nav.navbar.navbar-default.navbar-fixed-top
             - links =  { 'Heilpädagogik' => 'heilpaedagogik', 'Heilerziehungspflege' => 'heilerziehungspflege', 'Erzieher*in' => 'erzieher' }
             - links.each do |label, path|
               - path = "/ausbildung/#{path}"
-              li class=('active' if request.path == path) = link_to label, path
+              li class=('active' if request.path =~ Regexp.new(path)) = link_to label, path
         li.dropdown.yellow-menu class=('active' if request.path =~ /\A\/quereinstieg/)
           a.dropdown-toggle href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
             | Quereinstieg

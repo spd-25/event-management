@@ -59,5 +59,5 @@ Rails.application.routes.draw do
     resources :uploads
   end
 
-  get ':path1(/:path2)' => 'pages#show', as: :pages
+  get ':path1(/:path2(/:path3))' => 'pages#show', as: :pages
 end

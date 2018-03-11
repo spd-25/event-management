@@ -51,12 +51,9 @@
         h2 FORT- UND WEITERBILDUNG
         .img-container
         .bereich-content
-          p
-            |
-              Wir qualifizieren insbesondere Hilfs-, Fach- und Führungskräfte aus sozialen Einrichtungen.
-              Nutzen Sie unsere Kompetenzen und langjährigen Erfahrungen und planen Sie Ihre Weiterbildung mit uns!
-        .cta
-          a.cta-btn href="#"  Mehr Informationen
+          p Wir qualifizieren insbesondere Hilfs-, Fach- und Führungskräfte aus sozialen Einrichtungen.
+            Nutzen Sie unsere Kompetenzen und langjährigen Erfahrungen und planen Sie Ihre Weiterbildung mit uns!
+        .cta = link_to 'Mehr Informationen', '/seminare', class: 'cta-btn'
     .col-md-4.desktop-only
       .content.aus
         h2 AUSBILDUNG
@@ -65,27 +62,20 @@
           p
             | Wir bilden aus:
           ul
-            li
-              a href="#" staatlich anerkannten Heilerziehungspfleger/-in
-            li
-              a href="#" Heilpädagogen/-in
-            li
-              a href="#" staatlich anerkannten Erzieher/-in
-        .cta
-          a.cta-btn href="#" Mehr Informationen
+            li = link_to 'staatlich anerkannten Heilerziehungspfleger/-in', '/ausbildung/heilerziehungspflege'
+            li = link_to 'Heilpädagogen/-in', '/ausbildung/heilpaedagogik'
+            li = link_to 'staatlich anerkannten Erzieher/-in', '/ausbildung/erzieher'
+        .cta = link_to 'Mehr Informationen', '/ausbildung', class: 'cta-btn'
     .col-md-4.desktop-only
       .content.quer
         h2 QUEREINSTIEG
         .img-container
         .bereich-content
-          p
-            |
-              Im Bundesmodellprojekt „Quereinstieg – Männer und Frauen in Kitas“ absolvieren bei uns
-              derzeit 41 Berufsumsteiger*innen eine Ausbildung zum*zur staatlich anerkannten
-              Erzieher*in. Haben Sie auch schon einmal daran gedacht, in den Erzieher*innen-Beruf
-              zu wechseln?
-        .cta
-          a.cta-btn href="#"  Mehr Informationen
+          p Im Bundesmodellprojekt „Quereinstieg – Männer und Frauen in Kitas“ absolvieren bei uns
+            derzeit 41 Berufsumsteiger*innen eine Ausbildung zum*zur staatlich anerkannten
+            Erzieher*in. Haben Sie auch schon einmal daran gedacht, in den Erzieher*innen-Beruf
+            zu wechseln?
+        .cta = link_to 'Mehr Informationen', '/quereinstieg', class: 'cta-btn'
     .mobile-only.accordion-bereich.col-md-12
       #accordion.panel-group
         .panel.panel-default

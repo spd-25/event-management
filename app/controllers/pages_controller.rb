@@ -5,7 +5,7 @@ class PagesController < ApplicationController
   end
 
   def show
-    slug = [params[:path1], params[:path2]].select(&:present?).join('/')
+    slug = [params[:path1], params[:path2], params[:path3]].select(&:present?).join('/')
     static_page = "pages/static/#{slug}"
     return render static_page if lookup_context.find_all(static_page).any?
 
