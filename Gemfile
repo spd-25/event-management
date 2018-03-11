@@ -70,8 +70,8 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
-  gem 'meta_request'
-  gem 'better_errors'
+  # gem 'meta_request'
+  # gem 'better_errors'
   gem 'capistrano', '~> 3.5'
   gem 'capistrano-bundler'
   gem 'capistrano-rails', '~> 1.1'
@@ -88,7 +88,7 @@ group :development do
   gem 'rb-inotify', :require=>false
   gem 'spring-commands-rspec'
   gem 'mechanize'
-  gem 'binding_of_caller'
+  # gem 'binding_of_caller'
 end
 
 group :test do
