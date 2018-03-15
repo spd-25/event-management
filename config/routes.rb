@@ -54,10 +54,9 @@ Rails.application.routes.draw do
     resources :companies, except: :edit
     resources(:catalogs,  except: %i[edit destroy]) { get :make_current, on: :member }
 
-    resources :pages, except: :edit
     resources :feedbacks, only: %i[new create]
-    resources :uploads
   end
 
+  mount Alchemy::Engine => '/pbw'
   get ':path1(/:path2(/:path3))' => 'pages#show', as: :pages
 end

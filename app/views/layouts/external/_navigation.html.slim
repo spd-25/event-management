@@ -27,7 +27,7 @@ nav.navbar.navbar-default.navbar-fixed-top
           ul.dropdown-menu.menu-items
             - Catalog.published.pluck(:year).select { |year| year >= Date.current.year }.sort.each do |year|
               li class=('active' if request.path == "/seminare/#{year}")
-                = link_to "Seminare #{year}", seminare_visitor_url(year: year)
+                = link_to "Seminare #{year}", main_app.seminare_visitor_url(year: year)
             - links = { 'Service' => 'service', 'Finanzierungsmöglichkeiten' => 'finanzierung', 'Team' => 'team', 'AGBs' => 'agbs'}
             - links.each do |label, path|
               - path = "/fort-und-weiterbildung/#{path}"
