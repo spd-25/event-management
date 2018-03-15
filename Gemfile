@@ -51,6 +51,8 @@ gem 'axlsx', github: 'randym/axlsx'
 gem 'axlsx_rails'
 gem 'axlsx_styler'
 gem 'paperclip', '~> 5.0'
+gem 'alchemy_cms', '~> 4.0.0'
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
