@@ -76,12 +76,14 @@
 # end
 #
 # PgSearch::Multisearch.rebuild(Category)
-User.create!(
-  username:              'micha',
-  email:                 'test@example.com',
-  name:                  'Micha',
-  role:                  'admin',
-  password:              '12341234',
-  password_confirmation: '12341234'
-)
-# Alchemy::Seeder.seed!
+# User.create!(
+#   username:              'micha',
+#   email:                 'test@example.com',
+#   name:                  'Micha',
+#   role:                  'admin',
+#   password:              '12341234',
+#   password_confirmation: '12341234'
+# )
+Alchemy::Seeder.seed!
+
+# Catalog.create!(title: 'Bildungkalender 2018', year: 2018, published: true)
