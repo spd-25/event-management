@@ -42,7 +42,7 @@ module Admin
 
     def destroy
       if @user == current_user
-        redirect_to @user, alert: t('users.cannot_delete_yourself')
+        redirect_to [:admin, @user], alert: t('users.cannot_delete_yourself')
       else
         @user.destroy
         redirect_to admin_users_url, notice: t(:destroyed, model: User.model_name.human)
