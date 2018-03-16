@@ -151,6 +151,7 @@
       .col-md-6
         ul
           - seminars.each do |seminar|
+            - next if seminar.blank? || seminar.id.nil?
             li.flex = link_to main_app.seminar_visitor_url(seminar), class: 'seminar-link' do
               span.seminar-name = truncate seminar.title, length: 150
               span.seminar-date = ldate seminar.date
