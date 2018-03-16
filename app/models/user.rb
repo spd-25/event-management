@@ -8,6 +8,8 @@ class User < ApplicationRecord
   validates :email, :username, :role, presence: true
 
   has_paper_trail
+  acts_as_taggable
+  acts_as_tagger
 
   def set_default_role
     self.role ||= :user

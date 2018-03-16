@@ -76,4 +76,12 @@
 # end
 #
 # PgSearch::Multisearch.rebuild(Category)
-Alchemy::Seeder.seed!
+User.create!(
+  username:              'micha',
+  email:                 'test@example.com',
+  name:                  'Micha',
+  role:                  'admin',
+  password:              '12341234',
+  password_confirmation: '12341234'
+)
+# Alchemy::Seeder.seed!
