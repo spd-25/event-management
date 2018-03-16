@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   post 'buchung',               to: 'buchung#create', as: :buchung_create
   get  'nachricht/:booking_id', to: 'buchung#show',   as: :buchung_show
 
-  root to: 'pages#home'
+  # root to: 'pages#home'
 
   get 'seminare/start/:year',            to: 'seminare#home',   as: :seminare_home
   get 'seminare(/:year(/:category_id))', to: 'seminare#index',  as: :seminare_visitor
@@ -57,6 +57,6 @@ Rails.application.routes.draw do
     resources :feedbacks, only: %i[new create]
   end
 
-  mount Alchemy::Engine => '/pbw'
-  get ':path1(/:path2(/:path3))' => 'pages#show', as: :pages
+  mount Alchemy::Engine => '/'
+  # get ':path1(/:path2(/:path3))' => 'pages#show', as: :pages
 end

@@ -4,10 +4,21 @@ de:
     # Translations for page layout names
     page_layout_names:
       index: Startseite
+      team: Team-Seite
+      locations: Standorte
+      contact: Kontakt
 
     # Translations for element names
     element_names:
       article: Artikel
+      slider: Slider
+      info_boxes: Info-Boxen
+      recent_seminars: Aktuelle Seminare
+      testemonials: Kunden-Meinungen
+      contact_box: Kontakt-Box
+      headline: Überschrift
+      contactform: Kontakt-Formular
+      text: Textblock
 
     # Translations for content names
     content_names:

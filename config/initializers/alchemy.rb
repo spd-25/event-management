@@ -3,3 +3,4 @@
 # Alchemy.signup_path         = '/your/signup/path'   # Defaults to '/signup'
 Alchemy.login_path          = '/users/sign_in'    # Defaults to '/login'
 Alchemy.logout_path         = '/users/sign_out'   # Defaults to '/logout'
+Alchemy.admin_path          = 'cms'

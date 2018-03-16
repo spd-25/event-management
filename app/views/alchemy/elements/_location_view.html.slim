@@ -1,0 +1,16 @@
+- cache(element) do
+  = element_view_for(element) do |el|
+    h3 = el.render :name
+    .row
+      .col-md-8
+        .picture = el.render :picture
+        .text = el.render :text
+      .col-md-4
+        address
+          = el.render :address
+        .phone
+          label Telefon
+          =< el.render :phone
+        .email
+          label E-Mail
+          =< el.render :email

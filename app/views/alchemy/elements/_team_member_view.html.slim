@@ -1,0 +1,15 @@
+- cache(element) do
+  = element_view_for(element) do |el|
+    / .row
+      .col-md-4
+        .image = el.render :picture
+      .col-md-6
+        .employee-name     = el.render :name
+        .employee-position = el.render :position
+        .employee-phone    = el.render :phone
+        .employee-email    = el.render :email
+    .image = el.render :picture
+    .name = el.render :name
+    .position = el.render :position
+    .phone = el.render :phone
+    .email = el.render :email

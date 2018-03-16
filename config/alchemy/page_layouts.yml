@@ -2,13 +2,27 @@
 #
 # For further information please see http://guides.alchemy-cms.com/stable/page_layouts.html
 
+- name: header
+  layoutpage: true
+- name: footer
+  layoutpage: true
 - name: index
   unique: true
+#  autogenerate: [article]
+#  elements: [slider, info_boxes, recent_seminars, testemonials, contact]
+#  controller: PagesController
+#  Controller to use instead of the default Alchemy::PagesController
+#  action: home
+#  Controllers action to use instead of the default Alchemy::PagesController#show
+
+- name: team
+  elements: [article, team_member]
+- name: locations
+  elements: [article, location]
+- name: standard
   elements: [article]
-  autogenerate: [article]
-#- name: home
-#  unique: true
-#  elements: [slider, info_box, recent_seminars, testemonials, contact]
-##  autogenerate: []
-#- name: team
-#- name: locations
+- name: contact
+  cache: false
+  unique: true
+  elements: [headline, contactform, text]
+  autogenerate: [headline, contactform]

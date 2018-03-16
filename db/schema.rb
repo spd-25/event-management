@@ -427,16 +427,6 @@ ActiveRecord::Schema.define(version: 20180313214852) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "pages", force: :cascade do |t|
-    t.string "title", null: false
-    t.string "slug", null: false
-    t.text "teaser"
-    t.text "content"
-    t.boolean "published", default: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "pg_search_documents", id: :serial, force: :cascade do |t|
     t.text "content"
     t.string "searchable_type"
