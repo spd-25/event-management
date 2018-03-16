@@ -79,4 +79,6 @@
     type: EssenceText
   - name: email
     type: EssenceText
+  - name: website
+    type: EssenceText
 

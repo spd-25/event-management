@@ -17,10 +17,13 @@
 
 - name: team
   elements: [article, team_member]
+  autogenerate: [article]
 - name: locations
   elements: [article, location]
+  autogenerate: [article]
 - name: standard
   elements: [article]
+  autogenerate: [article]
 - name: contact
   cache: false
   unique: true

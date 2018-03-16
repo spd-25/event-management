@@ -12,55 +12,7 @@ nav.navbar.navbar-default.navbar-fixed-top
       a.navbar-brand href=alchemy.root_url
 
     #navbar-collapse.collapse.navbar-collapse
-      ul.nav.navbar-nav.navbar-right
-        li.dropdown class=('active' if request.path =~ /\A\/bildungswerk/)
-          a.dropdown-toggle href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
-            | Bildungswerk
-          ul.dropdown-menu.dropdown-menu.menu-items
-            li = link_to 'Wir über uns', 'http://bildungswerk-lsa.de/index.php?article_id=22'
-            li = link_to 'Team', 'http://bildungswerk-lsa.de/index.php?article_id=42'
-            / - links = { 'Unser Profil' => 'profil', 'Team' => 'team', 'Standorte' => 'standorte' }
-            / - links.each do |label, path|
-              - path = "/bildungswerk/#{path}"
-              li class=('active' if request.path == path) = link_to label, path
-        li.dropdown.yellow-menu class=('active' if request.path =~ /\A\/(fort-und-weiterbildung|seminare)/)
-          = link_to 'Fort- und Weiterbildung', main_app.seminare_visitor_url
-        / li.dropdown.yellow-menu class=('active' if request.path =~ /\A\/(fort-und-weiterbildung|seminare)/)
-          = link_to 'Fort- und Weiterbildung', '/fort-und-weiterbildung'
-        / li.dropdown.yellow-menu class=('active' if request.path =~ /\A\/(fort-und-weiterbildung|seminare)/)
-          a.dropdown-toggle href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
-            | Fort- und Weiterbildung
-          ul.dropdown-menu.menu-items
-            - Catalog.published.pluck(:year).select { |year| year >= Date.current.year }.sort.each do |year|
-              li class=('active' if request.path == "/seminare/#{year}")
-                = link_to "Seminare #{year}", main_app.seminare_visitor_url(year: year)
-            - links = { 'Service' => 'service', 'Finanzierungsmöglichkeiten' => 'finanzierung', 'Team' => 'team', 'AGBs' => 'agbs'}
-            - links.each do |label, path|
-              - path = "/fort-und-weiterbildung/#{path}"
-              li class=('active' if request.path == path) = link_to label, path
-        li.dropdown.yellow-menu
-          = link_to 'Ausbildung', 'http://bildungswerk-lsa.de/index.php?article_id=44'
-        / li.dropdown.yellow-menu class=('active' if request.path =~ /\A\/ausbildung/)
-          a.dropdown-toggle href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
-            | Ausbildung
-          ul.dropdown-menu.menu-items
-            - links =  { 'Heilpädagogik' => 'heilpaedagogik', 'Heilerziehungspflege' => 'heilerziehungspflege', 'Erzieher*in' => 'erzieher' }
-            - links.each do |label, path|
-              - path = "/ausbildung/#{path}"
-              li class=('active' if request.path =~ Regexp.new(path)) = link_to label, path
-        / li.dropdown.yellow-menu class=('active' if request.path =~ /\A\/quereinstieg/)
-          = link_to 'Quereinstieg', '/quereinstieg'
-        / li.dropdown.yellow-menu class=('active' if request.path =~ /\A\/quereinstieg/)
-          a.dropdown-toggle href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
-            | Quereinstieg
-          ul.dropdown-menu.menu-items
-            - links = { 'Projekt' => 'projekt', 'Team' => 'team', 'Standorte' => 'standorte', 'Projektpartner' => 'projektpartner' }
-            - links.each do |label, path|
-              - path = "/quereinstieg/#{path}"
-              li class=('active' if request.path == path) = link_to label, path
-        / li.dropdown class=('active' if request.path =~ /\A\/kontakt|\A\/standorte/)
-          a.dropdown-toggle href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
-            | Kontakt
-          ul.dropdown-menu.menu-items
-            li = link_to 'Kontakt', '/kontakt'
-            li = link_to 'Standorte', '/standorte'
+      - if Alchemy::Page.find_by( name: 'Startseite').children.published.any?
+        = render 'layouts/external/new_nav'
+      - else
+        = render 'layouts/external/old_nav'

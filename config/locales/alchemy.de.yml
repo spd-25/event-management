@@ -6,7 +6,9 @@ de:
       index: Startseite
       team: Team-Seite
       locations: Standorte
-      contact: Kontakt
+      contact: Kontakt-Seite
+      header: Seitenkopf
+      footer: Seitenfuß
 
     # Translations for element names
     element_names:
@@ -19,12 +21,20 @@ de:
       headline: Überschrift
       contactform: Kontakt-Formular
       text: Textblock
+      team_member: Team-Mitglied
+      location: Standort
 
     # Translations for content names
     content_names:
       headline: Überschrift
       text: Text
       picture: Bild
+      name: Name
+      position: Position
+      description: Beschreibung
+      phone: Telefon
+      email: E-Mail-Adresse
+      address: Adresse
 
     # Default texts for new contents created
     default_content_texts:

@@ -3,69 +3,47 @@ footer
   .upper-footer
     .container
       .row
-        .col-sm-3
-          b Fort- und Weiterbildung
-          ul
-            li
-              a href="#"  Management und Verwaltung
-            li
-              a href="#"  Persönliche Kompetenzen
-            li
-              a href="#"  Kinder- und Jugendhilfe
-            li
-              a href="#"  Umgang mit Menschen im Alter und/oder mit Behinderung
-            li
-              a href="#"  Schuldnerberatung
-            li
-              a href="#"  Weiterbildung für Betreuer
-            li
-              a href="#"  Praktikerforen
-        .col-sm-3
-          b Quereinstieg
-          ul
-            li
-              a href="#"  Ausbildung zum/zur Staatlich anerkannten Erzieher/in
-          b Ausbildung
-          ul
-            li
-              a href="#"  Heilpädagogik
-            li
-              a href="#"  Heilerziehungspflege
-            li
-              a href="#"  Erzieher/in
-        .col-sm-3
-          b Bildungswerk
-          ul
-            li
-              a href="#"  Unser Profil
-            li
-              a href="#"  Team
-            li
-              a href="#"  Kontakt
-            li
-              a href="#"  Standorte
-          b Rechtliches
-          ul
-            li
-              a href="#"  Impressum
-            li
-              a href="#"  AGB
-            li
-              a href="#"  Datenschutz
-        .col-sm-3
-          b Fort- und Weiterbildung
-          br
-          | Wiener Straße 2
-          br
-          | 39112 Magdeburg
-          br
-          br
-          | Tel.: (0391) 6293313
-          br
-          | Fax: (0391) 6293555
-          br
-          br
+        / .col-sm-3
+          / b Fort- und Weiterbildung
+          / ul
+            li = link_to 'Management und Verwaltung', '#'
+            li = link_to 'Persönliche Kompetenzen', '#'
+            li = link_to 'Kinder- und Jugendhilfe', '#'
+            li = link_to 'Umgang mit Menschen im Alter und/oder mit Behinderung', '#'
+            li = link_to 'Schuldnerberatung', '#'
+            li = link_to 'Weiterbildung für Betreuer', '#'
+            li = link_to 'Praktikerforen', '#'
+        / .col-sm-3
+          / b Quereinstieg
+          / ul
+            li = link_to 'Ausbildung zum/zur Staatlich anerkannten Erzieher/in', '#'
+          / b Ausbildung
+          / ul
+            li = link_to 'Heilpädagogik', '#'
+            li = link_to 'Heilerziehungspflege', '#'
+            li = link_to 'Erzieher/in', '#'
+        / .col-sm-3
+          / b Bildungswerk
+          / ul
+            li = link_to 'Unser Profil', '#'
+            li = link_to 'Team', '#'
+            li = link_to 'Kontakt', '#'
+            li = link_to 'Standorte', '#'
+          / b Rechtliches
+          / ul
+            li = link_to 'Impressum', '#'
+            li = link_to 'AGB', '#'
+            li = link_to 'Datenschutz', '#'
+        / .col-sm-6
+          / = render_navigation all_sub_menues: true
+        .col-sm-9
+          / b Fort- und Weiterbildung
+          |  Wiener Straße 2 |
+          |  39112 Magdeburg |
+          |  Tel.: (0391) 6293313 |
+          |  Fax: (0391) 6293555 |
           a href="mailto:bildungswerk@paritaet-lsa.de"  bildungswerk@paritaet-lsa.de
+        .col-sm-3 = link_to 'Anmelden', main_app.new_user_session_path unless current_user
   .sub-footer
     .container
       .row
