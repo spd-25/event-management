@@ -51,7 +51,7 @@ module Admin
 
     def access_rights
       authorize User
-      @roles         = User.roles.keys - ['user']
+      @roles         = User::ROLES - [:user]
       @access_rights = generate_access_rights(@roles)
     end
 
@@ -65,7 +65,9 @@ module Admin
 
     # Only allow a trusted parameter "white list" through.
     def user_params
-      params.require(:user).permit(:name, :username, :email, :role, :password, :password_confirmation)
+      params.require(:user).permit(
+        :name, :username, :email, :role, :password, :password_confirmation, roles: []
+      )
     end
 
     # gives a hash of access rights
@@ -78,7 +80,7 @@ module Admin
     #   }
     # }
     def generate_access_rights(roles)
-      users = roles.map { |role| User.new role: role }
+      users = roles.each_with_object({}) { |role, hsh| hsh[role] = User.new roles: [role] }
 
       standard_actions = { index: 'auflisten', show: 'ansehen', edit: 'bearbeiten' }
       policies = {
@@ -105,7 +107,7 @@ module Admin
         actions.each do |action, options|
           action_rights = {}
           title, object = options.is_a?(String) ? [options, model] : options
-          users.each { |user| action_rights[user.role] = access_right(user, object, action) }
+          roles.each { |role| action_rights[role] = access_right(users[role], object, action) }
           _access_rights[model_name][title] = action_rights
         end
       end

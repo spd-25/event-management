@@ -148,6 +148,7 @@ de:
         username: Benutzername
         password: Passwort
         role: Rolle
+        roles: Rollen
         encrypted_password: Verschlüsseltes Passwort
         reset_password_token: Reset-Password-Token
         reset_password_sent_at: Passwort zurück gesetzt am

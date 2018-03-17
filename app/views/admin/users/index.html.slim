@@ -9,7 +9,7 @@
   table.standard-table.table-clickable
     thead
       tr
-        - %i(name username email role last_sign_in_at).each do |attr|
+        - %i(name username email roles last_sign_in_at).each do |attr|
           th = User.human_attribute_name(attr)
     tbody
       - @users.each do |user|
@@ -17,6 +17,6 @@
           td = user.name
           td = user.username
           td = user.email
-          td = t("users.roles.#{user.role}")
+          td = display_roles_for(user).join(', ')
           td = ldate user.last_sign_in_at
 

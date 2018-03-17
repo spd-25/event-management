@@ -2,7 +2,7 @@
   .col-md-3 = f.input :archived
   .col-md-3 = f.input :canceled
 .row
-  .col-md-6 = f.association :editor, label_method: :name, collection: User.editor, input_html: { class: 'select2' }
+  .col-md-6 = f.association :editor, label_method: :name, collection: User.editors, input_html: { class: 'select2' }
   .col-md-6 = f.input :number
 = f.association :parent,
             label_method: ->(s){ "#{s.number} - #{s.title}" },

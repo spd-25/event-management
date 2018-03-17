@@ -10,14 +10,13 @@
     .col-md-4
       = f.input :name
       = f.input :email
-      = f.input :role, collection: roles_select_options, include_blank: false
+      = f.input :roles, collection: roles_select_options, as: :check_boxes
     .col-md-4
       = f.input :username
       = f.input :password,              disabled: !@user.new_record?
       = f.input :password_confirmation, disabled: !@user.new_record?
       - unless @user.new_record?
         button.btn.btn-danger.enable-pw Ändern
-
 
   section.action-buttons
     .col-md-8
