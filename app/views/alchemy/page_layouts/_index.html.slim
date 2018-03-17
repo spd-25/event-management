@@ -44,104 +44,106 @@
             .circle
             .circle
             .circle
-/ .container.bereich-block
-  .row
-    .col-md-4.desktop-only
-      .content.fuw
-        h2 FORT- UND WEITERBILDUNG
-        .img-container
-        .bereich-content
-          p Wir qualifizieren insbesondere Hilfs-, Fach- und Führungskräfte aus sozialen Einrichtungen.
-            Nutzen Sie unsere Kompetenzen und langjährigen Erfahrungen und planen Sie Ihre Weiterbildung mit uns!
-        .cta = link_to 'Mehr Informationen', '/seminare', class: 'cta-btn'
-    .col-md-4.desktop-only
-      .content.aus
-        h2 AUSBILDUNG
-        .img-container
-        .bereich-content
-          p
-            | Wir bilden aus:
-          ul
-            li = link_to 'staatlich anerkannten Heilerziehungspfleger/-in', '/ausbildung/heilerziehungspflege'
-            li = link_to 'Heilpädagogen/-in', '/ausbildung/heilpaedagogik'
-            li = link_to 'staatlich anerkannten Erzieher/-in', '/ausbildung/erzieher'
-        .cta = link_to 'Mehr Informationen', '/ausbildung', class: 'cta-btn'
-    .col-md-4.desktop-only
-      .content.quer
-        h2 QUEREINSTIEG
-        .img-container
-        .bereich-content
-          p Im Bundesmodellprojekt „Quereinstieg – Männer und Frauen in Kitas“ absolvieren bei uns
-            derzeit 41 Berufsumsteiger*innen eine Ausbildung zum*zur staatlich anerkannten
-            Erzieher*in. Haben Sie auch schon einmal daran gedacht, in den Erzieher*innen-Beruf
-            zu wechseln?
-        .cta = link_to 'Mehr Informationen', '/quereinstieg', class: 'cta-btn'
-    .mobile-only.accordion-bereich.col-md-12
-      #accordion.panel-group
+- if current_user
+  .container.bereich-block
+    .row
+      .col-md-4.desktop-only
+        .content.fuw
+          h2 FORT- UND WEITERBILDUNG
+          .img-container
+          .bereich-content
+            p Wir qualifizieren insbesondere Hilfs-, Fach- und Führungskräfte aus sozialen Einrichtungen.
+              Nutzen Sie unsere Kompetenzen und langjährigen Erfahrungen und planen Sie Ihre Weiterbildung mit uns!
+          .cta = link_to 'Mehr Informationen', '/seminare', class: 'cta-btn'
+      .col-md-4.desktop-only
+        .content.aus
+          h2 AUSBILDUNG
+          .img-container
+          .bereich-content
+            p
+              | Wir bilden aus:
+            ul
+              li = link_to 'staatlich anerkannten Heilerziehungspfleger/-in', '/ausbildung/heilerziehungspflege'
+              li = link_to 'Heilpädagogen/-in', '/ausbildung/heilpaedagogik'
+              li = link_to 'staatlich anerkannten Erzieher/-in', '/ausbildung/erzieher'
+          .cta = link_to 'Mehr Informationen', '/ausbildung', class: 'cta-btn'
+      .col-md-4.desktop-only
+        .content.quer
+          h2 QUEREINSTIEG
+          .img-container
+          .bereich-content
+            p Im Bundesmodellprojekt „Quereinstieg – Männer und Frauen in Kitas“ absolvieren bei uns
+              derzeit 41 Berufsumsteiger*innen eine Ausbildung zum*zur staatlich anerkannten
+              Erzieher*in. Haben Sie auch schon einmal daran gedacht, in den Erzieher*innen-Beruf
+              zu wechseln?
+          .cta = link_to 'Mehr Informationen', '/quereinstieg', class: 'cta-btn'
+      .mobile-only.accordion-bereich.col-md-12
+        #accordion.panel-group
+          .panel.panel-default
+            .panel-heading
+              h2
+                a data-parent="#accordion" data-toggle="collapse" href="#collapseOne"
+                  | FORT- UND WEITERBILDUNG
+                  span.glyphicon.glyphicon-menu-down
+            #collapseOne.panel-collapse.collapse
+              .content.fuw
+                .img-container
+                .bereich-content
+                  p
+                    | Mit unserem Weiterbildungsangebot steht Ihnen ein Weiterbildungstool zur Verfügung, mit dem SIe,
+                    | Ihre Mitarbeiter/innen aktuell und
+                    | flexibelentsprechend Ihrer individuellen Personalentwicklungsbedarfe
+                    | zu qualifizieren.
+                .cta
+                  a.cta-btn href="#"  Mehr Informationen
         .panel.panel-default
           .panel-heading
-            h2
-              a data-parent="#accordion" data-toggle="collapse" href="#collapseOne"
-                | FORT- UND WEITERBILDUNG
+            h2.panel-title
+              a data-parent="#accordion" data-toggle="collapse" href="#collapseTwo"
+                | AUSBILDUNG
                 span.glyphicon.glyphicon-menu-down
-          #collapseOne.panel-collapse.collapse
-            .content.fuw
+          #collapseTwo.panel-collapse.collapse
+            .content.aus
               .img-container
               .bereich-content
                 p
-                  | Mit unserem Weiterbildungsangebot steht Ihnen ein Weiterbildungstool zur Verfügung, mit dem SIe,
-                  | Ihre Mitarbeiter/innen aktuell und
-                  | flexibelentsprechend Ihrer individuellen Personalentwicklungsbedarfe
-                  | zu qualifizieren.
+                  | Wir bilden aus:
+                ul
+                  li
+                    a href="#"  staatlich anerkannten Heilerziehungspfleger/-in
+                  li
+                    a href="#"  Heilpädagogen/-in
+                  li
+                    a href="#"  staatlich anerkannten Erzieher/-in
               .cta
                 a.cta-btn href="#"  Mehr Informationen
-      .panel.panel-default
-        .panel-heading
-          h2.panel-title
-            a data-parent="#accordion" data-toggle="collapse" href="#collapseTwo"
-              | AUSBILDUNG
-              span.glyphicon.glyphicon-menu-down
-        #collapseTwo.panel-collapse.collapse
-          .content.aus
-            .img-container
-            .bereich-content
-              p
-                | Wir bilden aus:
-              ul
-                li
-                  a href="#"  staatlich anerkannten Heilerziehungspfleger/-in
-                li
-                  a href="#"  Heilpädagogen/-in
-                li
-                  a href="#"  staatlich anerkannten Erzieher/-in
-            .cta
-              a.cta-btn href="#"  Mehr Informationen
-      .panel.panel-default
-        .panel-heading
-          h2.panel-title
-            a data-parent="#accordion" data-toggle="collapse" href="#collapseThree"
-              | QUEREINSTIEG
-              span.glyphicon.glyphicon-menu-down
-        #collapseThree.panel-collapse.collapse
-          .content.quer
-            .img-container
-            .bereich-content
-              p
-                | Das Bundesmodellprojekt
-                | QUEREINSTIEG bietet in zwei
-                | Modelljahrgängen je 25
-                | Ausbildungsplätze für Berufsumsteiger/innen, die in den Erzieher/innen-Beruf wechseln möchten.
-            .cta
-              a.cta-btn href="#"  Mehr Informationen
-/ .container.big-cta
-  .row
-    .col-md-12
-      .flex
-        .text
-          i.fa.fa-envelope.fa-3x aria-hidden="true"
-          span Kontakt
-        .cta
-          a.cta-btn href="#"  Jetzt Kontakt aufnehmen
+        .panel.panel-default
+          .panel-heading
+            h2.panel-title
+              a data-parent="#accordion" data-toggle="collapse" href="#collapseThree"
+                | QUEREINSTIEG
+                span.glyphicon.glyphicon-menu-down
+          #collapseThree.panel-collapse.collapse
+            .content.quer
+              .img-container
+              .bereich-content
+                p
+                  | Das Bundesmodellprojekt
+                  | QUEREINSTIEG bietet in zwei
+                  | Modelljahrgängen je 25
+                  | Ausbildungsplätze für Berufsumsteiger/innen, die in den Erzieher/innen-Beruf wechseln möchten.
+              .cta
+                a.cta-btn href="#"  Mehr Informationen
+- if current_user
+  .container.big-cta
+    .row
+      .col-md-12
+        .flex
+          .text
+            i.fa.fa-envelope.fa-3x aria-hidden="true"
+            span Kontakt
+          .cta
+            a.cta-btn href="/kontakt"  Jetzt Kontakt aufnehmen
 .container.seminar
   .row
     .col-md-12

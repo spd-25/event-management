@@ -11,9 +11,8 @@ ul.nav.navbar-nav.navbar-right
     a.dropdown-toggle href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
       | Fort- und Weiterbildung
     ul.dropdown-menu.menu-items
-      - Catalog.published.pluck(:year).select { |year| year >= Date.current.year }.sort.each do |year|
-        li class=('active' if request.path == "/seminare/#{year}")
-          = link_to "Seminare #{year}", main_app.seminare_visitor_url(year: year)
+      li class=('active' if request.path =~ /\A\/seminare/)
+        = link_to 'Seminare', main_app.seminare_visitor_url
       - links = { 'Service' => 'service', 'Finanzierungsmöglichkeiten' => 'finanzierung', 'Team' => 'team', 'AGBs' => 'agbs'}
       - links.each do |label, path|
         - path = "/fort-und-weiterbildung/#{path}"
