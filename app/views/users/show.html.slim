@@ -3,7 +3,7 @@
   .buttons = delete_link @user
   h2
     = title_for @user, with_model: false
-    small =< t("users.roles.#{@user.role}")
+    small =< display_roles_for(@user).join(', ')
 
 = render 'form'
 

@@ -1,7 +1,13 @@
 module UsersHelper
   def roles_select_options
-    User.roles.keys.map do |key|
-      [t("users.roles.#{key}"), key]
-    end.to_h
+    User::ROLES.map { |role| [translate_role(role), role.to_s] }
+  end
+
+  def display_roles_for(user)
+    user.roles.map { |role| translate_role(role) }
+  end
+
+  def translate_role(role)
+    t("users.roles.#{role}")
   end
 end
