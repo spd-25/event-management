@@ -556,13 +556,10 @@ ActiveRecord::Schema.define(version: 20180317180357) do
     t.string "name"
     t.integer "role"
     t.string "username"
-<<<<<<< HEAD
     t.integer "creator_id"
     t.integer "updater_id"
-    t.index ["creator_id"], name: "index_users_on_creator_id"
-=======
     t.string "roles", default: [], array: true
->>>>>>> master
+    t.index ["creator_id"], name: "index_users_on_creator_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["updater_id"], name: "index_users_on_updater_id"
     t.index ["username"], name: "index_users_on_username", unique: true
