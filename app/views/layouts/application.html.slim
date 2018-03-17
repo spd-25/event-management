@@ -21,9 +21,11 @@ html.no-js lang="de"
       script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"
   body
     == render 'layouts/external/navigation'
-    main == yield
+    main
+      == render 'layouts/messages'
+      == yield
     == render 'layouts/external/footer'
-    = render 'alchemy/edit_mode'
+    == render 'alchemy/edit_mode'
 
     coffee:
       $ ->

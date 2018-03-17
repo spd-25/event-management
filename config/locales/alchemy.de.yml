@@ -1,4 +1,11 @@
 de:
+  activemodel:
+    attributes:
+      alchemy/message:
+        firstname: Vorname
+        lastname: Nachname
+        email: E-Mail-Adresse
+        message: Nachricht
   alchemy:
 
     # Translations for page layout names
@@ -35,6 +42,12 @@ de:
       phone: Telefon
       email: E-Mail-Adresse
       address: Adresse
+
+      # contactform
+      mail_from: Absenderadresse
+      mail_to: Empfängeradresse
+      subject: Betreff
+      success_page: Bestätigungsseite
 
     # Default texts for new contents created
     default_content_texts:

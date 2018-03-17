@@ -48,7 +48,6 @@
 - name: testemonials
 - name: contact_box
 - name: headline
-- name: contactform
 - name: text
 
 - name: team_member
@@ -82,3 +81,23 @@
   - name: website
     type: EssenceText
 
+- name: contactform
+  contents:
+  - name: mail_from
+    type: EssenceText
+    validate:
+    - presence
+    - format: email
+  - name: mail_to
+    type: EssenceText
+    validate:
+    - presence
+    - format: email
+  - name: subject
+    type: EssenceText
+    validate:
+    - presence
+  - name: success_page
+    type: EssenceSelect
+    validate:
+    - presence

@@ -24,8 +24,13 @@
 - name: standard
   elements: [article]
   autogenerate: [article]
+#- name: contact
+#  cache: false
+#  unique: true
+#  elements: [headline, contactform, text]
+#  autogenerate: [headline, contactform]
 - name: contact
-  cache: false
   unique: true
-  elements: [headline, contactform, text]
-  autogenerate: [headline, contactform]
+  cache: false
+  elements: [article, contactform]
+  autogenerate: [article, contactform]

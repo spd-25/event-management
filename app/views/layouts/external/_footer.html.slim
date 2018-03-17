@@ -43,7 +43,11 @@ footer
           |  Tel.: (0391) 6293313 |
           |  Fax: (0391) 6293555 |
           a href="mailto:bildungswerk@paritaet-lsa.de"  bildungswerk@paritaet-lsa.de
-        .col-sm-3 = link_to 'Anmelden', main_app.new_user_session_path unless current_user
+        .col-sm-3
+          - if current_user
+            = link_to 'Admin', main_app.admin_root_path, data: { no_turbolink: true }
+          - else
+            = link_to 'Anmelden', main_app.new_user_session_path
   .sub-footer
     .container
       .row

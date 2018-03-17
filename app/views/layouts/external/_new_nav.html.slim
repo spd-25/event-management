@@ -34,7 +34,8 @@ ul.nav.navbar-nav.navbar-right
       - links.each do |label, path|
         - path = "/quereinstieg/#{path}"
         li class=('active' if request.path == path) = link_to label, path
-  li.dropdown class=('active' if request.path =~ /\A\/kontakt|\A\/standorte/)
+  li.dropdown class=('active' if request.path == '/kontakt') = link_to 'Kontakt', '/kontakt'
+  / li.dropdown class=('active' if request.path =~ /\A\/kontakt|\A\/standorte/)
     a.dropdown-toggle href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
       | Kontakt
     ul.dropdown-menu.menu-items
