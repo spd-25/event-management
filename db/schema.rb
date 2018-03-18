@@ -556,9 +556,9 @@ ActiveRecord::Schema.define(version: 20180317180357) do
     t.string "name"
     t.integer "role"
     t.string "username"
+    t.string "roles", default: [], array: true
     t.integer "creator_id"
     t.integer "updater_id"
-    t.string "roles", default: [], array: true
     t.index ["creator_id"], name: "index_users_on_creator_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["updater_id"], name: "index_users_on_updater_id"

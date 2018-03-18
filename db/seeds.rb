@@ -85,5 +85,8 @@
 #   password_confirmation: '12341234'
 # )
 Alchemy::Seeder.seed!
+now = Time.current
+Alchemy::Page.update_all visible: true, published_at: now, public_on: now
+Alchemy::Page.find_by(name: 'Startseite').update visible: false
 
 # Catalog.create!(title: 'Bildungkalender 2018', year: 2018, published: true)
