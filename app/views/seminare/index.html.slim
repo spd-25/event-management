@@ -33,6 +33,7 @@
       .col-md-4 = render 'categories', categories: root.children , current_path: path
       .col-md-8 = render 'seminars_list', seminars: @seminars
 .container.bereich-block
+  = render 'search_form'
   - if @catalog.print_version.present?
     .pull-right = pdf_link @catalog.print_version.url, text: 'Bildungskalender als PDF herunterladen'
 

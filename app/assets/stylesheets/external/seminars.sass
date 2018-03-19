@@ -26,6 +26,13 @@ ul.categories
 //font-size: smaller
 
 .seminars-table
+  border-radius: 5px
+  &:hover
+    box-shadow: 0 0 20px rgba(50, 50, 50, 0.27)
+  .list-group-item:hover
+    text-decoration: underline
+  &.overdue
+    font-style: italic
   .seminar-number, .seminar-date, .seminar-title, .seminar-teachers
     display: table-cell
     padding: 3px
