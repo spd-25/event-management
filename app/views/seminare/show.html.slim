@@ -21,8 +21,23 @@
         = @seminar.content.html_safe
 
     .col-md-4.additional
+      / dl.dl-horizontal
+        dt Termin
+        dd
+          - if @seminar.has_date_text?
+            = @seminar.date_text.html_safe
+          - else
+            .row
+              - @seminar.events_list.each do |date, time|
+                .col-md-6 = ldate date
+                .col-md-6 = time
+
+        dt Seminar-Nr.
+        dd = @seminar.number
+        dt Referenten
+        dd = @seminar.teachers.map(&:name).join(', ')
       .row.line
-        .col-md-4 Termin
+        .col-md-4: strong Termin
         .col-md-8
           - if @seminar.has_date_text?
             = @seminar.date_text.html_safe
@@ -32,10 +47,10 @@
                 .col-md-6 = ldate date
                 .col-md-6 = time
       .row.line
-        .col-md-4 Seminar-Nr.
+        .col-md-4: strong Seminar-Nr.
         .col-md-8 = @seminar.number
       .row.line
-        .col-md-4 Referenten
+        .col-md-4: strong Referenten
         .col-md-8
           - @seminar.teachers.each do |teacher|
             p
@@ -43,19 +58,19 @@
               small.profession = teacher.profession
       - if @seminar.location.present?
         .row.line
-          .col-md-4 Ort
+          .col-md-4: strong Ort
           .col-md-8 = @seminar.location.name
       - if @seminar.price_text.present?
         .row.line
-          .col-md-4 Gebühr
+          .col-md-4: strong Gebühr
           .col-md-8 = @seminar.price_text.html_safe
       - if @seminar.due_date.present?
         .row.line
-          .col-md-4 Anmeldeschluss
+          .col-md-4: strong Anmeldeschluss
           .col-md-8 = @seminar.due_date.html_safe
       - if @seminar.notes.present?
         .row.line
-          .col-md-4 Bemerkungen
+          .col-md-4: strong Bemerkungen
           .col-md-8 = @seminar.notes.html_safe
 
   - if @seminar.bookable?
