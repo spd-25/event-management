@@ -1,0 +1,212 @@
+/* TYPOGRAPHIE
+
+h1
+  font-size: 30px
+  color: $primary
+
+  @media (max-width: 425px)
+    font-size: 26px
+
+h2
+  font-size: 22px
+  color: $primary
+
+  @media (max-width: 425px)
+    font-size: 18px
+
+h3
+  font-size: 18px
+  color: $primary
+
+  @media (max-width: 425px)
+    font-size: 16px
+
+a:visited
+  text-decoration: none
+
+span.author
+  font-style: italic
+  color: $primary
+  display: block
+  padding-top: 10px
+
+/* LISTS
+main
+  ul.custom
+    margin-top: 20px
+    margin-bottom: 20px
+    display: block
+    list-style: none
+    padding: 0
+    padding-left: .5em
+
+    & ul li::before
+      content: "\f0da"
+      font-family: FontAwesome
+      color: $link-color
+      font-size: 1.2em
+      padding-right: 0.5rem
+
+    li
+      padding-left: 1em
+      //text-indent: -1.1em
+      line-height: 1.4
+      list-style: none
+
+      &::before
+        //content: "\f0da"
+        font-family: FontAwesome
+        color: $primary
+        font-size: 1.2em
+        padding-right: 0.5rem
+
+  ol.custom
+    padding-left: 23px
+
+    & li
+      list-style: inherit
+
+      &::before
+        content: none
+
+/* TABLE
+
+/* BLOCKQUOTE
+
+blockquote
+  border-left: 2px solid $primary
+  background-color: #f4f4f4
+  padding: 20px
+
+  span.author
+    float: right
+    font-style: italic
+    color: $primary
+
+/*CI
+.ci
+  display: inline-block
+  width: 100px
+  height: 100px
+  border: 1px solid #999
+
+.bg-primary
+  background-color: $primary
+
+.bg-yellow
+  background-color: $yellow
+
+.bg-orange
+  background-color: $orange
+
+.bg-light-orange
+  background-color: #fefaf2
+
+.bg-light-blue
+  background-color: $light-blue
+
+.bg-light-gray
+  background-color: $light-gray
+
+.bg-font
+  background-color: #333
+
+/* BUTTONS
+
+.cta-btn
+  padding: .5em 1em
+  background-color: $primary
+  color: #ffffff
+  border: 1px solid $primary
+  font-size: 18px
+  font-family: $font-sans
+  display: inline-block
+  text-align: center
+  margin-top: 15px
+  font-weight: bold
+
+  @media (max-width: 768px)
+    display: block
+
+a:visited.cta-btn
+  color: #fff
+  text-decoration: none
+
+a:hover.cta-btn
+  color: $primary
+
+input.cta-btn
+  @media (max-width: 768px)
+    display: block
+    width: 100%
+
+.cta-btn:hover
+  text-decoration: none
+  color: $primary
+  background-color: #ffffff
+
+.sec-cta-btn
+  padding: .5em 1em
+  background-color: #ffffff
+  color: $primary
+  border: 1px solid $primary
+  font-size: 18px
+  font-family: $font-sans
+  display: inline-block
+  text-align: center
+  margin-top: 15px
+  font-weight: bold
+
+  @media (max-width: 768px)
+    display: block
+
+a:visited.sec-cta-btn
+  color: $primary
+
+a:hover.sec-cta-btn
+  color: #fff
+
+.sec-cta-btn:hover
+  background-color: $primary
+  color: #fff
+  text-decoration: none
+
+/* KONTAKT
+
+/*Toggle
+.accordion
+  margin-top: 20px
+  margin-bottom: 20px
+
+  h2
+    padding-left: 0
+
+  h2 > a
+    display: block
+    font-size: 22px
+    color: #fff
+
+    @media (max-width: 425px)
+      font-size: 18px
+
+  h2 > a:hover, h2 > a:active, h2 > a:focus
+    text-decoration: none
+
+  .panel
+    border: none
+    -webkit-box-shadow: none
+    box-shadow: none
+
+  .panel-content
+    padding: 20px 10px
+
+  .panel-heading
+    border-top-left-radius: 0px
+    border-top-right-radius: 0px
+
+    h2
+      margin: 0
+      padding: 10px 0
+
+  span.glyphicon
+    float: right

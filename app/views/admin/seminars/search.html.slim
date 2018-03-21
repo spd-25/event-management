@@ -1,0 +1,15 @@
+label for='seminar-search'
+select#seminar-search name='seminar' class='select2' data={ url: new_admin_seminar_url(copy_from: 'ID') }
+  option value='' Bitte auswählen
+  - Seminar.order(:number).where(year: current_year - 1).all.each do |seminar|
+    option value=seminar.id
+      => seminar.number
+      = seminar.title
+
+
+coffee:
+  $ ->
+    $('#seminar-search').change ->
+      id  = $('#seminar-search').val()
+      url = $('#seminar-search').data().url
+      Turbolinks.visit url.replace 'ID', id

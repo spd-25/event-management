@@ -1,5 +1,4 @@
 class BuchungController < ApplicationController
-  layout 'external'
 
   def new
     @seminar = Seminar.published.find(params[:seminar_id]).decorate

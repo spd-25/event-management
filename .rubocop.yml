@@ -1,8 +1,8 @@
 AllCops:
-  TargetRubyVersion: 2.3
+  TargetRubyVersion: 2.4
 Rails:
   Enabled: true
 Metrics/LineLength:
   Max: 120
 Metrics/AbcSize:
-  Max: 18
+  Max: 25

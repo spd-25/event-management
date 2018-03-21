@@ -1,0 +1,22 @@
+- page_title_for @users
+.page-header
+  .buttons
+    = link_to 'Zugriffsrechte', access_rights_admin_users_url, class: 'btn btn-default'
+    = new_link new_admin_user_path
+  h2 = title_for @users
+
+.table-responsive
+  table.standard-table.table-clickable
+    thead
+      tr
+        - %i(name username email roles last_sign_in_at).each do |attr|
+          th = User.human_attribute_name(attr)
+    tbody
+      - @users.each do |user|
+        tr data = { url: admin_user_url(user) }
+          td = user.name
+          td = user.username
+          td = user.email
+          td = display_roles_for(user).join(', ')
+          td = ldate user.last_sign_in_at
+

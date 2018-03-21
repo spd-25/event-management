@@ -1,0 +1,83 @@
+= simple_form_for([:admin, @attendee], defaults: { label: false }) do |f|
+
+  fieldset
+    legend = Attendee.model_name.human
+
+    .attendee
+      .row
+        .col-md-6 = f.input :first_name
+        .col-md-6 = f.input :last_name
+
+  fieldset
+    legend Arbeitgeber
+    .row
+      .col-md-6
+        = f.input :company_title, as: :text, input_html: { rows: 2 }
+        = f.input :company_street
+        .row
+          .col-md-4 = f.input :company_zip,  as: :tel
+          .col-md-8 = f.input :company_city
+
+      .col-md-6
+        = f.association :company,
+          label_method: ->(c){ "#{c.name} #{c.name2}, #{c.city}" },
+          collection: Company.order(:name),
+          input_html: { class: 'select2' },
+          label: 'Firma'
+        .display-company-address
+
+  fieldset
+    legend Kontakt
+    .row
+      .col-md-6 = f.input :contact_email,  as: :email, placeholder: 'E-Mail-Adresse'
+      .col-md-6 = f.input :contact_phone,  as: :tel,   placeholder: 'Telefon'
+      .col-md-6 = f.input :contact_fax,    as: :tel
+      .col-md-6 = f.input :contact_mobile, as: :tel
+
+  fieldset
+    legend = Attendee.human_attribute_name(:invoice_address)
+    .row
+      .col-md-9 = f.input :invoice_title, as: :text, input_html: { rows: 4 }, placeholder: 'Firmanname / Name'
+    .row
+      .col-md-5 = f.input :invoice_street, placeholder: 'Straße/Nr'
+      .col-md-2 = f.input :invoice_zip,  as: :tel, placeholder: 'PLZ'
+      .col-md-5 = f.input :invoice_city, placeholder: 'Ort'
+
+  fieldset
+    legend Paritätische
+    .row
+      .col-md-6 = f.input :member, label: t('.member')
+      .col-md-6 = f.input :member_institution, label: t('.member_institution')
+    .row
+      .col-md-4 = f.input :graduate, label: t('.graduate')
+      .col-md-4 = f.input :school, collection:t('bookings.schools'), include_blank: false
+      .col-md-4 = f.input :year
+
+  fieldset
+    legend Bemerkungen
+    = f.input :comments, input_html: { rows: 4 }
+
+  .action-buttons
+    .pull-right
+      => link_to t(:cancel), (session[:attendee_back_url] || admin_seminar_url(@seminar)), class: 'btn btn-default'
+      = f.submit t(:save), class: 'btn btn-primary'
+
+  coffee:
+    $ ->
+      fill_invoice_address = (company_id) ->
+        return if company_id is ''
+        $.getJSON "/companies/#{company_id}.json", (company) ->
+          title = company.name
+          title = "#{title}\n#{company.name2}" if company.name2 isnt null
+          $('.display-company-address').html "#{title}<br>#{company.street}<br>#{company.zip} #{company.city}"
+
+      $('#attendee_company_id').change -> fill_invoice_address $(this).val()
+      $('#attendee_company_id').change()
+
+
+sass:
+  a.add-attendee
+    margin-bottom: 25px
+  a.remove-attendee
+    position: absolute
+    right: -20px

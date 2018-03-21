@@ -1,0 +1,44 @@
+- page_title_for @categories
+.page-header
+  .buttons = new_link new_admin_category_path
+  h2 = title_for @categories, count: current_catalog.categories.count
+
+/ul.list-group
+  - @categories.each do |category|
+    li.list-group-item
+      = link_to "#{category.display_name} (#{category.seminars.count})", category
+      ul
+        - category.categories.order(:number).each do |sub_cat|
+          li = link_to "#{sub_cat.display_name} (#{sub_cat.seminars.count})", sub_cat
+
+.row
+  .col-md-8.col-md-offset-2
+table.table.table-hover.cat-tree
+  tbody = render partial: 'categories', locals: {categories: @categories, level: 1}
+
+sass:
+  .cat-tree
+    td.title
+      width: 80%
+    i.glyphicon
+      padding-left: 8px
+    .cat-level-1 > .title
+      font-size: 2em
+    .cat-level-2 > .title
+      font-size: 1.7em
+      padding-left: 20px
+    .cat-level-3 > .title
+      font-size: 1.3em
+      padding-left: 40px
+    .cat-level-4 > .title
+      font-size: 1em
+      padding-left: 60px
+    .cat-level-5 > .title
+      font-size: 0.9em
+      padding-left: 80px
+    .cat-level-6 > .title
+      font-size: 0.9em
+      padding-left: 100px
+    .cat-level-7 > .title
+      font-size: 0.9em
+      padding-left: 120px

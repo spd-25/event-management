@@ -1,0 +1,44 @@
+- page_title_for @bookings
+.page-header
+  /= new_link new_booking_path
+  h2 = title_for @bookings
+
+= paginate @bookings
+
+.table-responsive
+  table.standard-table.table-clickable
+    thead
+      tr
+        th = Booking.human_attribute_name(:date)
+        th = Booking.human_attribute_name(:seminar)
+        th = Booking.human_attribute_name(:attendees)
+        th = Booking.human_attribute_name(:contact_email)
+        th Firma / Arbeitgeber
+        th
+        th
+    tbody
+      - @bookings.each do | booking |
+        - invoice = booking.invoice
+        tr data = {url: admin_booking_url(booking)} class=('warning' if booking.canceled?)
+          td = ldate booking.created_at, format: :short2
+          td = link_to booking.seminar.number, admin_seminar_url(booking.seminar)
+          td = booking.attendees.map(&:name).join('<br>').html_safe
+          td = booking.contact_email
+          td
+            - if booking.company
+              = link_to booking.company&.name, admin_company_url(booking.company)
+            - else
+              = [booking.company_title, booking.invoice_title].select(&:present?).first
+          td
+            - if invoice
+              => pdf_link admin_invoice_path(invoice, format: :pdf), text: "Rechnung #{invoice.number}"
+              => link_to fa_icon('pencil'), admin_invoice_path(invoice)
+            - else
+              = link_to 'Rechnung schreiben', new_admin_invoice_path(booking_id: booking.id), class: 'btn btn-primary btn-xs'
+          td
+            - if booking.canceled?
+              |  storniert
+            - else
+              = link_to 'Stornieren', booking_cancel_url(booking), class: 'btn btn-danger btn-xs'
+
+= paginate @bookings

@@ -1,0 +1,16 @@
+- page_title_for @pages
+.page-header
+  .buttons = new_link new_admin_page_path
+  h2 = title_for @pages
+
+.table-responsive
+  table.standard-table.table-clickable
+    thead
+      tr
+        th = Page.human_attribute_name(:title)
+        th = Page.human_attribute_name(:slug)
+    tbody
+      - @pages.each do |page|
+        tr data = {url: admin_page_url(page)} class=(page.published? ? 'success' : 'warning')
+          td = page.title
+          td = page.slug

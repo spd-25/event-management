@@ -1,88 +1,41 @@
 doctype html
-html
+html.no-js lang="de"
   head
-    meta[name="viewport" content="width=device-width, initial-scale=1.0"]
+    meta charset="utf-8" /
+    meta content="IE=edge" http-equiv="X-UA-Compatible" /
+    meta content="width=device-width, initial-scale=1" name="viewport" /
     title
       | Paritätisches Bildungswerk Sachsen-Anhalt
       - if content_for? :page_title
         | -
         =< content_for :page_title
     meta content=content_for(:page_description) name="description"
-    meta content="parität, bildung, bildungswerk, sachsen, anhalt, paritätisches, " name="keywords"
 
-    == stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
-    == javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = stylesheet_link_tag 'external', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'external', 'data-turbolinks-track' => true
     == csrf_meta_tags
+
+    /[if IE 9]
+      script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"
+      script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"
   body
-    #main.container
-      header.hidden-print
-        a href="/"
-          img alt=("zur Startseite") src="/old_site/parit.png"
-      .hidden-print == render 'layouts/old_site/navigation'
+    == render 'layouts/external/navigation'
+    main == yield
+    == render 'layouts/external/footer'
 
 
-      .hidden-print == render 'layouts/old_site/header_block'
+    coffee:
+      $ ->
+        $('.dropdown').hover((-> $(this).addClass('open') ), (-> $(this).removeClass('open')))
 
+      $(document).ready ->
+        # Add minus icon for collapse element which is open by default
+        $(".collapse.in").each ->
+          $(this).siblings(".panel-heading").find(".glyphicon").addClass("rotate")
 
-      .content
-        .row.hidden-print
-          .col-md-6 = content_for :back_link if content_for? :back_link
-          .col-md-6.search
-            form.search.form action=seminar_search_url
-              .form-group
-                input.form-control type="text" name="q" placeholder="Suche" value=params[:q]
-        == render 'layouts/messages'
-        == yield
-
-      .hidden-print = render 'layouts/old_site/foot'
-
-  sass:
-    body
-      background: #f8b028 url(/old_site/bg.gif) repeat-x
-
-      #main.container
-        background-color: #f2f2f2
-        padding-left: 0
-        padding-right: 0
-
-        .content
-          padding: 20px
-
-          form.search.form
-            input.form-control
-              border-radius: 16px
-              font-size: large
-          ul.nav-tabs.years
-            margin-bottom: 20px
-          ul.categories
-            overflow: hidden
-            a
-              padding-right: 8px
-            li
-              border-top: 1px solid lightgray
-              &.active
-                border-top: none
-                > a
-                  background-color: #449dea
-            ul
-              margin: 2px 0 7px 20px
-              a
-                padding: 3px 8px
-                font-size: small
-          table.seminars
-            background-color: white
-            &.overdue
-              color: gray
-              font-style: italic
-              a
-                color: gray
-            td
-              &.number
-                width: 100px
-              &.teachers
-                min-width: 200px
-              &.date
-                width: 100px
-    @media print
-      body
-        background: white
+        # Toggle plus minus icon on show hide of collapse element
+        $(".collapse").on('show.bs.collapse', ->
+          $(this).parent().find(".glyphicon").addClass("rotate")
+        ).on('hide.bs.collapse', ->
+          $(this).parent().find(".glyphicon").removeClass("rotate")
+        )

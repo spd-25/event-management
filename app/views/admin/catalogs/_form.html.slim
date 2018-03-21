@@ -1,0 +1,16 @@
+= simple_form_for([:admin, @catalog]) do |f|
+  = f.error_notification
+
+  section
+    .col-md-6
+      .form-inputs
+        = f.input :title
+        = f.input :year
+        = f.input :published
+        = f.input :print_version
+
+  section.action-buttons
+    .col-md-12
+      .pull-right
+        => link_to t(:cancel), admin_catalogs_path, class: 'btn btn-default'
+        = f.submit t(:save), class: 'btn btn-primary'

@@ -1,0 +1,20 @@
+= simple_form_for([:admin, @category]) do |f|
+  = f.input :parent_id, as: :hidden
+  = f.input :year, as: :hidden
+  - if @category.errors.any?
+    .alert.alert-danger.alert-dismissable
+      button.close type="button" data-dismiss="alert"
+        span aria-hidden="true" &times;
+        span.sr-only Close
+      h4 = t('.error')
+  section
+    .col-md-3
+      = f.input :number
+      = f.input :year, disabled: true
+    .col-md-9
+      = f.input :name
+  section.action-buttons
+    .col-md-12
+      .pull-right
+        => link_to t(:cancel), 'javascript: window.history.back();', class: 'btn btn-default'
+        = f.submit t(:save), class: 'btn btn-primary'

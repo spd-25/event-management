@@ -1,0 +1,19 @@
+h4 = Seminar.human_attribute_name(:categories)
+= render 'admin/seminars/show/categories', categories: current_catalog.categories.roots
+
+- content_for :style do
+  sass:
+    ul.categories
+      overflow: hidden
+      ul
+        margin-left: 30px
+        margin-top: 5px
+        a
+          padding: 3px 8px
+
+- content_for :script do
+  coffee:
+    $(document).ready ->
+      $("a[data-behavior=toggle-category]").on "ajax:success", ->
+        $(this).closest('li').toggleClass('active')
+        alert 'Thema gespeichert.'

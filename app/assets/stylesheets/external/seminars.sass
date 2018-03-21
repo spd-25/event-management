@@ -1,0 +1,59 @@
+
+
+form.search.form
+  input.form-control
+    border-radius: 16px
+    font-size: large
+ul.nav-tabs.years
+  margin-bottom: 20px
+ul.categories
+  overflow: hidden
+  @media (max-width: $screen-md-min)
+    overflow: scroll
+    height: 125px
+  a
+    padding-right: 8px
+  li
+    //border-top: 1px solid lightgray
+    &.active
+      border-top: none
+      > a
+        background-color: #449dea
+  ul
+    margin: 2px 0 7px 20px
+    a
+      padding: 3px 8px
+//font-size: smaller
+
+.seminars-table
+  border-radius: 5px
+  &:hover
+    box-shadow: 0 0 20px rgba(50, 50, 50, 0.27)
+  .list-group-item:hover
+    text-decoration: underline
+  &.overdue
+    font-style: italic
+  .seminar-number, .seminar-date, .seminar-title, .seminar-teachers
+    display: table-cell
+    padding: 3px
+  .seminar-number
+    width: 120px
+    font-weight: bold
+  .seminar-title
+    width: 50%
+  .seminar-teachers
+    width: 150px
+    .seminar-teacher
+      font-style: italic
+      display: inline
+      & + .seminar-teacher::before
+        content: ", "
+  @media (max-width: $screen-md-min)
+    .seminar-number, .seminar-date
+      display: inline-block
+      width: 50%
+    .seminar-title, .seminar-teachers
+      display: block
+      width: 100%
+
+

@@ -1,0 +1,37 @@
+- page_title_for @seminar, :number
+- module_parent = @seminar.parent
+
+ol.breadcrumb
+  li = link_to Seminar.model_name.human(count: 2), admin_seminars_url
+  - if (category = @seminar.categories.first)
+    - category.path.each do |cat|
+      li = link_to cat.name, admin_seminars_url(category_id: cat.id)
+  - if (module_parent)
+    li = link_to module_parent.number, module_parent
+
+.page-header.row
+  .col-md-10
+    h2
+      - if module_parent
+        => link_to icon_for(module_parent, text: "#{module_parent.number} - #{module_parent.title}"), module_parent
+        br
+        => "Modul: #{@seminar.number} - #{@seminar.title}"
+      - else
+        => icon_for @seminar, text: "#{@seminar.number} - #{@seminar.title}"
+      br
+      small = @seminar.subtitle
+      br
+      small
+        = @seminar.dates.join(', ')
+        =< @seminar.teachers.map(&:name).join(', ')
+      - if (editor = @seminar.editor)
+        br
+        small = link_to editor.name, admin_user_url(editor)
+
+  .col-md-2
+    - icon, text, action, css_class = @seminar.published? ? ['eye-slash', 'Deaktivieren!', :unpublish, 'success'] : ['eye', 'Veröffentlichen!', :publish, 'default']
+    => link_to fa_icon(icon, text: text), [:admin, @seminar, action: action], method: :patch, class: "btn btn-#{css_class} btn-block"
+    => link_to fa_icon('external-link', text: 'Externe Ansicht'), seminar_visitor_url(@seminar), class: 'btn btn-default btn-block'
+
+    = copy_link new_admin_seminar_url(copy_from: @seminar.id), class: 'btn-block'
+

@@ -1,0 +1,60 @@
+.row
+  .col-md-8
+    h3 = Seminar.human_attribute_name :benefit
+    = @seminar.benefit&.html_safe
+    h3 = Seminar.human_attribute_name :content
+    = @seminar.content&.html_safe
+    h3 = Seminar.human_attribute_name :notes
+    = @seminar.notes&.html_safe
+  .col-md-4
+    .row
+      .col-md-6
+        - if @seminar.layout_finished?
+          - title_msg = t('.warning_seminar_layout_finished')
+          - confirm_msg = t('.confirm_message_finished_edit')
+          => link_to fa_icon('pencil', text: t(:edit)), edit_admin_seminar_url(@seminar),
+                  class: 'btn btn-warning btn-block', title: title_msg, data: { confirm: confirm_msg }
+        - else
+          => edit_link edit_admin_seminar_url(@seminar), class: 'btn-block'
+      .col-md-6 = render 'admin/seminars/status', seminar: @seminar
+
+    /= render 'admin/seminars/status', seminar: @seminar
+    - unless @seminar.catalog.published?
+      br
+      = simple_form_for @seminar, url: [:admin, @seminar, action: :finish_editing], method: :patch do |f|
+        = f.input :editing_finished, collection: { 'Bearbeitung abgeschlossen' => true, 'in Bearbeitung' => false },
+                include_blank: false, label: false,
+                wrapper_html: { title: ldate(@seminar.editing_finished_at) },
+                input_html: { data: { behavior: 'submit-on-change' }, disabled: !policy(@seminar).finish_editing? }
+      = simple_form_for @seminar, url: [:admin, @seminar, action: :finish_layout], method: :patch do |f|
+        = f.input :layout_finished, collection: { 'Layout abgeschlossen' => true, 'Layout offen' => false },
+                include_blank: false, label: false,
+                wrapper_html: { title: ldate(@seminar.layout_finished_at) },
+                input_html: { data: { behavior: 'submit-on-change' }, disabled: !policy(@seminar).finish_layout? }
+    - content_for :script do
+      coffee:
+        $ ->
+          $('[data-behavior=submit-on-change]').change -> $(this).closest('form').submit()
+
+    br
+    = render 'admin/seminars/show/sub_modules'
+
+    /= render 'admin/seminars/show/teachers'
+    - location = @seminar.location
+    = link_to icon_for(location, text: location.name, size: 2), admin_location_url(location) if location
+    p
+      label Jahr
+      =< @seminar.year
+    p
+      label Preis
+      br
+      = number_to_currency(@seminar.price)
+      br
+      = @seminar.price_text&.html_safe
+    - if @seminar.key_words.present?
+      p
+        label Suchbegriffe
+        =< @seminar.key_words
+
+    = render 'admin/seminars/show/events'
+    = render 'admin/seminars/show/categories_panel'

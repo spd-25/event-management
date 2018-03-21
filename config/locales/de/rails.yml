@@ -218,20 +218,21 @@ de:
       short2: "%d.%m.%Y %H:%M"
       short3: "%A, %d. %B %Y"
     pm: nachmittags
-  seminars:
-    pras:
-      age_16_17: "16-17"
-      age_18_24: "18-24"
-      age_25_34: "25-34"
-      age_35_49: "35-49"
-      age_50_65: "50-65"
-      age_gt_65: "> 65"
-      age_lt_16: "< 16"
-      age_unknown: unbekannt
-    show:
-      header:
-        warning_seminar_layout_finished: "Für dieses Seminar wurde der Status schon auf 'Layout fertig gesetzt.'"
-        confirm_message_finished_edit: "Soll das Seminar wirklich bearbeitet werden, obwohl es schon als 'Layout fertig' markiert wurde?"
-  uploads:
-    new:
-      title: "Neuer Upload"
+  admin:
+    seminars:
+      pras:
+        age_16_17: "16-17"
+        age_18_24: "18-24"
+        age_25_34: "25-34"
+        age_35_49: "35-49"
+        age_50_65: "50-65"
+        age_gt_65: "> 65"
+        age_lt_16: "< 16"
+        age_unknown: unbekannt
+      show:
+        header:
+          warning_seminar_layout_finished: "Für dieses Seminar wurde der Status schon auf 'Layout fertig gesetzt.'"
+          confirm_message_finished_edit: "Soll das Seminar wirklich bearbeitet werden, obwohl es schon als 'Layout fertig' markiert wurde?"
+    uploads:
+      new:
+        title: "Neuer Upload"

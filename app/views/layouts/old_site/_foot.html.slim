@@ -12,7 +12,7 @@
   | |
   a> href="http://bildungswerk-lsa.de/index.php?article_id=1"  Startseite
   | |
-  =< link_to 'Anmelden', (user_signed_in? ? seminars_url : new_user_session_url)
+  =< link_to 'Anmelden', (user_signed_in? ? admin_seminars_url : new_user_session_url)
 
 sass:
   .foot

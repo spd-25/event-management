@@ -16,6 +16,7 @@ module Features
     def sign_in_as_admin
       @current_user = admin = FactoryGirl.create(:user) { |user| user.admin! }
       sign_in(admin.username, admin.password)
+      visit admin_root_path
       admin
     end
   end

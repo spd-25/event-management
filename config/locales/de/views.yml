@@ -1,0 +1,87 @@
+de:
+  admin:
+    attendees:
+      cancel:
+        title: Anmeldungsstornierung
+        button_label: Stornieren
+        button_all_label: Alle stornieren
+        notice: Anmeldung wurde storniert.
+        confirm: Soll die Anmeldung wirklich storniert werden?
+        confirm: Sollen wirklich alle Teilnehmer dieser Anmeldung storniert werden?
+      form:
+        member: Mitglied im PARITÄTISCHEN LSA
+        member_institution: Einrichtung des PARITÄTISCHEN LSA
+        graduate: Absolvent*in der Fachschule
+        terms_of_service: 'Hiermit erkenne ich die Allgemeinen Geschäftsbedingungen des PARITÄTISCHEN Bildungswerkes LSA an.'
+        school: Schule
+    bookings:
+      new:
+        title: Neue Anmeldung
+        error: Anmeldung konnte nicht gespeichert werden. Bitte überprüfen Sie die markierten Felder.
+      show:
+        error: Anmeldung konnte nicht gespeichert werden. Bitte überprüfen Sie die markierten Felder.
+      form:
+        member: Mitglied im PARITÄTISCHEN LSA
+        member_institution: Einrichtung des PARITÄTISCHEN LSA
+        graduate: Absolvent*in der Fachschule
+        terms_of_service: 'Hiermit erkenne ich die Allgemeinen Geschäftsbedingungen des PARITÄTISCHEN Bildungswerkes LSA an.'
+        school: Schule
+    catalogs:
+      form:
+        error: Bildungskalender konnte nicht gespeichert werden.
+      new:
+        title: Bildungskalender anlegen
+    categories:
+      form:
+        error: Thema konnte nicht gespeichert werden.
+      new:
+        title: Neues Thema
+    companies:
+      form:
+        error: Firma konnte nicht gespeichert werden.
+      new:
+        title: Neue Firma
+    invoices:
+      new:
+        title: Rechnung schreiben
+      show:
+        title: Rechnung %{number} bearbeiten
+    locations:
+      form:
+        error: Veranstaltungsort konnte nicht gespeichert werden.
+      new:
+        title: Veranstaltungsort anlegen
+    search:
+      index:
+        title: Suchergebnisse
+    seminars:
+      form:
+        error: Seminar konnte nicht gespeichert werden.
+      new:
+        title: Seminar anlegen
+      editing_status:
+        all:                  Alle (%{count})
+        editing_not_finished: in Bearbeitung (%{count})
+        layout_open:          Bereit für Layout (%{count})
+        layout_finished:      Layout fertig (%{count})
+        completed:            Bearbeitung und Layout fertig (%{count})
+        editing_changed:      nachträglich bearbeitet (%{count})
+    teachers:
+      form:
+        error: Referent konnte nicht gespeichert werden.
+      new:
+        title: Referent anlegen
+    users:
+      form:
+        error: Benutzer konnte nicht gespeichert werden.
+      new:
+        title: Benutzer anlegen
+  buchung:
+    new:
+      title: Neue Anmeldung
+      error: Anmeldung konnte nicht gespeichert werden. Bitte überprüfen Sie die markierten Felder.
+      member: Mitglied im PARITÄTISCHEN LSA
+      member_institution: Einrichtung des PARITÄTISCHEN LSA
+      graduate: Absolvent*in der Fachschule
+      terms_of_service: 'Hiermit erkenne ich die Allgemeinen Geschäftsbedingungen des PARITÄTISCHEN Bildungswerkes LSA an.'
+      school: Schule

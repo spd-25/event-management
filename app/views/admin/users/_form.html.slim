@@ -1,0 +1,32 @@
+= simple_form_for([:admin, @user]) do |f|
+  - if @user.errors.any?
+    .alert.alert-danger.alert-dismissable
+      button.close type="button" data-dismiss="alert"
+        span aria-hidden="true" &times;
+        span.sr-only Close
+      h4 = t('.error')
+
+  section
+    .col-md-4
+      = f.input :name
+      = f.input :email
+      = f.input :roles, collection: roles_select_options, as: :check_boxes
+    .col-md-4
+      = f.input :username
+      = f.input :password,              disabled: !@user.new_record?
+      = f.input :password_confirmation, disabled: !@user.new_record?
+      - unless @user.new_record?
+        button.btn.btn-danger.enable-pw Ändern
+
+  section.action-buttons
+    .col-md-8
+      .pull-right
+        => link_to t(:cancel), 'javascript: window.history.back();', class: 'btn btn-default'
+        = f.submit t(:save), class: 'btn btn-primary'
+
+coffee:
+  $ ->
+    $('.enable-pw').click (event) ->
+      event.preventDefault()
+      $('input[type=password]').removeAttr('disabled')
+      $('.enable-pw').remove()

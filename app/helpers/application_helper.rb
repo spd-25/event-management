@@ -98,10 +98,11 @@ module ApplicationHelper
     link_to fa_icon('file-pdf-o', text: text), url, class: 'btn btn-default', target: '_blank'
   end
 
-  def delete_link(record)
+  def delete_link(record, scope: nil)
     label = fa_icon 'trash', text: t(:delete)
     confirm = t(:confirm_delete, model: record.class.model_name.human)
-    link_to label, record, method: :delete, data: { confirm: confirm }, class: 'btn btn-danger'
+    url = scope ? [scope, record] : record
+    link_to label, url, method: :delete, data: { confirm: confirm }, class: 'btn btn-danger'
   end
 
   def page_title_for(record_or_collection, attr = nil)
@@ -118,16 +119,6 @@ module ApplicationHelper
     title = icon_for record_or_collection, text: title if with_icon
     title
   end
-
-  # def title_for_record(record, attr = nil)
-  #   if record.new_record?
-  #     t("#{record.class.model_name.name.tableize}.new.title")
-  #   else
-  #     attr ||= :id
-  #     id = attr.is_a?(Symbol) ? record.send(attr) : attr
-  #     t("#{record.class.model_name.name.tableize}.single.title", id: id)
-  #   end
-  # end
 
   def title_for_model(model, count: 2, with_icon: false)
     title = model.model_name.human count: count
@@ -155,7 +146,7 @@ module ApplicationHelper
   end
 
   def member_title_for(record, attr = nil, with_model: true)
-    return t("#{record.class.model_name.name.tableize}.new.title") if record.new_record?
+    return t("admin.#{record.class.model_name.name.tableize}.new.title") if record.new_record?
     attr ||= :name
     if with_model
       [record.send(attr), content_tag(:small, record.class.model_name.human)].join(' ').html_safe

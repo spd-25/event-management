@@ -4,7 +4,9 @@ Rails.application.routes.draw do
   post 'buchung',               to: 'buchung#create', as: :buchung_create
   get  'nachricht/:booking_id', to: 'buchung#show',   as: :buchung_show
 
-  root to: 'visitors#index'
+  # root to: 'pages#home'
+
+  get 'seminare/start/:year',            to: 'seminare#home',   as: :seminare_home
   get 'seminare(/:year(/:category_id))', to: 'seminare#index',  as: :seminare_visitor
   get 'seminar/:id',                     to: 'seminare#show',   as: :seminar_visitor
   get 'suche',                           to: 'seminare#search', as: :seminar_search
@@ -15,38 +17,46 @@ Rails.application.routes.draw do
     patch 'users'    => 'devise/registrations#update', as: 'user_registration'
   end
 
-  get 'search', to: 'search#index', as: :search
+  namespace :admin do
 
-  resources(:users,     except: :edit) do
-    get :access_rights, on: :collection
-    get :seminars,      on: :member
-  end
-  resources :locations, except: :edit
-  resources(:teachers,  except: :edit) { get :seminars, on: :member }
-  resources :seminars do
-    member do
-      get :attendees, :pras, :versions
-      patch :toggle_category, :publish, :unpublish, :finish_editing, :finish_layout
-    end
-    collection do
-      get :date, :calendar, :canceled
-      get 'editing_status(/:scope)', action: :editing_status, as: :editing_status
-      get 'category(/:id)',          action: :category,       as: :category
-      get :search
-    end
-  end
-  resources :categories, except: :edit do
-    put :move, on: :member
-  end
-  resources :bookings,   only: %i[show new create]
-  resources :attendees,  only: %i[index show update] do
-    get :cancel
-    post :cancel, action: :destroy
-  end
-  resources :invoices,  except: :edit
-  resources :companies, except: :edit
-  resources(:catalogs,  except: %i[edit destroy]) { get :make_current, on: :member }
+    root to: 'seminars#index'
 
-  resources :feedbacks, only: %i[new create]
-  resources :uploads
+    get 'search', to: 'search#index', as: :search
+
+    resources(:users,     except: :edit) do
+      get :access_rights, on: :collection
+      get :seminars,      on: :member
+    end
+    resources :locations, except: :edit
+    resources(:teachers,  except: :edit) { get :seminars, on: :member }
+
+    resources :seminars do
+      member do
+        get :attendees, :pras, :versions
+        patch :toggle_category, :publish, :unpublish, :finish_editing, :finish_layout
+      end
+      collection do
+        get :date, :calendar, :canceled
+        get 'editing_status(/:scope)', action: :editing_status, as: :editing_status
+        get 'category(/:id)',          action: :category,       as: :category
+        get :search
+      end
+    end
+    resources :categories, except: :edit do
+      put :move, on: :member
+    end
+    resources :bookings,   only: %i[show new create]
+    resources :attendees,  only: %i[index show update] do
+      get :cancel
+      post :cancel, action: :destroy
+    end
+    resources :invoices,  except: :edit
+    resources :companies, except: :edit
+    resources(:catalogs,  except: %i[edit destroy]) { get :make_current, on: :member }
+
+    resources :feedbacks, only: %i[new create]
+  end
+
+  mount Alchemy::Engine => '/'
+  # get ':path1(/:path2(/:path3))' => 'pages#show', as: :pages
 end

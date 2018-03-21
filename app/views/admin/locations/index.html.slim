@@ -1,0 +1,18 @@
+- page_title_for @locations
+.page-header
+  .buttons = new_link new_admin_location_path
+  h2 = title_for @locations
+
+.table-responsive
+  table.standard-table.table-clickable
+    thead
+      tr
+        th = Location.human_attribute_name(:name)
+        th = Location.human_attribute_name(:city)
+        th = Location.human_attribute_name(:seminars)
+    tbody
+      - @locations.each do | location |
+        tr data = {url: admin_location_url(location)}
+          td = location.name
+          td = location.address_city
+          td = location.seminars.count

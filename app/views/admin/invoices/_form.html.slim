@@ -1,0 +1,80 @@
+= simple_form_for([:admin, @invoice]) do |f|
+  - if @invoice.errors.any?
+    .alert.alert-danger.alert-dismissable
+      button.close type="button" data-dismiss="alert"
+        span aria-hidden="true" &times;
+        span.sr-only Close
+      h4 = t('.error')
+
+  - if @invoice.company
+    input type='hidden' name='company_id' value=@invoice.company.id
+    input type='hidden' name='seminar_id' value=@invoice.seminar.id
+  - else
+    input type='hidden' name='attendee_id' value=@invoice.attendees.first.id
+
+  .row
+    .col-md-9
+      section
+        .col-md-6
+          .form-inputs
+            = f.input :address, input_html: { rows: 5 }
+        .col-md-6
+          .form-inputs
+            = f.input :date, as: :string, input_html: { class: :date }
+            = f.input :number
+
+      .form-inputs = f.input :pre_message, input_html: { rows: 5 }
+
+      label Teilnehmer:
+      - @invoice.items.each do |item|
+        = f.simple_fields_for :item, item do |item_fields|
+          .row
+            .col-md-6 = item_fields.input :attendee, label: false, input_html: { name: 'invoice[items][][attendee]' }
+            .col-md-3 = item_fields.input :price, label: false, input_html: {value: number_with_precision(item_fields.object.price), name: 'invoice[items][][price]' }
+      .row
+        .col-md-3.col-md-offset-6
+          p.sum = number_to_currency @invoice.items.map(&:price).sum
+
+      .form-inputs = f.input :post_message, input_html: { rows: 5 }
+
+      section.action-buttons
+        .col-md-12
+          .pull-right
+            => link_to t(:cancel), 'javascript: window.history.back();', class: 'btn btn-default'
+            = f.submit t(:save), class: 'btn btn-primary'
+
+    .col-md-3
+      = panel_box title: 'Seminar' do
+        ul.list-unstyled
+          li = link_to @invoice.seminar.number, admin_seminar_url(@invoice.seminar)
+          li = @invoice.seminar.title
+          li = @invoice.seminar.teachers.map(&:name).join(', ').html_safe
+          li = @invoice.seminar.price_text&.html_safe
+      /= panel_box title: 'Anmeldung' do
+        ul.list-unstyled
+          li = link_to ldate(@booking.created_at), @booking
+          li = @booking.name
+
+sass:
+  .invoice_item_price
+    input
+      text-align: right
+  .sum
+    text-align: right
+    font-weight: bold
+
+coffee:
+  $ ->
+    calculateSum = ->
+      sum = .0
+      $('.invoice_item_price input').each (index, input) =>
+        val = parseFloat($(input).val().replace('.', '').replace(',', '.'))
+        sum += val unless isNaN(val)
+      $('.sum').html(sum.toLocaleString('de', style: 'currency', currency: 'EUR'))
+
+    $('.invoice_item_price input').change (event) =>
+      calculateSum()
+      input = $(event.target)
+      val = parseFloat(input.val().replace('.', '').replace(',', '.'))
+      input.val(val.toLocaleString('de', minimumFractionDigits: 2 ))
+

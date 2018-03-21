@@ -1,0 +1,23 @@
+= render 'admin/seminars/index/header'
+
+- current_path = (@category && @category.path).to_a
+.row
+  .col-md-3
+    ul.nav.nav-pills.nav-stacked.categories
+      li class=('active' unless @category )
+        = link_to "ohne (#{@uncategorized_seminars.count})", category_admin_seminars_url(nil)
+    = render 'admin/seminars/index/categories', categories: current_catalog.categories.roots,
+      current_path: current_path
+
+  .col-md-9
+    = render 'table', seminars: @seminars, header: false
+    .row: .col-md-12: .pull-right = paginate @seminars
+
+sass:
+  ul.categories
+    overflow: hidden
+    ul
+      margin: 2px 0 7px 20px
+      a
+        padding: 3px 8px
+        font-size: small

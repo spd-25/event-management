@@ -1,0 +1,29 @@
+- page_title_for @seminars
+.row
+  .col-md-9.col-md-offset-3
+    .page-header
+      h2
+        - count = @seminars.total_count
+        - title = "#{count} #{Seminar.model_name.human count: count}"
+        - if @seminar.respond_to?(:total_count) && @seminars.total_count != count
+          - title += " (#{@seminars.total_count})"
+        = icon_for Seminar, text: title
+        .buttons
+          - if Catalog.where('year < ?', current_year).exists?
+            = link_to search_admin_seminars_path, class: 'btn btn-default' do
+              = fa_icon('plus', text: 'Aus Vorjahr kopieren')
+          => link_to fa_icon('table', text: 'Exportieren'), admin_seminars_url(format: :xlsx), class: 'btn btn-default'
+          = new_link new_admin_seminar_path
+
+ul.nav.nav-tabs.seminar-views
+  li class=('active' if params[:action] == 'category') = link_to 'nach Themen', category_admin_seminars_path
+  li class=('active' if params[:action] == 'date')     = link_to 'nach Monat',      date_admin_seminars_path
+  li class=('active' if params[:action] == 'calendar') = link_to 'Kalender',    calendar_admin_seminars_path
+  li class=('active' if params[:action] == 'canceled') = link_to 'Ausgefallen', canceled_admin_seminars_path
+  - unless current_catalog.published
+    li class=('active' if params[:action] == 'editing_status')
+      = link_to 'Bearbeitungsstatus', editing_status_admin_seminars_path
+
+sass:
+  ul.seminar-views
+    margin-bottom: 20px

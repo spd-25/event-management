@@ -1,0 +1,19 @@
+= simple_form_for([:admin, @page]) do |f|
+  - if @page.errors.any?
+    .alert.alert-danger.alert-dismissable
+      button.close type="button" data-dismiss="alert"
+        span aria-hidden="true" &times;
+        span.sr-only Close
+      h4 = t('.error')
+
+  = f.input :title
+  = f.input :slug
+  = f.input :published
+  = f.input :teaser,  input_html: { class: 'editor' }
+  = f.input :content, input_html: { class: 'editor' }
+
+  section.action-buttons
+    .col-md-12
+      .pull-right
+        => link_to t(:cancel), 'javascript: window.history.back();', class: 'btn btn-default'
+        = f.submit t(:save), class: 'btn btn-primary'

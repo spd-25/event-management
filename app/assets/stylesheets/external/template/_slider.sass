@@ -1,0 +1,81 @@
+.slider
+  position: relative
+
+  @media (max-width: 767px)
+    height: 8.75rem
+    background-size: cover
+    background: image-url("slider/slide-1.jpg") no-repeat top center
+    overflow: hidden
+
+  h1
+    color: $primary
+    font-size: 30px
+    margin-top: 0
+    margin-bottom: 0
+
+  .text-bar
+    background-color: rgba(255, 255, 255, 0.8)
+    padding: 10px
+    margin-bottom: 10px
+    width: fit-content
+    width: -moz-fit-content
+    margin-left: 4px
+
+    @media (max-width: 767px)
+      display: none
+
+  .slider-nav
+    .circle
+      height: 14px
+      width: 14px
+      border-radius: 50%
+      background-color: rgba(255, 255, 255, 0.8)
+      display: inline-block
+      margin-right: 2px
+      margin-left: 2px
+
+      &:hover
+        background-color: $primary
+
+    @media (max-width: 767px)
+      display: none
+
+  .container
+    height: 100%
+    display: flex
+    align-items: center
+    margin-right: auto
+    margin-left: auto
+
+  //.container-nav
+    //margin-top: -30px
+
+  .slide
+    width: 100%
+    height: 400px
+    background-size: cover
+
+    @media (max-width: 767px)
+      display: none
+
+  .slide1
+    background: image-url("slider/slide-1.jpg") center
+
+    .text-bar
+      border-left: 4px solid $blue
+
+  .slide2
+    background: image-url("slider/Slider-2.jpg") center
+    position: absolute
+    top: 0
+
+    .text-bar
+      border-left: 4px solid $red
+
+  .slide3
+    background: image-url("slider/Slider-3.jpg") center
+    position: absolute
+    top: 0
+
+    .text-bar
+      border-left: 4px solid $blue

@@ -1,0 +1,18 @@
+- page_title_for @category, :name
+.page-header
+  .buttons = delete_link @category, scope: :admin
+  h2 = title_for @category
+
+
+.row
+  .col-md-9
+    ol.breadcrumb
+      - @category.path.each do |cat|
+        li = link_to cat.name, admin_category_url(cat)
+    = render 'form'
+  .col-md-3
+    - @category.children.each do |category|
+      = link_to "#{category.number} #{category.name} (#{category.seminars.count})", admin_category_url(category)
+      br
+
+= render 'admin/seminars/table', seminars: @category.seminars

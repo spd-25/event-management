@@ -1,0 +1,11 @@
+- submenu = []
+- submenu << %w(Heilpädagogik           /ausbildung/heilpaedagogik)
+- submenu << %w(Aufnahmevoraussetzungen /ausbildung/heilpaedagogik/aufnahmevoraussetzungen)
+- submenu << %w(Berufsbild              /ausbildung/heilpaedagogik/berufsbild)
+- submenu << %w(Bewerbung               /ausbildung/heilpaedagogik/bewerbung)
+- submenu << %w(Kosten                  /ausbildung/heilpaedagogik/kosten)
+- submenu << %w(Standort                /ausbildung/heilpaedagogik/standort)
+- submenu << %w(Team                    /ausbildung/heilpaedagogik/team)
+ul.nav.nav-pills.nav-stacked
+  - submenu.each do |(label, path)|
+    li class=('active' if request.path == path) = link_to label, path

@@ -27,4 +27,9 @@ class Attendee < ApplicationRecord
   def full_address
     [name, address.street, "#{address.zip} #{address.city}"].join("\n")
   end
+
+  def cancel!(reason:, user:)
+    canceled!
+    update cancellation_reason: reason, canceled_by: user
+  end
 end

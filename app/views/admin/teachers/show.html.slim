@@ -1,0 +1,10 @@
+- page_title_for @teacher, :name
+.page-header
+  .buttons = delete_link @teacher, scope: :admin
+  h2 = title_for @teacher
+
+= render 'form'
+
+=> link_to fa_icon('table', text: 'Exportieren'), seminars_admin_teacher_url(@teacher, format: :xlsx), class: 'btn btn-default btn-xs'
+
+= render 'admin/seminars/table', seminars: @teacher.seminars

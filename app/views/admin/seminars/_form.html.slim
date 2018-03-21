@@ -1,0 +1,38 @@
+= simple_form_for([:admin, @seminar]) do |f|
+  = f.input :year,         as: :hidden
+  = f.input :copy_from_id, as: :hidden if @seminar.new_record?
+  - if @seminar.errors.any?
+    .alert.alert-danger.alert-dismissable
+      button.close type="button" data-dismiss="alert"
+        span aria-hidden="true" &times;
+        span.sr-only Close
+      h4 = t('.error')
+  div
+    ul.nav.nav-tabs role="tablist"
+      li.active role="presentation"
+        a aria-controls="home"     data-toggle="tab" href="#general" role="tab"  Allgemein
+      li role="presentation"
+        a aria-controls="settings" data-toggle="tab" href="#events"  role="tab"  Termine
+      li role="presentation"
+        a aria-controls="profile"  data-toggle="tab" href="#benefit" role="tab"  Nutzen
+      li role="presentation"
+        a aria-controls="messages" data-toggle="tab" href="#content" role="tab"  Inhalt
+      li role="presentation"
+        a aria-controls="settings" data-toggle="tab" href="#notes"   role="tab"  Bemerkungen
+    .tab-content
+      #general.tab-pane.active role="tabpanel" = render 'admin/seminars/form/general', f: f
+      #events.tab-pane         role="tabpanel" = render 'admin/seminars/form/events',  f: f
+      #benefit.tab-pane        role="tabpanel" = render 'admin/seminars/form/text',    f: f, field: :benefit
+      #content.tab-pane        role="tabpanel" = render 'admin/seminars/form/text',    f: f, field: :content
+      #notes.tab-pane          role="tabpanel" = render 'admin/seminars/form/text',    f: f, field: :notes
+
+  section.action-buttons
+    .col-md-12
+      .pull-right
+        => link_to t(:cancel), [:admin, cancel_url(@seminar)], class: 'btn btn-default'
+        = f.submit t(:save), class: 'btn btn-primary'
+
+sass:
+  #content, #benefit, #notes
+    iframe.wysihtml5-sandbox
+      height: 500px !important

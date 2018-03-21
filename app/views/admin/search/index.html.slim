@@ -1,0 +1,18 @@
+- content_for :title, t('.title')
+.page-header
+  h2 #{@result.count} Treffer für Suche nach "#{@query}"
+.row
+  - grouped_results = @result.compact.group_by(&:class)
+  - grouped_results.each do |model, results|
+    div class=("col-md-#{search_col_width(grouped_results.keys.size)}")
+      h4
+        => results.size
+        = model.model_name.human count: results.size
+
+      ul.list-group
+        - results.each do |result|
+          - if result.is_a? Attendee
+            li.list-group-item class=('list-group-item-warning' if result.canceled?)
+              = link_to display_name_for(result), admin_seminar_url(result.booking.seminar)
+          - else
+            li.list-group-item = link_to display_name_for(result), [:admin, result]

@@ -1,0 +1,86 @@
+= render 'admin/seminars/show/header'
+
+div
+  ul.nav.nav-tabs
+    li = link_to 'Inhalt', admin_seminar_url(@seminar, anchor: 'general')
+    - if policy(Attendee).index?
+      li = link_to "Teilnehmer (#{@seminar.attendees.count})", admin_seminar_url(@seminar, anchor: 'attendees')
+    - if policy(Invoice).index?
+      li = link_to 'Rechnungen', admin_seminar_url(@seminar, anchor: 'invoices')
+    li = link_to 'Kopien', admin_seminar_url(@seminar, anchor: 'copies')
+    li.active = link_to 'PRAS', pras_admin_seminar_url(@seminar)
+    li = link_to 'Änderungen', versions_admin_seminar_url(@seminar) if policy(Seminar).versions?
+  .tab-content
+    - @seminar.statistic.fill_defaults @seminar
+
+    = simple_form_for [:admin, @seminar], defaults: { required: false } do |f|
+
+      - f.simple_fields_for :statistic, @seminar.statistic do |sf|
+        .row
+          .col-md-8
+            .row
+              .col-md-6 = sf.input :number
+              .col-md-6 = sf.input :title
+              .col-md-6 = sf.input :section
+              .col-md-6 = sf.input :type
+              .col-md-6 = sf.input :published
+              .col-md-6 = sf.input :location
+              .col-md-6 = sf.input :start_date
+              .col-md-6 = sf.input :start_time
+              .col-md-6 = sf.input :end_date
+              .col-md-6 = sf.input :end_time
+              .col-md-6 = sf.input :hours, as: :integer
+              .col-md-6 = sf.input :partner
+              .col-md-6 = sf.input :certificate
+              .col-md-6 = sf.input :target_group
+              .col-md-6 = sf.input :not_local, as: :integer
+
+          .col-md-4
+            .table-responsive
+              table.standard-table.ages
+                thead
+                  tr
+                    th Alter
+                    th weiblich
+                    th männlich
+                    th gesamt
+                tbody
+                  - AttendeeStatistic::AGE_RANGES.each do |range|
+                    tr
+                      th = t(".age_#{range}")
+                      td = sf.input "age_#{range}_f", label: false, as: :integer, input_html: { class: 'f' }
+                      td = sf.input "age_#{range}_m", label: false, as: :integer, input_html: { class: 'm' }
+                      th.sum
+                tfoot
+                  tr
+                    th Gesamt
+                    th.sum.f
+                    th.sum.m
+                    th.sum.total
+
+        section.action-buttons
+          .col-md-12
+            .pull-right
+              = f.submit t(:save), class: 'btn btn-primary'
+
+sass:
+  input.integer, th.sum
+    text-align: right
+  th.sum.total
+    font-size: large
+
+coffee:
+  calculateSum = (elem, inputSel, sumSel) ->
+    sum = 0
+    elem.find(inputSel).each (index, input) -> sum += parseInt $(input).val()
+    elem.find(sumSel).html sum
+  calculateSums = () ->
+    table = $('table.ages')
+    table.find('tbody tr').each (i, row) -> calculateSum $(row), 'td input', 'th.sum'
+    calculateSum table, 'tbody td input.f', 'tfoot th.sum.f'
+    calculateSum table, 'tbody td input.m', 'tfoot th.sum.m'
+    calculateSum table, 'tbody td input',   'tfoot th.sum.total'
+
+  $ ->
+    $('input.integer').change calculateSums
+    calculateSums()

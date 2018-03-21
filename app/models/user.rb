@@ -22,6 +22,8 @@ class User < ApplicationRecord
   validates :email, :username, presence: true
 
   has_paper_trail
+  acts_as_taggable
+  acts_as_tagger
 
   def set_default_role
     roles << 'user' if roles.blank?
@@ -31,6 +33,11 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, #:registerable,
          :recoverable, :rememberable, :trackable, :validatable
+
+  def alchemy_roles
+    # member, author, editor, admin
+    cms_admin? || admin? ? %w[admin] : []
+  end
 
   def has_role?(role)
     role.to_s.in? roles

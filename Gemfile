@@ -20,11 +20,11 @@ gem 'draper'
 
 
 
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'bootstrap-sass'
 gem 'devise'
 gem 'devise-i18n'
-gem 'high_voltage'
+# gem 'high_voltage'
 gem 'pg'
 gem 'pg_search'
 gem 'rails-settings-cached'
@@ -51,10 +51,12 @@ gem 'axlsx', github: 'randym/axlsx'
 gem 'axlsx_rails'
 gem 'axlsx_styler'
 gem 'paperclip', '~> 5.0'
+gem 'alchemy_cms', '~> 4.0.0'
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'byebug', platforms: %i[mri mingw x64_mingw]
   # Adds support for Capybara system testing and selenium driver
   gem 'pry-rails'
   gem 'pry-rescue'
@@ -65,13 +67,13 @@ end
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
-  gem 'web-console', '>= 3.3.0'
-  gem 'listen', '>= 3.0.5', '< 3.2'
+  # gem 'web-console', '>= 3.3.0'
+  # gem 'listen', '>= 3.0.5', '< 3.2'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
-  gem 'meta_request'
-  gem 'better_errors'
+  # gem 'meta_request'
+  # gem 'better_errors'
   gem 'capistrano', '~> 3.5'
   gem 'capistrano-bundler'
   gem 'capistrano-rails', '~> 1.1'
@@ -88,7 +90,7 @@ group :development do
   gem 'rb-inotify', :require=>false
   gem 'spring-commands-rspec'
   gem 'mechanize'
-  gem 'binding_of_caller'
+  # gem 'binding_of_caller'
 end
 
 group :test do
