@@ -35,7 +35,7 @@ module Admin
       if cancellation_reason.present?
         @attendee.cancel! reason: cancellation_reason, user: current_user
         BookingMailer.attendee_canceled_email(@attendee).deliver_later
-        redirect_to (session[:back_url] || admin_seminar_url(@attendee.seminar)), notice: t('attendees.cancel.notice')
+        redirect_to (session[:back_url] || admin_seminar_url(@attendee.seminar)), notice: t('admin.attendees.cancel.notice')
       else
         @attendee.errors.add :cancellation_reason, :must_be_filled
         render :cancel
