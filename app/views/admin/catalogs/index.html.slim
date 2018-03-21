@@ -23,4 +23,4 @@
           td = catalog.seminars.count
           td = catalog.categories.count
           td = link_to('Herunterladen', catalog.print_version.url, target: '_blank') if catalog.print_version.present?
-          td = link_to fa_icon('table', text: 'Exportieren'), [catalog, format: :xlsx], class: 'btn btn-default btn-xs'
+          td = link_to fa_icon('table', text: 'Exportieren'), [:admin, catalog, format: :xlsx], class: 'btn btn-default btn-xs'
