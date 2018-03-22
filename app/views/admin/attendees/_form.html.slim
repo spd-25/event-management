@@ -66,7 +66,7 @@
     $ ->
       fill_invoice_address = (company_id) ->
         return if company_id is ''
-        $.getJSON "/companies/#{company_id}.json", (company) ->
+        $.getJSON "/admin/companies/#{company_id}.json", (company) ->
           title = company.name
           title = "#{title}\n#{company.name2}" if company.name2 isnt null
           $('.display-company-address').html "#{title}<br>#{company.street}<br>#{company.zip} #{company.city}"
