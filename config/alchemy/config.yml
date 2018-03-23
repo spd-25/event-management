@@ -74,8 +74,8 @@ url_nesting: true
 # NOTE: You can always override the output format in the options of your Essence. I.E. {format: 'gif'}
 #
 output_image_jpg_quality: 85
-preprocess_image_resize:
-image_output_format: original
+preprocess_image_resize: '1000x1000'
+image_output_format: jpg
 
 # This is used by the seeder to create the default site.
 default_site:
