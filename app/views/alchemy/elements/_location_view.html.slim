@@ -19,4 +19,4 @@
         - if el.has?(:website)
           .website
             label Internet
-            =< el.render :website
+            =< link_to el.render(:website), "http://#{el.render(:website)}"
