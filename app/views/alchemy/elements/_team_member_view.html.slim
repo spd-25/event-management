@@ -1,7 +1,7 @@
 - cache(element) do
   = element_view_for(element, class: 'media team-member') do |el|
     .media-left
-      = el.render :picture, {}, { class: 'media-object' }
+      / = el.render :picture, {}, { class: 'media-object' }
     .media-body
       h4 class="media-heading" = el.render :name
       p = el.render :position
