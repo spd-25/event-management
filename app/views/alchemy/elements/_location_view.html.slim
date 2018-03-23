@@ -8,9 +8,15 @@
       .col-md-4
         address
           = el.render :address
-        .phone
-          label Telefon
-          =< el.render :phone
-        .email
-          label E-Mail
-          =< el.render :email
+        - if el.has?(:phone)
+          .phone
+            label Telefon
+            =< el.render :phone
+        - if el.has?(:email)
+          .email
+            label E-Mail
+            =< el.render :email
+        - if el.has?(:website)
+          .website
+            label Internet
+            =< el.render :website
