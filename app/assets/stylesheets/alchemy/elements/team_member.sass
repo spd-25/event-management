@@ -1,24 +1,14 @@
-//.team_member
-//  clear: left
-//  padding: 1em 0
-//  .image
-//    float: left
-//    padding-right: 1em
-//    img
-//      height: 10em
-//  .name
-//    font-weight: bold
+$image-size: 150px
 .team-member
-  margin-bottom: 3em
-  &.media
-    .media-left
-      width: 10em
-      height: 100px
-      overflow: hidden
-      img
-        width: 6em
-        margin: 0 0 -3em 0
-    .media-body
-      width: 80%
-      p
-        margin: 0
+  padding: 1.5em 0
+  display: flex
+  .image
+    overflow-y: hidden
+    max-height: $image-size
+    min-width:  $image-size
+    max-width:  $image-size
+    margin-right: 1em
+    img
+      min-width: $image-size
+      max-width: $image-size
+      width:     $image-size
