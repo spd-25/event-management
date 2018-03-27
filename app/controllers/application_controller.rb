@@ -9,11 +9,18 @@ class ApplicationController < ActionController::Base
   rescue_from ActionController::RoutingError, with: :page_not_found
 
   before_action :set_paper_trail_whodunnit
+  before_action :set_new_nav
 
   helper_method :current_catalog
   helper_method :current_year
 
   private
+
+  # remove after hompage launch
+  def set_new_nav
+    session[:new_nav] = true if params[:nav_neu] == '1'
+    session.delete(:new_nav) if params[:nav_neu] == '0'
+  end
 
   def current_year
     @current_year ||= (session[:current_year] || Date.current.year)

@@ -4,4 +4,4 @@
     .col-md-8
       = render_elements
     .col-md-4
-      = render_navigation from_page:@page
+      = render_navigation({ from_page: @page }, { class: 'nav' })
