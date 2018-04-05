@@ -45,7 +45,7 @@ h4
           td = attendee.cancellation_reason
           td
             - if attendee.canceled_by_id.present?
-              = attendee.canceled_by.name
+              = attendee.canceled_by&.name || attendee.canceled_by_id
           /td
             - invoice = attendee.invoice
             - if invoice
