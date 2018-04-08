@@ -168,4 +168,10 @@ module ApplicationHelper
     value.to_s
   end
 
+  def pras_select(field)
+    collection = AttendeeStatistic::COLLECTIONS[field]
+    return collection if collection.is_a? Array
+    collection.map { |number, name| ["#{number} - #{name}", number] }
+  end
+
 end

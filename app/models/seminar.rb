@@ -16,9 +16,11 @@ class Seminar < ApplicationRecord
   belongs_to :original, class_name: 'Seminar', foreign_key: 'copy_from_id', inverse_of: :copies
   has_many :copies,     class_name: 'Seminar', foreign_key: 'copy_from_id', inverse_of: :original
 
-  accepts_nested_attributes_for :events,
-                                allow_destroy: true,
-                                reject_if: -> (attr) { attr['date'].blank? }
+  accepts_nested_attributes_for(
+    :events,
+    allow_destroy: true,
+    reject_if:     ->(attr) { attr['date'].blank? }
+  )
 
   serialize :statistic, ::AttendeeStatistic
 
@@ -51,11 +53,11 @@ class Seminar < ApplicationRecord
 
   has_paper_trail
 
-  search_fields = %i(number title subtitle benefit content notes due_date price_text key_words)
+  search_fields = %i[number title subtitle benefit content notes due_date price_text key_words]
   associated_fields = {
-    teachers:   %i(first_name last_name profession),
-    categories: %i(name),
-    location:   %i(name description address)
+    teachers:   %i[first_name last_name profession],
+    categories: %i[name],
+    location:   %i[name description address]
   }
   multisearchable against: search_fields
   pg_search_scope :external_search, against: search_fields, associated_against: associated_fields
