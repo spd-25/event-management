@@ -1,0 +1,109 @@
+collections:
+  event_type:
+    1: Einzelveranstaltung
+    2: Sonstige kurzfristige Veranstaltung
+    3: Vortragsreihe
+    4: Kurs / Lehrgang
+    5: Arbeitskreis
+    6: Tagesseminar
+    7: Mehrtagesseminar
+    8: Tagungen mit Seminarcharakter
+#  Anerkennung nach dem Bildungsfreistellungsgesetz:
+#    - ja
+#    - nein
+  topic:
+    1: Politik - Gesellschaft - Gender - Arbeitswelt / Interessenvertretung
+    2: Familie - Generationen
+    3: Religion - Ethik
+    4: Umwelt - Nachhaltigkeit - Naturwissenschaften
+    5: Kultur - Gestalten
+    6: Gesundheit
+    7: Sprachen
+    8: Medienanwendungen - Technik
+    9: Schulabschlüsse
+    10: Grundbildung - Alphabetisierung
+  EBG:
+    1: mit Förderung
+    0: ohne Förderung
+  target_group:
+    1: Senioren
+    2: Frauen
+    3: Menschen mit Behinderung
+    4: Migranten / Migrantinnen
+    5: Junge Erwachsene bis 25 Jahre
+    6: Menschen mit Alphabetisierungs- und Grundbildungsbedarf
+    7: Ehrenamtliche
+    8: Andere Adressatengruppen
+    9: keine spzielle Adressatengruppe
+  partner:
+    - 'ohne Kooperations-partner'
+    - 'andere EBG-geförderte Einrichtungen'
+    - 'sonstige Weiterbildungs-einrichtungen'
+    - 'BAMF'
+    - 'Hochschulen'
+    - 'Ämter / Behörden'
+    - 'Netzwerkarbeit'
+    - 'Sonstige'
+  ebg:
+    1: mit Förderung
+    0: ohne Förderung
+
+Felder:
+  Bezeichnung: Text
+  Maßnahmennummer der Einrichtung: Nummer
+  Veranstaltungszeitraum:
+    Beginn Datum: Datum
+    Beginn Uhrzeit: Uhrzeit
+    Ende Datum: Datum
+    Ende Uhrzeit: Uhrzeit
+  Veranstaltungsdauer:
+    Unterrichtsstd.: Zahl
+    Teilnehmertage: Zahl
+  Veranstaltungsart/ Anerkennung:
+    Veranstaltungsart: Ziffern
+    Anerkennung nach dem Bildungsfreistellungsgesetz: Ausprägung
+  Veranstaltungsort:
+    PLZ Durchführungsort: Zahl
+    Angaben zur Veranstaltungsstätte: Text
+  Kooperation:
+    andere EBG-geförderte Einrichtungen: Auswahl
+    sonstige Weiterbildungs-einrichtungen: Auswahl
+    BAMF: Auswahl
+    Hochschulen: Auswahl
+    Ämter / Behörden: Auswahl
+    Netzwerkarbeit: Auswahl
+    Sonstige: Auswahl
+    ohne Kooperations-partner: Auswahl
+  Thema:
+    Themenfeld: Ziffern
+  EBG:
+    EBG-Kennzeichen: Ausprägung
+  Zielgruppe:
+    Primäre Zielgruppe: Ziffern
+  Teilnehmende:
+    männlich:
+      < 16: Zahl
+      16-17: Zahl
+      18-24: Zahl
+      25-34: Zahl
+      35-49: Zahl
+      50-64: Zahl
+      65-75: Zahl
+      ">75": Zahl
+      unbekannt: Zahl
+    weiblich:
+      < 16: Zahl
+      16-17: Zahl
+      18-24: Zahl
+      25-34: Zahl
+      35-49: Zahl
+      50-64: Zahl
+      65-75: Zahl
+      ">75": Zahl
+      unbekannt: Zahl
+    Alter und Geschlecht unbekannt: Zahl
+  Übernachtungen:
+    Anzahl Übernachtungen: Zahl
+  Bildungspersonal:
+    Hauptamtlich: Zahl
+    Nebenamtlich: Zahl

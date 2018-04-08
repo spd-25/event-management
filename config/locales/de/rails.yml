@@ -17,7 +17,7 @@ de:
     - Fr
     - Sa
     abbr_month_names:
-    - 
+    -
     - Jan
     - Feb
     - Mär
@@ -44,7 +44,7 @@ de:
       short: "%e. %b"
       wday_short: "%a %d. %b %Y"
     month_names:
-    - 
+    -
     - Januar
     - Februar
     - März
@@ -226,6 +226,10 @@ de:
         age_25_34: "25-34"
         age_35_49: "35-49"
         age_50_65: "50-65"
+        age_50_64: "50-64"
+        age_65_75: "65-75"
+        age_gt_75: "> 75"
+
         age_gt_65: "> 65"
         age_lt_16: "< 16"
         age_unknown: unbekannt
