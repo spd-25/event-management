@@ -55,7 +55,8 @@ module Admin
     # Only allow a trusted parameter "white list" through.
     def teacher_params
       params.require(:teacher).permit(
-        :first_name, :last_name, :profession, :title, address: %i[street zip city], contact: %i[email phone mobile fax]
+        :first_name, :last_name, :profession, :title, :skill_sets, :remarks,
+        address: %i[street zip city], contact: %i[email phone mobile fax]
       )
     end
   end
