@@ -1,6 +1,6 @@
 .row
   .col-md-8
-    p #{Seminar.human_attribute_name :printed_pages}: #{@seminar.printed_pages}
+    p #{Seminar.human_attribute_name :printed_pages}: #{@seminar.printed_pages}, Zeichen: #{content_characters_for @seminar}
     h3 = Seminar.human_attribute_name :benefit
     = @seminar.benefit&.html_safe
     h3 = Seminar.human_attribute_name :content
