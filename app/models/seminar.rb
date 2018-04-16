@@ -29,7 +29,7 @@ class Seminar < ApplicationRecord
   # validate :validate_events
   validate :editor_is_editor
 
-  after_save :set_date
+  before_save :set_date
 
   default_scope { where archived: false }
 
@@ -108,6 +108,6 @@ class Seminar < ApplicationRecord
 
   def set_date
     return unless events.any?
-    update_column :date, events.order(:date).first.date
+    self.date = events.order(:date).first.date
   end
 end
