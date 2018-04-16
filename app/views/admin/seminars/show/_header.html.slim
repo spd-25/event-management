@@ -5,7 +5,7 @@ ol.breadcrumb
   li = link_to Seminar.model_name.human(count: 2), admin_seminars_url
   - if (category = @seminar.categories.first)
     - category.path.each do |cat|
-      li = link_to cat.name, admin_seminars_url(category_id: cat.id)
+      li = link_to cat.name, category_admin_seminars_url(cat)
   - if (module_parent)
     li = link_to module_parent.number, module_parent
 
