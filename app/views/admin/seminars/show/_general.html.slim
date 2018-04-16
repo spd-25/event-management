@@ -1,5 +1,6 @@
 .row
   .col-md-8
+    p #{Seminar.human_attribute_name :printed_pages}: #{@seminar.printed_pages}
     h3 = Seminar.human_attribute_name :benefit
     = @seminar.benefit&.html_safe
     h3 = Seminar.human_attribute_name :content
@@ -10,7 +11,7 @@
     .row
       .col-md-6
         - if @seminar.layout_finished?
-          - title_msg = t('.warning_seminar_layout_finished')
+          - title_msg   = t('.warning_seminar_layout_finished')
           - confirm_msg = t('.confirm_message_finished_edit')
           => link_to fa_icon('pencil', text: t(:edit)), edit_admin_seminar_url(@seminar),
                   class: 'btn btn-warning btn-block', title: title_msg, data: { confirm: confirm_msg }
