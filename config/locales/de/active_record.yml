@@ -135,6 +135,7 @@ de:
         statistic: PRAS
         editor: Bildungsreferent*in
         external_booking_address: Externe Buchung über
+        printed_pages: Seiten im Bildungskalender
       teacher:
         seminars: Seminare
         skill_sets: Fachbereiche
