@@ -14,7 +14,14 @@ class ApplicationController < ActionController::Base
   helper_method :current_catalog
   helper_method :current_year
 
+  layout :layout_by_resource
+
   private
+
+  def layout_by_resource
+    # needed for password change view
+    devise_controller? && current_user ? 'admin' : 'application'
+  end
 
   # remove after hompage launch
   def set_new_nav
@@ -50,8 +57,6 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(_resource)
-    return alchemy.admin_path if current_user.roles == ['cms_admin']
-    return alchemy.root_path  if current_user.roles == ['user']
     main_app.admin_root_path
   end
 

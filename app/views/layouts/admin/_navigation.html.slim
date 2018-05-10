@@ -9,8 +9,9 @@ nav.navbar.navbar-inverse.navbar-fixed-top
       = link_to 'Start', alchemy.root_url, class: 'navbar-brand', tabindex: -1
     .collapse.navbar-collapse
       ul.nav.navbar-nav
-        li class=('active' if controller_name == 'seminars')
-          = link_to title_for_model(Seminar, with_icon: true), admin_seminars_url, tabindex: -1
+        - if policy(Seminar).index?
+          li class=('active' if controller_name == 'seminars')
+            = link_to title_for_model(Seminar, with_icon: true), admin_seminars_url, tabindex: -1
         /li class=('active' if controller_name == 'bookings')
           = link_to title_for_model(Booking, with_icon: true), bookings_url, tabindex: -1
         - if policy(Attendee).index?
@@ -43,18 +44,19 @@ nav.navbar.navbar-inverse.navbar-fixed-top
               = link_to title_for_model(User, with_icon: true), admin_users_url, tabindex: -1
 
       ul.nav.navbar-nav.navbar-right
-        = navbar_dropdown current_catalog.title do
-          - Catalog.all.each do |catalog|
-            li class=('active' if current_catalog == catalog)
-              = link_to make_current_admin_catalog_url(catalog) do
-                - if catalog.published?
-                  = catalog.year
-                - else
-                  em #{catalog.year} *
-        li
-          form.navbar-form.navbar-right role="search" action=admin_search_url
-            .form-group
-              input.form-control type="text" placeholder="Suche" name="q" value=@query autofocus=(params[:controller] == 'search') tabindex="-1"
+        - if policy(Seminar).index?
+          = navbar_dropdown current_catalog.title do
+            - Catalog.all.each do |catalog|
+              li class=('active' if current_catalog == catalog)
+                = link_to make_current_admin_catalog_url(catalog) do
+                  - if catalog.published?
+                    = catalog.year
+                  - else
+                    em #{catalog.year} *
+          li
+            form.navbar-form.navbar-right role="search" action=admin_search_url
+              .form-group
+                input.form-control type="text" placeholder="Suche" name="q" value=@query autofocus=(params[:controller] == 'search') tabindex="-1"
         = navbar_dropdown current_user.username do
           li = link_to 'Passwort ändern', edit_user_registration_url
           li = link_to 'Abmelden', destroy_user_session_path, method: 'delete', title: current_user.username
