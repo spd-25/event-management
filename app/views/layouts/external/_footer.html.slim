@@ -36,7 +36,11 @@ footer
             li = link_to 'Datenschutz', '#'
         / .col-sm-6
           / = render_navigation all_sub_menues: true
-        .col-sm-9
+        .col-md-3
+          ul
+            li = link_to 'AGB', main_app.terms_of_service_path
+            li = link_to 'Datenschutz', main_app.data_protection_path
+        .col-sm-6
           / b Fort- und Weiterbildung
           |  Wiener Straße 2 |
           |  39112 Magdeburg |

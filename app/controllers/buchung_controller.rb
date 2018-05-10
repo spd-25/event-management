@@ -30,7 +30,7 @@ class BuchungController < ApplicationController
   end
 
   private
-  
+
   def request_origin_valid?
     ip_info = JSON.parse Net::HTTP.get('freegeoip.net', "/json/#{request.remote_ip}")
     ip_info['country_code'] == 'DE'
@@ -47,10 +47,11 @@ class BuchungController < ApplicationController
 
   def booking_params
     attrs = [
-      :seminar_id, :member, :member_institution, :graduate, :school, :year, :terms_of_service,
+      :seminar_id, :member, :member_institution, :graduate, :school, :year,
       :contact_email, :contact_phone, :contact_mobile, :contact_fax, :comments,
       :company_title, :company_street, :company_zip, :company_city,
       :invoice_title, :invoice_street, :invoice_zip, :invoice_city,
+      :data_protection, :terms_of_service,
       attendees_attributes: %i[first_name last_name profession]
     ]
     p = params.require(:booking).permit(attrs)
