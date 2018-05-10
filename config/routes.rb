@@ -57,6 +57,9 @@ Rails.application.routes.draw do
     resources :feedbacks, only: %i[new create]
   end
 
+  get 'agbs'        => 'static_pages#terms_of_service', as: :terms_of_service
+  get 'datenschutz' => 'static_pages#data_protection',  as: :data_protection
+
   mount Alchemy::Engine => '/'
   # get ':path1(/:path2(/:path3))' => 'pages#show', as: :pages
 end

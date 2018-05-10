@@ -14,6 +14,7 @@ class Booking < ApplicationRecord
   accepts_nested_attributes_for :attendees, allow_destroy: true
 
   validate :validate_attendees
+  validates :data_protection, acceptance: true
   validates :terms_of_service, acceptance: true
   validates :contact_email, :contact_phone, presence: true, if: :external
   validates :invoice_title, :invoice_street, :invoice_zip, :invoice_city, presence: true, if: :external
