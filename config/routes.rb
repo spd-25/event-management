@@ -19,7 +19,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
 
-    root to: 'seminars#index'
+    root to: 'dashboard#show'
 
     get 'search', to: 'search#index', as: :search
 
