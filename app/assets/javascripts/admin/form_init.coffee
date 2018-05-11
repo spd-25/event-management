@@ -18,14 +18,6 @@ window.Initializer =
         autoclose: true
         zIndexOffset: 1151
 
-  initWysihtml5: ->
-    $('.editor').wysihtml5
-      toolbar:
-        fa: true
-        html: true
-        link: false
-      locale: "de-DE"
-
   initSelect2: ->
     $(".select2").each (i, input) ->
       $input = $(input)
@@ -36,7 +28,6 @@ window.Initializer =
         placeholder: placeholder
 
   initAll: ->
-    Initializer.initWysihtml5()
     Initializer.initDate()
     Initializer.autoFocus()
     Initializer.initSelect2()

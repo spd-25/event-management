@@ -18,6 +18,6 @@
 .row
   .col-md-3 = f.input :price
   .col-md-3 = f.input :printed_pages, hint: "Zeichen gesamt: #{content_characters_for f.object}"
-= f.input :price_text, input_html: { class: 'editor' }
+= f.input :price_text, input_html: { class: 'tinymce' }
 = f.input :external_booking_address
 = f.input :key_words
