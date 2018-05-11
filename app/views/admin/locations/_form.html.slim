@@ -10,7 +10,7 @@
     .col-md-6
       .form-inputs
         = f.input :name
-        = f.input :description, input_html: { class: 'tinymce' }
+        = f.input :description, input_html: { class: 'editor' }
         /= f.input :address
 
     .col-md-6
@@ -23,4 +23,3 @@
       .pull-right
         => link_to t(:cancel), 'javascript: window.history.back();', class: 'btn btn-default'
         = f.submit t(:save), class: 'btn btn-primary'
-= tinymce language: 'de', height: 200
