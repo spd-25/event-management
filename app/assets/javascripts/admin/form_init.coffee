@@ -36,7 +36,7 @@ window.Initializer =
         placeholder: placeholder
 
   initAll: ->
-    Initializer.initWysihtml5()
+#    Initializer.initWysihtml5()
     Initializer.initDate()
     Initializer.autoFocus()
     Initializer.initSelect2()
