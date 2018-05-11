@@ -14,7 +14,7 @@
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require jquery_ujs
-//  require tinymce
+//= require tinymce
 //= require tinymce-jquery
 //= require select2
 //  require select2-full
