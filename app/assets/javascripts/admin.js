@@ -14,8 +14,6 @@
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require jquery_ujs
-//= require tinymce/tinymce.min.js
-//  require tinymce/jquery.tinymce.min.js
 //= require bootstrap-wysihtml5
 //= require bootstrap-wysihtml5/locales/de-DE
 //= require select2
@@ -25,7 +23,6 @@
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.de.js
 
 
-//= require admin/tinymce_config
 //= require admin/form_init.coffee
 //= require admin/table.coffee
 //= require admin/nav-tabs.coffee
