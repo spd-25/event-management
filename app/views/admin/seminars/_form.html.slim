@@ -28,8 +28,5 @@
       .pull-right
         => link_to t(:cancel), [:admin, cancel_url(@seminar)], class: 'btn btn-default'
         = f.submit t(:save), class: 'btn btn-primary'
+= tinymce language: 'de'
 
-sass:
-  #content, #benefit, #notes
-    iframe.wysihtml5-sandbox
-      height: 500px !important
