@@ -59,6 +59,7 @@ Rails.application.routes.draw do
 
   get 'agbs'        => 'static_pages#terms_of_service', as: :terms_of_service
   get 'datenschutz' => 'static_pages#data_protection',  as: :data_protection
+  get 'daten'       => 'static_pages#data_info',        as: :data_info
 
   mount Alchemy::Engine => '/'
   # get ':path1(/:path2(/:path3))' => 'pages#show', as: :pages
