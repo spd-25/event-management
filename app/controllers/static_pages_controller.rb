@@ -5,4 +5,7 @@ class StaticPagesController < ApplicationController
 
   def data_protection
   end
+
+  def data_info
+  end
 end
