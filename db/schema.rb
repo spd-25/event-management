@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180416131848) do
+ActiveRecord::Schema.define(version: 20180618205757) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -419,6 +419,52 @@ ActiveRecord::Schema.define(version: 20180416131848) do
     t.index ["seminar_id"], name: "index_invoices_on_seminar_id"
   end
 
+  create_table "legal_statistics", force: :cascade do |t|
+    t.bigint "seminar_id"
+    t.string "section"
+    t.integer "topic"
+    t.integer "event_type"
+    t.boolean "law_accepted", default: true
+    t.string "published"
+    t.string "zip"
+    t.string "location"
+    t.string "start_date"
+    t.string "start_time"
+    t.string "end_date"
+    t.string "end_time"
+    t.integer "hours"
+    t.string "partner"
+    t.integer "ebg", default: 1
+    t.string "certificate"
+    t.integer "target_group", default: 9
+    t.integer "not_local", default: 0
+    t.integer "age_unknown_f", default: 0
+    t.integer "age_unknown_m", default: 0
+    t.integer "age_lt_16_f", default: 0
+    t.integer "age_lt_16_m", default: 0
+    t.integer "age_16_17_f", default: 0
+    t.integer "age_16_17_m", default: 0
+    t.integer "age_18_24_f", default: 0
+    t.integer "age_18_24_m", default: 0
+    t.integer "age_25_34_f", default: 0
+    t.integer "age_25_34_m", default: 0
+    t.integer "age_35_49_f", default: 0
+    t.integer "age_35_49_m", default: 0
+    t.integer "age_50_64_f", default: 0
+    t.integer "age_50_64_m", default: 0
+    t.integer "age_65_75_f", default: 0
+    t.integer "age_65_75_m", default: 0
+    t.integer "age_gt_75_f", default: 0
+    t.integer "age_gt_75_m", default: 0
+    t.integer "age_50_65_f", default: 0
+    t.integer "age_50_65_m", default: 0
+    t.integer "age_gt_65_f", default: 0
+    t.integer "age_gt_65_m", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["seminar_id"], name: "index_legal_statistics_on_seminar_id"
+  end
+
   create_table "locations", id: :serial, force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -604,6 +650,7 @@ ActiveRecord::Schema.define(version: 20180416131848) do
   add_foreign_key "events", "seminars", on_delete: :cascade
   add_foreign_key "feedbacks", "users"
   add_foreign_key "invoices", "seminars"
+  add_foreign_key "legal_statistics", "seminars"
   add_foreign_key "seminars", "locations"
   add_foreign_key "seminars", "seminars", column: "parent_id"
   add_foreign_key "seminars_teachers", "seminars", on_delete: :cascade

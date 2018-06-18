@@ -71,6 +71,7 @@ module Admin
       copy_data_for @seminar
 
       if @seminar.save
+        @seminar.build_legal_statistic.tap(&:fill_defaults).save
         redirect_to after_save_url, notice: t(:created, model: Seminar.model_name.human)
       else
         10.times { @seminar.events.build }
@@ -80,10 +81,8 @@ module Admin
 
     def update
       @seminar.editing_finished_at = DateTime.current if @seminar.editing_finished?
-      sem_par = seminar_params
-      sem_par[:statistic] = @seminar.statistic.to_h.merge sem_par[:statistic]
 
-      if @seminar.update sem_par
+      if @seminar.update seminar_params
         redirect_to after_save_url, notice: t(:updated, model: Seminar.model_name.human)
       else
         10.times { @seminar.events.build }

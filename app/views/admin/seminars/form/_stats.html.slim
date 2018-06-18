@@ -1,12 +1,12 @@
-- @seminar.statistic.fill_defaults @seminar
-= f.simple_fields_for :statistic, @seminar.statistic do |sf|
+- @seminar.legal_statistic.fill_defaults
+= f.simple_fields_for :legal_statistic do |sf|
   .row
-    .col-md-4 = sf.input :topic, collection: pras_select('topic')
-    .col-md-4 = sf.input :event_type, collection: pras_select('event_type')
+    .col-md-4 = sf.input :topic,        collection: pras_select('topic')
+    .col-md-4 = sf.input :event_type,   collection: pras_select('event_type')
     .col-md-4 = sf.input :target_group, collection: pras_select('target_group'), include_blank: false
-    .col-md-4 = sf.input :law_accepted, as: :select, include_blank: false
-    .col-md-4 = sf.input :ebg, collection: pras_select('ebg'), include_blank: false
-    .col-md-4 = sf.input :partner, collection: pras_select('partner'), include_blank: false
+    .col-md-4 = sf.input :law_accepted, as: :select,                             include_blank: false
+    .col-md-4 = sf.input :ebg,          collection: pras_select('ebg'),          include_blank: false
+    .col-md-4 = sf.input :partner,      collection: pras_select('partner'),      include_blank: false
     .col-md-4 = sf.input :zip
     .col-md-4 = sf.input :location
   .row
@@ -14,4 +14,4 @@
     .col-md-3 = sf.input :start_time
     .col-md-3 = sf.input :end_date
     .col-md-3 = sf.input :end_time
-    .col-md-3 = sf.input :hours, as: :integer
+    .col-md-3 = sf.input :hours
