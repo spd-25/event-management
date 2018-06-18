@@ -58,6 +58,7 @@ de:
       location:
         one: Veranstaltungsort
         other: Veranstaltungsorte
+      legal_statistic: PRAS
       page:
         one: Seite
         other: Seiten
@@ -108,6 +109,25 @@ de:
         unit_price: Einzelpreis
       location:
         seminars: Seminare
+      legal_statistic:
+        section: 'Fachgebiet'
+        topic: 'Thema'
+        type: 'Art der BV'
+        event_type: 'Veranstaltungsart'
+        law_accepted: 'Anerkennung nach dem Bildungsfreistellungsgesetz'
+        published: 'Ankündigung'
+        location: 'Ort der Durchführung'
+        zip: 'Postleitzahl'
+        start_date: 'Beginn (Datum)'
+        start_time: 'Beginn (Zeit)'
+        end_date: 'Ende (Datum)'
+        end_time: 'Ende (Zeit)'
+        hours: 'Unterichtsstunden'
+        partner: 'Kooperation'
+        ebg: 'EBG'
+        certificate: 'Bildungsabschluss'
+        target_group: 'Zielgruppe'
+        not_local: 'nicht aus Sachsen-Anhalt'
       page:
         content: Inhalt
         teaser: Einleitung

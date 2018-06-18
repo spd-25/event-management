@@ -20,6 +20,9 @@ nav.navbar.navbar-inverse.navbar-fixed-top
         - if policy(Invoice).index?
           li class=('active' if controller_name == 'invoices')
             = link_to title_for_model(Invoice, with_icon: true), admin_invoices_url, tabindex: -1
+        - if policy(LegalStatistic).index?
+          li class=('active' if controller_name == 'legal_statistics')
+            = link_to title_for_model(LegalStatistic, with_icon: false), admin_legal_statistics_url, tabindex: -1
         li = link_to 'CMS', alchemy.admin_path, tabindex: -1
         = navbar_dropdown 'Stammdaten', active: controller_name.in?(%w(catalogs categories locations teachers companies users)) do
           - if policy(Catalog).index?
