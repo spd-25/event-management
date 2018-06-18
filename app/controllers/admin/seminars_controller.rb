@@ -80,7 +80,10 @@ module Admin
 
     def update
       @seminar.editing_finished_at = DateTime.current if @seminar.editing_finished?
-      if @seminar.update seminar_params
+      sem_par = seminar_params
+      sem_par[:statistic] = @seminar.statistic.to_h.merge sem_par[:statistic]
+
+      if @seminar.update sem_par
         redirect_to after_save_url, notice: t(:updated, model: Seminar.model_name.human)
       else
         10.times { @seminar.events.build }
