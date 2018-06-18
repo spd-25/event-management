@@ -1,0 +1,77 @@
+.page-header.row
+  .col-md-10
+    h2 => icon_for @seminar, text: "#{@seminar.number} - #{@seminar.title}"
+
+= simple_form_for([:admin, @statistic]) do |f|
+  .row
+    .col-md-4
+      = f.input :topic,        collection: pras_select('topic')
+      = f.input :event_type,   collection: pras_select('event_type')
+      = f.input :target_group, collection: pras_select('target_group'), include_blank: false
+      = f.input :law_accepted, as: :select,                             include_blank: false
+      = f.input :ebg,          collection: pras_select('ebg'),          include_blank: false
+      = f.input :partner,      collection: pras_select('partner'),      include_blank: false
+    .col-md-4
+      = f.input :zip
+      = f.input :location
+      = f.input :start_date
+      = f.input :start_time
+      = f.input :end_date
+      = f.input :end_time
+      = f.input :hours
+    .col-md-4
+      .table-responsive
+        table.standard-table.ages
+          thead
+            tr
+              th Alter
+              th weiblich
+              th männlich
+              th gesamt
+          tbody
+            - LegalStatistic::AGE_RANGES.each do |range|
+              tr
+                th = t(".age_#{range}")
+                td = f.input "age_#{range}_f", label: false, as: :integer, input_html: { class: 'f' }
+                td = f.input "age_#{range}_m", label: false, as: :integer, input_html: { class: 'm' }
+                th.sum
+
+            - LegalStatistic::AGE_RANGES_DEPR.each do |range|
+              tr.text-muted
+                th = t(".age_#{range}")
+                td = @seminar.legal_statistic.send "age_#{range}_f"
+                td = @seminar.legal_statistic.send "age_#{range}_m"
+                th
+          tfoot
+            tr
+              th Gesamt
+              th.sum.f
+              th.sum.m
+              th.sum.total
+
+  section.action-buttons
+    .col-md-12
+      .pull-right
+        => link_to t(:cancel), session[:back_path], class: 'btn btn-default'
+        = f.submit t(:save), class: 'btn btn-primary'
+sass:
+  input.integer, th.sum
+    text-align: right
+    th.sum.total
+      font-size: large
+
+coffee:
+  calculateSum = (elem, inputSel, sumSel) ->
+    sum = 0
+    elem.find(inputSel).each (index, input) -> sum += parseInt $(input).val()
+    elem.find(sumSel).html sum
+  calculateSums = () ->
+    table = $('table.ages')
+    table.find('tbody tr').each (i, row) -> calculateSum $(row), 'td input', 'th.sum'
+    calculateSum table, 'tbody td input.f', 'tfoot th.sum.f'
+    calculateSum table, 'tbody td input.m', 'tfoot th.sum.m'
+    calculateSum table, 'tbody td input', 'tfoot th.sum.total'
+
+  $ ->
+    $('input.integer').change calculateSums
+    calculateSums()

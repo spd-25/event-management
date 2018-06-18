@@ -86,26 +86,6 @@ de:
         mobile: Mobiltelefon
         phone: Telefon
         fax: Fax
-      legal_statistic:
-        number: 'Nummer'
-        title: 'Bezeichnung der Maßnahme'
-        section: 'Fachgebiet'
-        topic: 'Thema'
-        type: 'Art der BV'
-        event_type: 'Veranstaltungsart'
-        law_accepted: 'Anerkennung nach dem Bildungsfreistellungsgesetz'
-        published: 'Ankündigung'
-        location: 'Ort der Durchführung'
-        zip: 'Postleitzahl'
-        start_date: 'Beginn (Datum)'
-        start_time: 'Beginn (Zeit)'
-        end_date: 'Ende (Datum)'
-        end_time: 'Ende (Zeit)'
-        hours: 'Unterichtsstunden'
-        partner: 'Kooperation'
-        ebg: 'EBG'
-        certificate: 'Bildungsabschluss'
-        target_group: 'Zielgruppe'
-        not_local: 'nicht aus Sachsen-Anhalt'
+
 
 

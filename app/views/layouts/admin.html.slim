@@ -10,7 +10,7 @@ html
   body
     header
       == render 'layouts/admin/navigation'
-    main.container[role="main"]
+    main role="main" class=(defined?(@fluid_layout) ? 'container-fluid' : 'container')
       == render 'layouts/admin/messages'
       == yield
       - if current_user && controller_name != 'feedbacks'

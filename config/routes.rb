@@ -42,6 +42,7 @@ Rails.application.routes.draw do
         get :search
       end
     end
+    resources :legal_statistics, only: %i[index show update]
     resources :categories, except: :edit do
       put :move, on: :member
     end

@@ -1,0 +1,41 @@
+- @fluid_layout = true
+.page-header
+  h2 PRAS Statistik für #{current_year}
+
+= paginate @seminars
+
+.table-responsive
+  table.standard-table.table-clickable
+    thead = render 'table_head'
+    tbody
+      - @seminars.each do |seminar|
+        - stat = seminar.legal_statistic
+        tr data = {url: admin_legal_statistic_url(stat)}
+          td = seminar.number
+
+          td = stat.topic
+          td = stat.event_type
+          td = stat.target_group
+          td = stat.law_accepted ? 'ja' : 'nein'
+          td = stat.ebg
+          td = stat.partner
+          td = stat.zip
+          td = stat.location
+          td = stat.start_date
+          td = stat.start_time
+          td = stat.end_date
+          td = stat.end_time
+          td.int = stat.hours
+
+          - sum = 0
+          - LegalStatistic::AGE_RANGES.each do |range|
+            td.int = stat.send("age_#{range}_f").tap { |count| sum += count }
+            td.int = stat.send("age_#{range}_m").tap { |count| sum += count }
+          th.int = sum
+    tfoot = render 'table_head'
+
+= paginate @seminars
+
+sass:
+  th.int, td.int
+    text-align: right

@@ -1,0 +1,19 @@
+tr
+  th style='min-width: 120px' Nummer
+  th = LegalStatistic.human_attribute_name :topic
+  th = LegalStatistic.human_attribute_name :event_type
+  th = LegalStatistic.human_attribute_name :target_group
+  th = LegalStatistic.human_attribute_name :law_accepted
+  th = LegalStatistic.human_attribute_name :ebg
+  th = LegalStatistic.human_attribute_name :partner
+  th = LegalStatistic.human_attribute_name :zip
+  th = LegalStatistic.human_attribute_name :location
+  th = LegalStatistic.human_attribute_name :start_date
+  th = LegalStatistic.human_attribute_name :start_time
+  th = LegalStatistic.human_attribute_name :end_date
+  th = LegalStatistic.human_attribute_name :end_time
+  th = LegalStatistic.human_attribute_name :hours
+  - LegalStatistic::AGE_RANGES.each do |range|
+    th = t("admin.seminars.pras.age_#{range}") + ' w'
+    th = t("admin.seminars.pras.age_#{range}") + ' m'
+  th Summe
