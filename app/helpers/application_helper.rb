@@ -169,7 +169,7 @@ module ApplicationHelper
   end
 
   def pras_select(field)
-    collection = AttendeeStatistic::COLLECTIONS[field]
+    collection = LegalStatistic::COLLECTIONS[field]
     return collection if collection.is_a? Array
     collection.map { |number, name| ["#{number} - #{name}", number] }
   end

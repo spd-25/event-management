@@ -86,7 +86,7 @@ de:
         mobile: Mobiltelefon
         phone: Telefon
         fax: Fax
-      statistic:
+      legal_statistic:
         number: 'Nummer'
         title: 'Bezeichnung der Maßnahme'
         section: 'Fachgebiet'

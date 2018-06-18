@@ -11,11 +11,11 @@ div
     li.active = link_to 'PRAS', pras_admin_seminar_url(@seminar)
     li = link_to 'Änderungen', versions_admin_seminar_url(@seminar) if policy(Seminar).versions?
   .tab-content
-    - @seminar.statistic.fill_defaults @seminar
+    - @seminar.legal_statistic.fill_defaults
 
     = simple_form_for [:admin, @seminar], defaults: { required: false } do |f|
 
-      - f.simple_fields_for :statistic, @seminar.statistic do |sf|
+      - f.simple_fields_for :legal_statistic do |sf|
         .row
           .col-md-4
             .table-responsive
@@ -27,18 +27,18 @@ div
                     th männlich
                     th gesamt
                 tbody
-                  - AttendeeStatistic::AGE_RANGES.each do |range|
+                  - LegalStatistic::AGE_RANGES.each do |range|
                     tr
                       th = t(".age_#{range}")
                       td = sf.input "age_#{range}_f", label: false, as: :integer, input_html: { class: 'f' }
                       td = sf.input "age_#{range}_m", label: false, as: :integer, input_html: { class: 'm' }
                       th.sum
 
-                  - AttendeeStatistic::AGE_RANGES_DEPR.each do |range|
+                  - LegalStatistic::AGE_RANGES_DEPR.each do |range|
                     tr.text-muted
                       th = t(".age_#{range}")
-                      td = @seminar.statistic.send "age_#{range}_f"
-                      td = @seminar.statistic.send "age_#{range}_m"
+                      td = @seminar.legal_statistic.send "age_#{range}_f"
+                      td = @seminar.legal_statistic.send "age_#{range}_m"
                       th
                 tfoot
                   tr

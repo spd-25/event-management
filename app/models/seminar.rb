@@ -15,14 +15,16 @@ class Seminar < ApplicationRecord
   has_many :invoices, inverse_of: :seminar
   belongs_to :original, class_name: 'Seminar', foreign_key: 'copy_from_id', inverse_of: :copies
   has_many :copies,     class_name: 'Seminar', foreign_key: 'copy_from_id', inverse_of: :original
+  has_one :legal_statistic, inverse_of: :seminar, dependent: :destroy
 
   accepts_nested_attributes_for(
     :events,
     allow_destroy: true,
     reject_if:     ->(attr) { attr['date'].blank? }
   )
+  accepts_nested_attributes_for :legal_statistic
 
-  serialize :statistic, ::AttendeeStatistic
+  serialize :statistic, ::AttendeeStatistic # deprecated
 
   validates :number, :title, presence: true
   validates :number, uniqueness: true
