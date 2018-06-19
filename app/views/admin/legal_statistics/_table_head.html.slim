@@ -14,6 +14,10 @@ tr
   th = LegalStatistic.human_attribute_name :end_time
   th = LegalStatistic.human_attribute_name :hours
   - LegalStatistic::AGE_RANGES.each do |range|
-    th = t("admin.seminars.pras.age_#{range}") + ' w'
-    th = t("admin.seminars.pras.age_#{range}") + ' m'
+    th
+      = t("admin.seminars.pras.age_#{range}")
+      br
+      | w
+      br
+      | m
   th Summe
