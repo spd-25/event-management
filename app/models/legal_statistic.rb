@@ -10,8 +10,10 @@ class LegalStatistic < ApplicationRecord
   def fill_defaults
     # self.number   = seminar.number         if number.blank?
     # self.title    = seminar.title          if title.blank?
-    self.location = seminar.location&.name if location.blank?
-    events        = seminar.events.reload
+    self.location = seminar.location&.address&.city if location.blank?
+    self.zip      = seminar.location&.address&.zip if zip.blank?
+    self.law_accepted = false if new_record?
+    events = seminar.events.reload
     return unless events.any?
     first_event     = events.first
     self.start_date = I18n.l(first_event.date) if start_date.blank?
