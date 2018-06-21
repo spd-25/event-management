@@ -29,8 +29,12 @@
 
           - sum = 0
           - LegalStatistic::AGE_RANGES.each do |range|
-            td.int = stat.send("age_#{range}_f").tap { |count| sum += count }
-            td.int = stat.send("age_#{range}_m").tap { |count| sum += count }
+            td.int
+              - num = stat.send("age_#{range}_f").tap { |count| sum += count }
+              span class=('zero' if num.zero?) title='w' = num
+              br
+              - num = stat.send("age_#{range}_m").tap { |count| sum += count }
+              span class=('zero' if num.zero?) title='m' = num
           th.int = sum
     tfoot = render 'table_head'
 
@@ -39,3 +43,5 @@
 sass:
   th.int, td.int
     text-align: right
+  span.zero
+    color: lightgray
