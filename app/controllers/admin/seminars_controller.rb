@@ -57,6 +57,7 @@ module Admin
     def new
       authorize Seminar
       @seminar = Seminar.new new_seminar_params
+      @seminar.build_legal_statistic
       10.times { @seminar.events.build }
     end
 
