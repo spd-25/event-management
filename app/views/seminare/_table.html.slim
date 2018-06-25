@@ -5,7 +5,7 @@
     - seminars.each do |seminar|
       - cache seminar do
         = link_to seminar_visitor_url(seminar), class: 'list-group-item' do
-          .seminar-date   = ldate(seminar.date)
+          .seminar-date   = seminar.decorate.dates.join('<br>').html_safe
           .seminar-number = seminar.number
           .seminar-title  = seminar.title
           .seminar-teachers

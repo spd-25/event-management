@@ -19,6 +19,9 @@
       = f.input :end_date
       = f.input :end_time
       = f.input :hours
+    .col-md-4 = render 'seminar'
+
+  .row
     .col-md-4
       .table-responsive
         table.standard-table.ages
@@ -48,6 +51,7 @@
               th.sum.f
               th.sum.m
               th.sum.total
+    .col-md-8 = render 'attendees'
 
   section.action-buttons
     .col-md-12

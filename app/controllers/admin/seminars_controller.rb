@@ -18,13 +18,20 @@ module Admin
       seminars                = current_catalog.seminars
       @uncategorized_seminars = seminars.where.not(id: seminars.joins(:categories).select(:id))
       @seminars               = @category ? @category.all_seminars : @uncategorized_seminars
-      @seminars               = @seminars.page(params[:page])
+      respond_to do |format|
+        format.html { @seminars = @seminars.page(params[:page]) }
+        format.xlsx { render 'with_all_categories' unless @category }
+      end
     end
 
     def date
       authorize Seminar
       @month    = params[:month].to_i
-      @seminars = current_catalog.seminars.by_month(@month).page(params[:page])
+      @seminars = current_catalog.seminars.by_month(@month)
+      respond_to do |format|
+        format.html { @seminars = @seminars.page(params[:page]) }
+        format.xlsx
+      end
     end
 
     def calendar

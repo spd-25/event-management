@@ -3,6 +3,13 @@
   /= new_link new_attendee_path
   h2 = icon_for(Booking, text: "#{@attendees.total_count} #{Booking.model_name.human count: 2}")
 
+
+ul.nav.nav-tabs
+  li class=('active' if request.path == admin_attendees_path)
+    = link_to 'nach Monat', admin_attendees_url
+  li class=('active' if request.path == company_admin_attendees_path)
+    = link_to 'nach Firma', company_admin_attendees_url
+br
 .row
   .col-md-2
     ul.nav.nav-pills.nav-stacked
@@ -25,9 +32,9 @@
             th Firma / Arbeitgeber
             th
         tbody
-          - @attendees.each do | attendee |
+          - @attendees.each do |attendee|
             - booking = attendee.booking
-            tr data = {url: admin_attendee_url(attendee)} class=('warning' if attendee.canceled?)
+            tr data = { url: admin_attendee_url(attendee) } class=('warning' if attendee.canceled?)
               td = fa_icon booking.attendees.count == 1 ? 'user' : 'users'
               td = ldate attendee.created_at, format: :short2
               td = link_to attendee.seminar.number, admin_seminar_url(attendee.seminar)
@@ -45,3 +52,4 @@
                   = link_to 'Stornieren', admin_attendee_cancel_url(attendee), class: 'btn btn-danger btn-xs'
 
     = paginate @attendees
+

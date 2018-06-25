@@ -1,0 +1,16 @@
+- seminar = @seminar.decorate
+label PLZ
+p = seminar.location&.address.zip
+
+label Ort
+p= seminar.location&.address.city
+
+label = Seminar.human_attribute_name :events
+- if seminar.has_date_text?
+  p = seminar.date_text.html_safe
+
+table.standard-table
+  - seminar.events_list.each do |date, time|
+    tr
+      td = ldate date
+      td = time

@@ -50,6 +50,7 @@ Rails.application.routes.draw do
     resources :attendees,  only: %i[index show update] do
       get :cancel
       post :cancel, action: :destroy
+      get :company, on: :collection
     end
     resources :invoices,  except: :edit
     resources :companies, except: :edit
