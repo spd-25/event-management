@@ -1,3 +1,7 @@
+Dies ist eine automatisch generierte E-Mail. Bitte ANTWORTEN SIE NICHT auf diese Mail, da die Antwort NICHT ZUGESTELLT werden kann.
+Für Rückfragen erreichen Sie uns unter: bildungswerk@paritaet-lsa.de
+
+
 Sehr geehrte Damen und Herren,
 
 hiermit bedanken wir uns für Ihre Anmeldung und übersenden Ihnen noch einmal zur Kontrolle die eingegangenen Anmeldedaten. Eine Anmeldebestätigung und die Rechnung senden wir Ihnen ca. zwei Wochen vor dem Seminartermin an Ihre Rechnungsadresse zu.
@@ -5,9 +9,6 @@ hiermit bedanken wir uns für Ihre Anmeldung und übersenden Ihnen noch einmal z
 <%= render 'seminar' %>
 <%= Attendee.model_name.human(count: @booking.attendees.count) %>: <%= @booking.attendees.map(&:name).join(', ').html_safe %>
 Kontakt: <%= @booking.contact_email %>, <%= @booking.contact_phone %>, <%= @booking.contact_fax %> (Fax), <%= @booking.contact_mobile %> (Mobil)
-
-Dies ist eine automatisch generierte E-Mail. Bitte ANTWORTEN SIE NICHT auf diese Mail, da die Antwort NICHT ZUGESTELLT werden kann.
-Für Rückfragen erreichen Sie uns unter: bildungswerk@paritaet-lsa.de
 
 Freundliche Grüße
 PARITÄTISCHES Bildungswerk
