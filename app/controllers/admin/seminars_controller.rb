@@ -7,7 +7,17 @@ module Admin
       authorize Seminar
       respond_to do |format|
         format.html { redirect_to action: :category }
-        format.xlsx { @seminars = current_catalog.seminars }
+        format.xlsx do
+          @seminars = current_catalog.seminars
+          if params[:month]
+            @month    = params[:month].to_i
+            @seminars = @seminars.by_month(@month)
+          end
+          if params[:category_id]
+            @category = Category.find_by(id: params[:category_id])
+            @seminars = @category.all_seminars if @category
+          end
+        end
       end
     end
 

@@ -12,7 +12,8 @@
           - if Catalog.where('year < ?', current_year).exists?
             = link_to search_admin_seminars_path, class: 'btn btn-default' do
               = fa_icon('plus', text: 'Aus Vorjahr kopieren')
-          => link_to fa_icon('table', text: 'Exportieren'), admin_seminars_url(format: :xlsx), class: 'btn btn-default'
+          - export_options = { format: :xlsx }.merge(local_assigns[:export_options] || {})
+          => link_to fa_icon('table', text: 'Exportieren'), admin_seminars_url(export_options), class: 'btn btn-default'
           = new_link new_admin_seminar_path
 
 ul.nav.nav-tabs.seminar-views
