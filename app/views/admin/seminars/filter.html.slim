@@ -1,0 +1,34 @@
+- if request.xhr?
+  = render 'table', seminars: @seminars.order(:number)
+- else
+  = render 'admin/seminars/index/header', export_path: filter_admin_seminars_url(format: :xlsx)
+
+  - numbers = current_seminar_numbers
+  = simple_form_for :seminar_filter, url: filter_admin_seminars_url, method: :get, remote: true do |f|
+    .row
+      .col-md-1
+        = f.input :number1, collection: numbers.keys, label: 'Bereich', required: false
+      .col-md-3
+        = f.input :number2, collection: [], label: 'Nummer', required: false
+
+  #seminars-result data={ numbers: numbers.to_json }
+
+  coffee:
+    $ ->
+      results = $('#seminars-result')
+      numbers = results.data('numbers')
+      form = $('form.seminar_filter')
+      form.find('.seminar_filter_number1 select').change ->
+        secondNumbers = numbers[$(this).val()]
+        select2 = form.find('.seminar_filter_number2 select')
+        options = ''
+        for second, thirds of secondNumbers
+          options = options + "<option value='#{second}'>#{second} #{thirds.join(', ')}</option>"
+        select2.html options
+        form.submit()
+
+      form.find('.seminar_filter_number2 select').change ->
+        form.submit()
+
+      $(form).on 'ajax:success', (e, data, status, xhr) ->
+        results.html xhr.responseText

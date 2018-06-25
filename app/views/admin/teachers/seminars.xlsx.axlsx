@@ -17,7 +17,7 @@ wb.add_worksheet(name: 'Seminarliste') do |sheet|
 
   @seminars.each_with_index do |seminar, index|
     line = index + 6
-    sheet.add_row [ seminar.number, seminar.title, ldate(seminar.date), seminar.attendees.count ]
+    sheet.add_row [ seminar.number, seminar.title, seminar.decorate.dates.join(', '), seminar.attendees.count ]
     sheet.add_border "A#{line}:D#{line}"
   end
 

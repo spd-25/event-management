@@ -17,14 +17,14 @@ def add_categories(sheet, categories, level: 0)
 end
 
 def add_seminars(sheet, seminars)
-  seminars.each do |seminar|
+  seminars.order(:date).each do |seminar|
     sheet.add_row [
-      '', '', '', '',
+      nil, nil, nil, nil,
       seminar.number,
       seminar.title,
       seminar.decorate.dates.join(', '),
       seminar.teachers.map(&:name).join(', '),
-      seminar.location&.name,
+      seminar.location&.address&.city,
       seminar.price_text
     ]
   end
@@ -36,7 +36,7 @@ wb.add_worksheet(name: current_catalog.year.to_s) do |sheet|
   sheet.add_row ["Seminare #{current_catalog.year}"], style: bold
   sheet.add_row
 
-  header = ['Themen', '', '', ''] +
+  header = ['Themen', nil, nil, nil] +
     %w[Seminar-Nr. Seminar-Titel Seminar-Datum Referent Seminarort Teilnehmergebühren Teilnehmeranzahl]
   sheet.add_row header, style: bold
 
