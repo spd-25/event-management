@@ -1,14 +1,14 @@
-file_name = current_year.to_s
-file_name = "#{file_name}-#{@month}" if @month
-file_name = "#{file_name}-#{@category.name}" if @category
+file_name = "#{current_year}-#{@month}"
 file_name = "Seminarliste-#{file_name}_#{l Time.current, format: :short2}.xlsx"
 disposition = %(attachment; filename="#{file_name}")
 response.headers['Content-Disposition'] = disposition
 
 wb = xlsx_package.workbook
 
-wb.add_worksheet(name: "Seminarliste #{current_year} #{@month}") do |sheet|
+wb.add_worksheet(name: "Seminarliste #{current_year}") do |sheet|
   bold = sheet.styles.add_style b: true
+  sheet.add_row [[current_year, @month].join('/')], style: bold
+  sheet.add_row
 
   header = %w[Seminar-Nr. Seminar-Titel Seminar-Datum Referent Seminarort Teilnehmergebühren Teilnehmeranzahl]
   sheet.add_row header, style: bold

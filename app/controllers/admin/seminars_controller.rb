@@ -7,17 +7,7 @@ module Admin
       authorize Seminar
       respond_to do |format|
         format.html { redirect_to action: :category }
-        format.xlsx do
-          @seminars = current_catalog.seminars
-          if params[:month]
-            @month    = params[:month].to_i
-            @seminars = @seminars.by_month(@month)
-          end
-          if params[:category_id]
-            @category = Category.find_by(id: params[:category_id])
-            @seminars = @category.all_seminars if @category
-          end
-        end
+        format.xlsx { @seminars = current_catalog.seminars }
       end
     end
 
@@ -28,13 +18,20 @@ module Admin
       seminars                = current_catalog.seminars
       @uncategorized_seminars = seminars.where.not(id: seminars.joins(:categories).select(:id))
       @seminars               = @category ? @category.all_seminars : @uncategorized_seminars
-      @seminars               = @seminars.page(params[:page])
+      respond_to do |format|
+        format.html { @seminars = @seminars.page(params[:page]) }
+        format.xlsx { render 'with_all_categories' unless @category }
+      end
     end
 
     def date
       authorize Seminar
       @month    = params[:month].to_i
-      @seminars = current_catalog.seminars.by_month(@month).page(params[:page])
+      @seminars = current_catalog.seminars.by_month(@month)
+      respond_to do |format|
+        format.html { @seminars = @seminars.page(params[:page]) }
+        format.xlsx
+      end
     end
 
     def calendar

@@ -1,4 +1,4 @@
-= render 'admin/seminars/index/header', export_options: { category_id: @category.id }
+= render 'admin/seminars/index/header', export_path: category_admin_seminars_url(@category, format: :xlsx)
 
 - current_path = (@category && @category.path).to_a
 .row

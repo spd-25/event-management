@@ -1,0 +1,52 @@
+file_name = "Seminarliste-#{current_year}_#{l Time.current, format: :short2}.xlsx"
+disposition = %(attachment; filename="#{file_name}")
+response.headers['Content-Disposition'] = disposition
+
+wb = xlsx_package.workbook
+
+
+def add_categories(sheet, categories, level: 0)
+  bold = sheet.styles.add_style b: true
+  categories.each do |category|
+    row = Array.new(level) { '' }
+    row << category.display_name << ''
+    sheet.add_row row, style: bold
+    add_seminars sheet, category.seminars
+    add_categories sheet, category.children.order(:number, :name), level: level + 1
+  end
+end
+
+def add_seminars(sheet, seminars)
+  seminars.each do |seminar|
+    sheet.add_row [
+      '', '', '', '',
+      seminar.number,
+      seminar.title,
+      seminar.decorate.dates.join(', '),
+      seminar.teachers.map(&:name).join(', '),
+      seminar.location&.name,
+      seminar.price_text
+    ]
+  end
+end
+
+wb.add_worksheet(name: current_catalog.year.to_s) do |sheet|
+  bold = sheet.styles.add_style b: true
+
+  sheet.add_row ["Seminare #{current_catalog.year}"], style: bold
+  sheet.add_row
+
+  header = ['Themen', '', '', ''] +
+    %w[Seminar-Nr. Seminar-Titel Seminar-Datum Referent Seminarort Teilnehmergebühren Teilnehmeranzahl]
+  sheet.add_row header, style: bold
+
+
+  add_categories sheet, current_catalog.categories.roots.includes(children: { children: :children }).order(:number, :name)
+
+  sheet.add_row
+  sheet.add_row ['ohne Kategorie'], style: bold
+  add_seminars sheet, @uncategorized_seminars
+
+  col_width = 3
+  sheet.column_widths col_width, col_width, col_width, col_width
+end
