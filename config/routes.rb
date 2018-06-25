@@ -40,6 +40,7 @@ Rails.application.routes.draw do
         get 'editing_status(/:scope)', action: :editing_status, as: :editing_status
         get 'category(/:id)',          action: :category,       as: :category
         get :search
+        get :filter
       end
     end
     resources :legal_statistics, only: %i[index show update]

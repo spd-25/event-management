@@ -49,6 +49,17 @@ module Admin
       @seminars = current_catalog.seminars.canceled.page(params[:page])
     end
 
+    def filter
+      authorize Seminar
+      @seminars = current_catalog.seminars.page(params[:page])
+      return unless request.xhr?
+      number1 = params[:seminar_filter][:number1]
+      number2 = params[:seminar_filter][:number2]
+      query = [number1, number2].join number1 == 'K' ? '' : '-'
+      @seminars = @seminars.where('number ilike ?', "%#{query}-%")
+      render layout: false
+    end
+
     def editing_status
       authorize Seminar
       @scopes   = %i(all editing_not_finished layout_open editing_changed completed)

@@ -6,6 +6,7 @@ class SeminarPolicy < ApplicationPolicy
   who_can(:date?)            { editor? || layouter? }
   who_can(:calendar?)        { editor? || layouter? }
   who_can(:canceled?)        { editor? }
+  who_can(:filter?)          { editor? || layouter? }
   who_can(:editing_status?)  { editor? || layouter? }
   who_can(:show?)            { editor? || layouter? }
   who_can(:create?)          { editor? }
