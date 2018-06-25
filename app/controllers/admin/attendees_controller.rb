@@ -16,6 +16,15 @@ module Admin
       session[:attendee_back_url] = admin_attendees_url(month: @month)
     end
 
+    def company
+      authorize Attendee
+      @date_range = current_catalog.date_range
+      @companies = Company.order(:name).where(id: Attendee.where(created_at: @date_range).select(:company_id))
+      @company = Company.find_by(id: params[:company_id]) if params[:company_id]
+      return unless @company
+      @attendees = @company.attendees.where(created_at: @date_range).order(created_at: :desc)
+    end
+
     def show
     end
 

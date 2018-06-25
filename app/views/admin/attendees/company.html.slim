@@ -1,0 +1,54 @@
+/ - page_title_for Booking
+.page-header
+  h2 = icon_for(Booking, text: "#{@attendees&.count} #{Booking.model_name.human count: 2}")
+
+
+ul.nav.nav-tabs
+  li class=('active' if request.path == admin_attendees_path)
+    = link_to 'nach Monat', admin_attendees_url
+  li class=('active' if request.path == company_admin_attendees_path)
+    = link_to 'nach Firma', company_admin_attendees_url
+br
+h4
+  => @companies.count
+  | Firmen
+form#company-select action=company_admin_attendees_url
+  select.select2 name='company_id'
+    - @companies.all.each do |company|
+      option value=company.id selected=(company == @company)
+        | #{company.name} #{company.name2}, #{company.city} (#{company.attendees.where(created_at: @date_range).count})
+br
+- if @attendees
+  - grouped = @attendees.all.group_by { |attendee| attendee.seminar }
+  - seminars = grouped.keys
+
+  - seminars.sort_by(&:number).each do |seminar|
+    h4
+      = link_to seminar.number, admin_seminar_url(seminar)
+      small =< seminar.title
+    .table-responsive
+      table.standard-table.table-clickable
+        tbody
+          - grouped[seminar].each do | attendee |
+            - booking = attendee.booking
+            tr data = {url: admin_attendee_url(attendee)} class=('warning' if attendee.canceled?)
+              td.type = fa_icon booking.attendees.count == 1 ? 'user' : 'users'
+              td.date = ldate attendee.created_at, format: :short2
+              td.attendees = attendee.name
+              td = booking.contact_email
+
+
+sass:
+  table
+    td
+      &.date
+        width: 20%
+      &.attendees
+        width: 20%
+      &.type
+        width: 50px
+
+coffee:
+  $ ->
+    $('select[name=company_id]').change ->
+      $('#company-select').submit()
