@@ -27,7 +27,7 @@ class SeminarPolicy < ApplicationPolicy
 
       attrs << {
         teacher_ids: [],
-        events_attributes: %i[id location_id date start_time end_time notes],
+        events_attributes: %i[id location_id date start_time end_time notes _destroy],
         legal_statistic_attributes: LegalStatistic.column_names
       }
     end

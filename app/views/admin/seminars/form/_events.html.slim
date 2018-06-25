@@ -7,6 +7,7 @@ table.standard-table.events-table
       th.time = Event.human_attribute_name :end_time
       th.location = Event.human_attribute_name :location
       th = Event.human_attribute_name :notes
+      th = t(:delete)
   tbody
     = f.simple_fields_for :events do |event_form|
       - event = event_form.object
@@ -16,6 +17,7 @@ table.standard-table.events-table
         td = event_form.input :end_time, label: false
         td = event_form.association :location, collection: Location.order(:name), input_html: { class: 'select2' }, label: false
         td = event_form.input :notes, label: false
+        td = event_form.input :_destroy, as: :boolean, label: false
 = link_to fa_icon('plus'), '#', class: 'add-event btn btn-default', tabindex: -1
 
 coffee:
@@ -32,6 +34,8 @@ sass:
       padding: 3px
       p
         margin: 8px 0 3px
+      .boolean
+        text-align: center
     th
       &.date
         width: 15%
