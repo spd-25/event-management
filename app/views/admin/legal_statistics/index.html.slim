@@ -10,7 +10,7 @@
     tbody
       - @seminars.each do |seminar|
         - stat = seminar.legal_statistic
-        tr data = {url: admin_legal_statistic_url(stat)}
+        tr class=('warning' if stat.attendees_mismatch) data = {url: admin_legal_statistic_url(stat)}
           td = seminar.number
 
           td = stat.topic

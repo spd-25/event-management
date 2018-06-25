@@ -4,6 +4,7 @@ class LegalStatistic < ApplicationRecord
 
   AGE_RANGES_DEPR = %w[50_65 gt_65].freeze
   AGE_RANGES      = %w[unknown lt_16 16_17 18_24 25_34 35_49 50_64 65_75 gt_75].freeze
+  RANGE_FIELDS    = AGE_RANGES.flat_map { |range| %W[age_#{range}_f age_#{range}_m] }
 
   belongs_to :seminar, inverse_of: :legal_statistic
 
@@ -21,6 +22,14 @@ class LegalStatistic < ApplicationRecord
     last_event      = events.last
     self.end_date   = I18n.l(last_event.date) if end_date.blank?
     self.end_time   = last_event.end_time if end_time.blank?
+  end
+
+  def sum_attendees
+    RANGE_FIELDS.map { |age| self[age].to_i }.sum(0)
+  end
+
+  def attendees_mismatch
+    sum_attendees != seminar.attendees.count
   end
 
 end

@@ -1,0 +1,36 @@
+h4
+  - count = @seminar.attendees.count
+  => count
+  => Attendee.model_name.human(count: count)
+
+.table-responsive
+  table.standard-table.table-clickable
+    - @seminar.attendees.order(:created_at).each do |attendee|
+      - booking = attendee.booking
+      tr
+        td = attendee.name
+        td = ldate attendee.created_at, format: :short2
+        td
+          - if attendee.company
+            = attendee.company.name
+          - else
+            = [booking.company_title, booking.invoice_title].select(&:present?).first
+
+- if @seminar.all_attendees.canceled.any?
+  h4 #{@seminar.all_attendees.canceled.count} Stornierte Anmeldungen
+
+  .table-responsive
+    table.standard-table.table-clickable.muted
+      - @seminar.all_attendees.canceled.each do |attendee|
+        tr
+          td = attendee.name
+          td = ldate attendee.created_at, format: :short2
+          td
+            - if attendee.company
+              = attendee.company.name
+            - else
+              = [attendee.company_title, attendee.invoice_title].select(&:present?).first
+          td = attendee.cancellation_reason
+          td
+            - if attendee.canceled_by_id.present?
+              = attendee.canceled_by&.name || attendee.canceled_by_id
