@@ -3,11 +3,7 @@ module Admin
 
     def index
       authorize LegalStatistic
-      @seminars = current_catalog.seminars.where(canceled: false).order(:number).includes(:legal_statistic).page(params[:page])
-      respond_to do |format|
-        format.html
-        format.xlsx
-      end
+      @report = LegalStatistic::Report.new current_year
     end
 
     def show

@@ -1,0 +1,12 @@
+# frozen_string_literal: true
+
+file_name = "PRAS-Export #{current_year} #{l Time.current, format: :short2}.xlsx"
+response.headers['Content-Disposition'] = %(attachment; filename="#{file_name}")
+
+wb = xlsx_package.workbook
+fields = @report.fields
+
+wb.add_worksheet(name: 'PRAS') do |sheet|
+  @report.headers_as_excel.each { |row| sheet.add_row row }
+  @report.stats.each { |stat| sheet.add_row(fields.map { |field| stat.send field }) }
+end
