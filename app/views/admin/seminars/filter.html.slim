@@ -1,34 +1,50 @@
 - if request.xhr?
+  - if @seminars.any?
+    = link_to fa_icon('table', text: 'Exportieren'), filter_admin_seminars_url(format: :xlsx, seminar_filter: @filter), class: 'btn btn-default btn-xs'
   = render 'table', seminars: @seminars.order(:number)
 - else
-  = render 'admin/seminars/index/header', export_path: filter_admin_seminars_url(format: :xlsx)
+  = render 'admin/seminars/index/header', export_path: filter_admin_seminars_url(format: :xlsx, seminar_filter: @filter)
 
-  - numbers = current_seminar_numbers
+  - numbers = Seminar.grouped_numbers current_year
   = simple_form_for :seminar_filter, url: filter_admin_seminars_url, method: :get, remote: true do |f|
     .row
-      .col-md-1
-        = f.input :number1, collection: numbers.keys, label: 'Bereich', required: false
-      .col-md-3
-        = f.input :number2, collection: [], label: 'Nummer', required: false
+      .col-md-1 = f.input :number1, collection: numbers.keys, label: 'Bereich', required: false
+      .col-md-4 = f.input :number2, collection: [], label: 'Nummer', required: false
+      .col-md-2 = f.input :number3, label: 'Filter', required: false
 
   #seminars-result data={ numbers: numbers.to_json }
+  #spinner = fa_icon('spinner spin')
 
   coffee:
     $ ->
+      spinner = $('#spinner')
+      spinner.hide()
       results = $('#seminars-result')
       numbers = results.data('numbers')
       form = $('form.seminar_filter')
+
+      fetchResults = ->
+        form.submit()
+        results.html ''
+
       form.find('.seminar_filter_number1 select').change ->
         secondNumbers = numbers[$(this).val()]
+        secondNumbersKeys = (key for key of secondNumbers).sort (a, b) -> parseInt(a) - parseInt(b)
         select2 = form.find('.seminar_filter_number2 select')
-        options = ''
-        for second, thirds of secondNumbers
-          options = options + "<option value='#{second}'>#{second} #{thirds.join(', ')}</option>"
+        options = "<option value='*'>Alle</option>"
+        for secondNumber in secondNumbersKeys
+          thirds = secondNumbers[secondNumber]
+          thirds = thirds.sort (a, b) ->
+            if a.length < b.length then -1 else if a.length > b.length then 1 else a > b
+          options = options + "<option value='#{secondNumber}'>#{secondNumber} - #{thirds.join(', ')}</option>"
         select2.html options
-        form.submit()
+        fetchResults()
 
-      form.find('.seminar_filter_number2 select').change ->
-        form.submit()
+      form.find('.seminar_filter_number2 select').change -> fetchResults()
+      form.find('.seminar_filter_number3 input').keyup   -> fetchResults()
 
       $(form).on 'ajax:success', (e, data, status, xhr) ->
         results.html xhr.responseText
+        spinner.hide()
+      $(form).on 'ajax:send', (e, data, status, xhr) ->
+        spinner.show()
