@@ -7,6 +7,7 @@ wb = xlsx_package.workbook
 fields = @report.fields
 
 wb.add_worksheet(name: 'PRAS') do |sheet|
-  @report.headers_as_excel.each { |row| sheet.add_row row }
+  bold = sheet.styles.add_style b: true
+  @report.headers_as_excel.each { |row| sheet.add_row row, style: bold }
   @report.stats.each { |stat| sheet.add_row(fields.map { |field| stat.send field }) }
 end
