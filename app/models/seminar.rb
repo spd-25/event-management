@@ -40,6 +40,7 @@ class Seminar < ApplicationRecord
 
   default_scope { where archived: false }
 
+  scope :archived,  -> { unscoped.where archived:  true }
   scope :published, -> { where published: true }
   scope :canceled,  -> { where canceled:  true }
   scope :bookable,  -> { where 'date >= :date', date: Date.current }
