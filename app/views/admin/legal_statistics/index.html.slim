@@ -1,46 +1,38 @@
 - @fluid_layout = true
 .page-header
-  h2 PRAS Statistik für #{current_year}
-
-= paginate @seminars
+  h2
+    | PRAS Statistik für #{current_year}
+    .buttons
+      => link_to fa_icon('table', text: 'Exportieren'), admin_legal_statistics_url(format: :xlsx), class: 'btn btn-default'
+- stats = @report.stats.page(params[:page])
+= paginate stats
 
 .table-responsive
   table.standard-table.table-clickable
     thead = render 'table_head'
     tbody
-      - @seminars.each do |seminar|
-        - stat = seminar.legal_statistic
+      - fields = @report.fields
+      - stats.each do |stat|
         tr class=('warning' if stat.attendees_mismatch) data = {url: admin_legal_statistic_url(stat)}
-          td = seminar.number
+          - fields.each do |field|
+            - value = stat.send field
+            - if field == :title
+              td title=stat.title = stat.title.truncate 20
+            - elsif field.to_s.start_with? 'age_'
+              td.int: span class=('zero' if value.zero?) = value
+            - else
+              td = value
 
-          td = stat.topic
-          td = stat.event_type
-          td = stat.target_group
-          td = stat.law_accepted ? 'ja' : 'nein'
-          td = stat.ebg
-          td = stat.partner
-          td = stat.zip
-          td = stat.location
-          td = stat.start_date
-          td = stat.start_time
-          td = stat.end_date
-          td = stat.end_time
-          td.int = stat.hours
-
-          - sum = 0
-          - LegalStatistic::AGE_RANGES.each do |range|
-            td.int
-              - num = stat.send("age_#{range}_f").tap { |count| sum += count }
-              span class=('zero' if num.zero?) title='w' = num
-              br
-              - num = stat.send("age_#{range}_m").tap { |count| sum += count }
-              span class=('zero' if num.zero?) title='m' = num
-          th.int = sum
     tfoot = render 'table_head'
 
-= paginate @seminars
+= paginate stats
 
 sass:
+  thead
+    th
+      vertical-align: top !important
+      text-align: center
+
   th.int, td.int
     text-align: right
   span.zero

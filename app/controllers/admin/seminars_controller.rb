@@ -51,12 +51,9 @@ module Admin
 
     def filter
       authorize Seminar
-      @seminars = current_catalog.seminars.page(params[:page])
-      return unless request.xhr?
-      number1 = params[:seminar_filter][:number1]
-      number2 = params[:seminar_filter][:number2]
-      query = [number1, number2].join number1 == 'K' ? '' : '-'
-      @seminars = @seminars.where('number ilike ?', "%#{query}-%")
+      return unless request.xhr? || request.format == :xlsx
+      @filter   = params.require(:seminar_filter).permit(:number1, :number2, :number3)
+      @seminars = current_catalog.seminars.by_number @filter
       render layout: false
     end
 

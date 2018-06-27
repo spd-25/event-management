@@ -1,4 +1,9 @@
+# frozen_string_literal: true
+
 class Seminar < ApplicationRecord
+  COURSE_REGEX = /(K)(\d+)\-(.*)/
+  SEM_REGEX    = /([A-C])\-(\d+)\-(.*)/
+
   include PgSearch
 
   belongs_to :catalog, foreign_key: :year, primary_key: :year, inverse_of: :seminars
@@ -52,6 +57,9 @@ class Seminar < ApplicationRecord
   scope :completed,            -> { all_finished.where('editing_finished_at < layout_finished_at') }
   scope :editing_changed,      -> { all_finished.where('editing_finished_at > layout_finished_at') }
 
+  scope :by_number, ->(filter) {
+    where('number ilike ?', "#{filter[:number1]}%#{filter[:number2].tr('*', '%')}-%#{filter[:number3]}%")
+  }
 
   has_paper_trail
 
@@ -63,6 +71,20 @@ class Seminar < ApplicationRecord
   }
   multisearchable against: search_fields
   pg_search_scope :external_search, against: search_fields, associated_against: associated_fields
+
+  def self.grouped_numbers(year = Date.current.year)
+    numbers = where(year: year).order(:number).pluck(:number).map { |num| split_number num }.compact
+    numbers.each_with_object({}) do |(first, second, third), grouped|
+      grouped[first] ||= {}
+      grouped[first][second] ||= []
+      grouped[first][second] << third
+    end
+  end
+
+  def self.split_number(number)
+    return unless number
+    number.scan(number[0] == 'K' ? COURSE_REGEX : SEM_REGEX)&.first
+  end
 
   def cache_key
     [super, bookable?].join '/'

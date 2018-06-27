@@ -1,18 +1,21 @@
-- page_title_for @seminars
+- page_title_for @seminars if @seminars
 .row
   .col-md-9.col-md-offset-3
     .page-header
       h2
-        - count = @seminars.total_count
-        - title = "#{count} #{Seminar.model_name.human count: count}"
-        - if @seminar.respond_to?(:total_count) && @seminars.total_count != count
-          - title += " (#{@seminars.total_count})"
+        - if @seminars
+          - count = @seminars.total_count
+          - title = "#{count} #{Seminar.model_name.human count: count}"
+          - if @seminar.respond_to?(:total_count) && @seminars.total_count != count
+            - title += " (#{@seminars.total_count})"
+        - else
+          - title = 'Seminare'
         = icon_for Seminar, text: title
         .buttons
           - if Catalog.where('year < ?', current_year).exists?
             = link_to search_admin_seminars_path, class: 'btn btn-default' do
               = fa_icon('plus', text: 'Aus Vorjahr kopieren')
-          - export_path = local_assigns[:export_path] || admin_seminars_url(format: :xlsx)
+          - export_path = local_assigns[:export_path] || category_admin_seminars_url(format: :xlsx)
           => link_to fa_icon('table', text: 'Exportieren'), export_path, class: 'btn btn-default'
           = new_link new_admin_seminar_path
 

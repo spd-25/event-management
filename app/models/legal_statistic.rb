@@ -4,9 +4,14 @@ class LegalStatistic < ApplicationRecord
 
   AGE_RANGES_DEPR = %w[50_65 gt_65].freeze
   AGE_RANGES      = %w[unknown lt_16 16_17 18_24 25_34 35_49 50_64 65_75 gt_75].freeze
-  RANGE_FIELDS    = AGE_RANGES.flat_map { |range| %W[age_#{range}_f age_#{range}_m] }
+  RANGE_FIELDS_F  = AGE_RANGES.map { |range| "age_#{range}_f" }.freeze
+  RANGE_FIELDS_M  = AGE_RANGES.map { |range| "age_#{range}_m" }.freeze
+  RANGE_FIELDS    = RANGE_FIELDS_F + RANGE_FIELDS_M
+  PARTNER_FIELDS  = (1..8).to_a.map { |i| "partner#{i}".to_sym }.freeze
 
   belongs_to :seminar, inverse_of: :legal_statistic
+
+  delegate :title, :number, to: :seminar
 
   def fill_defaults
     # self.number   = seminar.number         if number.blank?
@@ -30,6 +35,20 @@ class LegalStatistic < ApplicationRecord
 
   def attendees_mismatch
     sum_attendees != seminar.attendees.count
+  end
+
+  def law_accepted_str
+    { true => 'ja', false => 'nein' }[law_accepted]
+  end
+
+  def days
+    1
+  end
+
+  PARTNER_FIELDS.each do |field|
+    define_method field do
+      'x' if self.class.human_attribute_name(field) == partner
+    end
   end
 
 end

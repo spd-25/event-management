@@ -182,6 +182,67 @@ de:
         confirmed_at: Bestätigt am
         confirmation_sent_at: Bestätigung gesendet am
         unconfirmed_email: Unbestätigte Email
+      legal_statistic:
+        title: Bezeichnung
+        number: Maßnahmennummer der Einrichtung
+        # Veranstaltungszeitraum
+        start_date: Beginn Datum
+        start_time: Beginn Uhrzeit
+        end_date: Ende Datum
+        end_time: Ende Uhrzeit
+        # Veranstaltungsdauer
+        hours: Unterrichtsstd.
+        days: Teilnehmertage
+        # Veranstaltungsart/ Anerkennung:
+        event_type: Veranstaltungsart
+        law_accepted: Anerkennung nach dem Bildungsfreistellungsgesetz
+        law_accepted_str: Anerkennung nach dem Bildungsfreistellungsgesetz
+        # Veranstaltungsort:
+        zip: PLZ Durchführungsort
+        location: Angaben zur Veranstaltungsstätte
+        # Kooperation:
+        partner1: andere EBG-geförderte Einrichtungen
+        partner2: sonstige Weiterbildungs-einrichtungen
+        partner3: BAMF
+        partner4: Hochschulen
+        partner5: Ämter / Behörden
+        partner6: Netzwerkarbeit
+        partner7: Sonstige
+        partner8: ohne Kooperations-partner
+        # stat.partner,
+        # Thema:
+        topic: Themenfeld
+        # EBG:
+        ebg: EBG-Kennzeichen
+        # Zielgruppe:
+        target_group: Primäre Zielgruppe
+        age_16_17_f: "16-17 w"
+        age_18_24_f: "18-24 w"
+        age_25_34_f: "25-34 w"
+        age_35_49_f: "35-49 w"
+        age_50_65_f: "50-65 w"
+        age_50_64_f: "50-64 w"
+        age_65_75_f: "65-75 w"
+        age_gt_75_f: "> 75 w"
+
+        age_gt_65_f: "> 65 w"
+        age_lt_16_f: "< 16 w"
+        age_unknown_f: unbekannt w
+
+        age_16_17_m: "16-17 m"
+        age_18_24_m: "18-24 m"
+        age_25_34_m: "25-34 m"
+        age_35_49_m: "35-49 m"
+        age_50_65_m: "50-65 m"
+        age_50_64_m: "50-64 m"
+        age_65_75_m: "65-75 m"
+        age_gt_75_m: "> 75 m"
+
+        age_gt_65_m: "> 65 m"
+        age_lt_16_m: "< 16 m"
+        age_unknown_m: unbekannt m
+        sum_attendees: Summe Teilnehmer
+
     errors:
       models:
         attendee:

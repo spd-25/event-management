@@ -1,0 +1,27 @@
+file_name = "Seminarliste-#{current_year}_#{l Time.current, format: :short2}.xlsx"
+disposition = %(attachment; filename="#{file_name}")
+response.headers['Content-Disposition'] = disposition
+
+wb = xlsx_package.workbook
+
+wb.add_worksheet(name: "Seminarliste #{current_year}") do |sheet|
+  bold = sheet.styles.add_style b: true
+  sheet.add_row ['Filter', [@filter[:number1], @filter[:number2], @filter[:number3]].join(' - ')], style: bold
+  sheet.add_row
+
+  header = %w[Seminar-Nr. Seminar-Titel Seminar-Datum Referent Seminarort Teilnehmergebühren Teilnehmeranzahl]
+  sheet.add_row header, style: bold
+
+  @seminars.order(:date, :number).includes(:location, :teachers).each do |seminar|
+    sheet.add_row [
+      seminar.number,
+      seminar.title,
+      seminar.decorate.dates.join(', '),
+      seminar.teachers.map(&:name).join(', '),
+      seminar.location&.name,
+      seminar.price_text,
+      seminar.attendees.count
+    ]
+  end
+
+end
