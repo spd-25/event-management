@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180618205757) do
+ActiveRecord::Schema.define(version: 20180628114617) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -507,7 +507,6 @@ ActiveRecord::Schema.define(version: 20180618205757) do
     t.boolean "archived", default: false
     t.boolean "published", default: false
     t.date "date"
-    t.jsonb "statistic", default: "{}"
     t.boolean "canceled", default: false
     t.text "key_words"
     t.integer "copy_from_id"

@@ -72,7 +72,7 @@ module Admin
     def new
       authorize Seminar
       @seminar = Seminar.new new_seminar_params
-      @seminar.build_legal_statistic
+      @seminar.build_legal_statistic.fill_defaults
       10.times { @seminar.events.build }
     end
 
@@ -177,7 +177,7 @@ module Admin
 
     def new_seminar_params
       attrs = {}
-      if params[:copy_from].present? && (sem = Seminar.find(params[:copy_from]))
+      if params[:copy_from].present? && (sem = Seminar.find_by(id: params[:copy_from]))
         attrs = sem.attributes.except('id', 'published').merge(
           teachers:     sem.teachers,
           copy_from_id: sem.id

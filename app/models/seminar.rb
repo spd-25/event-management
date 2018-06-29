@@ -30,8 +30,6 @@ class Seminar < ApplicationRecord
   )
   accepts_nested_attributes_for :legal_statistic
 
-  serialize :statistic, ::AttendeeStatistic # deprecated
-
   validates :number, presence: true, uniqueness: true
   validates :number, format: NUMBER_FORMAT, on: :create
   validates :title, presence: true
