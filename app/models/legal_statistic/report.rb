@@ -4,15 +4,9 @@ class LegalStatistic < ApplicationRecord
   class Report
     def initialize(year)
       @year = year
-      # @catalog = Catalog.find_by(year: year)
     end
 
-    # def seminars
-    #   @catalog.seminars.where(canceled: false).order(:number).includes(:legal_statistic)
-    # end
-
     def stats
-      # @catalog.seminars.where(canceled: false).order(:number).includes(:legal_statistic)
       LegalStatistic.joins(:seminar).where(seminars: { canceled: false, year: @year }).order('seminars.number')
     end
 

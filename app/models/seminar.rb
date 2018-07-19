@@ -33,6 +33,7 @@ class Seminar < ApplicationRecord
   validates :number, presence: true, uniqueness: true
   validates :number, format: NUMBER_FORMAT, on: :create
   validates :title, presence: true
+  validates :year, presence: true, inclusion: { in: proc { Catalog.pluck :year } }
   # validate :validate_events
   validate :editor_is_editor
 
