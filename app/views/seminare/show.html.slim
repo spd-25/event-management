@@ -21,6 +21,8 @@
         = @seminar.content.html_safe
 
     .col-md-4.additional
+      - if current_user
+        p = link_to 'Bearbeiten', [:admin, @seminar], class: 'btn btn-info'
       / dl.dl-horizontal
         dt Termin
         dd
