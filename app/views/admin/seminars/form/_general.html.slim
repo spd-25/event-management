@@ -1,6 +1,7 @@
 .row
   .col-md-3 = f.input :archived
   .col-md-3 = f.input :canceled
+  .col-md-2 = f.input :year, collection: Catalog.pluck(:year).sort, include_blank: false
 .row
   .col-md-6 = f.association :editor, label_method: :name, collection: User.editors, input_html: { class: 'select2' }
   .col-md-6 = f.input :number
