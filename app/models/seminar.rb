@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 class Seminar < ApplicationRecord
-  COURSE_REGEX = /(K)(\d+)\-(.*)/
-  SEM_REGEX    = /([A-C])\-(\d+)\-(.*)/
+  COURSE_REGEX  = /(K)(\d+)-(.*)/
+  SEM_REGEX     = /([A-CK])-(\d+)-(.*)/
+  NUMBER_FORMAT = /\A[ABCK]-\d{3}-\d{2}[A-Z]([AEMZ]\d)*\Z/
 
   include PgSearch
 
@@ -29,10 +30,9 @@ class Seminar < ApplicationRecord
   )
   accepts_nested_attributes_for :legal_statistic
 
-  serialize :statistic, ::AttendeeStatistic # deprecated
-
-  validates :number, :title, presence: true
-  validates :number, uniqueness: true
+  validates :number, presence: true, uniqueness: true
+  validates :number, format: NUMBER_FORMAT, on: :create
+  validates :title, presence: true
   # validate :validate_events
   validate :editor_is_editor
 
@@ -40,6 +40,7 @@ class Seminar < ApplicationRecord
 
   default_scope { where archived: false }
 
+  scope :archived,  -> { unscoped.where archived:  true }
   scope :published, -> { where published: true }
   scope :canceled,  -> { where canceled:  true }
   scope :bookable,  -> { where 'date >= :date', date: Date.current }
@@ -73,7 +74,7 @@ class Seminar < ApplicationRecord
   pg_search_scope :external_search, against: search_fields, associated_against: associated_fields
 
   def self.grouped_numbers(year = Date.current.year)
-    numbers = where(year: year).order(:number).pluck(:number).map { |num| split_number num }.compact
+    numbers = where(year: year).order(:number).pluck(:number).map { |num| split_number num, year }.compact
     numbers.each_with_object({}) do |(first, second, third), grouped|
       grouped[first] ||= {}
       grouped[first][second] ||= []
@@ -81,9 +82,10 @@ class Seminar < ApplicationRecord
     end
   end
 
-  def self.split_number(number)
+  def self.split_number(number, year)
     return unless number
-    number.scan(number[0] == 'K' ? COURSE_REGEX : SEM_REGEX)&.first
+    regex = year < 2019 && number[0] == 'K' ? COURSE_REGEX : SEM_REGEX
+    number.scan(regex)&.first
   end
 
   def cache_key

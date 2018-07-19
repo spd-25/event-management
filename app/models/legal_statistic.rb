@@ -14,8 +14,6 @@ class LegalStatistic < ApplicationRecord
   delegate :title, :number, to: :seminar
 
   def fill_defaults
-    # self.number   = seminar.number         if number.blank?
-    # self.title    = seminar.title          if title.blank?
     self.location = seminar.location&.address&.city if location.blank?
     self.zip      = seminar.location&.address&.zip if zip.blank?
     self.law_accepted = false if new_record?
