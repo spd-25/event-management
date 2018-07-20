@@ -41,7 +41,8 @@ class Category < ApplicationRecord
   end
 
   def all_seminars
-    Seminar.joins(:categories).where('categories.id' => descendant_ids)
+    seminar_ids = Category.select(:seminar_id).joins(:categories_seminars).where(id: descendant_ids)
+    Seminar.where(id: seminar_ids)
   end
 
   def to_param
