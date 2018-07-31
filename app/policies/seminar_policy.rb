@@ -1,17 +1,17 @@
 class SeminarPolicy < ApplicationPolicy
   alias seminar record
 
-  who_can(:index?)           { editor? || layouter? }
-  who_can(:category?)        { editor? || layouter? }
-  who_can(:date?)            { editor? || layouter? }
-  who_can(:calendar?)        { editor? || layouter? }
+  who_can(:index?)           { editor? || layouter? || finance? }
+  who_can(:category?)        { editor? || layouter? || finance? }
+  who_can(:date?)            { editor? || layouter? || finance? }
+  who_can(:calendar?)        { editor? || layouter? || finance? }
   who_can(:canceled?)        { editor? }
-  who_can(:filter?)          { editor? || layouter? }
+  who_can(:filter?)          { editor? || layouter? || finance? }
   who_can(:editing_status?)  { editor? || layouter? }
-  who_can(:show?)            { editor? || layouter? }
+  who_can(:show?)            { editor? || layouter? || finance? }
   who_can(:create?)          { editor? }
   who_can(:update?)          { editor? || (layouter? && !seminar.published? && !seminar.catalog.published?) }
-  who_can(:attendees?)       { editor? }
+  who_can(:attendees?)       { editor? || finance? }
   who_can(:pras?)            { admin? }
   who_can(:versions?)        { editor? || layouter? }
   who_can(:toggle_category?) { editor? }

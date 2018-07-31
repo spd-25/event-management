@@ -3,7 +3,7 @@
 div
   ul.nav.nav-tabs
     li = link_to 'Inhalt',                                            '#general',   data: { toggle: 'tab' }
-    - if policy(Attendee).index?
+    - if policy(Seminar).attendees?
       li.active = link_to "Teilnehmer (#{@seminar.attendees.count})", '#attendees', data: { toggle: 'tab' }
     - if policy(Invoice).index?
       li = link_to Seminar.human_attribute_name(:invoices),           '#invoices',  data: { toggle: 'tab' }
@@ -13,6 +13,6 @@ div
 
   .tab-content
     .tab-pane#general          = render 'admin/seminars/show/general'
-    .tab-pane#attendees.active = render 'admin/seminars/show/attendees' if policy(Attendee).index?
+    .tab-pane#attendees.active = render 'admin/seminars/show/attendees' if policy(Seminar).attendees?
     .tab-pane#invoices         = render 'admin/seminars/show/invoices'  if policy(Invoice).index?
     .tab-pane#copies           = render 'admin/seminars/show/copies'

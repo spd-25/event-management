@@ -92,6 +92,7 @@ de:
       layouter: Layouter*in
       user:     Benutzer*in
       cms_admin: CMS-Administrator*in
+      finance:   Finanzen
   delete: Löschen
   edit: Bearbeiten
   copy: Kopieren
