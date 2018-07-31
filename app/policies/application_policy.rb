@@ -27,6 +27,10 @@ class ApplicationPolicy
     admin? || user.layouter?
   end
 
+  def finance?
+    admin? || user.finance?
+  end
+
   def scope
     Pundit.policy_scope!(user, record.class)
   end

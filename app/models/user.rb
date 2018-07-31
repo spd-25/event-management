@@ -1,6 +1,6 @@
 class User < ApplicationRecord
 
-  ROLES = %i[admin user editor layouter cms_admin].freeze
+  ROLES = %i[admin user editor layouter cms_admin finance].freeze
   has_many :edited_seminars, class_name: 'Seminar', foreign_key: :editor_id
 
   ROLES.each do |role|
