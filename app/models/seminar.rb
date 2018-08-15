@@ -3,7 +3,7 @@
 class Seminar < ApplicationRecord
   COURSE_REGEX  = /(K)(\d+)-(.*)/
   SEM_REGEX     = /([A-CK])-(\d+)-(.*)/
-  NUMBER_FORMAT = /\A[ABCK]-\d{3}-\d{2}[A-Z]([AEMZ]\d)*\Z/
+  NUMBER_FORMAT = /\A[ABCK]-\d{3}-\d{2}(A\d)?[A-Z]([AEMZ]\d)*\Z/
 
   include PgSearch
 

@@ -25,7 +25,8 @@ def add_seminars(sheet, seminars)
       seminar.decorate.dates.join(', '),
       seminar.teachers.map(&:name).join(', '),
       seminar.location&.address&.city,
-      seminar.price_text
+      seminar.price_text&.gsub('<br>', ' '),
+      seminar.attendees.count
     ]
   end
 end
@@ -37,7 +38,7 @@ wb.add_worksheet(name: current_catalog.year.to_s) do |sheet|
   sheet.add_row
 
   header = ['Themen', nil, nil, nil] +
-    %w[Seminar-Nr. Seminar-Titel Seminar-Datum Referent Seminarort Teilnehmergebühren Teilnehmeranzahl]
+           %w[Seminar-Nr. Seminar-Titel Seminar-Datum Referent Seminarort Teilnehmergebühren Teilnehmeranzahl]
   sheet.add_row header, style: bold
 
 
@@ -48,5 +49,5 @@ wb.add_worksheet(name: current_catalog.year.to_s) do |sheet|
   add_seminars sheet, @uncategorized_seminars
 
   col_width = 3
-  sheet.column_widths col_width, col_width, col_width, col_width
+  sheet.column_widths col_width, col_width, col_width, col_width, 15, 60, 30, 40, 20, 60, 15
 end

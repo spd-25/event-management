@@ -10,7 +10,7 @@ class Company < ApplicationRecord
 
   validates :name, presence: true
 
-  multisearchable against: [:name, :name2, :city, :city_part]
+  multisearchable against: %i[name name2 city city_part]
 
   def address
     [city_part, street, "#{zip} #{city}"].compact.join "\n"
