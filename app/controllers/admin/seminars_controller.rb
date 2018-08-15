@@ -84,9 +84,9 @@ module Admin
       authorize Seminar
       @seminar = Seminar.new seminar_params
       copy_data_for @seminar
+      @seminar.legal_statistic.fill_dates
 
       if @seminar.save
-        @seminar.build_legal_statistic.tap(&:fill_defaults).save
         redirect_to after_save_url, notice: t(:created, model: Seminar.model_name.human)
       else
         10.times { @seminar.events.build }
