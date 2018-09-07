@@ -63,7 +63,7 @@ module Admin
     # Only allow a trusted parameter "white list" through.
     def attendee_params
       attrs = %i[
-        first_name last_name member member_institution graduate school year terms_of_service
+        first_name last_name member member_institution graduate school year terms_of_service reduction
         contact_person contact_email contact_phone contact_mobile contact_fax comments
         company_title company_street company_zip company_city company_id
         invoice_title invoice_street invoice_zip invoice_city
