@@ -40,20 +40,14 @@
         legend = Booking.human_attribute_name(:invoice_address)
         .row
           .col-md-6 = f.input :invoice_title, as: :text, input_html: { rows: 4 }
-        .row
-          .col-md-6 = f.input :invoice_street
-        .row
-          .col-md-2 = f.input :invoice_zip,  as: :tel
-          .col-md-4 = f.input :invoice_city
+          .col-md-6
+            = f.input :invoice_street
+            .row
+              .col-md-4 = f.input :invoice_zip,  as: :tel
+              .col-md-8 = f.input :invoice_city
 
       fieldset
         legend Ich möchte folgenden Rabatt in Anspruch nehmen
-        p.text-muted
-          small
-            |
-              Es kann nur ein Rabatt pro Teilnehmer*in in Anspruch genommen werden.  Weitere Informationen zu unseren
-              Rabatten finden Sie im Bildungskalender 2019 auf Seite 12 oder hier.
-
         .form-group.radio_buttons
           .control_group
             input type="hidden" name="booking[reduction]" value=""
@@ -92,6 +86,29 @@
         legend AGB
         = f.input :data_protection,  as: :boolean, required: true, label: raw(t('buchung.new.data_protection'))
         = f.input :terms_of_service, as: :boolean, required: true, label: raw(t('buchung.new.terms_of_service'))
+
+    .col-md-4
+      - if @seminar.year >= 2019
+        h3 Rabatte
+        small
+          p Mit dem neuen Bildungskalender bieten wir Ihnen verschiedene Möglichkeiten, bei der Buchung Ihrer Seminare und Kurse Geld zu sparen.
+          p Es kann jeweils nur ein Rabatt pro Teilnehmer*in in Anspruch genommen werden. Die Kombination mehrerer Rabatte ist nicht möglich. Um den Rabatt zu erhalten, müssen Sie im Anmeldeformular das entsprechende Feld markieren. Die Rabatte werden erst mit tatsächlicher Teilnahme der Person(en) gültig.
+
+          strong Frühbucher*innen-Rabatt
+          p Bei Buchung ausgewählter Seminare und Kurse bis 12 Wochen (bei Seminaren) bzw. 16 Wochen (bei Kursen) vor Veranstaltungsbeginn erhalten Sie 10% Rabatt.
+          p Die Seminare und Kurse, für die Sie einen Frühbucher*innen-Rabatt erhalten können, sind in der jeweiligen Seminarbeschreibung entsprechend gekennzeichnet.
+
+          strong Gruppen-Rabatt
+          p Sie erhalten 10% Rabatt pro Person bei gleichzeitiger Anmeldung von mindestens 5 Personen für ein Seminar.
+
+          strong Tandem-Rabatt für Kurse
+          p Wir gewähren bei Buchung desselben Kurses durch zwei Mitarbeiter*innen aus zwei verschiedenen Einrichtungen eines Trägers 10% Rabatt auf den Kurspreis.
+
+          strong PARITÄTER-Rabatt für Kurse
+          p PARITÄTISCHE Einrichtungen und Mitgliedsorganisationen erhalten 5% Rabatt auf unsere Kurse.
+
+          strong Rabatt für Absolvent*innen der PARITÄTISCHEN Fachschulen für Sozialwesen
+          p Absolvent*innen unserer Fachschulen in Drübeck und Aschersleben erhalten 20% Rabatt auf unsere Seminare und Kurse.
 
   .row.action-buttons
     .col-md-8 = f.submit 'Jetzt anmelden', class: 'btn btn-primary btn-block btn-lg'

@@ -76,7 +76,7 @@
           .col-md-8 = @seminar.notes.html_safe
 
   - if @seminar.bookable?
-    .row.action-buttons
+    .row
       .col-md-4
         = link_to 'Anmelden', @seminar.booking_address, class: 'btn btn-primary btn-block btn-lg'
   - else
