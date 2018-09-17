@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180907144336) do
+ActiveRecord::Schema.define(version: 20180917141616) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -303,6 +303,9 @@ ActiveRecord::Schema.define(version: 20180907144336) do
     t.text "cancellation_reason"
     t.integer "canceled_by_id"
     t.string "reduction"
+    t.string "tandem_name"
+    t.string "tandem_company"
+    t.string "tandem_address"
     t.index ["booking_id"], name: "index_attendees_on_booking_id"
     t.index ["company_id"], name: "index_attendees_on_company_id"
     t.index ["invoice_id"], name: "index_attendees_on_invoice_id"
@@ -330,6 +333,9 @@ ActiveRecord::Schema.define(version: 20180907144336) do
     t.integer "company_id"
     t.text "comments"
     t.string "reduction"
+    t.string "tandem_name"
+    t.string "tandem_company"
+    t.string "tandem_address"
     t.index ["company_id"], name: "index_bookings_on_company_id"
     t.index ["seminar_id"], name: "index_bookings_on_seminar_id"
   end
@@ -517,6 +523,7 @@ ActiveRecord::Schema.define(version: 20180907144336) do
     t.integer "editor_id"
     t.string "external_booking_address"
     t.integer "printed_pages", default: 1
+    t.integer "pre_booking_weeks", default: 0
     t.index ["location_id"], name: "index_seminars_on_location_id"
     t.index ["parent_id"], name: "index_seminars_on_parent_id"
   end

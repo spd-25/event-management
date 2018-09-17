@@ -51,29 +51,35 @@
         .form-group.radio_buttons
           .control_group
             input type="hidden" name="booking[reduction]" value=""
-            span.radio
-              label
-                => f.radio_button :reduction, :early
-                | Frühbucher*innen-Rabatt (auf ausgewählte Seminare und Kurse)
+            - if @seminar.pre_bookable?
+              span.radio
+                label
+                  => f.radio_button :reduction, :early, disabled: (Date.current > @seminar.date - @seminar.pre_booking_weeks.weeks)
+                  | 10% Frühbucher*innen-Rabatt (#{@seminar.pre_booking_weeks} Wochen im Vorraus)
             span.radio
               label
                 => f.radio_button :reduction, :tandem
-                | Tandem-Rabatt (nur für Kurse)
+                | 10% Tandem-Rabatt (nur für Kurse)
+              .reduction-content
+                .row
+                  .col-md-6 = f.input :tandem_name, label: 'Name, Vorname'
+                  .col-md-6 = f.input :tandem_company, label: 'Einrichtung'
+                = f.input :tandem_address, label: 'Name und Anschrift der Trägers der Einrichting'
             span.radio
               label
                 => f.radio_button :reduction, :pari
-                | PARITÄTER-Rabatt (nur für Kurse)
+                | 5% PARITÄTER-Rabatt (nur für Kurse)
               .row.reduction-content
                 .col-md-6 = f.input :member, label: t('buchung.new.member')
                 .col-md-6 = f.input :member_institution, label: t('buchung.new.member_institution')
             span.radio
               label
-                => f.radio_button :reduction, :group
-                | Gruppen-Rabatt (ab 5 Personen)
+                => f.radio_button :reduction, :group, disabled: true
+                | 10% Gruppen-Rabatt (ab 5 Personen)
             span.radio
               label
                 => f.radio_button :reduction, :school
-                | Rabatt für Absolvent*innen der PARITÄTISCHEN Fachschulen für Sozialwesen in Drübeck und Aschersleben
+                | 20% Rabatt für Absolvent*innen der PARITÄTISCHEN Fachschulen für Sozialwesen in Drübeck und Aschersleben
               .row.reduction-content
                 .col-md-6 = f.input :school, collection: t('bookings.schools'), include_blank: false
                 .col-md-6 = f.input :year
@@ -118,6 +124,12 @@ coffee:
     toggleAttendee = (attendee, hidden) ->
       attendee.toggleClass('hidden', hidden)
       attendee.find('.booking_attendees__destroy input').val(hidden)
+    checkGroupReduction = ->
+      attendeesCount = $('.attendee').length - $('.attendee.hidden').length
+      groupReductionPossible = attendeesCount > 4
+      $('#booking_reduction_group').attr 'disabled', !groupReductionPossible
+      if !groupReductionPossible && $('input[name="booking[reduction]"]:checked').val() == 'group'
+        $('input[name="booking[reduction]"]').prop('checked', false)
 
     $('.attendee').addClass('hidden')
     toggleAttendee $('.attendee.hidden').first(), false
@@ -125,26 +137,35 @@ coffee:
     $('.add-attendee').on 'click', (event) ->
       event.preventDefault()
       toggleAttendee $('.attendee.hidden').first(), false
+      checkGroupReduction()
     $('.remove-attendee').on 'click', (event) ->
       event.preventDefault()
       if $('.attendee:visible').length > 1
         attendee = $(this).parents('.attendee')
         toggleAttendee attendee, true
         attendee.find('input').val('')
+      checkGroupReduction()
 
     reduction = $('[name="booking[reduction]"]')
     reduction.change (event) ->
-      $('.reduction-content').hide()
-      $(event.target).parent().parent().find('.reduction-content').show()
-
-    $('.reduction-content').hide()
+      $('span.radio').removeClass('selected')
+      $(event.target).parentsUntil('span.radio').parent().addClass('selected')
 
 
 sass:
   a.add-attendee
     margin-bottom: 25px
+  a.remove-attendee
+    position: absolute
+    right: -10px
+    display: none
+    z-index: 10
+  .attendee:hover
     a.remove-attendee
-      position: absolute
-      right: -20px
+      display: inline
   .reduction-content
-    margin-left: 20px
+    display: none
+    margin: 10px 0 30px 20px
+  span.radio.selected
+    .reduction-content
+      display: block

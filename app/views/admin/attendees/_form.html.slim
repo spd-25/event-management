@@ -56,6 +56,11 @@
           label
             => f.radio_button :reduction, :tandem
             | Tandem-Rabatt
+          .reduction-content
+            .row
+              .col-md-6 = f.input :tandem_name, label: 'Name, Vorname'
+              .col-md-6 = f.input :tandem_company, label: 'Einrichtung'
+            = f.input :tandem_address, label: 'Name und Anschrift der Trägers der Einrichting'
         span.radio
           label
             => f.radio_button :reduction, :pari

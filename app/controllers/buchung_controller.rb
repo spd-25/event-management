@@ -37,10 +37,10 @@ class BuchungController < ApplicationController
   end
 
   def copy_fields_to_attendees
-    attributes = %w[
-      seminar_id contact company_address invoice_address member member_institution school year
-      graduate comments reduction
-    ]
+    attributes = %w(
+      seminar_id contact company_address invoice_address member member_institution school year graduate comments
+      reduction tandem_name tandem_company tandem_address
+    )
     attributes = @booking.attributes.slice(*attributes)
     @booking.attendees.each { |attendee| attendee.assign_attributes attributes }
   end
@@ -51,8 +51,8 @@ class BuchungController < ApplicationController
       :contact_email, :contact_phone, :contact_mobile, :contact_fax, :comments,
       :company_title, :company_street, :company_zip, :company_city,
       :invoice_title, :invoice_street, :invoice_zip, :invoice_city,
-      :data_protection, :terms_of_service,
-      attendees_attributes: %i[first_name last_name profession]
+      :data_protection, :terms_of_service, :tandem_name, :tandem_company, :tandem_address,
+      attendees_attributes: %i(first_name last_name profession)
     ]
     p = params.require(:booking).permit(attrs)
     p['attendees_attributes'].reject! do |_, attr|
@@ -60,4 +60,5 @@ class BuchungController < ApplicationController
     end
     p
   end
+
 end

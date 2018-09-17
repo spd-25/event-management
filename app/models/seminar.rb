@@ -109,6 +109,10 @@ class Seminar < ApplicationRecord
     (date || Date.current) >= Date.current
   end
 
+  def pre_bookable?
+    pre_booking_weeks.to_i.positive?
+  end
+
   def editing_finished?
     editing_finished_at.present?
   end

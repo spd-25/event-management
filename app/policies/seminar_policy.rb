@@ -22,15 +22,17 @@ class SeminarPolicy < ApplicationPolicy
   who_can(:finish_layout?)   { layouter? }
 
   def permitted_attributes
-    attrs = %i[
+    attrs = %i(
       title subtitle benefit content notes date_text location_id editor_id external_booking_address printed_pages
-    ]
+    )
     if editor?
-      attrs += %i[number price price_text key_words parent_id max_attendees archived canceled copy_from_id year]
+      attrs += %i(
+        number price price_text key_words parent_id max_attendees archived canceled copy_from_id year pre_booking_weeks
+      )
 
       attrs << {
         teacher_ids: [],
-        events_attributes: %i[id location_id date start_time end_time notes _destroy],
+        events_attributes: %i(id location_id date start_time end_time notes _destroy),
         legal_statistic_attributes: LegalStatistic.column_names
       }
     end
