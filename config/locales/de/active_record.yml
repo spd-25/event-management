@@ -81,7 +81,7 @@ de:
         reduction: Rabatt
         tandem_name: Name, Vorname
         tandem_company: Einrichtung
-        tandem_address: Name und Anschrift der Trägers der Einrichting
+        tandem_address: Name und Anschrift der Trägers der Einrichtung
       booking:
         company: Anmeldung
         company_name: Firma
@@ -91,7 +91,7 @@ de:
         reduction: Rabatt
         tandem_name: Name, Vorname
         tandem_company: Einrichtung
-        tandem_address: Name und Anschrift der Trägers der Einrichting
+        tandem_address: Name und Anschrift der Trägers der Einrichtung
       catalog:
         categories: Themen
         seminars: Seminare

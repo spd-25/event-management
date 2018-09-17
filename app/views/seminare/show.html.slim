@@ -21,23 +21,8 @@
         = @seminar.content.html_safe
 
     .col-md-4.additional
-      - if current_user
+      - if current_user&.editor?
         p = link_to 'Bearbeiten', [:admin, @seminar], class: 'btn btn-info'
-      / dl.dl-horizontal
-        dt Termin
-        dd
-          - if @seminar.has_date_text?
-            = @seminar.date_text.html_safe
-          - else
-            .row
-              - @seminar.events_list.each do |date, time|
-                .col-md-6 = ldate date
-                .col-md-6 = time
-
-        dt Seminar-Nr.
-        dd = @seminar.number
-        dt Referenten
-        dd = @seminar.teachers.map(&:name).join(', ')
       .row.line
         .col-md-4: strong Termin
         .col-md-8
@@ -74,6 +59,8 @@
         .row.line
           .col-md-4: strong Bemerkungen
           .col-md-8 = @seminar.notes.html_safe
+      - if @seminar.year > 2018
+        .line = link_to 'Informationen zu unserem Rabattsystem', main_app.reductions_path
 
   - if @seminar.bookable?
     .row
