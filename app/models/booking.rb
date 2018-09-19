@@ -17,7 +17,14 @@ class Booking < ApplicationRecord
   validates :terms_of_service, acceptance: true
   validates :contact_email, :contact_phone, presence: true, if: :external
   validates :invoice_title, :invoice_street, :invoice_zip, :invoice_city, presence: true, if: :external
+  validates :tandem_address, :tandem_company, :tandem_name,
+    presence: true,
+    if: proc { |booking| booking.reduction.to_s == 'tandem' }
+  validates :school, :year,
+    presence: true,
+    if: proc { |booking| booking.reduction.to_s == 'school' }
 
+  before_validation { |booking| booking.invoice_title = booking.attendees&.first&.name unless booking.is_company }
   before_save { |booking| booking.graduate = booking.reduction.to_s == 'school' }
 
   has_paper_trail
@@ -29,6 +36,6 @@ class Booking < ApplicationRecord
   private
 
   def validate_attendees
-    errors.add(:attendees, :too_few) if attendees.empty?
+    errors.add(:attendees, :too_few) if attendees.empty? || (reduction.to_s == 'group' && attendees.size < 5)
   end
 end

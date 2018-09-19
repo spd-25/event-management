@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180917141616) do
+ActiveRecord::Schema.define(version: 20180919155146) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -306,6 +306,7 @@ ActiveRecord::Schema.define(version: 20180917141616) do
     t.string "tandem_name"
     t.string "tandem_company"
     t.string "tandem_address"
+    t.boolean "is_company"
     t.index ["booking_id"], name: "index_attendees_on_booking_id"
     t.index ["company_id"], name: "index_attendees_on_company_id"
     t.index ["invoice_id"], name: "index_attendees_on_invoice_id"
@@ -336,6 +337,7 @@ ActiveRecord::Schema.define(version: 20180917141616) do
     t.string "tandem_name"
     t.string "tandem_company"
     t.string "tandem_address"
+    t.boolean "is_company"
     t.index ["company_id"], name: "index_bookings_on_company_id"
     t.index ["seminar_id"], name: "index_bookings_on_seminar_id"
   end
